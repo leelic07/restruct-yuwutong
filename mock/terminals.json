@@ -1,0 +1,49 @@
+{
+  "draw": "1",
+  "recordsFiltered": [
+    {
+      "id": null,
+      "COUNT(*)": 3
+    }
+  ],
+  "recordsTotal": [
+    {
+      "id": null,
+      "COUNT(*)": 3
+    }
+  ],
+  "data": {
+    "prisoner_data": [
+      {
+        "id": 4,
+        "jail_id": 2,
+        "terminal_number": "9999",
+        "room_number": null,
+        "host_password": "7890",
+        "metting_password": "0987",
+        "created_at": "2017-04-05T01:59:18.000Z",
+        "updated_at": "2017-04-05T01:59:18.000Z"
+      },
+      {
+        "id": 5,
+        "jail_id": 2,
+        "terminal_number": "9998",
+        "room_number": null,
+        "host_password": "7890",
+        "metting_password": "0987",
+        "created_at": "2017-04-05T01:59:18.000Z",
+        "updated_at": "2017-04-05T01:59:18.000Z"
+      },
+      {
+        "id": 6,
+        "jail_id": 2,
+        "terminal_number": "9997",
+        "room_number": null,
+        "host_password": "7890",
+        "metting_password": "0987",
+        "created_at": "2017-04-05T01:59:18.000Z",
+        "updated_at": "2017-04-05T01:59:18.000Z"
+      }
+    ]
+  }
+}

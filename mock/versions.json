@@ -1,0 +1,32 @@
+{
+  "total": [
+    {
+      "id": null,
+      "COUNT(*)": 2
+    }
+  ],
+  "versions": [
+    {
+      "id": 1,
+      "version_code": "1.3.6",
+      "version_number": 22,
+      "created_at": "2017-03-30T02:01:53.000Z",
+      "updated_at": "2017-12-15T09:58:50.000Z",
+      "type_id": 1,
+      "description": "家属版app",
+      "download": "https://www.fushuile.com/app/yuwutong_f.apk",
+      "is_force": true
+    },
+    {
+      "id": 2,
+      "version_code": "1.0.8",
+      "version_number": 8,
+      "created_at": "2017-03-30T02:01:53.000Z",
+      "updated_at": "2017-12-15T09:57:28.000Z",
+      "type_id": 2,
+      "description": "监狱版app",
+      "download": "https://www.fushuile.com/app/yuwutong_p.apk",
+      "is_force": false
+    }
+  ]
+}
