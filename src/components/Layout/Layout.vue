@@ -28,7 +28,6 @@
     },
     watch:{
       $route(to){//监听路由变化
-        console.log(to);
         if (to.path == loginUrl ) {//进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
         }else {
