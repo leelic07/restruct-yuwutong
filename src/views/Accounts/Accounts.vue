@@ -164,7 +164,6 @@
       //显示家属详细信息
       showAccountsDetail(row){
         this.dialogTableVisible = true;
-        console.log(row);
       }
     },
     mounted(){

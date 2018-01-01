@@ -19,6 +19,7 @@ Vue.config.productionTip = false;
 
 axios.defaults.baseURL = 'http://10.10.10.135:3000/';
 
+
 axios.defaults.withCredentials = true;
 
 Vue.prototype.axios = axios;
