@@ -15,7 +15,7 @@ Vue.config.productionTip = false;
 
 // axios.defaults.baseURL = 'https://www.fushuile.com/';
 
-axios.defaults.baseURL = 'http://10.10.10.152:3000/';
+// axios.defaults.baseURL = 'http://10.10.10.152:3000/';
 
 axios.defaults.withCredentials = true;
 

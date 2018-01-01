@@ -45,10 +45,12 @@
               label="终端号">
             </el-table-column>
             <el-table-column :class="{'application-status':true}"
-                             prop="status"
                              label="申请状态"
-                             :formatter="registrationsStatus"
+
             >
+              <template slot-scope="scope">
+                {{scope.row.status | registrationsStatus}}
+              </template>
             </el-table-column>
             <el-table-column
               label="操作">
@@ -138,7 +140,7 @@
       //映射getters方法获取state状态
       ...mapGetters({
         meetings: 'meetings',
-        meetingsTotal:'meetingsTotal',
+        meetingsTotal: 'meetingsTotal',
         authMeetingsResult: 'authMeetingsResult'
       })
     },
@@ -178,7 +180,7 @@
       //点击搜索时执行的方法
       search(searching){
         this.pagination.page = 1;
-        this.searchAction(Object.assign(this.searching,this.pagination,{value: searching}));
+        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
@@ -247,8 +249,8 @@
         font-weight: bold
     & /deep/ .cell .el-button--default
       float: left
-      color:#3C8DBC
-      font-weight:bold
+      color: #3C8DBC
+      font-weight: bold
     .el-dialog__body
       img
         float: left
