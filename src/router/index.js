@@ -14,6 +14,8 @@ import PrisonTermImportIndex from '@/views/PrisonerDataManagement/Prison-Term'
 import PrisonerRewardPunishment from '@/views/PrisonerDataManagement/Prisoner-Reward-Punishment'
 import Terminals from '@/views/Terminals/Terminals'
 import Versions from '@/views/Versions/Versions'
+import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
+import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
 
 Vue.use(Router)
 
@@ -87,6 +89,16 @@ export default new Router({
       path:'/versions',
       name:'Versions',
       component:Versions
+    },
+    {
+      path:'/goods_management',
+      name:'GoodsManagement',
+      component:GoodsManagement,
+      children:[{
+        path:'/goods_management/:id',
+        name:'GoodsEditor',
+        component:GoodsEditor
+      }]
     },
     {
       path:'*',

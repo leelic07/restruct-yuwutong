@@ -8,7 +8,10 @@ export default {
   registrationsTotal: state => state.total,
 
   //获取家属注册授权结果
-  authRegistrationsResult: (state) => {
-    return state.authorizationResult;
-  }
+  authRegistrationsResult: state => state.authorizationResult,
+
+  //获取家属照片数组
+  uuidImages: state => state.uuidImages
+
 }
+

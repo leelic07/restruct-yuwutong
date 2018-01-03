@@ -48,8 +48,8 @@
               label="操作">
               <template slot-scope="scope">
                 <el-button v-if="scope.row.status == 'PENDING'"
-                  size="mini"
-                  @click="handleAuthorization(scope.$index, scope.row)">授权
+                           size="mini"
+                           @click="handleAuthorization(scope.$index, scope.row)">授权
                 </el-button>
               </template>
             </el-table-column>
@@ -59,7 +59,7 @@
     </el-col>
 
     <!--分页组件-->
-    <pagination :total="registrationsTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
+    <pagination :total="registrationsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息授权弹出框-->
@@ -73,19 +73,20 @@
                     show-icon
                     :closable="false">
           </el-alert>
+          <el-alert v-else
+                    title="授权失败"
+                    type="danger"
+                    :description="authRegistrationsResult.msg"
+                    show-icon
+                    :closable="false">
+          </el-alert>
         </el-col>
       </el-row>
 
       <el-row :gutter="0">
         <el-col :span="24">
-          <el-col :span="6" :offset="2">
-            <img src="../../assets/logo.png" alt="" @mouseover="amplifyImage($event)">
-          </el-col>
-          <el-col :span="6" :offset="1">
-            <img src="../../assets/logo.png" alt="" @mouseover="amplifyImage($event)">
-          </el-col>
-          <el-col :span="6" :offset="1">
-            <img src="../../assets/logo.png" alt="" @mouseover="amplifyImage($event)">
+          <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1">
+            <img :src='imgSrc' alt="" @mouseover="amplifyImage($event)">
           </el-col>
         </el-col>
       </el-row>
@@ -120,7 +121,7 @@
         total: 1000,//总共记录条数
         pagination: {
           limit: 10,//每页显示记录条数
-          page: 1//当前显示第几页
+          page: 0//当前显示第几页
         },
         searching: {
           c: 'registrations',//搜索的模块类型
@@ -135,10 +136,14 @@
         }
       }
     },
+    watch:{
+
+    },
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
         registrations: 'registrations',
+        uuidImages:'uuidImages',
         registrationsTotal: 'registrationsTotal',
         authRegistrationsResult: 'authRegistrationsResult'
       })
@@ -152,34 +157,37 @@
       //映射actions方法
       ...mapActions({
         getRegistrations: 'getRegistrations',//获取家属注册列表
+        getUuidImage:'getUuidImage',//获取对应家属得照片地址
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
         authorizeRegistrations: 'authorizeRegistrations'//家属注册信息授权
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.pagination.page = 1;
-        this.change({'limit': limit});
+        this.$set(this.pagination,'page',0);
+        this.$set(this.pagination,'limit',limit);
+        this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.change({'page': page});
+        this.$set(this.pagination,'page',page - 1);
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value != '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
+      change(){
+        if (this.searching.value !== '') {
+          this.searchAction(Object.assign(this.searching,this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
             delete this.pagination.value;
           }
-          this.getRegistrations(Object.assign(this.pagination, changeParams));
+          this.getRegistrations(this.pagination);
         }
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 1;
-        this.searchAction(Object.assign(this.searching,this.pagination,{value: searching}));
+        this.$set(this.pagination,'page',0);
+        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
@@ -191,6 +199,7 @@
         this.authorizeId = row.id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
+        this.getUuidImage(row.id);
         this.setAuthRegistrationsResult({});
       },
       //点击同意或者确定申请通过执行的方法
@@ -199,10 +208,10 @@
           this.agreeText = '确定申请通过？';
           this.disagreeText = '返回';
         } else if (agreeText == '提交') {
-          this.authorization.status = 'DENIED';
+          this.$set(this.authorization,'status','DENIED');
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         } else {
-          this.authorization.status = 'PASSED';
+          this.$set(this.authorization,'status','PASSED');
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         }
       },
@@ -218,7 +227,7 @@
       },
       //图片放大执行的方法
       amplifyImage(e){
-        console.log(e.target);
+//        console.log(e.target);
       }
     },
     mounted(){
@@ -243,13 +252,13 @@
     & /deep/ .el-table__body-wrapper
       overflow: visible
     & /deep/ .el-table__row
-      >td:nth-child(7)
+      > td:nth-child(7)
         color: orange
         font-weight: bold
     & /deep/ .cell .el-button--default
       float: left
-      color:#3C8DBC
-      font-weight:bold
+      color: #3C8DBC
+      font-weight: bold
     .el-dialog__body
       img
         float: left

@@ -8,17 +8,21 @@ import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import axios from 'axios'
 import filters from './filters'
+import VueJsonp from 'vue-jsonp'
 
 Vue.use(ElementUI);
 
+Vue.use(VueJsonp);
+
 Vue.config.productionTip = false;
 
-// axios.defaults.baseURL = 'https://www.fushuile.com/';
+axios.defaults.baseURL = 'https://www.fushuile.com/';
 
 // axios.defaults.baseURL = 'http://10.10.10.152:3000/';
 
-axios.defaults.baseURL = 'http://10.10.10.135:3000/';
+// axios.defaults.baseURL = 'http://10.10.10.135:3000/';
 
+// axios.defaults.baseURL = 'http://10.10.10.117:3000/';
 
 axios.defaults.withCredentials = true;
 

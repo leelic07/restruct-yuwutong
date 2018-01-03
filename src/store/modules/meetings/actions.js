@@ -6,7 +6,7 @@ import axios from 'axios'
 export default {
   //获取家属注册信息列表
   getMeetings:({commit},regs) => {
-    axios.get('../../../mock/meetings.json',{
+    axios.get('/meetings.json',{
       params:regs
     }).then(res => {
       commit('getMeetings',res.data);
@@ -18,7 +18,7 @@ export default {
   authorizeMeetings:({commit},regs) => {
     let id = regs.id;
     delete regs.id;
-    axios.get('../../../mock/authorizations-meetings.json',{
+    axios.get(`/meetings.json/${id}`,{
       params:regs
     }).then(res => {
       commit('authorizeMeetings',res.data);

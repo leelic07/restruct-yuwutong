@@ -7,14 +7,11 @@ export default {
   //搜索方法
   searchAction: ({commit}, regs) => {
     let mutationType = regs.c;//判断是哪个模块执行的搜索方法
-    let url = '../../../mock/search.json';
+    let url = 'search';
     if (regs.hasOwnProperty('draw') || regs.hasOwnProperty('length')) {
       Object.assign(regs, {'page': regs.draw, 'limit': regs.length});
       delete regs.draw;
       delete regs.length;
-    }
-    if (mutationType == 'versions') {
-      url = '../../../mock/versions.json';
     }
     axios.get(url, {
       params: regs

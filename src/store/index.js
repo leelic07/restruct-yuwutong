@@ -12,15 +12,16 @@ import versions from './modules/versions'
 import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
 import search from './modules/search'
+import goods from './modules/goods'
 import 'babel-polyfill'
 
-let actions = Object.assign(registrations.actions, meetings.actions, prisoners.actions, families.actions, terminals.actions, versions.actions, breadCrumb.actions, search.actions,accounts.actions);
+let actions = Object.assign(registrations.actions, meetings.actions, prisoners.actions, families.actions, terminals.actions, versions.actions, breadCrumb.actions, search.actions,accounts.actions,goods.actions);
 
-let mutations = Object.assign(registrations.mutations, meetings.mutations, prisoners.mutations, families.mutations, terminals.mutations, versions.mutations, breadCrumb.mutations, search.mutations,accounts.mutations);
+let mutations = Object.assign(registrations.mutations, meetings.mutations, prisoners.mutations, families.mutations, terminals.mutations, versions.mutations, breadCrumb.mutations, search.mutations,accounts.mutations,goods.mutations);
 
-let getters = Object.assign(registrations.getters, meetings.getters, prisoners.getters, families.getters, terminals.getters, versions.getters, breadCrumb.getters, search.getters,accounts.getters);
+let getters = Object.assign(registrations.getters, meetings.getters, prisoners.getters, families.getters, terminals.getters, versions.getters, breadCrumb.getters, search.getters,accounts.getters,goods.getters);
 
-let state = Object.assign(registrations.state, meetings.state, prisoners.state, families.state, terminals.state, versions.state, breadCrumb.state, search.state,accounts.state);
+let state = Object.assign(registrations.state, meetings.state, prisoners.state, families.state, terminals.state, versions.state, breadCrumb.state, search.state,accounts.state,goods.state);
 
 Vue.use(Vuex);
 
