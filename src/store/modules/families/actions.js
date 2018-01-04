@@ -6,8 +6,11 @@ import axios from 'axios'
 export default {
   //获取家属注册信息列表
   getFamilies:({commit},regs) => {
-    axios.get('../../../mock/families.json',{
-      params:regs
+    let start = (regs.draw - 1) * regs.length;
+    axios.get('/families.json',{
+      params:Object.assign(regs,{
+        'start':start
+      })
     }).then(res => {
       commit('getFamilies',res.data);
     }).catch(err =>{

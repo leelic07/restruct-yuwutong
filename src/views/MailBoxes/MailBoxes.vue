@@ -2,12 +2,12 @@
   <el-row id="mail-boxes" :gutter="0">
     <el-row :gutter="0" v-if="!isMailBoxesInspect">
       <el-col :span="24">
-        <el-button size="mini">刷新</el-button>
+        <el-button size="mini" @click="refreshMailBoxes()">刷新</el-button>
       </el-col>
 
       <el-col :span="24">
         <el-table
-          :data="tableData"
+          :data="mailBoxes[pagination.page - 1]"
           stripe
           style="width: 100%">
           <el-table-column
@@ -20,7 +20,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="content"
+            prop="contents"
             label="内容"
             width="180">
           </el-table-column>
@@ -29,14 +29,14 @@
             label="发件人">
           </el-table-column>
           <el-table-column
-            prop="post_date"
+            prop="created_at"
             label="发送日期">
           </el-table-column>
         </el-table>
       </el-col>
 
       <!--分页组件-->
-      <pagination :total="total" :pageSize="pagination.limit" :currentPage="pagination.page"
+      <pagination :total="mailBoxesTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
 
@@ -53,38 +53,14 @@
   export default {
     data() {
       return {
-        tableData: [{
-          id: 1,
-          title: '狱务通',
-          content: '审核模块',
-          poster: 'lcc',
-          post_date: '2017-12-21'
-        }, {
-          id: 2,
-          title: '狱务通',
-          content: '审核模块',
-          poster: 'lcc',
-          post_date: '2017-12-21'
-        }, {
-          id: 3,
-          title: '狱务通',
-          content: '审核模块',
-          poster: 'lcc',
-          post_date: '2017-12-21'
-        }, {
-          id: 4,
-          title: '狱务通',
-          content: '审核模块',
-          poster: 'lcc',
-          post_date: '2017-12-21'
-        }],
         breadcrumb: ['主页', '监狱长信箱'],//面包屑数组
         total: 1000,//总共记录条数
         pagination: {
           limit: 10,//每页显示记录条数
           page: 1//当前显示第几页
         },
-        isMailBoxesInspect: false//是否是查看邮箱信息页面
+        isMailBoxesInspect: false,//是否是查看邮箱信息页面
+        type:1
       }
     },
     watch: {
@@ -98,26 +74,42 @@
         }
       }
     },
+    computed:{
+      ...mapGetters({
+        mailBoxes:'mailBoxes',
+        mailBoxesTotal:'mailBoxesTotal'
+      })
+    },
     methods: {
       ...mapMutations({
         breadCrumb: 'breadCrumb'//设置家属注册页面的面包屑信息
       }),
+      ...mapActions({
+        getMailBoxes:'getMailBoxes'//获取监狱长邮箱列表信息
+      }),
       //当前页发生变化时执行的方法
       currentChange(page){
-        console.log(page);
+        this.$set(this.pagination,'page',page);
       },
       //点击邮件标题时执行的方法
       inspectMail(row){
         this.$router.push({
           path: `/mailboxes/${row.id}`
         })
+      },
+      //刷新监狱长邮箱信息
+      refreshMailBoxes(){
+        this.$set(this.pagination,'page',1);
+        this.getMailBoxes(this.type);
       }
     },
     components: {
       Pagination
     },
     mounted(){
-      this.breadCrumb(this.breadcrumb)
+      this.breadCrumb(this.breadcrumb);
+
+      this.getMailBoxes(this.type);
     }
   }
 </script>
@@ -125,6 +117,9 @@
 <style type="text/stylus" lang="stylus" scoped>
   #mail-boxes
     padding: 20px 1% 0 1%
+    & /deep/ .el-table__body-wrapper
+      overflow: visible
     & /deep/ .el-col-24 > .el-button--default
       float: right
+
 </style>

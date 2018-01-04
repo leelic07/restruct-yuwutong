@@ -114,7 +114,7 @@
       //映射getters方法获取state状态
       ...mapGetters({
         families: 'families',
-        familiesTotal:'familiesTotal'//总共记录条数
+        familiesTotal: 'familiesTotal'//总共记录条数
       })
     },
     methods: {
@@ -129,29 +129,31 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(length){
-        this.pagination.draw = 1;
-        this.change({'length': length});
+        this.$set(this.pagination, 'draw', 1);
+        this.$set(this.pagination, 'length', length);
+        this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(draw){
-        this.change({'draw': draw});
+        this.$set(this.pagination, 'draw', draw);
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value != '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
+      change(){
+        if (this.searching.value !== '') {
+          this.searchAction(Object.assign(this.searching,this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
             delete this.pagination.value;
           }
-          this.getFamilies(Object.assign(this.pagination, changeParams));
+          this.getFamilies(Object.assign(this.pagination));
         }
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.draw = 1;
-        this.searchAction(Object.assign(this.searching,this.pagination,{value: searching}));
+        this.$set(this.pagination,'draw',1);
+        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){

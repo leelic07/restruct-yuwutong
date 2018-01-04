@@ -76,7 +76,7 @@
           <el-col :span="12">
             <span>照片：</span>
             <!--<img :src="family.image_url" alt="">-->
-            <img src="../../assets/logo.png" alt="">
+            <img :src="family.image_url" alt="">
           </el-col>
         </el-col>
       </el-row>
@@ -192,6 +192,6 @@
       .el-dialog__body
         img
           float: left
-          width: 150px
-          height: 150px
+          width: 200px
+          height: 200px
 </style>

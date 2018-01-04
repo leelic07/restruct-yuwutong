@@ -6,16 +6,16 @@
           <p class="projectName">狱务公开管理平台</p>
         </el-col>
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-          <el-form-item label-width="0" prop="prisonCode">
-            <el-input type="text" v-model="ruleForm2.prisonCode" auto-complete="off" placeholder="监狱代码"></el-input>
+          <el-form-item label-width="0" prop="prison">
+            <el-input type="text" v-model="ruleForm2.prison" auto-complete="off" placeholder="监狱代码"></el-input>
           </el-form-item>
 
           <el-form-item label-width="0" prop="username">
             <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="用户名"></el-input>
           </el-form-item>
 
-          <el-form-item label-width="0" prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="密码"></el-input>
+          <el-form-item label-width="0" prop="password">
+            <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
 
           <el-form-item label-width="0" class="btn-box">
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
+
   export default {
     data() {
       var validatePass = (rule, value, callback) => {
@@ -58,19 +60,19 @@
 
       return {
         ruleForm2: {
-          pass: '',
+          password: '',
           username: '',
-          prisonCode:'',
+          prison:'',
           checked:false//是否选总记住密码
         },
         rules2: {
-          pass: [
+          password: [
             { validator: validatePass, trigger: 'blur' }
           ],
           username: [
             { validator: validateUsername, trigger: 'blur' }
           ],
-          prisonCode: [
+          prison: [
             { validator: validatePrisonCode, trigger: 'blur'}
           ]
         }
@@ -78,11 +80,14 @@
 
     },
     methods: {
+      ...mapActions({
+        login:'login'
+      }),
       //点击提交按钮执行的方法
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.login(this.ruleForm2);
           } else {
             console.log('error submit!!');
             return false;

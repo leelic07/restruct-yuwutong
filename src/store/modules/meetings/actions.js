@@ -18,7 +18,7 @@ export default {
   authorizeMeetings:({commit},regs) => {
     let id = regs.id;
     delete regs.id;
-    axios.get(`/meetings.json/${id}`,{
+    axios.get(`/meetings/${id}`,{
       params:regs
     }).then(res => {
       commit('authorizeMeetings',res.data);
