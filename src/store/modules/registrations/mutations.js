@@ -11,5 +11,12 @@ export default {
   },
   setAuthRegistrationsResult(state,authorizationResult) {
     state.authorizationResult = authorizationResult;
+  },
+  getUuidImages(state,images) {
+    let https = 'https://www.fushuile.com';
+    for(let item in images) {
+      images[item] = https + images[item];
+    }
+    state.uuidImages = images;
   }
 }

@@ -71,7 +71,7 @@
     </el-col>
 
     <!--分页组件-->
-    <pagination :total="meetingsTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
+    <pagination :total="meetingsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息授权弹出框-->
@@ -118,7 +118,7 @@
         tabNum: 'first',
         pagination: {
           limit: 10,//每页显示记录条数
-          page: 1//当前显示第几页
+          page: 0//当前显示第几页
         },
         searching: {
           c: 'meetings',//搜索的模块类型
@@ -158,28 +158,30 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.pagination.page = 1;
-        this.change({'limit': limit});
+        this.$set(this.pagination,'page',0);
+        this.$set(this.pagination,'limit',limit);
+        this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.change({'page': page});
+        this.$set(this.pagination,'page',page - 1);
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value != '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
+      change(){
+        if (this.searching.value !== '') {
+          this.searchAction(Object.assign(this.searching,this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
             delete this.pagination.value;
           }
-          this.getMeetings(Object.assign(this.pagination, changeParams));
+          this.getMeetings(Object.assign(this.pagination));
         }
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 1;
+        this.$set(this.pagination,'page',0);
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -193,10 +195,6 @@
         this.agreeText = '同意';
         this.disagreeText = '不同意';
         this.setAuthMeetingsResult({});
-      },
-      //申请状态过滤器
-      registrationsStatus(row, column){
-        return this._$filter.registrationsStatus(row.status)
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){

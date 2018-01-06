@@ -3,7 +3,7 @@
     <el-row :gutter="0" class="download-box">
       <el-col :span="22" :offset="2">
         <span>点击下载模板：</span>
-        <a href="#">刑期变动信息导入模板</a>
+        <a :href="prisonTermHref" >刑期变动信息导入模板</a>
       </el-col>
     </el-row>
 
@@ -29,11 +29,12 @@
 
 <script>
   import {mapMutations} from 'vuex'
-
+  const url = 'https://www.fushuile.com';
   export default {
     data() {
       return {
-        breadcrumb:['主页','刑期变动信息管理']
+        breadcrumb:['主页','刑期变动信息管理'],
+        prisonTermHref:url + '/upload/prison_template.xls'
       }
     },
     methods:{

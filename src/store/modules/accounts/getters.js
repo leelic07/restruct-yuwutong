@@ -5,5 +5,7 @@ export default {
   //获取囚犯账户列表信息
   accounts:state => state.accounts,
 
-  accountsTotal:state => state.total
+  accountsTotal:state => state.total,
+
+  accountDetail:state => state.accountDetail
 }

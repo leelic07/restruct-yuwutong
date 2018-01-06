@@ -1,15 +1,12 @@
 <template>
   <div id="login">
     <el-row :gutter="0" class="loginBackground">
-      <el-col :span="6" :offset="9">
+      <el-col :span="7" :offset="8">
         <el-col :span="24">
-          <p class="projectName">狱务公开管理平台</p>
+          <p class="projectName">修改密码</p>
         </el-col>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-          <el-form-item label-width="0" prop="prison">
-            <el-input type="text" v-model="ruleForm2.prison" auto-complete="off" placeholder="监狱代码"></el-input>
-          </el-form-item>
-
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                 class="demo-ruleForm">
           <el-form-item label-width="0" prop="username">
             <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="用户名"></el-input>
           </el-form-item>
@@ -18,10 +15,14 @@
             <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
 
+          <el-form-item label-width="0" prop="passwordReview">
+            <el-input type="password" v-model="ruleForm2.passwordReview" auto-complete="off"
+                      placeholder="重新输入密码"></el-input>
+          </el-form-item>
+
           <el-form-item label-width="0" class="btn-box">
             <!-- `checked` 为 true 或 false -->
-            <el-checkbox v-model="ruleForm2.checked">记住密码</el-checkbox>
-            <el-button type="" @click="submitForm('ruleForm2')" >提交</el-button>
+            <el-button type="" @click="submitForm('ruleForm2')">提交</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapMutations} from 'vuex'
 
   export default {
     data() {
@@ -50,9 +51,11 @@
         }
       };
 
-      var validatePrisonCode = (rule,value,callback) => {
+      var validatePasswordReview = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入监狱代码'));
+        } else if (value !== this.ruleForm2.password) {
+          callback(new Error('输入密码不一致'));
         } else {
           callback();
         }
@@ -62,38 +65,43 @@
         ruleForm2: {
           password: '',
           username: '',
-          prison:'',
-          checked:false//是否选总记住密码
+          passwordReview: '',
         },
         rules2: {
           password: [
-            { validator: validatePass, trigger: 'blur' }
+            {validator: validatePass, trigger: 'blur'}
           ],
           username: [
-            { validator: validateUsername, trigger: 'blur' }
+            {validator: validateUsername, trigger: 'blur'}
           ],
-          prison: [
-            { validator: validatePrisonCode, trigger: 'blur'}
+          passwordReview: [
+            {validator: validatePasswordReview, trigger: 'blur'}
           ]
-        }
+        },
+        breadcrumb: ['主页', '修改用户密码']
       };
 
     },
     methods: {
       ...mapActions({
-        login:'login'
+      }),
+      ...mapMutations({
+        breadCrumb: 'breadCrumb'
       }),
       //点击提交按钮执行的方法
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.login(this.ruleForm2);
+            alert('submit!');
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       }
+    },
+    mounted(){
+      this.breadCrumb(this.breadcrumb);
     }
   }
 </script>
@@ -102,25 +110,24 @@
   white = #fff
   #login
     .loginBackground
-      background:#4F98C2
-      margin-top:10%
+      background: #4F98C2
+      margin-top: 5%
     .projectName
       font-size: 35px
-      color:white
-      margin-top:20px
-      margin-bottom:20px
+      color: white
+      margin: 20px 0 20px 24%;
     .btn-box
       & /deep/ .el-button
-        background:#186C9C
-        color:white
-        float:right
-        border:0
-        border-radius:0
+        background: #186C9C
+        color: white
+        float: right
+        border: 0
+        border-radius: 0
         width: 86px
-        height:34px
-        vertical-align:middle
+        height: 34px
+        vertical-align: middle
       & /deep/ .el-checkbox
-        float:left
+        float: left
       & /deep/ .el-checkbox__label
-        color:white
+        color: white
 </style>

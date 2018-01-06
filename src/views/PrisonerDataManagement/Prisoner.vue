@@ -23,8 +23,8 @@
         <!--<el-button type="primary">导入文件</el-button>-->
       <!--</el-col>-->
     <!--</el-row>-->
-    <e-row :gutter="0">
-      <el-col :span="5" :offset="1">
+    <el-row :gutter="0">
+      <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
@@ -38,20 +38,22 @@
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
       </el-col>
-    </e-row>
+    </el-row>
 
   </el-row>
 </template>
 
 <script>
   import {mapMutations} from 'vuex'
+  const url = 'https://www.fushuile.com';
 
   export default {
     data() {
       return {
         breadcrumb:['主页','囚犯信息管理'],
 //        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-        fileList:[]
+        fileList:[],
+        prisonerHref:url + '/upload/prison_template.xls'
       }
     },
     methods:{

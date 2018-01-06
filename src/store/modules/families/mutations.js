@@ -3,8 +3,19 @@
  */
 export default {
   getFamilies(state,familyList) {
-    let families = familyList.data.families_data;
-    let prisoners = familyList.data.prisoners_data;
+    let families = [];
+    let prisoners = [];
+    let total = 0;
+    if(familyList.data !== undefined) {
+      families = familyList.data.families_data;
+      prisoners = familyList.data.prisoners_data;
+      total = familyList.recordsTotal;
+    }else {
+      families = familyList.families;
+      prisoners = familyList.prisoners;
+      total = familyList.total;
+    }
+
     // console.log(families,prisoners);
     //将对应家属的罪犯信息加入到家属信息列表中
     for(let family of families) {
@@ -15,6 +26,6 @@ export default {
       }
     }
     state.familyList = families;
-    state.total = familyList.recordsTotal;
+    state.total = total;
   }
 }

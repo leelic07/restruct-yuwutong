@@ -25,10 +25,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="text-center">
-                  <a href="#" class="pull-left">
+                  <router-link to="/super_user/modify_index" class="pull-left">
                     <i class="fa fa-pencil"></i>
                     修改用户密码
-                  </a>
+                  </router-link>
                 </div>
               </li>
             </ul>

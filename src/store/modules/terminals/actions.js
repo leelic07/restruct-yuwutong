@@ -6,11 +6,12 @@ import axios from 'axios'
 export default {
   //获取家属注册信息列表
   getTerminals: ({commit}, regs) => {
-    axios.get('../../mock/terminals.json', {
-      params: regs,
-      // headers:{'Access-Control-Allow-Origin':'*'}
+    let start = (regs.draw - 1) * regs.length;
+    axios.get('/terminals.json', {
+      params: Object.assign(regs,{
+        'start':start
+      }),
     }).then(res => {
-      // console.log(res);
       commit('getTerminals', res.data);
     }).catch(err => {
       console.log(err);

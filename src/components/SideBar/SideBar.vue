@@ -14,7 +14,7 @@
       </div>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
+      <ul class="sidebar-menu" v-if="examination">
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/registrations">
@@ -73,6 +73,35 @@
           </ul>
         </li>
       </ul>
+
+      <!--商品侧边栏-->
+      <ul class="sidebar-menu" v-if="goods">
+        <li class="header">导航</li>
+        <li class="treeview">
+          <router-link to="/goods_management">
+            <i class="fa fa-folder"></i>
+            <span>商品管理</span>
+          </router-link>
+        </li>
+        <li class="treeview">
+          <router-link to="/meetings">
+            <i class="fa fa-folder"></i>
+            <span>家属订单</span>
+          </router-link>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-folder"></i>
+            <span>订单管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link></li>
+          </ul>
+        </li>
+      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -82,7 +111,8 @@
   export default {
     data() {
       return {
-
+        examination:true,
+        goods:false
       }
     }
   }

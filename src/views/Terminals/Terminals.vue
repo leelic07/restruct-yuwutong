@@ -75,7 +75,7 @@
           start:0
         },
         searching: {
-          c: 'families',//搜索的模块类型
+          c: 'terminals',//搜索的模块类型
           value: ''//搜索的条件
         },
         dialogVisible: false,//弹出框的显示和隐藏
@@ -107,7 +107,7 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(length){
-        this.pagination.draw = 1;
+        this.$set(this.pagination,'draw',1);
         this.change({'length': length});
       },
       //当前页发生变化时执行的方法
@@ -128,7 +128,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.draw = 1;
+        this.$set(this.pagination,'draw',1);
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
