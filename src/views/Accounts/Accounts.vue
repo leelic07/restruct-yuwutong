@@ -38,7 +38,7 @@
               label="对应罪犯">
               <template slot-scope="scope">
                 <el-button type="text" size="small"
-                           @click="showAccountsDetail(scope.row)">
+                           @click="showAccountsDetail(scope.row.account_id,scope.row.name)">
                   查看账户记录
                 </el-button>
               </template>
@@ -49,15 +49,15 @@
     </el-col>
 
     <!--分页组件-->
-    <pagination :total="accountsTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
+    <pagination :total="accountsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息弹出框-->
     <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
 
-    <el-dialog title="服刑人员: 张三的账户详情" :visible.sync="dialogTableVisible">
+    <el-dialog :title="accountName" :visible.sync="dialogTableVisible">
       <el-table
-        :data="account"
+        :data="accountDetail"
         border
         stripe
         style="width: 100%">
@@ -90,9 +90,8 @@
         breadcrumb: ['主页', '囚犯账户管理'],//面包屑数组
         tabNum: 'first',
         pagination: {
-          length: 10,//每页显示记录条数
-          draw: 1,//当前显示第几页
-          start:0//从第几条记录开始
+          limit: 10,//每页显示记录条数
+          page: 0,//当前显示第几页
         },
         searching: {
           c: 'families',//搜索的模块类型
@@ -106,70 +105,71 @@
           status: ''//授权状态
         },
         dialogTableVisible: false,
-        account: [{
-          name: '张三',
-          account_money: 100,
-          account_reason: '买吃的',
-          account_time: '2017-12-26'
-        }]
+        accountName:''//查看账户详情对应账户名称
       }
     },
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
         accounts: 'accounts',
-        accountsTotal:'accountsTotal'//总共记录条数
+        accountsTotal: 'accountsTotal',//总共记录条数
+        accountDetail:'accountDetail'//账户详情信息
       })
     },
     methods: {
       //映射mutations方法
       ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置家属注册页面的面包屑信息
+        breadCrumb: 'breadCrumb',//设置囚犯账户页面的面包屑信息
       }),
       //映射actions方法
       ...mapActions({
-        getAccounts: 'getAccounts',//获取家属注册列表
-        searchAction: 'searchAction',//获取带搜索条件的家属注册列表
+        getAccounts: 'getAccounts',//获取囚犯账户列表
+        searchAction: 'searchAction',//获取带搜索条件的囚犯账户列表
+        getAccountDetail:'getAccountDetail'//获取囚犯账户详情信息
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(length){
-        this.pagination.draw = 1;
-        this.change({'length': length});
+      sizeChange(limit){
+        this.$set(this.pagination, 'page', 0);
+        this.$set(this.pagination, 'limit', limit);
+        this.change();
       },
       //当前页发生变化时执行的方法
-      currentChange(draw){
-        this.change({'draw': draw});
+      currentChange(page){
+        this.$set(this.pagination, 'page', page - 1);
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value != '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
+      change(){
+        if (this.searching.value !== '') {
+          this.searchAction(Object.assign(this.searching, this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
             delete this.pagination.value;
           }
-          this.getFamilies(Object.assign(this.pagination, changeParams));
+          this.getAccounts(Object.assign(this.pagination));
         }
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.draw = 1;
+        this.$set(this.pagination, 'page', 0);
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
         this.searching.value = searching;
       },
-      //显示家属详细信息
-      showAccountsDetail(row){
+      //显示囚犯账户详情信息
+      showAccountsDetail(account_id,accountName){
         this.dialogTableVisible = true;
+        this.accountName = `服刑人员：${accountName} 的账户详情`;
+        this.getAccountDetail(account_id);
       }
     },
     mounted(){
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
-      //获取家属注册信息列表
+      //获取囚犯账户信息列表
       this.getAccounts(this.pagination);
     },
     components: {

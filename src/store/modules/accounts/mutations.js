@@ -5,5 +5,9 @@ export default {
   getAccounts(state,accountsList) {
     state.accounts = accountsList.data;
     state.total = accountsList.total;
+  },
+
+  getAccountDetail(state,accountDetail){
+    state.accountDetail = accountDetail.details;
   }
 }

@@ -16,6 +16,7 @@ import Terminals from '@/views/Terminals/Terminals'
 import Versions from '@/views/Versions/Versions'
 import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
 import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
+import PasswordModification from '@/views/PasswordModification/Password-Modification'
 
 Vue.use(Router)
 
@@ -99,6 +100,11 @@ export default new Router({
         name:'GoodsEditor',
         component:GoodsEditor
       }]
+    },
+    {
+      path:'/super_user/modify_index',
+      name:'PasswordModification',
+      component:PasswordModification
     },
     {
       path:'*',

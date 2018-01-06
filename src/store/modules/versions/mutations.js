@@ -10,9 +10,9 @@ export default {
     for(let version of versionList.versions) {
       version.version_number = version.version_number.toString();
       Object.assign(version,{'isCheck':true},{'buttonText':'修改'});
-      if(version.type_id == 1) {
+      if(version.type_id === 2) {
         prisonVersions.push(version);
-      }else if(version.type_id == 2) {
+      }else if(version.type_id === 1) {
         familyVersions.push(version);
       }
     }

@@ -26,7 +26,7 @@ axios.defaults.baseURL = 'https://www.fushuile.com/';
 
 axios.defaults.withCredentials = true;
 
-Vue.prototype.axios = axios;
+// Vue.prototype.axios = axios;
 
 //声明过滤器
 Object.keys(filters).forEach((key)=>Vue.filter(key,filters[key]));
