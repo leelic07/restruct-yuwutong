@@ -2,17 +2,13 @@
  * Created by Administrator on 2018/1/1 0001.
  */
 import axios from 'axios'
+import http from '../../../service'
 
 export default {
   //获取家属注册信息列表
   getRegistrations: ({commit}, regs) => {
-    let url = '/registrations.json';
-    axios.get(url, {
-      params: regs,
-    }).then(res => {
-      commit('getRegistrations', res.data);
-    }).catch(err => {
-      console.log(err);
+    http.getRegistrations(regs).then(res => {
+      commit('getRegistrations',res);
     })
   },
 
@@ -20,14 +16,8 @@ export default {
   authorizeRegistrations: ({commit}, regs) => {
     let id = regs.id;
     delete regs.id;
-    axios({
-      url:`/registrations/${id}`,
-      method:'patch',
-      data:regs,
-    }).then(res => {
-      commit('authorizeRegistrations', res.data);
-    }).catch(err => {
-      console.log(err);
+    http.authorizeRegistrations(regs,id).then(res => {
+      commit('authorizeRegistrations',res);
     })
   },
 

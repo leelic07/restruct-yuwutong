@@ -85,7 +85,7 @@
 
       <el-row :gutter="0">
         <el-col :span="24">
-          <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1">
+          <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1" :key="$index">
             <img :src='imgSrc' alt="" @mouseover="amplifyImage($event)">
           </el-col>
         </el-col>

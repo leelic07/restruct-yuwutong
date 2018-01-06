@@ -16,7 +16,11 @@ Vue.use(VueJsonp);
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = 'https://www.fushuile.com/';
+const baseUrl = 'https://www.fushuile.com/';
+
+Vue.prototype._$baseUrl = baseUrl;
+
+axios.defaults.baseURL = baseUrl;
 
 // axios.defaults.baseURL = 'http://10.10.10.152:3000/';
 

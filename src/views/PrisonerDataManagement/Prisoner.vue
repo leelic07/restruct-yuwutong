@@ -3,7 +3,7 @@
     <el-row :gutter="0" class="download-box">
       <el-col :span="22" :offset="2">
         <span>点击下载模板：</span>
-        <a href="#">罪犯信息导入模板</a>
+        <a :href="prisonerHref">罪犯信息导入模板</a>
       </el-col>
     </el-row>
 
@@ -45,7 +45,6 @@
 
 <script>
   import {mapMutations} from 'vuex'
-  const url = 'https://www.fushuile.com';
 
   export default {
     data() {
@@ -53,7 +52,7 @@
         breadcrumb:['主页','囚犯信息管理'],
 //        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         fileList:[],
-        prisonerHref:url + '/upload/prison_template.xls'
+        prisonerHref:this._$baseUrl + '/upload/prison_template.xls'
       }
     },
     methods:{
