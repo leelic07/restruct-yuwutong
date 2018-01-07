@@ -1,29 +1,28 @@
 /**
  * Created by Administrator on 2018/1/1 0001.
  */
-import axios from 'axios'
+import http from '../../../service'
 
 export default {
-  //获取家属注册信息列表
-  getMeetings:({commit},regs) => {
-    axios.get('/meetings.json',{
-      params:regs
-    }).then(res => {
-      commit('getMeetings',res.data);
-    }).catch(err =>{
+  //获取家属会见信息列表
+  getMeetings: ({commit}, regs) => {
+    http.getMeetings(regs).then(res => {
+      commit('getMeetings', res);
+    }).catch(err => {
       console.log(err);
     })
   },
-  //授权家属注册信息列表
-  authorizeMeetings:({commit},regs) => {
-    let id = regs.id;
+
+  //授权家属会见信息列表
+  authorizeMeetings: ({commit}, regs) => {
+    let id = regs.id;//获取要授权的家属会见id
     delete regs.id;
-    axios.get(`/meetings/${id}`,{
-      params:regs
-    }).then(res => {
-      commit('authorizeMeetings',res.data);
+
+    http.authorizeMeetings(regs,id).then(res => {
+      commit('authorizeMeetings', res);
     }).catch(err => {
       console.log(err);
     })
   }
+
 }

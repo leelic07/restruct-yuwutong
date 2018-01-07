@@ -5,6 +5,8 @@ import base from '../config/base'
 import axios from 'axios';
 import {Message} from 'element-ui';
 
+let serviceConfig = base.serviceConfig;
+
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
@@ -50,8 +52,9 @@ axios.interceptors.response.use(
  */
 
 export function get(url, params = {}) {
+  console.log(serviceConfig);
   return new Promise((resolve, reject) => {
-    axios(Object.assign(base,{
+    axios(Object.assign(serviceConfig,{
       url:url,
       method:'get',
       params: params
@@ -79,7 +82,7 @@ export function post(url, data = {}) {
     params.append(key,data[key]);
   }
   return new Promise((resolve, reject) => {
-    axios(Object.assign(base,{
+    axios(Object.assign(serviceConfig,{
       url:url,
       method:'post',
       data:params,
@@ -104,7 +107,7 @@ export function post(url, data = {}) {
 
 export function patch(url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios(Object.assign(base,{
+    axios(Object.assign(serviceConfig,{
       url:url,
       method:'patch',
       data:data
@@ -126,7 +129,7 @@ export function patch(url, data = {}) {
 
 export function put(url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios(Object.assign(base,{
+    axios(Object.assign(serviceConfig,{
       url:url,
       method:'put',
       data:data

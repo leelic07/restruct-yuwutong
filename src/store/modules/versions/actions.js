@@ -12,6 +12,7 @@ export default {
       is_force:regs.is_force
     }
 
+    //更新狱务通版本信息
     http.updateVersion(params).then(res => {
       commit('updateVersion',res);
     })

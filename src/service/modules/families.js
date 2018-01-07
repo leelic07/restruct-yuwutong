@@ -4,12 +4,14 @@
 import * as service from '../base/service'
 
 export default {
-  //更新狱务通版本信息
-  updateVersion(params){
+  //获取家属注册信息列表
+  getFamilies(params){
     return new Promise((resolve,reject) => {
-      service.post('/versions/update',params).then(res => {
+      service.get('/families.json',params).then(res => {
         resolve(res);
+      }).catch(err => {
+        reject(err);
       })
     })
-  },
+  }
 }

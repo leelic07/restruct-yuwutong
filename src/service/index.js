@@ -3,9 +3,12 @@
  */
 import registrations from './modules/registrations'
 import versions from './modules/versions'
-
+import families from './modules/families'
+import meetings from './modules/meetings'
 
 export default Object.assign(
   registrations,
-  versions
+  versions,
+  families,
+  meetings
 )
