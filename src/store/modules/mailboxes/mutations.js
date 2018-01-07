@@ -14,7 +14,7 @@ export default {
       }
     }
 
-    //将邮箱信息拆分成长度为10得数组
+    //将邮箱信息拆分成长度为10的数组
     for (let key = 0; key < mailBoxesList.mailBoxes.length; key += 10) {
       if (key + 9 > mailBoxesList.mailBoxes.length) {
         mailBoxes.push(mailBoxesList.mailBoxes.slice(key, mailBoxesList.mailBoxes.length));

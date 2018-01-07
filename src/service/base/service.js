@@ -12,9 +12,9 @@ axios.interceptors.request.use(
   config => {
     // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
     // config.data = JSON.stringify(config.data);
-    config.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    // config.headers = {
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // }
     // if(token){
     //   config.params = {'token':token}
     // }
@@ -35,6 +35,16 @@ axios.interceptors.response.use(
     //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
     //   })
     // }
+    if (response.data.code) {
+      switch (response.data.code) {
+        case 404:
+          Message('未找到相应数据');
+          break;
+        case 200:
+          break;
+        default:
+      }
+    }
     return response;
   },
   error => {
@@ -52,11 +62,10 @@ axios.interceptors.response.use(
  */
 
 export function get(url, params = {}) {
-  console.log(serviceConfig);
   return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig,{
-      url:url,
-      method:'get',
+    axios(Object.assign(serviceConfig, {
+      url: url,
+      method: 'get',
       params: params
     }))
       .then(response => {
@@ -78,17 +87,14 @@ export function get(url, params = {}) {
 
 export function post(url, data = {}) {
   let params = new URLSearchParams();
-  for(let key in data) {
-    params.append(key,data[key]);
+  for (let key in data) {
+    params.append(key, data[key]);
   }
   return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig,{
-      url:url,
-      method:'post',
-      data:params,
-      headers:{
-        'Content-Type':'application/x-www-form-urlencoded'
-      }
+    axios(Object.assign(serviceConfig, {
+      url: url,
+      method: 'post',
+      data: params
     }))
       .then(response => {
         resolve(response.data);
@@ -107,10 +113,10 @@ export function post(url, data = {}) {
 
 export function patch(url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig,{
-      url:url,
-      method:'patch',
-      data:data
+    axios(Object.assign(serviceConfig, {
+      url: url,
+      method: 'patch',
+      data: data
     }))
       .then(response => {
         resolve(response.data);
@@ -129,15 +135,36 @@ export function patch(url, data = {}) {
 
 export function put(url, data = {}) {
   return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig,{
-      url:url,
-      method:'put',
-      data:data
+    axios(Object.assign(serviceConfig, {
+      url: url,
+      method: 'put',
+      data: data
     }))
       .then(response => {
         resolve(response.data);
       }, err => {
         reject(err)
       })
+  })
+}
+
+/**
+ * 封装all请求
+ * @param url
+ * @param params
+ * @returns {Promise}
+ */
+
+export function all(urls = []) {
+  return new Promise((resolve, reject) => {
+    axios.all(urls.map(url => axios(Object.assign(serviceConfig, {
+      url: url,
+      method: 'get'
+    })))).then(axios.spread((...response) => {
+      // resolve(response);
+      resolve(response.map(res => res.data));
+    })).catch(error => {
+      reject(error);
+    })
   })
 }

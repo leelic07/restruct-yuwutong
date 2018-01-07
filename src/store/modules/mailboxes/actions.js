@@ -1,25 +1,22 @@
 /**
  * Created by Administrator on 2018/1/4/004.
  */
-import axios from 'axios'
+import http from '../../../service'
 
 export default {
-
-  getMailBoxes({commit}, regs){
-    let urls = [`/mail_boxes.json?type=${regs}`, '/registrations.json', '/meetings.json'];
-
-    let requests = urls.map(url => axios.get(url));
-
-    axios.all(requests).then(axios.spread((mail, reg, meet) => {
+  //获取监狱长邮箱信息
+  getMailBoxes({commit}, type){
+    http.getMailBoxes(type).then(res => {
       let mailBoxesList = new Object();
       Object.assign(mailBoxesList, {
-        mailBoxes: mail.data,
-        registrations: reg.data.registrations,
-        meetings: meet.data
+        mailBoxes: res[0],
+        registrations: res[1].registrations,
+        meetings: res[2]
       });
       commit('getMailBoxes', mailBoxesList);
-    })).catch(err => {
+    }).catch(err => {
       console.log(err);
     })
   }
+
 }

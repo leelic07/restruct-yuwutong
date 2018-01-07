@@ -53,7 +53,6 @@
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息弹出框-->
-    <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
 
     <el-dialog :title="accountName" :visible.sync="dialogTableVisible">
       <el-table

@@ -17,10 +17,13 @@ export default {
     }],
     //请求发送之后对入参进行处理
     transformResponse: [(data) => {
-      return Qs.parse(data);
+      return data;
     }],
     //设置请求头
-    headers: {'X-Requested-With': 'XMLHttpRequest'},
+    headers: {
+      // 'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     //post 请求参数
     data: {},
     //get 请求参数
