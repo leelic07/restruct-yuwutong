@@ -17,7 +17,7 @@
               <el-table-column
                 label="商品图片">
                 <template slot-scope="scope">
-                  <img :src="scope.row.avatar_url" alt="">
+                  <img :src="_$baseUrl + scope.row.avatar_url" alt="">
                 </template>
               </el-table-column>
               <el-table-column
@@ -27,7 +27,14 @@
               <el-table-column
                 label="商品简介">
                 <template slot-scope="scope">
-                  <el-button size="mini" plain @click="showGoodsIntroduction(scope.row.description)">简介详情</el-button>
+                  <el-popover
+                    placement="top"
+                    title="简介详情"
+                    width="200"
+                    trigger="click"
+                    :content="scope.row.description">
+                    <el-button size="mini" plain slot="reference">简介详情</el-button>
+                  </el-popover>
                 </template>
               </el-table-column>
               <el-table-column
@@ -78,24 +85,8 @@
       </el-col>
 
       <!--分页组件-->
-      <pagination :total="goodsTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
+      <pagination :total="goodsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                   @currentChange="currentChange"></pagination>
-
-      <!--家属信息授权弹出框-->
-      <el-dialog title="简介详情" :visible.sync="dialogVisible">
-        <el-row :gutter="0">
-          <el-col :span="24">
-            <p>{{goodsDescription}}</p>
-          </el-col>
-        </el-row>
-
-        <el-row :gutter="0">
-          <el-col :span="20" :offset="2">
-            <el-button type="danger">关闭</el-button>
-          </el-col>
-        </el-row>
-      </el-dialog>
-
     </el-row>
 
     <!--子路由-->
@@ -112,26 +103,25 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '商品管理'],//面包屑数组
+        breadcrumb: ['主页', '商品信息管理'],//面包屑数组
         tabNum: 'first',
         total: 1000,//总共记录条数
         pagination: {
           limit: 10,//每页显示记录条数
-          page: 1//当前显示第几页
+          page: 0//当前显示第几页
         },
         searching: {
           c: 'goods',//搜索的模块类型
           value: ''//搜索的条件
         },
-        dialogVisible: false,//弹出框的显示和隐藏
         isGoodsEditor: false,//是否是商品信息列表页面
-        goodsDescription:''//商品简介信息
+        goodsDescription: ''//商品简介信息
       }
     },
-    watch:{
+    watch: {
       //从商品管理页面跳转到商品编辑页面使商品列表显示
       $route(to, from) {
-        if (to.path == '/goods_management') {
+        if (to.path === '/goods_management') {
           this.isGoodsEditor = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
         } else {
@@ -142,54 +132,43 @@
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        goods: 'goods',
-        goodsTotal: 'goodsTotal',
+        goods: 'goods',//获取商品列表信息
+        goodsTotal: 'goodsTotal',//获取商品列表的记录数
       })
     },
     methods: {
       //映射mutations方法
       ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置家属注册页面的面包屑信息
+        breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
       }),
       //映射actions方法
       ...mapActions({
-        getGoods: 'getGoods',//获取家属注册列表
-        searchAction: 'searchAction',//获取带搜索条件的家属注册列表
+        getGoods: 'getGoods',//获取商品列表
+        searchGoods: 'searchGoods'//获取带搜索条件的商品列表
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.pagination.page = 1;
-        this.change({'limit': limit});
+        this.$set(this.pagination, 'page', 0);
+        this.$set(this.pagination, 'limit', limit);
+        this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.change({'page': page});
+        this.$set(this.pagination, 'page', page - 1);
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value != '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getGoods(Object.assign(this.pagination, changeParams));
-        }
+      change(){
+        this.searchGoods(Object.assign(this.searching, this.pagination));
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 1;
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.$set(this.pagination, 'page', 0);
+        this.searchGoods(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
         this.searching.value = searching;
-      },
-      //点击简介详情实行的方法
-      showGoodsIntroduction(description){
-        this.goodsDescription = description;
-        this.dialogVisible = true;
       },
       //点击删除时执行的方法
       handleDelete(index, row){
@@ -198,13 +177,16 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message('删除成功')
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
         })
       },
       //点击编辑时执行的方法
       handleEdit(index, row){
         this.$router.push({
-          path:`/goods_management/${row.id}`
+          path: `/goods_management/${row.id}`
         });
       }
     },
@@ -230,15 +212,24 @@
     & /deep/ .el-table__body-wrapper
       overflow: visible
     & /deep/ .el-table__row
-      .cell
-        .el-button
-          /*float: left*/
-          &:nth-child(2)
-            margin-left: 0
-            margin-top: 15px
-    /*.el-dialog__body*/
-      /*.el-col-24*/
-        /*margin-top: 5px*/
-        /*.el-button*/
-          /*width: 100%*/
+      td
+        &:first-child
+          .cell
+            img
+              width: 80px
+              height: 80px
+        &:last-child
+          .cell
+            .el-button
+              &:nth-child(2)
+                margin-left: 0
+                margin-top: 15px
+
+    .el-dialog__body
+      > .el-row
+        &:nth-child(2)
+          .el-col-24
+            margin-top: 25px
+          .el-button
+            width: 100%
 </style>

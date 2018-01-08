@@ -67,9 +67,16 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link></li>
-            <li><router-link to="/prison_term/import_index"><i class="fa fa-circle-o"></i>刑期变动数据导入</router-link></li>
-            <li><router-link to="/prison_reward_punishment/import_index"><i class="fa fa-circle-o"></i>罪犯奖惩数据导入</router-link></li>
+            <li>
+              <router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+            </li>
+            <li>
+              <router-link to="/prison_term/import_index"><i class="fa fa-circle-o"></i>刑期变动数据导入</router-link>
+            </li>
+            <li>
+              <router-link to="/prison_reward_punishment/import_index"><i class="fa fa-circle-o"></i>罪犯奖惩数据导入
+              </router-link>
+            </li>
           </ul>
         </li>
       </ul>
@@ -98,7 +105,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link></li>
+            <li>
+              <router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+            </li>
           </ul>
         </li>
       </ul>
@@ -111,8 +120,8 @@
   export default {
     data() {
       return {
-        examination:true,
-        goods:false
+        examination: false,
+        goods: true
       }
     }
   }
@@ -122,7 +131,7 @@
   #main-sidebar
 
     &.main-sidebar
-      bottom:0
+      bottom: 0
       a
         font-size: 14px
 </style>

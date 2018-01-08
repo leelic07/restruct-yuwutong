@@ -9,7 +9,7 @@ export default {
     for (let mail of mailBoxesList.mailBoxes) {
       for (let reg of mailBoxesList.registrations) {
         if (mail.family_id === reg.id) {
-          Object.assign(mail, {poster: reg.name,relationship:reg.relationship});
+          Object.assign(mail, {poster: reg.name, relationship: reg.relationship});
         }
       }
     }
@@ -28,17 +28,17 @@ export default {
   },
 
   //获取邮件详情信息
-  getMailDetail(state,id){
+  getMailDetail(state, id){
     let mailBoxes = new Array();
 
     //将mailBoxes二维数组拼接成一维数组
-    for(let mail of state.mailBoxes) {
+    for (let mail of state.mailBoxes) {
       mailBoxes = mailBoxes.concat(mail);
     }
 
     //找出对应id得监狱长邮箱详情信息
-    for(let mailDetail of mailBoxes) {
-      if(mailDetail.id === Number(id)) {
+    for (let mailDetail of mailBoxes) {
+      if (mailDetail.id === Number(id)) {
         state.mailDetail = mailDetail;
         break;
       }

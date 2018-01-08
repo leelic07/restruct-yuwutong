@@ -1,7 +1,6 @@
 /**
  * Created by Administrator on 2018/1/1 0001.
  */
-import axios from 'axios'
 import http from '../../../service'
 
 export default {

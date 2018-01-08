@@ -46,7 +46,7 @@
     </el-col>
 
     <!--分页组件-->
-    <pagination :total="prisonersTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
+    <pagination :total="prisonersTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息弹出框-->

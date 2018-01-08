@@ -27,7 +27,7 @@ export default {
   //获取家属注册信息的照片url
   getUuidImage({commit}, id){
     http.getUuidImage(id).then(res => {
-      commit('getUuidImages', res.data);
+      commit('getUuidImages', res);
     }).catch(err => {
       console.log(err);
     })

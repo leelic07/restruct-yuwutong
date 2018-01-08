@@ -13,7 +13,7 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
-const baseUrl = 'https://www.fushuile.com/';
+const baseUrl = 'https://www.fushuile.com';
 
 Vue.prototype._$baseUrl = baseUrl;
 

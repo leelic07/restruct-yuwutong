@@ -8,6 +8,9 @@ import meetings from './modules/meetings'
 import accounts from './modules/accounts'
 import mailboxes from './modules/mailboxes'
 import prisoners from './modules/prisoners'
+import terminals from './modules/terminals'
+import search from './modules/search'
+import goods from './modules/goods'
 
 export default Object.assign(
   registrations,
@@ -16,5 +19,8 @@ export default Object.assign(
   meetings,
   accounts,
   mailboxes,
-  prisoners
+  prisoners,
+  terminals,
+  search,
+  goods
 )

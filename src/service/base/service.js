@@ -38,7 +38,7 @@ axios.interceptors.response.use(
     if (response.data.code) {
       switch (response.data.code) {
         case 404:
-          Message('未找到相应数据');
+          Message.error('未找到相应数据');
           break;
         case 200:
           break;
@@ -161,7 +161,6 @@ export function all(urls = []) {
       url: url,
       method: 'get'
     })))).then(axios.spread((...response) => {
-      // resolve(response);
       resolve(response.map(res => res.data));
     })).catch(error => {
       reject(error);
