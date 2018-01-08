@@ -1,13 +1,18 @@
 /**
  * Created by Administrator on 2018/1/2/002.
  */
+import filters from '../../../filters'
+
 export default {
   //获取商品列表信息
   getGoods(state, goodsList){
     state.goods = goodsList;
+    state.goodsOrigin = [];
     //将页面显示的数据信息保存到goodsOrigin里面
     for (let good of goodsList) {
+      good.category_id = filters.goodsCategory(good.category_id);//将商品部类过滤为中文信息
       state.goodsOrigin.push({
+        id:good.id,
         title: good.title,
         description: good.description,
         barcode: good.barcode,
@@ -18,12 +23,12 @@ export default {
       });
     }
     if (goodsList.length) {
-      state.goodsTotal = goodsList.length;
+      state.total = goodsList.length;
     }
   },
   //每页显示条数，当前页码，搜索   内容发生变化时执行的方法
   searchGoods(state, pagination){
-    let goodsList = new Array();
+    let goodsList = [];
     //当有搜索条件时执行的操作
     if (pagination.value !== '') {
       for (let good of state.goodsOrigin) {
@@ -33,13 +38,13 @@ export default {
           }
         }
       }
-      goodsList = goodsList.slice(pagination.page, pagination.page + pagination.limit);
       if (goodsList.length) {
-        state.goodsTotal = goodsList.length;
+        state.total = goodsList.length;
       }
+      goodsList = goodsList.slice(pagination.page, pagination.page + pagination.limit);
     } else {//当不带搜索条件时执行的操作
+      state.total = state.goodsOrigin.length;
       goodsList = state.goodsOrigin.slice(pagination.page, pagination.page + pagination.limit);
-      state.goodsTotal = state.goodsOrigin.length;
     }
 
     state.goods = goodsList;

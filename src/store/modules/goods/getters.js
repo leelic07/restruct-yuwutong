@@ -6,7 +6,7 @@ export default {
   goods: state => state.goods,
 
   //获取商品信息列表记录数
-  goodsTotal:state => state.goodsTotal,
+  goodsTotal:state => state.total,
 
   //获取用作编辑的商品信息
   goodsForEdit:state => state.goodsForEdit

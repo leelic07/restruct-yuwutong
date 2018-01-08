@@ -3,9 +3,11 @@
  */
 import registrations from './modules/registrations'
 import families from './modules/families'
+import goods from './modules/goods'
 
-let filters = new Object();
 
-filters = Object.assign(filters,registrations,families);
-
-export default filters;
+export default Object.assign(
+  registrations,
+  families,
+  goods
+);

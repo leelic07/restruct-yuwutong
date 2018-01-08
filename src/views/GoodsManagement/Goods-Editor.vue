@@ -25,6 +25,9 @@
             :on-remove="handleRemove"
             :file-list="fileList"
             :auto-upload="false"
+            :limit="1"
+            :with-credentials="true"
+            accept="image/*"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加商品图片</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
@@ -34,12 +37,12 @@
           <el-input v-model="goodsForEdit.factory"></el-input>
         </el-form-item>
         <el-form-item label="请选择商品部类">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="goodsForEdit.category_id" placeholder="请选择">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item,key in options"
+              :key="item"
+              :label="key"
+              :value="item">
             </el-option>
           </el-select>
         </el-form-item>
@@ -68,7 +71,14 @@
           desc: ''
         },
         breadcrumb: ['主页', '商品信息管理', '商品编辑管理'],
-        fileList: []
+        fileList: [],
+        options:{
+          '洗化日用':1,
+          '食品饮料':2,
+          '服饰鞋帽':3,
+          '医药保健':4,
+          '电话卡':5
+        }
       }
     },
     computed: {

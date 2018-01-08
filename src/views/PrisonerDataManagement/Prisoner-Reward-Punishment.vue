@@ -10,18 +10,20 @@
     <el-row :gutter="0" class="title-box">
       <el-col :span="22" :offset="2">
         <p>上传模板文件：</p>
-        <p>限制文件后缀名为 <el-tag type="danger">.xls</el-tag></p>
+        <p>限制文件后缀名为
+          <el-tag type="danger">.xls</el-tag>
+        </p>
       </el-col>
     </el-row>
 
     <!--<el-row :gutter="0" class="button-box">-->
-      <!--<el-col :span="23" :offset="1">-->
-        <!--<input type="file">-->
-        <!--<el-button>选择本地文件</el-button>-->
-      <!--</el-col>-->
-      <!--<el-col :span="22" :offset="2">-->
-        <!--<el-button type="primary">导入文件</el-button>-->
-      <!--</el-col>-->
+    <!--<el-col :span="23" :offset="1">-->
+    <!--<input type="file">-->
+    <!--<el-button>选择本地文件</el-button>-->
+    <!--</el-col>-->
+    <!--<el-col :span="22" :offset="2">-->
+    <!--<el-button type="primary">导入文件</el-button>-->
+    <!--</el-col>-->
     <!--</el-row>-->
 
     <el-row :gutter="0">
@@ -33,7 +35,9 @@
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"
-          :auto-upload="false">
+          :auto-upload="false"
+          accept=".xls"
+        >
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           <div slot="tip" class="el-upload__tip">只能上传.xls文件</div>
@@ -50,14 +54,14 @@
   export default {
     data() {
       return {
-        breadcrumb:['主页','罪犯奖惩信息管理'],
-        prisonerRewardHref:this._$baseUrl + '/upload/prisoner_reward_punishment_template.xls',
-        fileList:[]
+        breadcrumb: ['主页', '罪犯奖惩信息管理'],
+        prisonerRewardHref: this._$baseUrl + '/upload/prisoner_reward_punishment_template.xls',
+        fileList: []
       }
     },
-    methods:{
+    methods: {
       ...mapMutations({
-        breadCrumb:'breadCrumb'
+        breadCrumb: 'breadCrumb'
       }),
       submitUpload() {
         this.$refs.upload.submit();
