@@ -20,9 +20,9 @@ import PasswordModification from '@/views/PasswordModification/Password-Modifica
 import FamilyOrders from '@/views/FamilyOrders/Family-Orders'
 import PrisonerOrders from '@/views/OrdersManagement/Prisoner-Orders'
 import OrderDetail from '@/views/FamilyOrders/Order-Detail'
+import JailInformationManagement from '@/views/JailInformationManagement/Jail-Information-Management'
 
-
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -124,6 +124,11 @@ export default new Router({
       path:'/prisoner_orders/import_index',
       name:'PrisonerOrders',
       component:PrisonerOrders
+    },
+    {
+      path:'/jails',
+      name:'JailInformationManagement',
+      component:JailInformationManagement
     },
     {
       path:'*',

@@ -117,7 +117,7 @@
       <ul class="sidebar-menu" v-if="information">
         <li class="header">导航</li>
         <li class="treeview">
-          <router-link to="/goods_management">
+          <router-link to="/jails">
             <i class="fa fa-folder"></i>
             <span>监狱基本信息管理</span>
           </router-link>
