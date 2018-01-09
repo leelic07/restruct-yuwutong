@@ -11,6 +11,7 @@ import prisoners from './modules/prisoners'
 import terminals from './modules/terminals'
 import search from './modules/search'
 import goods from './modules/goods'
+import familyOrders from './modules/family-orders'
 
 export default Object.assign(
   registrations,
@@ -22,5 +23,6 @@ export default Object.assign(
   prisoners,
   terminals,
   search,
-  goods
+  goods,
+  familyOrders
 )

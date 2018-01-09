@@ -17,6 +17,10 @@ import Versions from '@/views/Versions/Versions'
 import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
 import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
 import PasswordModification from '@/views/PasswordModification/Password-Modification'
+import FamilyOrders from '@/views/FamilyOrders/Family-Orders'
+import PrisonerOrders from '@/views/OrdersManagement/Prisoner-Orders'
+import OrderDetail from '@/views/FamilyOrders/Order-Detail'
+
 
 Vue.use(Router)
 
@@ -105,6 +109,21 @@ export default new Router({
       path:'/super_user/modify_index',
       name:'PasswordModification',
       component:PasswordModification
+    },
+    {
+      path:'/orders',
+      name:'FamilyOrders',
+      component:FamilyOrders,
+      children:[{
+        path:'/orders/:id',
+        name:'OrderDetail',
+        component:OrderDetail
+      }]
+    },
+    {
+      path:'/prisoner_orders/import_index',
+      name:'PrisonerOrders',
+      component:PrisonerOrders
     },
     {
       path:'*',

@@ -72,24 +72,24 @@
         },
         breadcrumb: ['主页', '商品信息管理', '商品编辑管理'],
         fileList: [],
-        options:{
-          '洗化日用':1,
-          '食品饮料':2,
-          '服饰鞋帽':3,
-          '医药保健':4,
-          '电话卡':5
+        options: {
+          '洗化日用': 1,
+          '食品饮料': 2,
+          '服饰鞋帽': 3,
+          '医药保健': 4,
+          '电话卡': 5
         }
       }
     },
     computed: {
       ...mapGetters({
-        goodsForEdit:'goodsForEdit'
+        goodsForEdit: 'goodsForEdit'//获取编辑的商品对象
       })
     },
     methods: {
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        editGoods: 'editGoods'//获取要编辑的商品信息
+        editGoods: 'editGoods'//根据id获取要编辑的商品信息
       }),
       onSubmit() {
         console.log('submit!');
@@ -120,5 +120,5 @@
           float: right
       &:nth-child(8)
         .el-form-item__label
-          width:auto!important
+          width: auto !important
 </style>

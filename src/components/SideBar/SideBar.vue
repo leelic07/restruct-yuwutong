@@ -14,6 +14,7 @@
       </div>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
+      <!--审核侧边栏-->
       <ul class="sidebar-menu" v-if="examination">
         <li class="header">导航</li>
         <li class="treeview">
@@ -91,7 +92,7 @@
           </router-link>
         </li>
         <li class="treeview">
-          <router-link to="/meetings">
+          <router-link to="/orders">
             <i class="fa fa-folder"></i>
             <span>家属订单</span>
           </router-link>
@@ -106,7 +107,44 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!--信息侧边栏-->
+      <ul class="sidebar-menu" v-if="information">
+        <li class="header">导航</li>
+        <li class="treeview">
+          <router-link to="/goods_management">
+            <i class="fa fa-folder"></i>
+            <span>监狱基本信息管理</span>
+          </router-link>
+        </li>
+        <li class="treeview">
+          <router-link to="/orders">
+            <i class="fa fa-folder"></i>
+            <span>法律法规信息管理</span>
+          </router-link>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-folder"></i>
+            <span>狱务公开信息管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>狱务公开</router-link>
+            </li>
+            <li>
+              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>工作动态</router-link>
+            </li>
+            <li>
+              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>投诉建议公示</router-link>
             </li>
           </ul>
         </li>
@@ -121,7 +159,8 @@
     data() {
       return {
         examination: false,
-        goods: true
+        goods: false,
+        information:true
       }
     }
   }

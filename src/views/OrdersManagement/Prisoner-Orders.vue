@@ -1,9 +1,9 @@
 <template>
-  <el-row :gutter="0" id="prisoner-import-index">
+  <el-row :gutter="0" id="orders-import-index">
     <el-row :gutter="0" class="download-box">
       <el-col :span="22" :offset="2">
         <span>点击下载模板：</span>
-        <a :href="prisonTermHref">刑期变动信息导入模板</a>
+        <a :href="prisonerHref">家属订单导入模板</a>
       </el-col>
     </el-row>
 
@@ -15,16 +15,6 @@
         </p>
       </el-col>
     </el-row>
-
-    <!--<el-row :gutter="0" class="button-box">-->
-    <!--<el-col :span="23" :offset="1">-->
-    <!--<input type="file">-->
-    <!--<el-button>选择本地文件</el-button>-->
-    <!--</el-col>-->
-    <!--<el-col :span="22" :offset="2">-->
-    <!--<el-button type="primary">导入文件</el-button>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
 
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
@@ -55,9 +45,10 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '刑期变动信息管理'],
-        prisonTermHref: this._$baseUrl + '/upload/prison_term_template.xls',
-        fileList: []
+        breadcrumb: ['主页', '订单信息管理'],
+//        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+        fileList: [],
+        prisonerHref: this._$baseUrl + '/upload/order_template.xls'
       }
     },
     methods: {
@@ -80,6 +71,23 @@
   }
 </script>
 
-<style type="text/stylus" lang="stylus">
+<style type="text/stylus" lang="stylus" scoped>
+  #orders-import-index
+    min-height:370px
+    .download-box
+      margin-top: 35px
+    .title-box
+      margin-top: 30px
+    & /deep/ .upload-demo
+      margin-bottom: 45px
+      > .el-button
+        margin-top: 20px
+      .el-upload
+        margin-right: 50%
+        margin-top: 15px
+        .el-button
+          float: left
+        input[type=file]
+          display: none
 
 </style>

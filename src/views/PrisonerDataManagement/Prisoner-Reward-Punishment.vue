@@ -36,6 +36,7 @@
           :on-remove="handleRemove"
           :file-list="fileList"
           :auto-upload="false"
+          :limit="1"
           accept=".xls"
         >
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>

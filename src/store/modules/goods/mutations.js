@@ -12,7 +12,7 @@ export default {
     for (let good of goodsList) {
       good.category_id = filters.goodsCategory(good.category_id);//将商品部类过滤为中文信息
       state.goodsOrigin.push({
-        id:good.id,
+        id: good.id,
         title: good.title,
         description: good.description,
         barcode: good.barcode,
@@ -26,7 +26,7 @@ export default {
       state.total = goodsList.length;
     }
   },
-  //每页显示条数，当前页码，搜索   内容发生变化时执行的方法
+  //每页显示条数，当前页码，搜索条件发生变化时执行的方法
   searchGoods(state, pagination){
     let goodsList = [];
     //当有搜索条件时执行的操作
@@ -52,8 +52,8 @@ export default {
 
   //根据id获取需要编辑的商品信息
   editGoods(state, id){
-    for(let good of state.goods){
-      if(good.id === Number(id)){
+    for (let good of state.goods) {
+      if (good.id === Number(id)) {
         state.goodsForEdit = good;
         break;
       }

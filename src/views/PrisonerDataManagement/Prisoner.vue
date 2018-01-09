@@ -35,6 +35,7 @@
           :on-remove="handleRemove"
           :file-list="fileList"
           :auto-upload="false"
+          :limit="1"
           accept=".xls"
         >
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -81,6 +82,7 @@
 
 <style type="text/stylus" lang="stylus">
   #prisoner-import-index
+    min-height:370px
     .download-box
       margin-top: 35px
     .title-box
@@ -90,7 +92,7 @@
       > .el-button
         margin-top: 20px
       .el-upload
-        margin-right: 38%
+        margin-right: 50%
         margin-top: 15px
         .el-button
           float: left

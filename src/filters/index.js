@@ -5,7 +5,6 @@ import registrations from './modules/registrations'
 import families from './modules/families'
 import goods from './modules/goods'
 
-
 export default Object.assign(
   registrations,
   families,
