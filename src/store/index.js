@@ -16,15 +16,17 @@ import goods from './modules/goods'
 import login from './modules/login'
 import mailboxes from './modules/mailboxes'
 import familyOrders from './modules/family-orders'
+import jailsInformation from './modules/jails-information'
+import lawsInformation from './modules/laws-information'
 import 'babel-polyfill'
 
-let actions = Object.assign(registrations.actions, meetings.actions, prisoners.actions, families.actions, terminals.actions, versions.actions, breadCrumb.actions, search.actions, accounts.actions, goods.actions, login.actions, mailboxes.actions, familyOrders.actions);
+let actions = Object.assign(registrations.actions, meetings.actions, prisoners.actions, families.actions, terminals.actions, versions.actions, breadCrumb.actions, search.actions, accounts.actions, goods.actions, login.actions, mailboxes.actions, familyOrders.actions,jailsInformation.actions,lawsInformation.actions);
 
-let mutations = Object.assign(registrations.mutations, meetings.mutations, prisoners.mutations, families.mutations, terminals.mutations, versions.mutations, breadCrumb.mutations, search.mutations, accounts.mutations, goods.mutations, mailboxes.mutations, familyOrders.mutations);
+let mutations = Object.assign(registrations.mutations, meetings.mutations, prisoners.mutations, families.mutations, terminals.mutations, versions.mutations, breadCrumb.mutations, search.mutations, accounts.mutations, goods.mutations, mailboxes.mutations, familyOrders.mutations,jailsInformation.mutations,lawsInformation.mutations);
 
-let getters = Object.assign(registrations.getters, meetings.getters, prisoners.getters, families.getters, terminals.getters, versions.getters, breadCrumb.getters, search.getters, accounts.getters, goods.getters, mailboxes.getters, familyOrders.getters);
+let getters = Object.assign(registrations.getters, meetings.getters, prisoners.getters, families.getters, terminals.getters, versions.getters, breadCrumb.getters, search.getters, accounts.getters, goods.getters, mailboxes.getters, familyOrders.getters,jailsInformation.getters,lawsInformation.getters);
 
-let state = Object.assign(registrations.state, meetings.state, prisoners.state, families.state, terminals.state, versions.state, breadCrumb.state, search.state, accounts.state, goods.state, mailboxes.state, familyOrders.state);
+let state = Object.assign(registrations.state, meetings.state, prisoners.state, families.state, terminals.state, versions.state, breadCrumb.state, search.state, accounts.state, goods.state, mailboxes.state, familyOrders.state,jailsInformation.state,lawsInformation.state);
 
 Vue.use(Vuex);
 

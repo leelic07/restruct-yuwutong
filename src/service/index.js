@@ -12,6 +12,8 @@ import terminals from './modules/terminals'
 import search from './modules/search'
 import goods from './modules/goods'
 import familyOrders from './modules/family-orders'
+import jailsInformation from './modules/jails-information'
+import lawsInformation from './modules/laws-information'
 
 export default Object.assign(
   registrations,
@@ -24,5 +26,7 @@ export default Object.assign(
   terminals,
   search,
   goods,
-  familyOrders
+  familyOrders,
+  jailsInformation,
+  lawsInformation
 )

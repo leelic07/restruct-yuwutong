@@ -123,7 +123,7 @@
           </router-link>
         </li>
         <li class="treeview">
-          <router-link to="/orders">
+          <router-link to="/laws">
             <i class="fa fa-folder"></i>
             <span>法律法规信息管理</span>
           </router-link>

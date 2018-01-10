@@ -21,6 +21,8 @@ import FamilyOrders from '@/views/FamilyOrders/Family-Orders'
 import PrisonerOrders from '@/views/OrdersManagement/Prisoner-Orders'
 import OrderDetail from '@/views/FamilyOrders/Order-Detail'
 import JailInformationManagement from '@/views/JailInformationManagement/Jail-Information-Management'
+import JailEditor from '@/views/JailInformationManagement/Jail-Editor'
+import LawInformationManagement from '@/views/LawInformationManagement/Law-Information-Management'
 
 Vue.use(Router);
 
@@ -128,7 +130,17 @@ export default new Router({
     {
       path:'/jails',
       name:'JailInformationManagement',
-      component:JailInformationManagement
+      component:JailInformationManagement,
+      children:[{
+        path:'/jails/:id/edit',
+        name:'JailEditor',
+        component:JailEditor
+      }]
+    },
+    {
+      path:'/laws',
+      name:'LawInformationManagement',
+      component:LawInformationManagement
     },
     {
       path:'*',
