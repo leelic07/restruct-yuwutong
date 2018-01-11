@@ -75,8 +75,7 @@
               <router-link to="/prison_term/import_index"><i class="fa fa-circle-o"></i>刑期变动数据导入</router-link>
             </li>
             <li>
-              <router-link to="/prison_reward_punishment/import_index"><i class="fa fa-circle-o"></i>罪犯奖惩数据导入
-              </router-link>
+              <router-link to="/prison_reward_punishment/import_index"><i class="fa fa-circle-o"></i>罪犯奖惩数据导入</router-link>
             </li>
           </ul>
         </li>
@@ -138,7 +137,7 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>狱务公开</router-link>
+              <router-link to="/news/prison_affairs_disclosure"><i class="fa fa-circle-o"></i>狱务公开</router-link>
             </li>
             <li>
               <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>工作动态</router-link>
@@ -160,7 +159,7 @@
       return {
         examination: false,
         goods: false,
-        information:true
+        information: true
       }
     }
   }
@@ -168,7 +167,6 @@
 
 <style type="text/stylus" lang="stylus">
   #main-sidebar
-
     &.main-sidebar
       bottom: 0
       a

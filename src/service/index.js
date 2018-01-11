@@ -14,6 +14,7 @@ import goods from './modules/goods'
 import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
+import news from './modules/news'
 
 export default Object.assign(
   registrations,
@@ -28,5 +29,6 @@ export default Object.assign(
   goods,
   familyOrders,
   jailsInformation,
-  lawsInformation
+  lawsInformation,
+  news
 )

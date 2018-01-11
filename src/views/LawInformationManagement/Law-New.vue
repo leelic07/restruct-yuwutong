@@ -1,37 +1,22 @@
 <template>
-  <el-row id="jail-editor" :gutter="0">
+  <el-row id="law-new" :gutter="0">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="jails" label-width="80px">
-        <el-form-item label="监狱名称">
-          <el-input v-model="jails.title" placeholder="请填写监狱名称"></el-input>
+      <el-form ref="form" :model="law" label-width="80px">
+        <el-form-item label="法律名称">
+          <el-input v-model="law.title" placeholder="请填写法律名称"></el-input>
         </el-form-item>
-        <el-form-item label="详情">
+        <el-form-item label="法律简介">
           <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
           <!--<div class="edit_container">-->
-            <!--<quill-editor-->
-              <!--v-model="jails.description"-->
-              <!--ref="myQuillEditor"-->
-              <!--class="editer"-->
-              <!--:options="editorOption"-->
-              <!--@ready="onEditorReady($event)">-->
-            <!--</quill-editor>-->
+          <!--<quill-editor-->
+          <!--v-model="jails.description"-->
+          <!--ref="myQuillEditor"-->
+          <!--class="editer"-->
+          <!--:options="editorOption"-->
+          <!--@ready="onEditorReady($event)">-->
+          <!--</quill-editor>-->
           <!--</div>-->
           <div id="editor"></div>
-        </el-form-item>
-        <el-form-item label="街道">
-          <el-input v-model="jails.street" placeholder="请填写街道名称"></el-input>
-        </el-form-item>
-        <el-form-item label="行政区">
-          <el-input v-model="jails.district" placeholder="请填写行政区名称"></el-input>
-        </el-form-item>
-        <el-form-item label="市">
-          <el-input v-model="jails.city" placeholder="请填写所在市名称"></el-input>
-        </el-form-item>
-        <el-form-item label="省">
-          <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <img :src="_$baseUrl + '/system/jails/images/000/000/001/thumb/' + jails.image_file_name" alt="">
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -45,7 +30,7 @@
             :with-credentials="true"
             accept="image/*"
             list-type="picture">
-            <el-button size="normal" type="primary" plain>添加监狱图片</el-button>
+            <el-button size="normal" type="primary" plain>添加图片</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
           </el-upload>
         </el-form-item>
@@ -59,20 +44,21 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-//  import {quillEditor} from 'vue-quill-editor'
+  //  import {quillEditor} from 'vue-quill-editor'
 
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
+        law: {//需要添加的法律信息
+          title: ''
+        },
+        breadcrumb: ['主页', '法律法规信息管理', '添加法律信息'],
         fileList: [],
 //        editorOption: {}//富文本编辑器的配置
       }
     },
     computed: {
-      ...mapGetters({
-        jails: 'jails'//获取编辑的监狱基本信息
-      }),
+      ...mapGetters({}),
 //      editor() {
 //        return this.$refs.myQuillEditor.quill
 //      }
@@ -104,17 +90,14 @@
 </script>
 
 <style type="text/stylus" lang="stylus">
-  #jail-editor
+  #law-new
     padding-top: 35px
     .el-form-item
       .upload-demo
         .el-upload
           input
             display: none
-      img
-        float:left
-        width:100%
       &:last-child
         .el-button
-          float:right
+          float: right
 </style>

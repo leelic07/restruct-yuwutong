@@ -23,6 +23,9 @@ import OrderDetail from '@/views/FamilyOrders/Order-Detail'
 import JailInformationManagement from '@/views/JailInformationManagement/Jail-Information-Management'
 import JailEditor from '@/views/JailInformationManagement/Jail-Editor'
 import LawInformationManagement from '@/views/LawInformationManagement/Law-Information-Management'
+import LawNew from '@/views/LawInformationManagement/Law-New'
+import LawEditor from '@/views/LawInformationManagement/Law-Editor'
+import PrisonAffairsDisclosure from '@/views/NewsManagement/Prison-Affairs-Disclosure'
 
 Vue.use(Router);
 
@@ -34,117 +37,131 @@ export default new Router({
       component: Login
     },
     {
-      path:'/dashboard',
-      name:'DashBoard',
-      component:DashBoard
+      path: '/dashboard',
+      name: 'DashBoard',
+      component: DashBoard
     },
     {
-      path:'/registrations',
-      name:'Registrations',
-      component:Registration
+      path: '/registrations',
+      name: 'Registrations',
+      component: Registration
     },
     {
-      path:'/meetings',
-      name:'Meetings',
-      component:Meeting
+      path: '/meetings',
+      name: 'Meetings',
+      component: Meeting
     },
     {
-      path:'/mailboxes',
-      name:'MailBoxes',
-      component:MailBoxes,
-      children:[{
-        path:'/mailboxes/:id',
-        component:MailBoxes_Inspect
+      path: '/mailboxes',
+      name: 'MailBoxes',
+      component: MailBoxes,
+      children: [{
+        path: '/mailboxes/:id',
+        component: MailBoxes_Inspect
       }]
     },
     {
-      path:'/prisoners',
-      name:'Prisoners',
-      component:Prisoners
+      path: '/prisoners',
+      name: 'Prisoners',
+      component: Prisoners
     },
     {
-      path:'/families',
-      name:'Families',
-      component:Families
+      path: '/families',
+      name: 'Families',
+      component: Families
     },
     {
-      path:'/accounts',
-      name:'Accounts',
-      component:Accounts
+      path: '/accounts',
+      name: 'Accounts',
+      component: Accounts
     },
     {
-      path:'/prisoner/import_index',
-      name:'PrisonerImportIndex',
-      component:PrisonerImportIndex
+      path: '/prisoner/import_index',
+      name: 'PrisonerImportIndex',
+      component: PrisonerImportIndex
     },
     {
-      path:'/prison_term/import_index',
-      name:'PrisonTermImportIndex',
-      component:PrisonTermImportIndex
+      path: '/prison_term/import_index',
+      name: 'PrisonTermImportIndex',
+      component: PrisonTermImportIndex
     },
     {
-      path:'/prison_reward_punishment/import_index',
-      name:'PrisonerRewardPunishment',
-      component:PrisonerRewardPunishment
+      path: '/prison_reward_punishment/import_index',
+      name: 'PrisonerRewardPunishment',
+      component: PrisonerRewardPunishment
     },
     {
-      path:'/terminals',
-      name:'Terminals',
-      component:Terminals
+      path: '/terminals',
+      name: 'Terminals',
+      component: Terminals
     },
     {
-      path:'/versions',
-      name:'Versions',
-      component:Versions
+      path: '/versions',
+      name: 'Versions',
+      component: Versions
     },
     {
-      path:'/goods_management',
-      name:'GoodsManagement',
-      component:GoodsManagement,
-      children:[{
-        path:'/goods_management/:id',
-        name:'GoodsEditor',
-        component:GoodsEditor
+      path: '/goods_management',
+      name: 'GoodsManagement',
+      component: GoodsManagement,
+      children: [{
+        path: '/goods_management/:id',
+        name: 'GoodsEditor',
+        component: GoodsEditor
       }]
     },
     {
-      path:'/super_user/modify_index',
-      name:'PasswordModification',
-      component:PasswordModification
+      path: '/super_user/modify_index',
+      name: 'PasswordModification',
+      component: PasswordModification
     },
     {
-      path:'/orders',
-      name:'FamilyOrders',
-      component:FamilyOrders,
-      children:[{
-        path:'/orders/:id',
-        name:'OrderDetail',
-        component:OrderDetail
+      path: '/orders',
+      name: 'FamilyOrders',
+      component: FamilyOrders,
+      children: [{
+        path: '/orders/:id',
+        name: 'OrderDetail',
+        component: OrderDetail
       }]
     },
     {
-      path:'/prisoner_orders/import_index',
-      name:'PrisonerOrders',
-      component:PrisonerOrders
+      path: '/prisoner_orders/import_index',
+      name: 'PrisonerOrders',
+      component: PrisonerOrders
     },
     {
-      path:'/jails',
-      name:'JailInformationManagement',
-      component:JailInformationManagement,
-      children:[{
-        path:'/jails/:id/edit',
-        name:'JailEditor',
-        component:JailEditor
+      path: '/jails',
+      name: 'JailInformationManagement',
+      component: JailInformationManagement,
+      children: [{
+        path: '/jails/:id/edit',
+        name: 'JailEditor',
+        component: JailEditor
       }]
     },
     {
-      path:'/laws',
-      name:'LawInformationManagement',
-      component:LawInformationManagement
+      path: '/laws',
+      name: 'LawInformationManagement',
+      component: LawInformationManagement,
+      children: [{
+        path: '/laws/new',
+        name: 'LawNew',
+        component: LawNew
+      }, {
+        path: '/laws/:id/edit',
+        name: 'LawEditor',
+        component: LawEditor
+      }]
     },
     {
-      path:'*',
-      redirect:'/login'
+      path: '/news/prison_affairs_disclosure',
+      name: 'PrisonAffairsDisclosure',
+      component: PrisonAffairsDisclosure
+    },
+    {
+      path: '*',
+      redirect: '/login'
     }
   ]
 })

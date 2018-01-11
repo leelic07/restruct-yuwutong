@@ -2,7 +2,7 @@
   <el-row id="jail-information-management" :gutter="0">
     <el-row :gutter="0" v-if="!isJailEdit">
       <el-col :span="12">
-        <img :src="_$baseUrl + '/system/jails/images/000/000/001/thumb/' + jails.image_file_name" alt="">
+        <img :src="_$baseUrl + '/system/jails/images/000/000/00' + jails.id + '/thumb/' + jails.image_file_name" alt="">
       </el-col>
 
       <el-col :span="12">
@@ -87,7 +87,8 @@
     },
     methods: {
       ...mapActions({
-        getJailsInformation: 'getJailsInformation'//获取监狱基本信息
+        getJailsInformation: 'getJailsInformation',//获取监狱基本信息
+        getNews: 'getNews'//获取狱务公开信息
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'//获取监狱基本信息管理的面包屑
@@ -104,6 +105,7 @@
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
+      this.getNews();
     }
   }
 </script>
