@@ -6,11 +6,5 @@ import * as service from '../base/service'
 export default {
   //获取狱务公开信息
   getNews: params =>
-    new Promise((resolve, reject) => {
-      service.get('news.json',params).then(res => {
-        resolve(res);
-      }).catch(err => {
-        reject(err);
-      })
-    })
+    service.get('/news.json', params).then(res => res).catch(err => err)
 }

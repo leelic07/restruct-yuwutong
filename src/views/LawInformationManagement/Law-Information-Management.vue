@@ -126,7 +126,7 @@
       //编辑法律法规
       editLaw(id){
         this.$router.push({
-          path:`/laws/${id}/edit`
+          path: `/laws/${id}/edit`
         });
       }
     },

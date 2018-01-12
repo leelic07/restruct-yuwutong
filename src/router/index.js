@@ -25,7 +25,9 @@ import JailEditor from '@/views/JailInformationManagement/Jail-Editor'
 import LawInformationManagement from '@/views/LawInformationManagement/Law-Information-Management'
 import LawNew from '@/views/LawInformationManagement/Law-New'
 import LawEditor from '@/views/LawInformationManagement/Law-Editor'
-import PrisonAffairsDisclosure from '@/views/NewsManagement/Prison-Affairs-Disclosure'
+import PrisonAffairsDisclosure from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure'
+import PrisonAffairsDisclosureNew from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-New'
+import PrisonAffairsDisclosureEditor from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-Editor'
 
 Vue.use(Router);
 
@@ -157,7 +159,16 @@ export default new Router({
     {
       path: '/news/prison_affairs_disclosure',
       name: 'PrisonAffairsDisclosure',
-      component: PrisonAffairsDisclosure
+      component: PrisonAffairsDisclosure,
+      children:[{
+        path:'/news/prison_affairs_disclosure/new',
+        name:'PrisonAffairsDisclosureNew',
+        component:PrisonAffairsDisclosureNew
+      },{
+        path:'/news/prison_affairs_disclosure/:id/edit',
+        name:'PrisonAffairsDisclosureEditor',
+        component:PrisonAffairsDisclosureEditor
+      }]
     },
     {
       path: '*',

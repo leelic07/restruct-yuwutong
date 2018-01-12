@@ -57,25 +57,16 @@ axios.interceptors.response.use(
 /**
  * 封装get方法
  * @param url
- * @param data
+ * @param params
  * @returns {Promise}
  */
 
-export function get(url, params = {}) {
-  return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig, {
-      url: url,
-      method: 'get',
-      params: params
-    }))
-      .then(response => {
-        resolve(response.data);
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
-}
+export let get = (url, params = {}) =>
+  axios(Object.assign(serviceConfig, {
+    url: url,
+    method: 'get',
+    params: params
+  })).then(res => res.data).catch(err => err);
 
 
 /**
@@ -85,24 +76,17 @@ export function get(url, params = {}) {
  * @returns {Promise}
  */
 
-export function post(url, data = {}) {
+export let post = (url, data = {}) => {
   let params = new URLSearchParams();
   for (let key in data) {
     params.append(key, data[key]);
   }
-  return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig, {
-      url: url,
-      method: 'post',
-      data: params
-    }))
-      .then(response => {
-        resolve(response.data);
-      }, err => {
-        reject(err)
-      })
-  })
-}
+  axios(Object.assign(serviceConfig, {
+    url: url,
+    method: 'post',
+    data: params
+  })).then(res => res.data).catch(err => err)
+};
 
 /**
  * 封装patch请求
@@ -111,20 +95,13 @@ export function post(url, data = {}) {
  * @returns {Promise}
  */
 
-export function patch(url, data = {}) {
-  return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig, {
-      url: url,
-      method: 'patch',
-      data: data
-    }))
-      .then(response => {
-        resolve(response.data);
-      }, err => {
-        reject(err)
-      })
-  })
-}
+export let patch = (url, data = {}) =>
+  axios(Object.assign(serviceConfig, {
+    url: url,
+    method: 'patch',
+    data: data
+  })).then(res => res.data).catch(err => err);
+
 
 /**
  * 封装put请求
@@ -133,37 +110,23 @@ export function patch(url, data = {}) {
  * @returns {Promise}
  */
 
-export function put(url, data = {}) {
-  return new Promise((resolve, reject) => {
-    axios(Object.assign(serviceConfig, {
-      url: url,
-      method: 'put',
-      data: data
-    }))
-      .then(response => {
-        resolve(response.data);
-      }, err => {
-        reject(err)
-      })
-  })
-}
+export let put = (url, data = {}) =>
+  axios(Object.assign(serviceConfig, {
+    url: url,
+    method: 'put',
+    data: data
+  })).then(res => res.data).catch(err => err);
+
 
 /**
  * 封装all请求
- * @param url
- * @param params
+ * @param urls
  * @returns {Promise}
  */
 
-export function all(urls = []) {
-  return new Promise((resolve, reject) => {
-    axios.all(urls.map(url => axios(Object.assign(serviceConfig, {
-      url: url,
-      method: 'get'
-    })))).then(axios.spread((...response) => {
-      resolve(response.map(res => res.data));
-    })).catch(error => {
-      reject(error);
-    })
-  })
-}
+export let all = (urls = []) =>
+  axios.all(urls.map(url => axios(Object.assign(serviceConfig, {
+    url: url,
+    method: 'get'
+  })))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
+

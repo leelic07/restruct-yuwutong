@@ -1,59 +1,62 @@
 <template>
   <el-row id="prison-affairs-disclosure" :gutter="0">
-    <el-row :gutter="0" v-if="!isGoodsEditor">
+
+    <el-row :gutter="0" v-if="!isPrisonAffairsDisclosure">
+      <!--添加狱务公开信息-->
+      <el-col :span="24">
+        <el-button size="small" type="primary" plain @click="newPrisonAffairsDisclosure()">添加狱务公开信息</el-button>
+      </el-col>
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
 
       <!--标签页表格-->
       <el-col :span="24">
-        <el-tabs v-model="tabNum" type="card">
-          <el-tab-pane label="狱务公开" name="first">
-            <el-table
-              :data="goods"
-              border
-              stripe
-              style="width: 100%">
-              <el-table-column
-                prop="title"
-                label="新闻标题">
-              </el-table-column>
-              <el-table-column
-                label="新闻图片">
-                <template slot-scope="scope">
-                  <img :src="_$baseUrl + scope.row.avatar_url" alt="">
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="title"
-                label="焦点">
-              </el-table-column>
-              <el-table-column
-                label="操作">
-                <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    @click="handleDelete(scope.$index, scope.row)"
-                    type="danger"
-                  >
-                    删除
-                  </el-button>
-                  <el-button
-                    size="mini"
-                    @click="handleEdit(scope.$index,scope.row)"
-                    type="primary"
-                  >
-                    编辑
-                  </el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-        </el-tabs>
+        <el-table
+          :data="prisonAffairsDisclosure"
+          border
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="title"
+            label="新闻标题">
+          </el-table-column>
+          <el-table-column
+            label="新闻图片">
+            <template slot-scope="scope">
+              <img :src="_$baseUrl + scope.row.image_url" alt="">
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="焦点">
+            <template slot-scope="scope">
+              {{scope.row.is_focus?'是':'否'}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleDelete(scope.$index, scope.row)"
+                type="danger"
+              >
+                删除
+              </el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.row.id)"
+                type="primary"
+              >
+                编辑
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-col>
 
       <!--分页组件-->
-      <pagination :total="goodsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+      <pagination :total="prisonAffairsDisclosureTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                   @currentChange="currentChange"></pagination>
     </el-row>
 
@@ -71,29 +74,27 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '商品信息管理'],//面包屑数组
-        tabNum: 'first',
-        total: 1000,//总共记录条数
+        breadcrumb: ['主页', '狱务公开信息管理', '狱务公开'],//面包屑数组
         pagination: {
           limit: 10,//每页显示记录条数
           page: 0//当前显示第几页
         },
         searching: {
-          c: 'goods',//搜索的模块类型
+          c: 'prisonAffairsDisclosure',//搜索的模块类型
           value: ''//搜索的条件
         },
-        isGoodsEditor: false,//是否是商品信息列表页面
+        isPrisonAffairsDisclosure: false,//是否是商品信息列表页面
         goodsDescription: ''//商品简介信息
       }
     },
     watch: {
       //从商品管理页面跳转到商品编辑页面使商品列表显示
       $route(to) {
-        if (to.path === '/goods_management') {
-          this.isGoodsEditor = false;
+        if (to.path === '/news/prison_affairs_disclosure') {
+          this.isPrisonAffairsDisclosure = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
         } else {
-          this.isGoodsEditor = true;
+          this.isPrisonAffairsDisclosure = true;
         }
       }
     },
@@ -102,18 +103,18 @@
       ...mapGetters({
         goods: 'goods',//获取商品列表信息
         goodsTotal: 'goodsTotal',//获取商品列表的记录数
+        prisonAffairsDisclosure: 'prisonAffairsDisclosure',//获取狱务公开信息
+        prisonAffairsDisclosureTotal: 'prisonAffairsDisclosureTotal'//获取狱务公开记录条数
       })
     },
     methods: {
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-        getPrisonAffairsDisclosure: 'getPrisonAffairsDisclosure'//获取狱务公开信息
       }),
       //映射actions方法
       ...mapActions({
-        getGoods: 'getGoods',//获取商品列表
-        searchGoods: 'searchGoods',//获取带搜索条件的商品列表
+        getNews: 'getNews'//获取狱务公开信息
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -128,7 +129,6 @@
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        this.searchGoods(Object.assign(this.searching, this.pagination));
       },
       //点击搜索时执行的方法
       search(searching){
@@ -153,19 +153,23 @@
         })
       },
       //点击编辑时执行的方法
-      handleEdit(index, row){
+      handleEdit(id){
         this.$router.push({
-          path: `/goods_management/${row.id}`
+          path: `/news/prison_affairs_disclosure/${id}/edit`
+        });
+      },
+      //添加狱务公开信息
+      newPrisonAffairsDisclosure(){
+        this.$router.push({
+          path: '/news/prison_affairs_disclosure/new'
         });
       }
     },
     mounted(){
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
-      //获取家属注册信息列表
-      this.getGoods(this.pagination);
-      //获取狱务公开信息
-      this.getPrisonAffairsDisclosure();
+
+      this.getNews();
     },
     components: {
       SelectAndSearch,
@@ -177,16 +181,26 @@
 <style type="text/stylus" lang="stylus" scoped>
   white = #fff
   #prison-affairs-disclosure
-    padding: 20px 1% 0 1%
+    padding: 10px 1% 0 1%
+    > .el-row
+      > .el-col
+        &:first-child
+          .el-button
+            float: right
+            margin-bottom: 10px
     & /deep/ .el-tabs__item
       background: white
     & /deep/ .el-table__body-wrapper
       overflow: visible
     & /deep/ .el-table__row
       td
+        &:nth-child(3)
+          text-align: center
         &:nth-child(2)
           .cell
             img
+              display: block
+              margin: 0 auto
               width: 80px
               height: 80px
         &:last-child

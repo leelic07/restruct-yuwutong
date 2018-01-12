@@ -88,7 +88,6 @@
     methods: {
       ...mapActions({
         getJailsInformation: 'getJailsInformation',//获取监狱基本信息
-        getNews: 'getNews'//获取狱务公开信息
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'//获取监狱基本信息管理的面包屑
@@ -105,12 +104,11 @@
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-      this.getNews();
     }
   }
 </script>
 
-<style type="text/stylus" lang="stylus">
+<style type="text/stylus" lang="stylus" scoped>
   #jail-information-management
     > .el-row
       > .el-col-12
