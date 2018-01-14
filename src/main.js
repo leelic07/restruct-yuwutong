@@ -7,8 +7,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import filters from './filters'
+import VueValidator from 'vue-validator'
 
 Vue.use(ElementUI);
+
+Vue.use(VueValidator);
 
 Vue.config.productionTip = false;
 

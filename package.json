@@ -18,6 +18,7 @@
     "vue-jsonp": "^0.1.7",
     "vue-quill-editor": "^3.0.4",
     "vue-router": "^3.0.1",
+    "vue-validator": "^3.0.0-alpha.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
