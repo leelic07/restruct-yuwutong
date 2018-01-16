@@ -1,43 +1,43 @@
 <template>
   <el-row id="law-new" :gutter="0">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="law" label-width="80px">
-        <el-form-item label="法律名称">
-          <el-input v-model="law.title" placeholder="请填写法律名称"></el-input>
-        </el-form-item>
-        <el-form-item label="法律简介">
-          <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
-          <!--<div class="edit_container">-->
-          <!--<quill-editor-->
-          <!--v-model="jails.description"-->
-          <!--ref="myQuillEditor"-->
-          <!--class="editer"-->
-          <!--:options="editorOption"-->
-          <!--@ready="onEditorReady($event)">-->
-          <!--</quill-editor>-->
-          <!--</div>-->
-          <div id="editor"></div>
-        </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            :auto-upload="false"
-            :limit="1"
-            :with-credentials="true"
-            accept="image/*"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
-        </el-form-item>
-      </el-form>
+        <el-form ref="form" :model="law" label-width="80px">
+          <el-form-item label="法律名称">
+            <el-input v-model="law.title" placeholder="请填写法律名称"></el-input>
+          </el-form-item>
+          <el-form-item label="法律简介">
+            <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
+            <!--<div class="edit_container">-->
+            <!--<quill-editor-->
+            <!--v-model="jails.description"-->
+            <!--ref="myQuillEditor"-->
+            <!--class="editer"-->
+            <!--:options="editorOption"-->
+            <!--@ready="onEditorReady($event)">-->
+            <!--</quill-editor>-->
+            <!--</div>-->
+            <div id="editor"></div>
+          </el-form-item>
+          <el-form-item>
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList"
+              :auto-upload="false"
+              :limit="1"
+              :with-credentials="true"
+              accept="image/*"
+              list-type="picture">
+              <el-button size="normal" type="primary" plain>添加图片</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+            </el-upload>
+          </el-form-item>
+          <el-form-item>
+            <el-button native-type="submit" type="primary" @click="onSubmit" size="small">提交</el-button>
+          </el-form-item>
+        </el-form>
     </el-col>
   </el-row>
 </template>
