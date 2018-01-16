@@ -5,13 +5,6 @@ import * as service from '../base/service'
 
 export default {
   //获取家属注册信息列表
-  getFamilies(params){
-    return new Promise((resolve,reject) => {
-      service.get('/families.json',params).then(res => {
-        resolve(res);
-      }).catch(err => {
-        reject(err);
-      })
-    })
-  }
+  getFamilies: params =>
+    service.get('/families.json', params).then(res => res).catch(err => err)
 }

@@ -5,11 +5,6 @@ import * as service from '../base/service'
 
 export default {
   //更新狱务通版本信息
-  updateVersion(params){
-    return new Promise((resolve,reject) => {
-      service.post('/versions/update',params).then(res => {
-        resolve(res);
-      })
-    })
-  },
+  updateVersion: params =>
+    service.post('/versions/update', params).then(res => res).catch(err => err),
 }

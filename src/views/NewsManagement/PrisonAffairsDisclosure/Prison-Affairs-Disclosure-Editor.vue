@@ -1,9 +1,9 @@
 <template>
   <el-row id="prison-affairs-disclosure-editor" :gutter="0">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="lawForEdit" label-width="80px">
+      <el-form ref="form" :model="newsForEdit" label-width="80px">
         <el-form-item label="新闻名称">
-          <el-input v-model="lawForEdit.title" placeholder="请填写新闻名称"></el-input>
+          <el-input v-model="newsForEdit.title" placeholder="请填写新闻名称"></el-input>
         </el-form-item>
         <el-form-item label="新闻详情">
           <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
@@ -19,7 +19,7 @@
           <div id="editor"></div>
         </el-form-item>
         <el-form-item>
-          <img :src="_$baseUrl + lawForEdit.image_url" alt="">
+          <img :src="_$baseUrl + newsForEdit.image_url" alt="">
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -38,6 +38,10 @@
           </el-upload>
         </el-form-item>
         <el-form-item>
+          <!-- `checked` 为 true 或 false -->
+          <el-checkbox v-model="newsForEdit.is_focus">是否设为焦点新闻</el-checkbox>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
         </el-form-item>
       </el-form>
@@ -52,14 +56,14 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '狱务公开信息管理', '狱务公开', '新闻信息编辑'],
+        breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
         fileList: [],
 //        editorOption: {}//富文本编辑器的配置
       }
     },
     computed: {
       ...mapGetters({
-        lawForEdit: 'lawForEdit'//获取编辑的监狱基本信息
+        newsForEdit: 'newsForEdit'//获取编辑的监狱基本信息
       }),
 //      editor() {
 //        return this.$refs.myQuillEditor.quill
@@ -68,7 +72,7 @@
     methods: {
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getPrisonAffairsById: 'getPrisonAffairsById'//根据id获取需要编辑的新闻信息
+        getNewsById: 'getNewsById'//根据id获取需要编辑的新闻信息
       }),
       onSubmit() {
         console.log('submit!');
@@ -86,7 +90,7 @@
     mounted(){
       this.breadCrumb(this.breadcrumb);
 
-      this.getPrisonAffairsById(this.$route.params.id);
+      this.getNewsById(this.$route.params.id);
     },
     components: {
 //      quillEditor

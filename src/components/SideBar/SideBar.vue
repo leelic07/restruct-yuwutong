@@ -19,63 +19,64 @@
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/registrations">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>家属注册管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/meetings">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>会见申请管理</span>
           </router-link>
         </li>
         <li>
           <router-link to="/mailboxes">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>监狱长信箱</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/prisoners">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>服刑人员信息管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/families">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>家属信息管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/accounts">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>囚犯账户管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/terminals">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>终端管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>数据管理</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="iconfont icon-more pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li>
-              <router-link to="/prisoner/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+              <router-link to="/prisoner/import_index"><i class="iconfont icon-circle-o"></i>罪犯数据导入</router-link>
             </li>
             <li>
-              <router-link to="/prison_term/import_index"><i class="fa fa-circle-o"></i>刑期变动数据导入</router-link>
+              <router-link to="/prison_term/import_index"><i class="iconfont icon-circle-o"></i>刑期变动数据导入</router-link>
             </li>
             <li>
-              <router-link to="/prison_reward_punishment/import_index"><i class="fa fa-circle-o"></i>罪犯奖惩数据导入</router-link>
+              <router-link to="/prison_reward_punishment/import_index"><i class="iconfont icon-circle-o"></i>罪犯奖惩数据导入
+              </router-link>
             </li>
           </ul>
         </li>
@@ -86,27 +87,27 @@
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/goods_management">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>商品管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/orders">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>家属订单</span>
           </router-link>
         </li>
         <li>
           <a href="#">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>订单管理</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="iconfont icon-more pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li>
-              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>罪犯数据导入</router-link>
+              <router-link to="/prisoner_orders/import_index"><i class="iconfont icon-circle-o"></i>罪犯数据导入</router-link>
             </li>
           </ul>
         </li>
@@ -117,33 +118,33 @@
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/jails">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>监狱基本信息管理</span>
           </router-link>
         </li>
         <li class="treeview">
           <router-link to="/laws">
-            <i class="fa fa-folder"></i>
+            <i class="iconfont icon-folder"></i>
             <span>法律法规信息管理</span>
           </router-link>
         </li>
         <li>
-          <a href="#">
-            <i class="fa fa-folder"></i>
+          <a href="#" @click="toggleIcon($event)">
+            <i class="iconfont icon-folder"></i>
             <span>狱务公开信息管理</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="iconfont icon-more pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li>
-              <router-link to="/news/prison_affairs_disclosure"><i class="fa fa-circle-o"></i>狱务公开</router-link>
+              <router-link to="/news/prison_affairs_disclosure"><i class="iconfont icon-circle-o"></i>狱务公开</router-link>
             </li>
             <li>
-              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>工作动态</router-link>
+              <router-link to="/news/working_dynamics"><i class="iconfont icon-circle-o"></i>工作动态</router-link>
             </li>
             <li>
-              <router-link to="/prisoner_orders/import_index"><i class="fa fa-circle-o"></i>投诉建议公示</router-link>
+              <router-link to="/news/complaints_proposals"><i class="iconfont icon-circle-o"></i>投诉建议公示</router-link>
             </li>
           </ul>
         </li>
@@ -157,10 +158,12 @@
   export default {
     data() {
       return {
-        examination: false,
-        goods: false,
+        examination: true,
+        goods: true,
         information: true
       }
+    },
+    methods:{
     }
   }
 </script>

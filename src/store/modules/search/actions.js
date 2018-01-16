@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2018/1/1 0001.
  */
-import http from '../../../service'
+import http from '@/service'
 
 export default {
   //带搜索条件时执行的方法
@@ -16,10 +16,6 @@ export default {
       delete regs.length;
     }
 
-    http.searchAction(regs).then(res => {
-      commit(mutationMethod, res);
-    }).catch(err => {
-      console.log(err);
-    });
+    http.searchAction(regs).then(res => commit(mutationMethod, res)).catch(err => console.log(err));
   }
 }

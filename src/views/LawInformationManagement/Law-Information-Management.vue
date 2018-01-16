@@ -52,7 +52,7 @@
           <!--<div class="box-footer no-padding">-->
           <el-row :gutter="0" class="box-footer no-padding">
             <el-col :span="12">
-              <el-button type="danger" size="small">删除</el-button>
+              <el-button type="danger" size="small" @click="deleteLaw()">删除</el-button>
             </el-col>
             <el-col :span="12">
               <el-button type="primary" size="small" @click="editLaw(lawDetail.id)">编辑</el-button>
@@ -128,6 +128,19 @@
         this.$router.push({
           path: `/laws/${id}/edit`
         });
+      },
+      //点击删除法律法规
+      deleteLaw(){
+        this.$confirm('此操作将删除法律法规，是否继续？','提示',{
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+        }).then(() => {
+          this.$message({
+            type:'success',
+            message:'删除成功'
+          })
+        })
       }
     },
     mounted(){

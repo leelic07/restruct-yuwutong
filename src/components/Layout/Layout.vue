@@ -29,6 +29,7 @@
     },
     watch: {
       $route(to){//监听路由变化
+        window.scrollTo(0, 0);//每次路由变化页面回到最顶部
         if (to.path == loginUrl) {//进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
         } else {
@@ -49,26 +50,14 @@
           password: '123456'
         }
 
-        axios.post('/login',{
-          data:param,
+        axios.post('/login', {
+          data: param,
 //          headers:{'Access-Control-Allow-Origin':'*'}
         }).then(res => {
           console.log(res);
         }).catch(err => {
           console.log(err);
         })
-//        $.ajax({
-//          type: 'post',
-//          url: 'https://www.fushuile.com/login',
-//          data: param,
-//          dataType:'jsonp',
-//          success: res => {
-//            console.log(res);
-//          },
-//          error: err => {
-//            console.log(err);
-//          }
-//        })
       }
     },
     components: {

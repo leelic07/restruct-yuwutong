@@ -68,7 +68,7 @@
           title: '',
           checked: false
         },
-        breadcrumb: ['主页', '狱务公开信息管理', '狱务公开', '新闻信息管理'],
+        breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
         fileList: [],
 //        editorOption: {}//富文本编辑器的配置
         newsType: {//新闻类型
@@ -77,6 +77,24 @@
           '投诉公示': 3
         }
       }
+    },
+    watch: {
+//      $route(to, from){
+//        switch (from.path) {
+//          case '/news/prison_affairs_disclosure':
+//            this.breadCrumb(['主页', '狱务公开信息管理', '狱务公开', '新闻信息管理']);
+//            break;
+//          case '/news/working_dynamics':
+//            this.breadCrumb(['主页', '狱务公开信息管理', '工作动态', '新闻信息管理']);
+//            break;
+//          case '/news/complaints_proposals':
+//            this.breadCrumb(['主页', '狱务公开信息管理', '投诉建议公示', '新闻信息管理']);
+//            break;
+//          default:
+//            this.breadCrumb([]);
+//            break;
+//        }
+//      }
     },
     computed: {
       ...mapGetters({}),

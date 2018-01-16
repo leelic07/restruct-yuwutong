@@ -5,13 +5,6 @@ import * as service from '../base/service'
 
 export default {
   //获取商品列表信息
-  getGoods(params){
-    return new Promise((resolve, reject) => {
-      service.get('/items.json', params).then(res => {
-        resolve(res);
-      }).catch(err => {
-        reject(err);
-      });
-    })
-  }
+  getGoods: params =>
+    service.get('/items.json', params).then(res => res).catch(err => err)
 }

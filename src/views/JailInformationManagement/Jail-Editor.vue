@@ -7,15 +7,14 @@
         </el-form-item>
         <el-form-item label="详情">
           <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
-          <!--<div class="edit_container">-->
-            <!--<quill-editor-->
-              <!--v-model="jails.description"-->
-              <!--ref="myQuillEditor"-->
-              <!--class="editer"-->
-              <!--:options="editorOption"-->
-              <!--@ready="onEditorReady($event)">-->
-            <!--</quill-editor>-->
-          <!--</div>-->
+          <!-- bidirectional data binding（双向数据绑定） -->
+          <quill-editor v-model="jails.description"
+                        ref="myQuillEditor"
+                        :options="editorOption"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)">
+          </quill-editor>
           <div id="editor"></div>
         </el-form-item>
         <el-form-item label="街道">
@@ -59,23 +58,23 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-//  import {quillEditor} from 'vue-quill-editor'
+  import {quillEditor} from 'vue-quill-editor'
 
   export default {
     data() {
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],
-//        editorOption: {}//富文本编辑器的配置
+        editorOption: {}//富文本编辑器的配置
       }
     },
     computed: {
       ...mapGetters({
         jails: 'jails'//获取编辑的监狱基本信息
       }),
-//      editor() {
-//        return this.$refs.myQuillEditor.quill
-//      }
+      editor() {
+        return this.$refs.myQuillEditor.quill
+      }
     },
     methods: {
       ...mapMutations({
@@ -90,15 +89,21 @@
       handlePreview(file) {
         console.log(file);
       },
-//      onEditorReady(editor){
-//
-//      }
+      onEditorBlur(editor){
+        console.log(editor);
+      },
+      onEditorFocus(editor){
+        console.log(editor);
+      },
+      onEditorReady(editor){
+        console.log(editor);
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
     },
     components: {
-//      quillEditor
+      quillEditor
     }
   }
 </script>
@@ -112,9 +117,9 @@
           input
             display: none
       img
-        float:left
-        width:100%
+        float: left
+        width: 100%
       &:last-child
         .el-button
-          float:right
+          float: right
 </style>

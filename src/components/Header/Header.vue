@@ -10,7 +10,8 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" @click="$event.preventDefault()">
+      <a href="#" data-toggle="offcanvas" role="button" @click="$event.preventDefault()">
+        <i class="iconfont icon-category"></i>
         <span class="sr-only">Toggle navigation</span>
       </a>
       <div class="navbar-custom-menu">
@@ -36,7 +37,7 @@
           <!-- Control Sidebar Toggle Button -->
           <li>
             <a href="#" data-toggle="control-sidebar" @click="confirmExit($event)">
-              <i class="fa fa-power-off"></i>
+              <i class="iconfont icon-icon-logout"></i>
             </a>
           </li>
         </ul>
@@ -54,10 +55,10 @@
       //点击退出登录执行的方法
       confirmExit(e) {
         e.preventDefault();
-        this.$confirm('是否退出登录？','提示',{
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
-          type:'warning'
+        this.$confirm('是否退出登录？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         })
       }
     }
@@ -68,16 +69,29 @@
   #main-header
     .user-header
       height: 110px
-    .nav
-      .dropdown
-        .dropdown-menu
-          width: 0
-        .user-footer
-          padding: 5px 0 5px 0
-          > div
-            background: #F2F2F2
-            height: 30px
-            line-height: 30px
-            a
-              width: 100%
+    .navbar
+      > a
+        float: left
+        height: 51px
+        width:46px
+        text-align: center
+        &:hover
+          background: #367FA9
+        i
+          color: #ffffff
+          font-size: 16px
+          font-weight: bold
+          line-height: 51px
+      .nav
+        .dropdown
+          .dropdown-menu
+            width: 0
+          .user-footer
+            padding: 5px 0 5px 0
+            > div
+              background: #F2F2F2
+              height: 30px
+              line-height: 30px
+              a
+                width: 100%
 </style>

@@ -5,24 +5,10 @@ import * as service from '../base/service'
 
 export default {
   //获取囚犯账户信息列表
-  getAccounts(params){
-    return new Promise((resolve,reject) => {
-      service.get('/accounts.json',params).then(res => {
-        resolve(res);
-      }).catch(err => {
-        reject(err);
-      })
-    })
-  },
+  getAccounts: params =>
+    service.get('/accounts.json', params).then(res => res).catch(err => err),
 
   //获取囚犯账户详情信息
-  getAccountDetail(id){
-    return new Promise((resolve,reject) => {
-      service.get(`/accounts/${id}`).then(res => {
-        resolve(res);
-      }).catch(err => {
-        reject(err);
-      })
-    })
-  }
+  getAccountDetail: id =>
+    service.get(`/accounts/${id}`).then(res => res).catch(err => err)
 }

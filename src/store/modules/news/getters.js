@@ -8,15 +8,18 @@ export default {
   //获取狱务公开
   prisonAffairsDisclosure: state => state.prisonAffairsDisclosure,
 
-  prisonAffairsDisclosureTotal: state => state.prisonAffairsDisclosure.length,
+  prisonAffairsDisclosureTotal: state => state.prisonAffairsDisclosureTotal,
 
   //获取工作动态
   workingDynamics: state => state.workingDynamics,
 
-  workingDynamicsTotal: state => state.workingDynamics.length,
+  workingDynamicsTotal: state => state.workingDynamicsTotal,
 
   //获取投诉建议
   complaintsProposals: state => state.complaintsProposals,
 
-  complaintsProposalsTotal: state => state.complaintsProposals.length
+  complaintsProposalsTotal: state => state.complaintsProposalsTotal,
+
+  //获取待编辑的新闻信息
+  newsForEdit:state => state.newsForEdit
 }

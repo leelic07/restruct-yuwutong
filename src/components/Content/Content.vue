@@ -13,29 +13,34 @@
       </ol>
     </section>
     <!-- Main content -->
-    <section class="content" :class="{'content-not-login':isNotLogin}">
-      <router-view></router-view>
+    <section
+      class="content"
+      :class="{'content-not-login':isNotLogin}"
+      v-loading="loading"
+      element-loading-background="rgba(255, 255, 255, 0)">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </section>
     <!-- /.content -->
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapGetters} from 'vuex'
 
   export default {
-    props:{
-      isNotLogin:[Boolean] //是否为登录界面
+    props: {
+      isNotLogin: [Boolean], //是否为登录界面
     },
     data() {
-      return {
-
-      }
+      return {}
     },
-    computed:{
+    computed: {
       //获取vuex数据
       ...mapGetters({
-        'breadCrumb':'breadCrumb'
+        'breadCrumb': 'breadCrumb',//获取面包屑信息
+        loading: 'loading'//获取是否显示遮罩层
       })
     }
   }
@@ -45,12 +50,12 @@
   white = #fff
   #content-wrapper
     &.content-wrapper-login
-      margin-left:0
+      margin-left: 0
     .breadcrumb
-      left:3%
+      left: 3%
     .content-not-login
-      margin-top:30px
+      margin-top: 30px
     .content
-      >div
-        background:white
+      > div
+        background: white
 </style>

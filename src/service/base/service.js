@@ -3,6 +3,7 @@
  */
 import base from '../config/base'
 import axios from 'axios';
+import store from '@/store';
 import {Message} from 'element-ui';
 
 let serviceConfig = base.serviceConfig;
@@ -10,19 +11,12 @@ let serviceConfig = base.serviceConfig;
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
-    // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
-    // config.data = JSON.stringify(config.data);
-    // config.headers = {
-    //   'Content-Type': 'application/x-www-form-urlencoded'
-    // }
-    // if(token){
-    //   config.params = {'token':token}
-    // }
+    if (config.url !== config.baseURL + 'login')
+    //加载loading遮罩层
+      store.commit('showLoading');
     return config;
   },
-  error => {
-    return Promise.reject(err);
-  }
+  error => Promise.reject(err)
 );
 
 
@@ -35,6 +29,7 @@ axios.interceptors.response.use(
     //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
     //   })
     // }
+
     if (response.data.code) {
       switch (response.data.code) {
         case 404:
@@ -45,13 +40,13 @@ axios.interceptors.response.use(
         default:
       }
     }
+    //隐藏loading遮罩层
+    store.commit('hideLoading');
+
     return response;
   },
-  error => {
-    console.log(error);
-    return Promise.reject(error)
-  }
-)
+  error => Promise.reject(error)
+);
 
 
 /**
@@ -78,9 +73,8 @@ export let get = (url, params = {}) =>
 
 export let post = (url, data = {}) => {
   let params = new URLSearchParams();
-  for (let key in data) {
+  for (let key in data)
     params.append(key, data[key]);
-  }
   axios(Object.assign(serviceConfig, {
     url: url,
     method: 'post',

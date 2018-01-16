@@ -1,7 +1,7 @@
 <template>
-  <el-row id="prison-affairs-disclosure" :gutter="0">
+  <el-row id="working-dynamics" :gutter="0">
 
-    <el-row :gutter="0" v-if="!isPrisonAffairsDisclosure">
+    <el-row :gutter="0" v-if="!isWorkingDynamics">
       <!--添加狱务公开信息-->
       <el-col :span="24">
         <el-button size="small" type="primary" plain @click="newPrisonAffairsDisclosure()">添加狱务公开信息</el-button>
@@ -13,7 +13,7 @@
       <!--标签页表格-->
       <el-col :span="24">
         <el-table
-          :data="prisonAffairsDisclosure"
+          :data="workingDynamics"
           border
           stripe
           style="width: 100%">
@@ -56,7 +56,7 @@
       </el-col>
 
       <!--分页组件-->
-      <pagination :total="prisonAffairsDisclosureTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+      <pagination :total="workingDynamicsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                   @currentChange="currentChange"></pagination>
     </el-row>
 
@@ -74,46 +74,47 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '狱务公开信息管理', '狱务公开'],//面包屑数组
+        breadcrumb: ['主页', '狱务公开信息管理', '工作动态'],//面包屑数组
         pagination: {
           limit: 10,//每页显示记录条数
           page: 0//当前显示第几页
         },
         searching: {
-          c: 'prisonAffairsDisclosure',//搜索的模块类型
+          c: 'workingDynamics',//搜索的模块类型
           value: ''//搜索的条件
         },
-        isPrisonAffairsDisclosure: false,//是否是商品信息列表页面
+        isWorkingDynamics: false,//是否是商品信息列表页面
         goodsDescription: ''//商品简介信息
       }
     },
     watch: {
       //从商品管理页面跳转到商品编辑页面使商品列表显示
-      $route(to) {
-        if (to.path === '/news/prison_affairs_disclosure') {
-          this.isPrisonAffairsDisclosure = false;
+      $route(to, from) {
+        if (to.path === '/news/working_dynamics') {
+          this.isWorkingDynamics = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
         } else {
-          this.isPrisonAffairsDisclosure = true;
+          this.isWorkingDynamics = true;
         }
       }
     },
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        prisonAffairsDisclosure: 'prisonAffairsDisclosure',//获取狱务公开信息
-        prisonAffairsDisclosureTotal: 'prisonAffairsDisclosureTotal'//获取狱务公开记录条数
+        workingDynamics: 'workingDynamics',//获取狱务公开信息
+        workingDynamicsTotal: 'workingDynamicsTotal'//获取狱务公开记录条数
       })
     },
     methods: {
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-        searchPrisonAffairsDisclosure: 'searchPrisonAffairsDisclosure'//获取带搜索条件的狱务公开信息
+        searchPrisonAffairsDisclosure: 'searchPrisonAffairsDisclosure'//获取带搜索条件的工作状态信息
       }),
       //映射actions方法
       ...mapActions({
-        getNews: 'getNews'//获取狱务公开信息
+        getNews: 'getNews',//获取狱务公开信息
+        searchGoods: 'searchGoods'
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -155,13 +156,13 @@
       //点击编辑时执行的方法
       handleEdit(id){
         this.$router.push({
-          path: `/news/prison_affairs_disclosure/${id}/edit`
+          path: `/news/working_dynamics/${id}/edit`
         });
       },
       //添加狱务公开信息
       newPrisonAffairsDisclosure(){
         this.$router.push({
-          path: '/news/prison_affairs_disclosure/new'
+          path: '/news/working_dynamics/new'
         });
       }
     },
@@ -180,7 +181,7 @@
 
 <style type="text/stylus" lang="stylus" scoped>
   white = #fff
-  #prison-affairs-disclosure
+  #working-dynamics
     padding: 10px 1% 0 1%
     > .el-row
       > .el-col

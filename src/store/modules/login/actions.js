@@ -4,9 +4,9 @@
 import axios from 'axios'
 
 export default {
-  login({commit},regs){
+  login({commit}, regs){
     delete regs.checked;
-    axios.post('/login',regs).then(res => {
+    axios.post('/login', regs).then(res => {
       console.log(res);
     }).catch(err => {
       console.log(err);
