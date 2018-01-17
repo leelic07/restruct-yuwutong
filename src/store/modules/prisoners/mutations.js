@@ -22,6 +22,6 @@ export default {
     }
 
     state.prisonerList = prisoners;
-    state.total = prisonersList.recordsTotal[0]['COUNT(*)'];
+    state.prisonersTotal = prisonersList.recordsTotal[0]['COUNT(*)'];
   }
 }

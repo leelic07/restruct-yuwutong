@@ -4,6 +4,6 @@
 export default {
   prisonVersions: [],
   familyVersions: [],
-  total: 0,
-  updateVersionResult:{}
+  versionsTotal: 0,
+  updateVersionResult: {}
 }

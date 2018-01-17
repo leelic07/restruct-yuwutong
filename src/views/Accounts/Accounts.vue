@@ -104,7 +104,7 @@
           status: ''//授权状态
         },
         dialogTableVisible: false,
-        accountName:''//查看账户详情对应账户名称
+        accountName: ''//查看账户详情对应账户名称
       }
     },
     computed: {
@@ -112,7 +112,7 @@
       ...mapGetters({
         accounts: 'accounts',
         accountsTotal: 'accountsTotal',//总共记录条数
-        accountDetail:'accountDetail'//账户详情信息
+        accountDetail: 'accountDetail'//账户详情信息
       })
     },
     methods: {
@@ -124,7 +124,7 @@
       ...mapActions({
         getAccounts: 'getAccounts',//获取囚犯账户列表
         searchAction: 'searchAction',//获取带搜索条件的囚犯账户列表
-        getAccountDetail:'getAccountDetail'//获取囚犯账户详情信息
+        getAccountDetail: 'getAccountDetail'//获取囚犯账户详情信息
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -159,7 +159,7 @@
         this.searching.value = searching;
       },
       //显示囚犯账户详情信息
-      showAccountsDetail(account_id,accountName){
+      showAccountsDetail(account_id, accountName){
         this.dialogTableVisible = true;
         this.accountName = `服刑人员：${accountName} 的账户详情`;
         this.getAccountDetail(account_id);

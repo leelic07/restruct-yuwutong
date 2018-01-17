@@ -23,7 +23,7 @@ export default {
       });
     }
     if (goodsList.length) {
-      state.total = goodsList.length;
+      state.goodsTotal = goodsList.length;
     }
   },
   //每页显示条数，当前页码，搜索条件发生变化时执行的方法
@@ -39,11 +39,11 @@ export default {
         }
       }
       if (goodsList.length) {
-        state.total = goodsList.length;
+        state.goodsTotal = goodsList.length;
       }
       goodsList = goodsList.slice(pagination.page, pagination.page + pagination.limit);
     } else {//当不带搜索条件时执行的操作
-      state.total = state.goodsOrigin.length;
+      state.goodsTotal = state.goodsOrigin.length;
       goodsList = state.goodsOrigin.slice(pagination.page, pagination.page + pagination.limit);
     }
 

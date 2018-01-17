@@ -24,7 +24,7 @@ export default {
     }
 
     state.mailBoxes = mailBoxes;
-    state.total = mailBoxesList.mailBoxes.length;
+    state.mailBoxesTotal = mailBoxesList.mailBoxes.length;
   },
 
   //获取邮件详情信息

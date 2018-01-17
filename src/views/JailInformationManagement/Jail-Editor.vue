@@ -1,12 +1,11 @@
 <template>
   <el-row id="jail-editor" :gutter="0">
-    <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="jails" label-width="80px">
+    <el-col :span="11" :offset="6">
+      <el-form ref="form" :model="jails">
         <el-form-item label="监狱名称">
           <el-input v-model="jails.title" placeholder="请填写监狱名称"></el-input>
         </el-form-item>
-        <el-form-item label="详情">
-          <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
+        <el-form-item label="监狱简介">
           <!-- bidirectional data binding（双向数据绑定） -->
           <quill-editor v-model="jails.description"
                         ref="myQuillEditor"
@@ -15,7 +14,6 @@
                         @focus="onEditorFocus($event)"
                         @ready="onEditorReady($event)">
           </quill-editor>
-          <div id="editor"></div>
         </el-form-item>
         <el-form-item label="街道">
           <el-input v-model="jails.street" placeholder="请填写街道名称"></el-input>
@@ -112,6 +110,8 @@
   #jail-editor
     padding-top: 35px
     .el-form-item
+      .el-form-item__label
+        float: none
       .upload-demo
         .el-upload
           input

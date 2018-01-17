@@ -1,22 +1,18 @@
 <template>
   <el-row id="law-editor" :gutter="0">
-    <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="lawForEdit" label-width="80px">
+    <el-col :span="11" :offset="6">
+      <el-form ref="form" :model="lawForEdit">
         <el-form-item label="监狱名称">
           <el-input v-model="lawForEdit.title" placeholder="请填写监狱名称"></el-input>
         </el-form-item>
-        <el-form-item label="详情">
-          <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
-          <!--<div class="edit_container">-->
-          <!--<quill-editor-->
-          <!--v-model="jails.description"-->
-          <!--ref="myQuillEditor"-->
-          <!--class="editer"-->
-          <!--:options="editorOption"-->
-          <!--@ready="onEditorReady($event)">-->
-          <!--</quill-editor>-->
-          <!--</div>-->
-          <div id="editor"></div>
+        <el-form-item label="法律简介">
+          <quill-editor v-model="lawForEdit.contents"
+                        ref="myQuillEditor"
+                        :options="editorOption"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)">
+          </quill-editor>
         </el-form-item>
         <el-form-item>
           <img :src="_$baseUrl + lawForEdit.image_url" alt="">
@@ -47,28 +43,28 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  //  import {quillEditor} from 'vue-quill-editor'
+  import {quillEditor} from 'vue-quill-editor'
 
   export default {
     data() {
       return {
         breadcrumb: ['主页', '法律法规信息管理', '法律信息编辑'],
         fileList: [],
-//        editorOption: {}//富文本编辑器的配置
+        editorOption: {}//富文本编辑器的配置
       }
     },
     computed: {
       ...mapGetters({
         lawForEdit: 'lawForEdit'//获取编辑的监狱基本信息
       }),
-//      editor() {
-//        return this.$refs.myQuillEditor.quill
-//      }
+      editor() {
+        return this.$refs.myQuillEditor.quill
+      }
     },
     methods: {
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getLawById:'getLawById'//根据id获取需要编辑的法律信息
+        getLawById: 'getLawById'//根据id获取需要编辑的法律信息
       }),
       onSubmit() {
         console.log('submit!');
@@ -79,9 +75,15 @@
       handlePreview(file) {
         console.log(file);
       },
-//      onEditorReady(editor){
-//
-//      }
+      onEditorBlur(editor){
+        console.log(editor);
+      },
+      onEditorFocus(editor){
+        console.log(editor);
+      },
+      onEditorReady(editor){
+        console.log(editor);
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
@@ -98,14 +100,16 @@
   #law-editor
     padding-top: 35px
     .el-form-item
+      .el-form-item__label
+        float:none
       .upload-demo
         .el-upload
           input
             display: none
       img
-        float:left
+        float: left
         width: 200px
       &:last-child
         .el-button
-          float:right
+          float: right
 </style>

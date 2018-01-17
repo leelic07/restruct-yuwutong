@@ -4,7 +4,6 @@
       <el-col :span="12">
         <img :src="_$baseUrl + '/system/jails/images/000/000/00' + jails.id + '/thumb/' + jails.image_file_name" alt="">
       </el-col>
-
       <el-col :span="12">
         <el-col :span="24">
           <h3>{{jails.title}}</h3>

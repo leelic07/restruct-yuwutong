@@ -26,7 +26,7 @@ export default {
       }
     }
     state.news = news;
-    state.total = total;
+    state.newsTotal = total;
     state.prisonAffairsDisclosure = state.prisonAffairsDisclosureOrigin = prisonAffairsDisclosure;//保存原始的狱务公开信息
     state.prisonAffairsDisclosureTotal = prisonAffairsDisclosure.length;//狱务公开记录数
     state.workingDynamics = state.workingDynamicsOrigin = workingDynamics;//保存原始的工作动态信息

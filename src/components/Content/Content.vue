@@ -17,7 +17,8 @@
       class="content"
       :class="{'content-not-login':isNotLogin}"
       v-loading="loading"
-      element-loading-background="rgba(255, 255, 255, 0)">
+      element-loading-background="rgba(255, 255, 255, 0.5)">
+      <!--页面路由窗口-->
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -31,7 +32,10 @@
 
   export default {
     props: {
-      isNotLogin: [Boolean], //是否为登录界面
+      isNotLogin: {
+        type:Boolean,
+        required:true
+      }, //是否为登录界面
     },
     data() {
       return {}

@@ -3,6 +3,6 @@
  */
 export default {
   familyOrders: [],//家属订单列表信息
-  orderDetail:{},//订单详情信息
-  total:0//家属订单列表信息记录数
+  orderDetail: {},//订单详情信息
+  ordersTotal: 0//家属订单列表信息记录数
 }

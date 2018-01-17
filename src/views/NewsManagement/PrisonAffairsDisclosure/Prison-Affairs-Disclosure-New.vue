@@ -1,7 +1,7 @@
 <template>
   <el-row id="prison-affairs-disclosure-new" :gutter="0">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="news" label-width="80px">
+      <el-form ref="form" :model="news">
         <el-form-item label="新闻类型">
           <el-select v-model="news.type_id" placeholder="请选择">
             <el-option
@@ -16,17 +16,13 @@
           <el-input v-model="news.title" placeholder="请填写新闻名称"></el-input>
         </el-form-item>
         <el-form-item label="新闻简介">
-          <!--<el-input type="textarea" v-model="jails.description" :rows="8"></el-input>-->
-          <!--<div class="edit_container">-->
-          <!--<quill-editor-->
-          <!--v-model="jails.description"-->
-          <!--ref="myQuillEditor"-->
-          <!--class="editer"-->
-          <!--:options="editorOption"-->
-          <!--@ready="onEditorReady($event)">-->
-          <!--</quill-editor>-->
-          <!--</div>-->
-          <div id="editor"></div>
+          <quill-editor v-model="news.contents"
+                        ref="myQuillEditor"
+                        :options="editorOption"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)">
+          </quill-editor>
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -58,7 +54,7 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  //  import {quillEditor} from 'vue-quill-editor'
+  import {quillEditor} from 'vue-quill-editor'
 
   export default {
     data() {
@@ -66,11 +62,12 @@
         news: {//需要添加的法律信息
           type_id: 1,
           title: '',
+          contents: '',
           checked: false
         },
         breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
         fileList: [],
-//        editorOption: {}//富文本编辑器的配置
+        editorOption: {},//富文本编辑器的配置
         newsType: {//新闻类型
           '狱务公开': 1,
           '工作动态': 2,
@@ -98,9 +95,9 @@
     },
     computed: {
       ...mapGetters({}),
-//      editor() {
-//        return this.$refs.myQuillEditor.quill
-//      }
+      editor() {
+        return this.$refs.myQuillEditor.quill
+      }
     },
     methods: {
       ...mapMutations({
@@ -115,15 +112,18 @@
       handlePreview(file) {
         console.log(file);
       },
-//      onEditorReady(editor){
-//
-//      }
+      onEditorBlur(editor){
+        console.log(editor);
+      },
+      onEditorFocus(editor){
+        console.log(editor);
+      },
+      onEditorReady(editor){
+        console.log(editor);
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-    },
-    components: {
-//      quillEditor
     }
   }
 </script>
@@ -132,6 +132,8 @@
   #prison-affairs-disclosure-new
     padding-top: 35px
     & /deep/ .el-form-item
+      .el-form-item__label
+        float:none
       .upload-demo
         .el-upload
           .el-upload__input

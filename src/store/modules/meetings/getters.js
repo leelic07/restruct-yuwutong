@@ -3,13 +3,9 @@
  */
 export default {
   //获取家属注册数组信息
-  meetings(state){
-    return state.meetings
-  },
+  meetings: state => state.meetings,
 
-  meetingsTotal: state => state.total,
+  meetingsTotal: state => state.meetingsTotal,
 
-  authMeetingsResult(state){
-    return state.authorizationResult
-  }
+  authMeetingsResult: state => state.authorizationResult
 }

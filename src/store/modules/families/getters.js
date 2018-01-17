@@ -5,5 +5,5 @@ export default {
   //获取家属列表信息
   families:state => state.familyList,
 
-  familiesTotal:state => state.total
+  familiesTotal:state => state.familiesTotal
 }

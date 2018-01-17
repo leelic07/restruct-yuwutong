@@ -27,7 +27,7 @@
               <li class="user-footer">
                 <div class="text-center">
                   <router-link to="/super_user/modify_index" class="pull-left">
-                    <i class="fa fa-pencil"></i>
+                    <i class="iconfont icon-edit"></i>
                     修改用户密码
                   </router-link>
                 </div>

@@ -3,11 +3,11 @@
  */
 export default {
   //获取家属订单信息列表
-  familyOrders:state => state.familyOrders,
+  familyOrders: state => state.familyOrders,
 
   //获取订单详情信息
-  orderDetail:state => state.orderDetail,
+  orderDetail: state => state.orderDetail,
 
   //获取家属订单信息列表总记录数
-  ordersTotal:state => state.total
+  ordersTotal: state => state.ordersTotal
 }

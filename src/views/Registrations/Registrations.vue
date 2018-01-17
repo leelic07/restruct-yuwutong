@@ -136,14 +136,12 @@
         }
       }
     },
-    watch:{
-
-    },
+    watch: {},
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
         registrations: 'registrations',
-        uuidImages:'uuidImages',
+        uuidImages: 'uuidImages',
         registrationsTotal: 'registrationsTotal',
         authRegistrationsResult: 'authRegistrationsResult'
       })
@@ -157,25 +155,25 @@
       //映射actions方法
       ...mapActions({
         getRegistrations: 'getRegistrations',//获取家属注册列表
-        getUuidImage:'getUuidImage',//获取对应家属得照片地址
+        getUuidImage: 'getUuidImage',//获取对应家属得照片地址
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
         authorizeRegistrations: 'authorizeRegistrations'//家属注册信息授权
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.$set(this.pagination,'page',0);
-        this.$set(this.pagination,'limit',limit);
+        this.$set(this.pagination, 'page', 0);
+        this.$set(this.pagination, 'limit', limit);
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination,'page',page - 1);
+        this.$set(this.pagination, 'page', page - 1);
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
         if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching,this.pagination));
+          this.searchAction(Object.assign(this.searching, this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
@@ -186,7 +184,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination,'page',0);
+        this.$set(this.pagination, 'page', 0);
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -208,10 +206,10 @@
           this.agreeText = '确定申请通过？';
           this.disagreeText = '返回';
         } else if (agreeText == '提交') {
-          this.$set(this.authorization,'status','DENIED');
+          this.$set(this.authorization, 'status', 'DENIED');
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         } else {
-          this.$set(this.authorization,'status','PASSED');
+          this.$set(this.authorization, 'status', 'PASSED');
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         }
       },

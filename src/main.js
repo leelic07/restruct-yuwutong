@@ -9,9 +9,7 @@ import store from './store'
 import filters from './filters'
 import '@/assets/icons/iconfont.css'
 import VueQuillEditor from 'vue-quill-editor'
-import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
 
 Vue.use(ElementUI);
 
@@ -19,12 +17,10 @@ Vue.use(VueQuillEditor);
 
 Vue.config.productionTip = false;
 
-const baseUrl = 'https://www.fushuile.com';
-
-Vue.prototype._$baseUrl = baseUrl;
+Vue.prototype._$baseUrl = 'https://www.fushuile.com';
 
 //声明过滤器
-Object.keys(filters).forEach((key)=>Vue.filter(key,filters[key]));
+Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
 
 /* eslint-disable no-new */
 new Vue({
@@ -32,5 +28,5 @@ new Vue({
   router,
   store,
   template: '<Layout/>',
-  components: { Layout }
+  components: {Layout}
 })

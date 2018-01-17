@@ -30,11 +30,10 @@
     watch: {
       $route(to){//监听路由变化
         window.scrollTo(0, 0);//每次路由变化页面回到最顶部
-        if (to.path == loginUrl) {//进入登陆页面
+        if (to.path === loginUrl) //进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
-        } else {
+        else
           this.isNotLogin = true;
-        }
       }
     },
     methods: {
@@ -52,7 +51,6 @@
 
         axios.post('/login', {
           data: param,
-//          headers:{'Access-Control-Allow-Origin':'*'}
         }).then(res => {
           console.log(res);
         }).catch(err => {
@@ -61,7 +59,7 @@
       }
     },
     components: {
-      SideBar,
+      'side-bar': SideBar,
       'nav-header': Header,
       'nav-footer': Footer,
       'content-page': Content

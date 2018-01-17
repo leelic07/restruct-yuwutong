@@ -2,14 +2,14 @@
  * Created by Administrator on 2018/1/1 0001.
  */
 export default {
-  getMeetings(state,meetingList) {
+  getMeetings(state, meetingList) {
     state.meetings = meetingList.meetings;
-    state.total = meetingList.total;
+    state.meetingsTotal = meetingList.total;
   },
-  authorizeMeetings(state,authorizationResult) {
+  authorizeMeetings(state, authorizationResult) {
     state.authorizationResult = authorizationResult;
   },
-  setAuthMeetingsResult(state,authorizationResult) {
+  setAuthMeetingsResult(state, authorizationResult) {
     state.authorizationResult = authorizationResult;
   }
 }

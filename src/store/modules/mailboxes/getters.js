@@ -2,9 +2,9 @@
  * Created by Administrator on 2018/1/4/004.
  */
 export default {
-  mailBoxes:state => state.mailBoxes,
+  mailBoxes: state => state.mailBoxes,
 
-  mailBoxesTotal:state => state.total,
+  mailBoxesTotal: state => state.mailBoxesTotal,
 
-  mailDetail:state => state.mailDetail
+  mailDetail: state => state.mailDetail
 }

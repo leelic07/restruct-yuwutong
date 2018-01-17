@@ -19,7 +19,7 @@ export default {
 
     state.prisonVersions = prisonVersions;
     state.familyVersions = familyVersions;
-    state.total = versionList.total[0]['COUNT(*)']
+    state.versionsTotal = versionList.total[0]['COUNT(*)']
   },
 
   //更新狱务通版本信息

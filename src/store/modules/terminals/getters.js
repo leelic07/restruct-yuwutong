@@ -3,7 +3,7 @@
  */
 export default {
   //获取囚犯账户列表信息
-  terminals:state => state.terminals,
+  terminals: state => state.terminals,
 
-  terminalsTotal:state => state.total
+  terminalsTotal: state => state.terminalsTotal
 }

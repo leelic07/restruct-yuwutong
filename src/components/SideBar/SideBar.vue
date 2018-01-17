@@ -163,8 +163,7 @@
         information: true
       }
     },
-    methods:{
-    }
+    methods: {}
   }
 </script>
 
