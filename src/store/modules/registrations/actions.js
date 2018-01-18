@@ -12,7 +12,7 @@ export default {
   authorizeRegistrations({commit}, regs){
     let id = regs.id;
     delete regs.id;
-    http.authorizeRegistrations(regs, id).then(res => commit('authorizeRegistrations', res)).catch(err => console.log(err));
+    http.authorizeRegistrations(regs, id).then(res => commit('authorizeRegistrations', Object.assign(res, {'id': id}))).catch(err => console.log(err));
   },
 
   //获取家属注册信息的照片url

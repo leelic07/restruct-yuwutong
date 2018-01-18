@@ -29,4 +29,4 @@ new Vue({
   store,
   template: '<Layout/>',
   components: {Layout}
-})
+});

@@ -141,7 +141,7 @@
       },
       //根据是否有搜索内容调用不同的接口
       change(changeParams){
-        if (this.searching.value != '') {
+        if (this.searching.value !== '') {
           this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
         } else {
           if (this.pagination.hasOwnProperty('value')) {

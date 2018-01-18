@@ -61,7 +61,7 @@
                 </el-button>
                 <el-button v-else-if="scope.row.status == 'PASSED'"
                            size="mini"
-                           @click="handleAuthorization(scope.$index, scope.row)">撤回
+                           @click="handleWithdraw(scope.$index, scope.row)">撤回
                 </el-button>
               </template>
             </el-table-column>
@@ -75,30 +75,61 @@
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息授权弹出框-->
-    <el-dialog title="授权" :visible.sync="dialogVisible">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
+      <!--点击授权时显示的对话框内容-->
+      <el-row :gutter="0" v-if="!isWithdraw">
+        <el-row :gutter="0" v-show="authMeetingsResult.code">
+          <el-col :span="24">
+            <el-alert v-if="authMeetingsResult.code == 200"
+                      title="授权成功"
+                      type="success"
+                      :description="authMeetingsResult.msg"
+                      show-icon
+                      :closable="false">
+            </el-alert>
+          </el-col>
+        </el-row>
 
-      <el-row :gutter="0" v-show="authMeetingsResult.code">
-        <el-col :span="24">
-          <el-alert v-if="authMeetingsResult.code == 200"
-                    title="授权成功"
-                    type="success"
-                    :description="authMeetingsResult.msg"
-                    show-icon
-                    :closable="false">
-          </el-alert>
-        </el-col>
+        <el-row :gutter="0" v-show="!authMeetingsResult.code">
+          <el-col :span="24" v-if="showRemarks" class="refuse-reason">
+            <el-col :span="24">
+              <p>请选择驳回原因</p>
+            </el-col>
+            <el-select v-model="authorization.remarks">
+              <el-option v-for="remark,index in remarks"
+                         :value="remark"
+                         :label="remark"
+                         :key="index"
+              ></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="24">
+            <el-button plain @click="agreeAuthorization(agreeText)">{{agreeText}}</el-button>
+          </el-col>
+          <el-col :span="24">
+            <el-button plain @click="disagreeAuthorization(disagreeText)">{{disagreeText}}</el-button>
+          </el-col>
+          <el-col :span="24">
+            <el-button type="danger" plain @click="dialogVisible = false">关闭</el-button>
+          </el-col>
+        </el-row>
+
       </el-row>
 
-      <el-row :gutter="0" v-show="!authMeetingsResult.code">
-        <el-col :span="24">
-          <el-button plain @click="agreeAuthorization(agreeText)">{{agreeText}}</el-button>
-        </el-col>
-        <el-col :span="24">
-          <el-button plain @click="disagreeAuthorization(disagreeText)">{{disagreeText}}</el-button>
-        </el-col>
-        <el-col :span="24">
-          <el-button type="danger" plain @click="dialogVisible = false">关闭</el-button>
-        </el-col>
+      <!--点击撤回时显示的对话框内容-->
+      <el-row :gutter="0" v-if="isWithdraw">
+        <el-row :gutter="0">
+          <el-input type="textarea"
+                    autosize
+                    placeholder="请输入撤回理由"
+                    v-model="authorization.remarks"
+          ></el-input>
+        </el-row>
+
+        <el-row :gutter="0" class="btn-box">
+          <el-button type="danger" @click="dialogVisible = false">取消</el-button>
+          <el-button>确定</el-button>
+        </el-row>
       </el-row>
 
     </el-dialog>
@@ -133,7 +164,10 @@
         },
         applicationStatus: {
           'color': 'orange'
-        }
+        },
+        isWithdraw: false,//是否是撤回执行的方法
+        dialogTitle: '',//对话框的标题文字
+        showRemarks: false//是否显示拒绝家属会见理由
       }
     },
     computed: {
@@ -141,7 +175,8 @@
       ...mapGetters({
         meetings: 'meetings',
         meetingsTotal: 'meetingsTotal',
-        authMeetingsResult: 'authMeetingsResult'
+        authMeetingsResult: 'authMeetingsResult',
+        remarks: 'remarks'//获取家属会见拒绝理由
       })
     },
     methods: {
@@ -158,19 +193,19 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.$set(this.pagination,'page',0);
-        this.$set(this.pagination,'limit',limit);
+        this.$set(this.pagination, 'page', 0);
+        this.$set(this.pagination, 'limit', limit);
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination,'page',page - 1);
+        this.$set(this.pagination, 'page', page - 1);
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
         if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching,this.pagination));
+          this.searchAction(Object.assign(this.searching, this.pagination));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
             delete this.pagination.c;
@@ -181,7 +216,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination,'page',0);
+        this.$set(this.pagination, 'page', 0);
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -189,32 +224,46 @@
         this.searching.value = searching;
       },
       //点击授权时执行的方法
-      handleAuthorization(index, row) {
+      handleAuthorization(index, row){
+        this.showRemarks = false;
+        this.dialogTitle = '授权';
+        this.authorization.remarks = '您的身份信息错误';
+        this.isWithdraw = false;
         this.dialogVisible = true;
         this.authorizeId = row.id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
         this.setAuthMeetingsResult({});
       },
+      //点击撤回执行的方法
+      handleWithdraw(index, row){
+        this.dialogTitle = '撤回';
+        this.authorization.remarks = '';
+        this.isWithdraw = true;
+        this.dialogVisible = true;
+      },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){
-        if (agreeText == '同意') {
+        if (agreeText === '同意') {
           this.agreeText = '确定申请通过？';
           this.disagreeText = '返回';
-        } else if (agreeText == '提交') {
-          this.authorization.status = 'DENIED';
-          this.authorizeMeetings(Object.assign(this.authorization, {id: this.authorizeId}));
         } else {
-          this.authorization.status = 'PASSED';
-          this.authorizeMeetings(Object.assign(this.authorization, {id: this.authorizeId}));
+          if (agreeText === '提交') {
+            this.$set(this.authorization, 'status', 'DENIED');
+          } else {
+            this.$set(this.authorization, 'status', 'PASSED');
+          }
+          this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         }
       },
       //点击不同意或者返回执行的方法
       disagreeAuthorization(disagreeText){
-        if (disagreeText == '返回') {
+        if (disagreeText === '返回') {
+          this.showRemarks = false;
           this.disagreeText = '不同意';
           this.agreeText = '同意';
         } else {
+          this.showRemarks = true;
           this.agreeText = '提交';
           this.disagreeText = '返回';
         }
@@ -250,12 +299,20 @@
       color: #3C8DBC
       font-weight: bold
     .el-dialog__body
-      img
-        float: left
-        width: 150px
-        height: 150px
-      .el-col-24
-        margin-top: 5px
-        .el-button
-          width: 100%
+      .el-row
+        &.btn-box
+          margin-top: 20px
+          .el-button
+            float: right
+            margin-left: 3%
+        img
+          float: left
+          width: 150px
+          height: 150px
+        .el-col-24
+          &.refuse-reason
+            margin-bottom: 10px
+          margin-top: 5px
+          .el-select, .el-button
+            width: 100%
 </style>

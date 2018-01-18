@@ -7,16 +7,21 @@ export default {
     state.registrationsTotal = registrationList.total;
   },
   authorizeRegistrations(state, authorizationResult) {
+    let id = authorizationResult.id;
+    for (let reg of state.registrations) {
+      if (reg.id === Number(id)) {
+        if (authorizationResult.code === 200)
+          reg.status = 'PASSED';
+        else
+          reg.status = 'DENIED';
+      }
+    }
     state.authorizationResult = authorizationResult;
   },
   setAuthRegistrationsResult(state, authorizationResult) {
     state.authorizationResult = authorizationResult;
   },
   getUuidImages(state, images) {
-    let https = 'https://www.fushuile.com';
-    for (let item in images) {
-      images[item] = https + images[item];
-    }
     state.uuidImages = images;
   }
 }

@@ -7,11 +7,20 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
   export default {
     data() {
       return {
-
+        breadcrumb: ['主页']
       }
+    },
+    methods: {
+      ...mapMutations({
+        breadCrumb: 'breadCrumb'
+      })
+    },
+    mounted(){
+      this.breadCrumb(this.breadcrumb);
     }
   }
 </script>
@@ -19,5 +28,5 @@
 <style type="text/stylus" lang="stylus">
   #dash-board
     h1
-      margin-top:100px
+      margin-top: 100px
 </style>

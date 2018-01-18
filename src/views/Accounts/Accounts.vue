@@ -61,15 +61,15 @@
         stripe
         style="width: 100%">
         <el-table-column
-          prop="account_money"
+          prop="amount"
           label="操作金额">
         </el-table-column>
         <el-table-column
-          prop="account_reason"
+          prop="reason"
           label="操作原因">
         </el-table-column>
         <el-table-column
-          prop="account_time"
+          prop="created_at"
           label="操作时间">
         </el-table-column>
       </el-table>
@@ -158,7 +158,7 @@
       searchingChange(searching){
         this.searching.value = searching;
       },
-      //显示囚犯账户详情信息
+      //根据账户id囚犯账户详情信息
       showAccountsDetail(account_id, accountName){
         this.dialogTableVisible = true;
         this.accountName = `服刑人员：${accountName} 的账户详情`;

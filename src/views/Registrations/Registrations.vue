@@ -86,12 +86,24 @@
       <el-row :gutter="0">
         <el-col :span="24">
           <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1" :key="$index">
-            <img :src='imgSrc' alt="" @mouseover="amplifyImage($event)">
+            <img :src='_$baseUrl + imgSrc' alt="" @mouseover="amplifyImage($event)">
           </el-col>
         </el-col>
       </el-row>
 
       <el-row :gutter="0" v-show="!authRegistrationsResult.code">
+        <el-col :span="24" v-if="showRemarks" class="refuse-reason">
+          <el-col :span="24">
+            <p>请选择驳回原因</p>
+          </el-col>
+          <el-select v-model="authorization.remarks">
+            <el-option v-for="remark,index in remarks"
+                       :value="remark"
+                       :label="remark"
+                       :key="index"
+            ></el-option>
+          </el-select>
+        </el-col>
         <el-col :span="24">
           <el-button plain @click="agreeAuthorization(agreeText)">{{agreeText}}</el-button>
         </el-col>
@@ -118,7 +130,6 @@
       return {
         breadcrumb: ['主页', '家属注册管理'],//面包屑数组
         tabNum: 'first',
-        total: 1000,//总共记录条数
         pagination: {
           limit: 10,//每页显示记录条数
           page: 0//当前显示第几页
@@ -133,7 +144,8 @@
         authorization: {
           remarks: '',//授权评语
           status: ''//授权状态
-        }
+        },
+        showRemarks: false//是否显示拒绝家属注册理由
       }
     },
     watch: {},
@@ -143,7 +155,8 @@
         registrations: 'registrations',
         uuidImages: 'uuidImages',
         registrationsTotal: 'registrationsTotal',
-        authRegistrationsResult: 'authRegistrationsResult'
+        authRegistrationsResult: 'authRegistrationsResult',
+        remarks: 'remarks'//获取拒绝家属注册的理由
       })
     },
     methods: {
@@ -193,7 +206,9 @@
       },
       //点击授权时执行的方法
       handleAuthorization(index, row) {
+        this.showRemarks = false;
         this.dialogVisible = true;
+        this.authorization.remarks = '您的身份信息错误';
         this.authorizeId = row.id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
@@ -202,23 +217,26 @@
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){
-        if (agreeText == '同意') {
+        if (agreeText === '同意') {
           this.agreeText = '确定申请通过？';
           this.disagreeText = '返回';
-        } else if (agreeText == '提交') {
-          this.$set(this.authorization, 'status', 'DENIED');
-          this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         } else {
-          this.$set(this.authorization, 'status', 'PASSED');
+          if (agreeText === '提交') {
+            this.$set(this.authorization, 'status', 'DENIED');
+          } else {
+            this.$set(this.authorization, 'status', 'PASSED');
+          }
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         }
       },
       //点击不同意或者返回执行的方法
       disagreeAuthorization(disagreeText){
-        if (disagreeText == '返回') {
+        if (disagreeText === '返回') {
+          this.showRemarks = false;
           this.disagreeText = '不同意';
           this.agreeText = '同意';
         } else {
+          this.showRemarks = true;
           this.agreeText = '提交';
           this.disagreeText = '返回';
         }
@@ -263,7 +281,9 @@
         width: 150px
         height: 150px
       .el-col-24
+        &.refuse-reason
+          margin-bottom: 10px
         margin-top: 5px
-        .el-button
+        .el-select, .el-button
           width: 100%
 </style>

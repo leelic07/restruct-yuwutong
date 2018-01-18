@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header" v-if="isNotLogin">
       <ol class="breadcrumb">
-        <li v-for="bc in breadCrumb">
+        <li v-for="bc in breadcrumb">
           <router-link to="/">
             <!--<i class="fa fa-dashboard"></i> -->
             {{bc}}
@@ -19,9 +19,9 @@
       v-loading="loading"
       element-loading-background="rgba(255, 255, 255, 0.5)">
       <!--页面路由窗口-->
-      <keep-alive>
+      <!--<keep-alive>-->
         <router-view></router-view>
-      </keep-alive>
+      <!--</keep-alive>-->
     </section>
     <!-- /.content -->
   </div>
@@ -43,7 +43,7 @@
     computed: {
       //获取vuex数据
       ...mapGetters({
-        'breadCrumb': 'breadCrumb',//获取面包屑信息
+        breadcrumb: 'breadcrumb',//获取面包屑信息
         loading: 'loading'//获取是否显示遮罩层
       })
     }

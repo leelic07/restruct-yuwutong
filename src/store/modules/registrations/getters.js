@@ -11,7 +11,9 @@ export default {
   authRegistrationsResult: state => state.authorizationResult,
 
   //获取家属照片数组
-  uuidImages: state => state.uuidImages
+  uuidImages: state => state.uuidImages,
 
+  //获取拒绝家属申请理由数组
+  remarks: state => state.remarks
 }
 

@@ -7,7 +7,7 @@ export default {
     let prisoners = [];
     let total = 0;
 
-    //判断是调用search接口还是调用families接口的到不同的入参
+    //判断是调用search接口还是调用families接口得到不同的入参
     if (familyList.data !== undefined) {
       families = familyList.data.families_data;
       prisoners = familyList.data.prisoners_data;
@@ -28,6 +28,6 @@ export default {
     }
 
     state.familyList = families;
-    state.familiesTotal = familiesTotal;
+    state.familiesTotal = total;
   }
 }
