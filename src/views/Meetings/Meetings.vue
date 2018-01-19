@@ -233,7 +233,7 @@
         this.authorizeId = row.id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
-        this.setAuthMeetingsResult({});
+        this.setAuthMeetingsResult({});//重置家属会见授权结果
       },
       //点击撤回执行的方法
       handleWithdraw(index, row){

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapMutations,mapActions} from 'vuex'
 
   export default {
     data() {
@@ -61,6 +61,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        uploadPrisoners:'uploadPrisoners'
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
@@ -82,7 +85,7 @@
 
 <style type="text/stylus" lang="stylus">
   #prisoner-import-index
-    min-height:370px
+    min-height: 370px
     .download-box
       margin-top: 35px
     .title-box
@@ -98,24 +101,4 @@
           float: left
         input[type=file]
           display: none
-
-  /*.button-box*/
-  /*.el-col:first-child*/
-  /*position:relative*/
-  /*margin-top:15px*/
-  /*input[type=file]*/
-  /*position:absolute*/
-  /*top:0*/
-  /*left:0*/
-  /*width:126px*/
-  /*height:40px*/
-  /*opacity:0*/
-  /*&:hover*/
-  /*cursor:pointer*/
-  /*.el-button*/
-  /*color:#6096EE*/
-  /*border-color:#6096EE*/
-  /*.el-col:nth-child(2)*/
-  /*margin-top:25px*/
-  /*margin-bottom:35px*/
 </style>

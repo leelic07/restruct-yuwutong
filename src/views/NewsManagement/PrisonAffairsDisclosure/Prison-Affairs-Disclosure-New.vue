@@ -1,6 +1,6 @@
 <template>
   <el-row id="prison-affairs-disclosure-new" :gutter="0">
-    <el-col :span="10" :offset="7">
+    <el-col :span="11" :offset="6">
       <el-form ref="form" :model="news">
         <el-form-item label="新闻类型">
           <el-select v-model="news.type_id" placeholder="请选择">

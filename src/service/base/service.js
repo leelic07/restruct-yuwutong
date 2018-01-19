@@ -5,12 +5,19 @@ import base from '../config/base'
 import axios from 'axios';
 import store from '@/store';
 import {Message} from 'element-ui';
+import qs from 'qs'
 
 let serviceConfig = base.serviceConfig;
 
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
+    // console.log(config);
+    // config.baseURL = 'https://www.fushuile.com';
+    // config.withCredentials = true;
+    // config.headers = {
+    //   'Content-Type': "application/x-www-form-urlencoded"
+    // };
     if (config.url !== config.baseURL + 'login')
     //加载loading遮罩层
       store.commit('showLoading');
@@ -93,9 +100,8 @@ export let patch = (url, data = {}) =>
   axios(Object.assign(serviceConfig, {
     url: url,
     method: 'patch',
-    data: data
+    data: qs.stringify(data)
   })).then(res => res.data).catch(err => err);
-
 
 /**
  * 封装put请求

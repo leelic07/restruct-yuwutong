@@ -1,6 +1,6 @@
 <template>
   <el-row id="prison-affairs-disclosure-editor" :gutter="0">
-    <el-col :span="10" :offset="7">
+    <el-col :span="11" :offset="6">
       <el-form ref="form" :model="newsForEdit">
         <el-form-item label="新闻名称">
           <el-input v-model="newsForEdit.title" placeholder="请填写新闻名称"></el-input>

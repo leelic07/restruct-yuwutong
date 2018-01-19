@@ -213,7 +213,7 @@
         this.agreeText = '同意';
         this.disagreeText = '不同意';
         this.getUuidImage(row.id);
-        this.setAuthRegistrationsResult({});
+        this.setAuthRegistrationsResult({});//重置家属注册授权结果
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){
