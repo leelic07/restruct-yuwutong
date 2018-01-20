@@ -31,9 +31,10 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="_$baseUrl + '/prisoner_reward_punishment/upload'"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
+          :on-success="handleSuccess"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -60,7 +61,24 @@
         fileList: []
       }
     },
+    watch: {
+      prisonerRewardPunishmentResult(newValue){
+        if (newValue.code === 200)
+          this.$message({
+            type: 'success',
+            message: newValue.msg
+          })
+      }
+    },
+    computed: {
+      ...mapGetters({
+        prisonerRewardPunishmentResult: 'prisonerRewardPunishmentResult'//获取罪犯奖惩模板导入结果
+      })
+    },
     methods: {
+      ...mapActions({
+        importPrisonerRewardPunishment: 'importPrisonerRewardPunishment'//罪犯奖惩模板上传成功后将罪犯奖惩模板导入到服务端
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
@@ -72,6 +90,9 @@
       },
       handlePreview(file) {
         console.log(file);
+      },
+      handleSuccess(response, file, fileList){
+        this.importPrisonerRewardPunishment({'filepath': response.path});
       }
     },
     mounted(){

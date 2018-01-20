@@ -44,7 +44,11 @@ axios.interceptors.response.use(
           break;
         case 200:
           break;
+        case 500:
+          Message.error(response.data.msg);
+          break;
         default:
+          break;
       }
     }
     //隐藏loading遮罩层

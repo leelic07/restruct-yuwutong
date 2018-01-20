@@ -12,7 +12,12 @@
                         :options="editorOption"
                         @blur="onEditorBlur($event)"
                         @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
+                        @ready="onEditorReady($event)"
+                        @change="onEditorChange($event)">
+            <!--<div class="toolbar" slot="toolbar">-->
+              <!--<el-button>添加图片</el-button>-->
+              <!--<input type="file" style="display:none !important;">-->
+            <!--</div>-->
           </quill-editor>
         </el-form-item>
         <el-form-item label="街道">
@@ -63,7 +68,11 @@
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],
-        editorOption: {}//富文本编辑器的配置
+        editorOption: {
+//          modules: {
+//            toolbar: '#toolbar'
+//          }
+        }//富文本编辑器的配置
       }
     },
     computed: {
@@ -95,6 +104,9 @@
       },
       onEditorReady(editor){
         console.log(editor);
+      },
+      onEditorChange(editor){
+        console.log('editor has been changed' + editor);
       }
     },
     mounted(){

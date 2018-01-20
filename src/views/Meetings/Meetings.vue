@@ -128,7 +128,7 @@
 
         <el-row :gutter="0" class="btn-box">
           <el-button type="danger" @click="dialogVisible = false">取消</el-button>
-          <el-button>确定</el-button>
+          <el-button @click="confirmWithdraw()">确定</el-button>
         </el-row>
       </el-row>
 
@@ -167,7 +167,9 @@
         },
         isWithdraw: false,//是否是撤回执行的方法
         dialogTitle: '',//对话框的标题文字
-        showRemarks: false//是否显示拒绝家属会见理由
+        showRemarks: false,//是否显示拒绝家属会见理由
+        authorizeId: '',//授权家属会见id
+        callbackId: ''//撤回家属会见id
       }
     },
     computed: {
@@ -189,7 +191,7 @@
       ...mapActions({
         getMeetings: 'getMeetings',//获取家属注册列表
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
-        authorizeMeetings: 'authorizeMeetings'//家属注册信息授权
+        authorizeMeetings: 'authorizeMeetings',//家属注册信息授权
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -230,7 +232,7 @@
         this.authorization.remarks = '您的身份信息错误';
         this.isWithdraw = false;
         this.dialogVisible = true;
-        this.authorizeId = row.id;
+        this.authorizeId = row.id;//获取授权消息的id
         this.agreeText = '同意';
         this.disagreeText = '不同意';
         this.setAuthMeetingsResult({});//重置家属会见授权结果
@@ -239,8 +241,12 @@
       handleWithdraw(index, row){
         this.dialogTitle = '撤回';
         this.authorization.remarks = '';
+        this.authorizeId = row.id;//获取撤回消息的id
         this.isWithdraw = true;
         this.dialogVisible = true;
+      },
+      confirmWithdraw(){
+        this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId, status: 'DENIED'}));
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){

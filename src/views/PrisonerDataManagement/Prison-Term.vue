@@ -31,10 +31,11 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="_$baseUrl + '/prison_term/upload'"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"
+          :on-success="handleSuccess"
           :auto-upload="false"
           :limit="1"
           accept=".xls"
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -60,7 +61,24 @@
         fileList: []
       }
     },
+    watch: {
+      prisonTermResult(newValue){
+        if (newValue.code === 200)
+          this.$message({
+            type: 'success',
+            message: newValue.msg
+          })
+      }
+    },
+    computed: {
+      ...mapGetters({
+        prisonTermResult: 'prisonTermResult'//获取刑期变动模板导入结果
+      })
+    },
     methods: {
+      ...mapActions({
+        importPrisonTerm: 'importPrisonTerm'//刑期变动模板上传成功后将刑期变动模板导入到服务端
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
@@ -72,6 +90,9 @@
       },
       handlePreview(file) {
         console.log(file);
+      },
+      handleSuccess(response, file, fileList){
+        this.importPrisonTerm({'filepath': response.path});
       }
     },
     mounted(){

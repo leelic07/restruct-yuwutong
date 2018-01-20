@@ -17,5 +17,5 @@ export default {
       'id': id,
       'status': status
     }))).catch(err => console.log(err))
-  }
+  },
 }
