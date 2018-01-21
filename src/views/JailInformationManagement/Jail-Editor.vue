@@ -15,10 +15,24 @@
                         @ready="onEditorReady($event)"
                         @change="onEditorChange($event)">
             <!--<div class="toolbar" slot="toolbar">-->
-              <!--<el-button>添加图片</el-button>-->
-              <!--<input type="file" style="display:none !important;">-->
+            <!--<el-button>添加图片</el-button>-->
+            <!--<input type="file" style="display:none !important;">-->
+            <!--</div>-->
+            <!--<div id="toolbar" slot="toolbar">-->
+            <!--<button class="ql-bold">Bold</button>-->
+            <!--<button class="ql-italic">Italic</button>-->
+            <!--<select class="ql-size">-->
+            <!--<option value="small"></option>-->
+            <!--<option selected></option>-->
+            <!--<option value="large"></option>-->
+            <!--<option value="huge"></option>-->
+            <!--</select>-->
+            <!--&lt;!&ndash; Add subscript and superscript buttons &ndash;&gt;-->
+            <!--&lt;!&ndash;<button type="button" class="ql-image"></button>&ndash;&gt;-->
+            <!--<button type="button" @click="customButtonClick">img</button>-->
             <!--</div>-->
           </quill-editor>
+          <input type="file" class="custom-input" @change='upload($event)' style='display: none !important;'>
         </el-form-item>
         <el-form-item label="街道">
           <el-input v-model="jails.street" placeholder="请填写街道名称"></el-input>
@@ -65,13 +79,45 @@
 
   export default {
     data() {
+      const _this = this;
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],
         editorOption: {
-//          modules: {
-//            toolbar: '#toolbar'
-//          }
+          modules: {
+//            toolbar: '#toolbar',
+            toolbar: {
+              container: [
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['blockquote', 'code-block'],
+
+                [{'header': 1}, {'header': 2}],               // custom button values
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                [{'direction': 'rtl'}],                         // text direction
+
+                [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+                [{'font': []}],
+                [{'align': []}],
+                ['image', 'link'],
+                ['clean']                                         // remove formatting button
+              ],
+              handlers: {
+                'image': function (value) {
+                  if (value)
+                    this.quill.format('image', _this.$el.querySelector('.custom-input').click());
+                  else
+                    this.quill.format('image', false);
+                }
+              }
+            }
+
+          }
+
         }//富文本编辑器的配置
       }
     },
@@ -84,6 +130,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        uploadImage: 'uploadImage'//富文本上传图片执行的方法
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
@@ -97,16 +146,23 @@
         console.log(file);
       },
       onEditorBlur(editor){
-        console.log(editor);
+//        console.log(editor);
       },
       onEditorFocus(editor){
-        console.log(editor);
+//        console.log(editor);
       },
       onEditorReady(editor){
-        console.log(editor);
+//        console.log(editor);
       },
       onEditorChange(editor){
-        console.log('editor has been changed' + editor);
+//        console.log('editor has been changed' + editor);
+      },
+      customButtonClick(){
+        this.$el.querySelector('.custom-input').click();
+      },
+      upload(e){
+        console.log(e.target.files[0]);
+        this.uploadImage(e.target.files[0]);
       }
     },
     mounted(){
