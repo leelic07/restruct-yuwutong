@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import {mapMutations,mapActions} from 'vuex'
+  import {mapMutations, mapActions} from 'vuex'
 
   export default {
     data() {
@@ -62,7 +62,7 @@
     },
     methods: {
       ...mapActions({
-        uploadPrisoners:'uploadPrisoners'
+        uploadPrisoners: 'uploadPrisoners'
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
