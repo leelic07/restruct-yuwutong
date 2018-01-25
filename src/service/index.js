@@ -15,6 +15,9 @@ import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
 import news from './modules/news'
+import prisonerDataManagement from './modules/prisoner-data-management'
+import ordersManagement from './modules/orders-management'
+import login from './modules/login'
 
 export default Object.assign(
   registrations,
@@ -30,5 +33,8 @@ export default Object.assign(
   familyOrders,
   jailsInformation,
   lawsInformation,
-  news
+  news,
+  prisonerDataManagement,
+  ordersManagement,
+  login
 )

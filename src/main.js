@@ -10,15 +10,19 @@ import filters from './filters'
 import '@/assets/icons/iconfont.css'
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.snow.css'
+import VueJsonp from 'vue-jsonp'
 
 Vue.use(ElementUI);
 
 Vue.use(VueQuillEditor);
 
+Vue.use(VueJsonp);
+
 Vue.config.productionTip = false;
 
 Vue.prototype._$baseUrl = 'https://www.fushuile.com';
 
+// Vue.prototype._$baseUrl = 'http://10.10.10.117:3000';
 //声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
 

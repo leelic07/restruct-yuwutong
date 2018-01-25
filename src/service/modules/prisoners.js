@@ -6,5 +6,5 @@ import * as service from '../base/service'
 export default {
   //获取服刑人员信息
   getPrisoners: params =>
-    service.get('/prisoners.json', params).then(res => res).catch(err => err)
+    service.get(`${service.agency}/prisoners.json`, params).then(res => res).catch(err => err)
 }

@@ -15,7 +15,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <!--审核侧边栏-->
-      <ul class="sidebar-menu" v-if="examination">
+      <ul class="sidebar-menu" v-if="role == 1">
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/registrations">
@@ -83,7 +83,7 @@
       </ul>
 
       <!--商品侧边栏-->
-      <ul class="sidebar-menu" v-if="goods">
+      <ul class="sidebar-menu" v-if="role == 2">
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/goods_management">
@@ -114,7 +114,7 @@
       </ul>
 
       <!--信息侧边栏-->
-      <ul class="sidebar-menu" v-if="information">
+      <ul class="sidebar-menu" v-if="role == 3">
         <li class="header">导航</li>
         <li class="treeview">
           <router-link to="/jails">
@@ -155,12 +155,18 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
     data() {
-      return {
-        examination: true,
-        goods: true,
-        information: true
+      return {}
+    },
+    computed: {
+      ...mapGetters({
+        users: 'users'//获取用户登录时的信息
+      }),
+      role(){
+        return this.users.role ? this.users.role : sessionStorage.getItem('role')
       }
     },
     methods: {}

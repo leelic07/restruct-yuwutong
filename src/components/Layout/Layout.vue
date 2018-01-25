@@ -38,25 +38,25 @@
     },
     methods: {
       hideBar() {
-        if (this.$route.path == loginUrl) {//进入登陆页面
+        if (this.$route.path === loginUrl) {//进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
         }
       },
-      login(){
-        let param = {
-          prison: '9999',
-          username: '9999_sh',
-          password: '123456'
-        }
-
-        axios.post('/login', {
-          data: param,
-        }).then(res => {
-          console.log(res);
-        }).catch(err => {
-          console.log(err);
-        })
-      }
+//      login(){
+//        let param = {
+//          prison: '9999',
+//          username: '9999_sh',
+//          password: '123456'
+//        }
+//
+//        axios.post('/login', {
+//          data: param,
+//        }).then(res => {
+//          console.log(res);
+//        }).catch(err => {
+//          console.log(err);
+//        })
+//      }
     },
     components: {
       'side-bar': SideBar,

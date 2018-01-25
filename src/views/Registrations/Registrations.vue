@@ -227,6 +227,7 @@
             this.$set(this.authorization, 'status', 'PASSED');
           }
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
+//          this.$jsonp(`${this._$baseUrl}/registrations/${this.authorizeId}`, this.authorization).then(res => console.log(res)).catch(err => console.log(err));
         }
       },
       //点击不同意或者返回执行的方法

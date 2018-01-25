@@ -12,8 +12,23 @@
                         :options="editorOption"
                         @blur="onEditorBlur($event)"
                         @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
+                        @ready="onEditorReady($event)"
+                        @change="onEditorChange($event)">
           </quill-editor>
+          <el-upload
+            v-show="false"
+            class="upload-demo"
+            name="dir"
+            :action="_$baseUrl + '/prisoners/upload_img'"
+            :headers="{'Content-Type':'application/x-www-form-urlencoded'}"
+            :on-success="handleSuccess"
+            :file-list="fileList"
+            :auto-upload="true"
+            :limit="1"
+            :with-credentials="true"
+            accept="image/*">
+            <el-button class="custom-input" size="normal" type="primary" plain>添加富文本图片</el-button>
+          </el-upload>
         </el-form-item>
         <el-form-item label="街道">
           <el-input v-model="jails.street" placeholder="请填写街道名称"></el-input>
@@ -60,10 +75,44 @@
 
   export default {
     data() {
+      const _this = this;
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
-        fileList: [],
-        editorOption: {}//富文本编辑器的配置
+        fileList: [],//上传图片列表
+        editorOption: {
+          modules: {
+//            toolbar: '#toolbar',
+            toolbar: {
+              container: [
+                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                ['blockquote', 'code-block'],
+
+                [{'header': 1}, {'header': 2}],               // custom button values
+                [{'list': 'ordered'}, {'list': 'bullet'}],
+                [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
+                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
+                [{'direction': 'rtl'}],                         // text direction
+
+                [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
+                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+
+                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
+                [{'font': []}],
+                [{'align': []}],
+                ['image', 'link'],
+                ['clean']                                         // remove formatting button
+              ],
+              handlers: {
+                'image': function (value) {
+                  if (value)
+                    this.quill.format('image', _this.$el.querySelector('.custom-input').click());
+                  else
+                    this.quill.format('image', false);
+                }
+              }
+            }
+          }
+        }//富文本编辑器的配置
       }
     },
     computed: {
@@ -75,6 +124,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        uploadImage: 'uploadImage'//富文本上传图片执行的方法
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
@@ -87,21 +139,28 @@
       handlePreview(file) {
         console.log(file);
       },
+      handleSuccess(response, file, fileList){
+        console.log(response);
+      },
       onEditorBlur(editor){
-        console.log(editor);
+//        console.log(editor);
       },
       onEditorFocus(editor){
-        console.log(editor);
+//        console.log(editor);
       },
       onEditorReady(editor){
-        console.log(editor);
+//        console.log(editor);
+      },
+      onEditorChange(editor){
+//        console.log('editor has been changed' + editor);
+      },
+      upload(e){
+        console.log(e.target.files[0]);
+        this.uploadImage(e.target.files[0]);
       }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-    },
-    components: {
-      quillEditor
     }
   }
 </script>

@@ -16,23 +16,15 @@
       </el-col>
     </el-row>
 
-    <!--<el-row :gutter="0" class="button-box">-->
-    <!--<el-col :span="23" :offset="1">-->
-    <!--<input type="file">-->
-    <!--<el-button>选择本地文件</el-button>-->
-    <!--</el-col>-->
-    <!--<el-col :span="22" :offset="2">-->
-    <!--<el-button type="primary">导入文件</el-button>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="_$baseUrl + '/prisoners/upload'"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
+          :on-success="handleSuccess"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
@@ -49,7 +41,8 @@
 </template>
 
 <script>
-  import {mapMutations, mapActions} from 'vuex'
+
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -60,24 +53,50 @@
         prisonerHref: this._$baseUrl + '/upload/prison_template.xls'
       }
     },
-    methods: {
-      ...mapActions({
-        uploadPrisoners: 'uploadPrisoners'
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'
-      }),
-      submitUpload() {
-        this.$refs.upload.submit();
-      },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
+    watch: {
+      prisonerResult(newValue){
+        if (newValue === 200)
+          this.$message({
+            type: 'success',
+            message: newValue.msg
+          })
       }
     },
-    mounted(){
+    computed: {
+      ...mapGetters({
+        prisonerResult: 'prisonerResult'//获取罪犯模板导入结果
+      })
+    },
+    methods: {
+      ...mapActions({
+        importPrisoner: 'importPrisoner'//罪犯数据模板上传成功后将罪犯数据模板导入到服务端
+      }),
+      ...
+        mapMutations({
+          breadCrumb: 'breadCrumb'
+        }),
+      submitUpload()
+      {
+        this.$refs.upload.submit();
+      }
+      ,
+      handleRemove(file, fileList)
+      {
+        console.log(file, fileList);
+      }
+      ,
+      handlePreview(file)
+      {
+        console.log(file);
+      }
+      ,
+      handleSuccess(response, file, fileList)
+      {
+        this.importPrisoner({'filepath': response.path});
+      }
+    },
+    mounted()
+    {
       this.breadCrumb(this.breadcrumb)
     }
   }
@@ -95,7 +114,7 @@
       > .el-button
         margin-top: 20px
       .el-upload
-        margin-right: 50%
+        margin-right: 60%
         margin-top: 15px
         .el-button
           float: left

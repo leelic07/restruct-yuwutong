@@ -6,5 +6,5 @@ import * as service from '../base/service'
 export default {
   //获取法律法规信息
   getLawsInformation: params =>
-    service.get('/laws.json',params).then(res => res).catch(err => err)
+    service.get(`${service.agency}/laws.json`,params).then(res => res).catch(err => err)
 }

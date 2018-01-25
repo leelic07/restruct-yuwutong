@@ -6,16 +6,18 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/': {
-      //   target: 'http:10.10.10.152:3000/',
-      //   secure: false,
-      //   changeOrigin: true,
-      // }
+      '/ywt': {
+        // target: 'https://www.fushuile.com',
+        target: 'http://10.10.10.117:3000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ywt': '/'
+        }
+      }
     },
 
     // Various Dev Server settings

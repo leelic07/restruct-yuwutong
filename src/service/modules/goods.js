@@ -6,5 +6,5 @@ import * as service from '../base/service'
 export default {
   //获取商品列表信息
   getGoods: params =>
-    service.get('/items.json', params).then(res => res).catch(err => err)
+    service.get(`${service.agency}/items.json`, params).then(res => res).catch(err => err)
 }

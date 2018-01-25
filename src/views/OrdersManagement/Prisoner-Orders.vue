@@ -21,9 +21,10 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :action="_$baseUrl + '/prisoner_orders/upload'"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
+          :on-success="handleSuccess"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapMutations, mapActions, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -51,7 +52,24 @@
         prisonerHref: this._$baseUrl + '/upload/order_template.xls'
       }
     },
+    watch: {
+      prisonerOrdersResult(newValue){
+        if (newValue.code === 200)
+          this.$message({
+            type: 'success',
+            message: '家属订单导入成功！'
+          })
+      }
+    },
+    computed: {
+      ...mapGetters({
+        prisonerOrdersResult: 'prisonerOrdersResult'//获取家属订单导入结果
+      })
+    },
     methods: {
+      ...mapActions({
+        importPrisonerOrders: 'importPrisonerOrders'//家属订单模板上传成功后将家属订单模板导入到服务端
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
@@ -63,6 +81,9 @@
       },
       handlePreview(file) {
         console.log(file);
+      },
+      handleSuccess(response, file, fileList){
+        this.importPrisonerOrders({'filepath': response.path})
       }
     },
     mounted(){
@@ -73,7 +94,7 @@
 
 <style type="text/stylus" lang="stylus" scoped>
   #orders-import-index
-    min-height:370px
+    min-height: 370px
     .download-box
       margin-top: 35px
     .title-box
@@ -83,7 +104,7 @@
       > .el-button
         margin-top: 20px
       .el-upload
-        margin-right: 50%
+        margin-right: 60%
         margin-top: 15px
         .el-button
           float: left

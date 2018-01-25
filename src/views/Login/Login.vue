@@ -5,7 +5,8 @@
         <el-col :span="24">
           <p class="projectName">狱务公开管理平台</p>
         </el-col>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                 class="demo-ruleForm">
           <el-form-item label-width="0" prop="prison">
             <el-input type="text" v-model="ruleForm2.prison" auto-complete="off" placeholder="监狱代码"></el-input>
           </el-form-item>
@@ -21,7 +22,7 @@
           <el-form-item label-width="0" class="btn-box">
             <!-- `checked` 为 true 或 false -->
             <el-checkbox v-model="ruleForm2.checked">记住密码</el-checkbox>
-            <el-button type="" @click="submitForm('ruleForm2')" >提交</el-button>
+            <el-button type="" @click="submitForm('ruleForm2')">提交</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -30,7 +31,7 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapMutations, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -50,38 +51,50 @@
         }
       };
 
-      var validatePrisonCode = (rule,value,callback) => {
+      var validatePrisonCode = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入监狱代码'));
         } else {
           callback();
         }
-      }
+      };
 
       return {
         ruleForm2: {
           password: '',
           username: '',
-          prison:'',
-          checked:false//是否选总记住密码
+          prison: '',
+          checked: false//是否选总记住密码
         },
         rules2: {
           password: [
-            { validator: validatePass, trigger: 'blur' }
+            {validator: validatePass, trigger: 'blur'}
           ],
           username: [
-            { validator: validateUsername, trigger: 'blur' }
+            {validator: validateUsername, trigger: 'blur'}
           ],
           prison: [
-            { validator: validatePrisonCode, trigger: 'blur'}
+            {validator: validatePrisonCode, trigger: 'blur'}
           ]
         }
       };
-
+    },
+    watch: {
+      users(newValue){
+        if (newValue.hasOwnProperty('id'))
+          this.$router.push({
+            path: '/dashboard'
+          })
+      }
+    },
+    computed: {
+      ...mapGetters({
+        users: 'users'//获取用户登录时的信息
+      })
     },
     methods: {
       ...mapActions({
-        login:'login'
+        login: 'login'
       }),
       //点击提交按钮执行的方法
       submitForm(formName) {
@@ -102,25 +115,25 @@
   white = #fff
   #login
     .loginBackground
-      background:#4F98C2
-      margin-top:10%
+      background: #4F98C2
+      margin-top: 10%
     .projectName
       font-size: 35px
-      color:white
-      margin-top:20px
-      margin-bottom:20px
+      color: white
+      margin-top: 20px
+      margin-bottom: 20px
     .btn-box
       & /deep/ .el-button
-        background:#186C9C
-        color:white
-        float:right
-        border:0
-        border-radius:0
+        background: #186C9C
+        color: white
+        float: right
+        border: 0
+        border-radius: 0
         width: 86px
-        height:34px
-        vertical-align:middle
+        height: 34px
+        vertical-align: middle
       & /deep/ .el-checkbox
-        float:left
+        float: left
       & /deep/ .el-checkbox__label
-        color:white
+        color: white
 </style>

@@ -4,8 +4,8 @@
 export default {
   //获取狱务通版本信息
   getVersions(state,versionList){
-    let prisonVersions = new Array();
-    let familyVersions = new Array();
+    let prisonVersions = [];
+    let familyVersions = [];
 
     for(let version of versionList.versions) {
       version.version_number = version.version_number.toString();

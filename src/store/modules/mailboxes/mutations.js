@@ -28,20 +28,35 @@ export default {
   },
 
   //获取邮件详情信息
-  getMailDetail(state, id){
-    let mailBoxes = new Array();
-
-    //将mailBoxes二维数组拼接成一维数组
-    for (let mail of state.mailBoxes) {
-      mailBoxes = mailBoxes.concat(mail);
-    }
-
-    //找出对应id得监狱长邮箱详情信息
-    for (let mailDetail of mailBoxes) {
-      if (mailDetail.id === Number(id)) {
-        state.mailDetail = mailDetail;
-        break;
-      }
-    }
+  // getMailDetailById(state, id){
+  //   let mailBoxes = [];
+  //
+  //   //将mailBoxes二维数组拼接成一维数组
+  //   for (let mail of state.mailBoxes) {
+  //     mailBoxes = mailBoxes.concat(mail);
+  //   }
+  //
+  //   //找出对应id得监狱长邮箱详情信息
+  //   for (let mailDetail of mailBoxes) {
+  //     if (mailDetail.id === Number(id)) {
+  //       state.mailDetail = mailDetail;
+  //       break;
+  //     }
+  //   }
+  // }
+  getMailDetailById(state, mailDetailList){
+    let mail = mailDetailList.mail;
+    let family = mailDetailList.family;
+    let prisoner = mailDetailList.prisoner;
+    //将邮件详情页说需要的信息放入到mailDetail对象中
+    Object.assign(state.mailDetail, {
+      title: mail.title,
+      poster: family.name,
+      prisonerName: prisoner.name,
+      relationship: family.relationship,
+      created_at: mail.created_at,
+      contents: mail.contents,
+      comments: mailDetailList.comments
+    });
   }
 }

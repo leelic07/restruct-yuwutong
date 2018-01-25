@@ -196,8 +196,8 @@ export default new Router({
         component: PrisonAffairsDisclosureNew
       }, {
         path: '/news/complaints_proposals/:id/edit',
-        name:'ComplaintsProposalEditor',
-        component:PrisonAffairsDisclosureEditor
+        name: 'ComplaintsProposalEditor',
+        component: PrisonAffairsDisclosureEditor
       }]
     },
     {

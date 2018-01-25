@@ -14,5 +14,9 @@ export default {
         meetings: res[2]
       });
       commit('getMailBoxes', mailBoxesList);
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err)),
+
+  //根据id获取邮件详情
+  getMailDetailById: ({commit}, id) =>
+    http.getMailDetailById(id).then(res => commit('getMailDetailById', res)).catch(err => err)
 }
