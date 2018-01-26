@@ -35,32 +35,15 @@
 
   export default {
     data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          callback();
-        }
-      };
-
-      var validateUsername = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入用户名'));
-        } else {
-          callback();
-        }
-      };
-
-      var validatePasswordReview = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入监狱代码'));
-        } else if (value !== this.ruleForm2.password) {
+      //验证密码和确认密码是否一致
+      var validatePasswordReview = (state, rule, value, callback) => {
+        if (value === '')
+          callback(new Error('请输入确认密码'));
+        else if (value !== this.ruleForm2.password)
           callback(new Error('输入密码不一致'));
-        } else {
+        else
           callback();
-        }
-      }
-
+      };
       return {
         ruleForm2: {
           password: '',
@@ -69,10 +52,10 @@
         },
         rules2: {
           password: [
-            {validator: validatePass, trigger: 'blur'}
+            {required: true, message: '请输入密码', trigger: 'blur'}
           ],
           username: [
-            {validator: validateUsername, trigger: 'blur'}
+            {required: true, message: '请输入用户名', trigger: 'blur'}
           ],
           passwordReview: [
             {validator: validatePasswordReview, trigger: 'blur'}
@@ -80,11 +63,8 @@
         },
         breadcrumb: ['主页', '修改用户密码']
       };
-
     },
     methods: {
-      ...mapActions({
-      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),

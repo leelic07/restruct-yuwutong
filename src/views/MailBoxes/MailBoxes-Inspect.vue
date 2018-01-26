@@ -61,15 +61,9 @@
         breadcrumb: ['主页', '监狱长信箱', '邮件详情']
       }
     },
-    watch: {
-      comment(newValue){
-        this.mailDetail.comments.push(newValue);
-      }
-    },
     computed: {
       ...mapGetters({
         mailDetail: 'mailDetail',//邮件详情信息
-        comment: 'comment'//监狱回复家属的信息
       })
     },
     methods: {

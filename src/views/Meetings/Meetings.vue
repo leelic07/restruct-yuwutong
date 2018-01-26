@@ -162,9 +162,6 @@
           remarks: '',//拒绝理由
           status: ''//授权状态
         },
-        applicationStatus: {
-          'color': 'orange'
-        },
         isWithdraw: false,//是否是撤回执行的方法
         dialogTitle: '',//对话框的标题文字
         showRemarks: false,//是否显示拒绝家属会见理由
@@ -175,9 +172,9 @@
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        meetings: 'meetings',
-        meetingsTotal: 'meetingsTotal',
-        authMeetingsResult: 'authMeetingsResult',
+        meetings: 'meetings',//获取家属会见的数据列表
+        meetingsTotal: 'meetingsTotal',//获取家属会见的总记录数
+        authMeetingsResult: 'authMeetingsResult',//获取家属会见的授权结果
         remarks: 'remarks'//获取家属会见拒绝理由
       })
     },

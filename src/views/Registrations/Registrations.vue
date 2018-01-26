@@ -152,10 +152,10 @@
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        registrations: 'registrations',
-        uuidImages: 'uuidImages',
-        registrationsTotal: 'registrationsTotal',
-        authRegistrationsResult: 'authRegistrationsResult',
+        registrations: 'registrations',//获取家属注册的注册信息列表
+        uuidImages: 'uuidImages',//获取家属注册时的照片数组
+        registrationsTotal: 'registrationsTotal',//获取家属注册时的总记录数
+        authRegistrationsResult: 'authRegistrationsResult',//获取给家属授权的授权结果
         remarks: 'remarks'//获取拒绝家属注册的理由
       })
     },
@@ -221,13 +221,11 @@
           this.agreeText = '确定申请通过？';
           this.disagreeText = '返回';
         } else {
-          if (agreeText === '提交') {
+          if (agreeText === '提交')
             this.$set(this.authorization, 'status', 'DENIED');
-          } else {
+          else
             this.$set(this.authorization, 'status', 'PASSED');
-          }
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
-//          this.$jsonp(`${this._$baseUrl}/registrations/${this.authorizeId}`, this.authorization).then(res => console.log(res)).catch(err => console.log(err));
         }
       },
       //点击不同意或者返回执行的方法

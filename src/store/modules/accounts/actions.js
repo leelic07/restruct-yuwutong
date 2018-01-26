@@ -10,9 +10,5 @@ export default {
 
   //获取囚犯账户详情信息
   getAccountDetail: ({commit}, id) =>
-    http.getAccountDetail(id).then(res => {
-      if (res.code === 200) {
-        commit('getAccountDetail', res);
-      }
-    }).catch(err => console.log(err))
+    http.getAccountDetail(id).then(res => res.code === 200 && commit('getAccountDetail', res)).catch(err => console.log(err))
 }

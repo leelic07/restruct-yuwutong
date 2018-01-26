@@ -24,7 +24,7 @@ export default {
   replyComment: ({commit}, regs) => {
     let id = regs.id;
     delete regs.id;
-    http.replyComment(regs, id).then(res => commit('replyComment', res)).catch(err => console.log(err));
+    http.replyComment(regs, id).then(res => commit('replyComment', res.code === 200 && res)).catch(err => console.log(err));
   }
 
 }

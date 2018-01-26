@@ -47,11 +47,16 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
+
   export default {
     data() {
       return {}
     },
     methods: {
+      ...mapMutations({
+        logout: 'logout'//点击确定退出登录时执行的方法
+      }),
       //点击退出登录执行的方法
       confirmExit(e) {
         e.preventDefault();
@@ -60,11 +65,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          sessionStorage.setItem('token', '');
-          sessionStorage.setItem('jail_id', '');
-          this.$router.push({
-            path: '/login'
-          });
+          this.logout();
         })
       }
     }

@@ -35,30 +35,6 @@
 
   export default {
     data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          callback();
-        }
-      };
-
-      var validateUsername = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入用户名'));
-        } else {
-          callback();
-        }
-      };
-
-      var validatePrisonCode = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入监狱代码'));
-        } else {
-          callback();
-        }
-      };
-
       return {
         ruleForm2: {
           password: '',
@@ -68,13 +44,13 @@
         },
         rules2: {
           password: [
-            {validator: validatePass, trigger: 'blur'}
+            {required: true, message: '请输入密码', trigger: 'blur'}
           ],
           username: [
-            {validator: validateUsername, trigger: 'blur'}
+            {required: true, message: '请输入用户名', trigger: 'blur'}
           ],
           prison: [
-            {validator: validatePrisonCode, trigger: 'blur'}
+            {required: true, message: '请输入监狱代码', trigger: 'blur'}
           ]
         }
       };
