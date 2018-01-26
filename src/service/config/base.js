@@ -1,8 +1,6 @@
 /**
  * Created by Administrator on 2018/1/7 0007.
  */
-import qs from 'qs'
-
 export default {
   //请求地址
   url: '/',
@@ -12,7 +10,7 @@ export default {
   // baseURL: 'https://www.fushuile.com/',
   // baseURL: 'http://10.10.10.117:3000/',
   //请求发送之前对出参进行处理
-  transformRequest: [data => qs.stringify(data)],
+  transformRequest: [data => data],
   //请求发送之后对入参进行处理
   transformResponse: [data => data],
   //设置请求头

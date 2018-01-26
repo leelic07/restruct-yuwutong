@@ -59,6 +59,12 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
+        }).then(() => {
+          sessionStorage.setItem('token', '');
+          sessionStorage.setItem('jail_id', '');
+          this.$router.push({
+            path: '/login'
+          });
         })
       }
     }
@@ -73,7 +79,7 @@
       > a
         float: left
         height: 51px
-        width:46px
+        width: 46px
         text-align: center
         &:hover
           background: #367FA9

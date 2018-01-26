@@ -66,7 +66,7 @@
     watch: {
       //从邮件详情页面跳转到邮箱列表路由使邮箱列表显示
       $route(to, from) {
-        if (to.path == '/mailboxes') {
+        if (to.path === '/mailboxes') {
           this.isMailBoxesInspect = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
         } else {
@@ -85,7 +85,7 @@
         breadCrumb: 'breadCrumb'//设置家属注册页面的面包屑信息
       }),
       ...mapActions({
-        getMailBoxes:'getMailBoxes'//获取监狱长邮箱列表信息
+        getMailBoxes:'getMailBoxes',//获取监狱长邮箱列表信息
       }),
       //当前页发生变化时执行的方法
       currentChange(page){

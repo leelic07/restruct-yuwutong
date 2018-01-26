@@ -37,17 +37,13 @@
         type="textarea"
         :rows="3"
         placeholder="快速回复"
-        v-model="replayContent">
+        v-model="replyContent">
       </el-input>
     </div>
     <!-- /.box-footer -->
     <div class="box-footer">
       <div class="pull-right">
-        <el-button
-          plain
-          size="mini"
-        >回复
-        </el-button>
+        <el-button plain size="mini" @click="reply">回复</el-button>
       </div>
     </div>
     <!-- /.box-footer -->
@@ -61,27 +57,41 @@
   export default {
     data() {
       return {
-        replayContent: '',//回复的内容
+        replyContent: '',//回复的内容
         breadcrumb: ['主页', '监狱长信箱', '邮件详情']
       }
     },
-    watch: {},
+    watch: {
+      comment(newValue){
+        this.mailDetail.comments.push(newValue);
+      }
+    },
     computed: {
       ...mapGetters({
-        mailDetail: 'mailDetail'//邮件详情信息
+        mailDetail: 'mailDetail',//邮件详情信息
+        comment: 'comment'//监狱回复家属的信息
       })
     },
     methods: {
       ...mapActions({
-        getMailDetailById: 'getMailDetailById'//根据邮件id获取邮件详情信息
+        getMailDetailById: 'getMailDetailById',//根据邮件id获取邮件详情信息
+        replyComment: 'replyComment'//根据回复的内容添加监狱回复信息
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
-      })
+      }),
+      //点击回复按钮执行的方法
+      reply(){
+        this.replyComment({
+          'id': this.$route.params.id,
+          'contents': this.replyContent,
+          'family_id': this.mailDetail.family_id,
+          'user_id': sessionStorage['user_id']
+        });
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-
       this.getMailDetailById(this.$route.params.id);
     }
   }

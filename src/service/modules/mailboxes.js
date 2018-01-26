@@ -10,5 +10,9 @@ export default {
 
   //根据id获取邮件详情
   getMailDetailById: id =>
-    service.get(`${service.agency}/mail_boxes/${id}/check`).then(res => res).catch(err => err)
+    service.get(`${service.agency}/mail_boxes/${id}/check`).then(res => res).catch(err => err),
+
+  //监狱回复家属的邮件
+  replyComment: (comment, id) =>
+    service.post(`${service.agency}/mail_boxes/${id}/comments`, comment).then(res => res).catch(err => err)
 }

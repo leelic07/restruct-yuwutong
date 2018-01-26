@@ -6,43 +6,43 @@ import axios from 'axios';
 import store from '@/store';
 import router from '@/router'
 import {Message} from 'element-ui';
+import qs from 'qs';
 
 const instance = axios.create(base);
 let token = '';//用户登录时的token
 let jail_id = '';//用户调接口时传入的监狱id
 
+//代理服务器
+export let agency = '/ywt';
+
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
-    token = store.getters.token.token;
-    // console.log(config);
-    // config.baseURL = 'https://www.fushuile.com';
-    // config.withCredentials = true;
-    // config.headers = {
-    //   'Content-Type': "application/x-www-form-urlencoded"
-    // };
-    // if (config.url !== config.baseURL + 'login')
-
+    if (sessionStorage['token']) {
+      config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
+      //每次发起请求将jail_id发送给服务器端
+      if (jail_id = sessionStorage['jail_id']) {//每次请求时加上jail_id属性
+        if (config.method === 'get') {
+          if (config.params)
+            Object.assign(config.params, {'jail_id': jail_id});
+          else
+            config.url += `?jail_id=${jail_id}`;
+        }
+        if (config.method === 'post' && config.url !== `${agency}/users`)
+          config.data += `&jail_id=${jail_id}`;
+      }
+    } else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
+      console.log(sessionStorage['token']);
+      Message({type: 'warning', message: '当前用户无权限，请先登录！'});
+      router.push({
+        path: '/login'
+      });
+      return;
+    }
     //加载loading遮罩层
     store.commit('showLoading');
-
-    config.headers.common['Authorization'] = token ? token : sessionStorage['token'];//每次发送请求是给请求头加上token
-
-    if (jail_id = store.getters.users.jail_id) {//每次请求时加上jail_id属性
-      if (config.method === 'get') {
-        if (config.params)
-          Object.assign(config.params, {'jail_id': sessionStorage['jail_id']});
-        else
-          config.url += '?jail_id=' + jail_id ? jail_id : sessionStorage['jail_id'];
-      }
-
-      if (config.method === 'post' && config.url !== `${config.baseURL}users`)
-        config.data += '&jail_id=' + jail_id ? jail_id : sessionStorage['jail_id'];
-    }
-
     return config;
-  }
-  ,
+  },
   error => Promise.reject(err)
 );
 
@@ -67,12 +67,12 @@ instance.interceptors.response.use(
           Message.error(response.data.msg);
           break;
         default:
+          Message.error(response.data.msg);
           break;
       }
     }
     //隐藏loading遮罩层
     store.commit('hideLoading');
-
     return response;
   },
   error => {
@@ -82,7 +82,7 @@ instance.interceptors.response.use(
         router.push({
           path: '/login'
         });
-        break
+        break;
       case 404:
         Message.error('找不到对应的资源！');
         break;
@@ -92,12 +92,11 @@ instance.interceptors.response.use(
       default:
         break;
     }
+    //隐藏loading遮罩层
+    store.commit('hideLoading');
     Promise.reject(error);
   }
 );
-
-//代理服务器
-export let agency = '/ywt';
 
 /**
  * 封装get方法
@@ -105,7 +104,6 @@ export let agency = '/ywt';
  * @param params
  * @returns {Promise}
  */
-
 export let get = (url, params = {}) =>
   instance.get(url, {params: params}).then(res => res.data).catch(err => err);
 
@@ -115,9 +113,11 @@ export let get = (url, params = {}) =>
  * @param data
  * @returns {Promise}
  */
+export let post = (url, data = {}) => {
+  console.log(data, qs.stringify(data));
+  instance.post(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+};
 
-export let post = (url, data = {}) =>
-  instance.post(url, data).then(res => res.data).catch(err => err);
 
 /**
  * 封装patch请求
@@ -125,9 +125,8 @@ export let post = (url, data = {}) =>
  * @param data
  * @returns {Promise}
  */
-
 export let patch = (url, data = {}) =>
-  instance.patch(url, data).then(res => res.data).catch(err => err);
+  instance.patch(url, qs.stringify(data)).then(res => res.data).catch(err => err);
 
 
 /**
@@ -136,16 +135,14 @@ export let patch = (url, data = {}) =>
  * @param data
  * @returns {Promise}
  */
-
 export let put = (url, data = {}) =>
-  instance.put(url, data).then(res => res.data).catch(err => err);
+  instance.put(url, qs.stringify(data)).then(res => res.data).catch(err => err);
 
 /**
  * 封装all请求
  * @param urls
  * @returns {Promise}
  */
-
 export let all = (urls = []) =>
   axios.all(urls.map(url => instance.get(url))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
 

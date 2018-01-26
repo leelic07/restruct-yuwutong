@@ -6,5 +6,7 @@ export default {
 
   mailBoxesTotal: state => state.mailBoxesTotal,
 
-  mailDetail: state => state.mailDetail
+  mailDetail: state => state.mailDetail,
+
+  comment: state => state.comment
 }

@@ -8,6 +8,7 @@ export default {
   getAuthentication: params =>
     service.post(`${service.agency}/authentication`, params).then(res => res).catch(err => err),
 
+
   //获取用户登录时的信息
   getUsers: params =>
     service.get(`${service.agency}/users`).then(res => res).catch(err => err)

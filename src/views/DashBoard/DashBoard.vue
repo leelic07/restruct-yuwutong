@@ -27,6 +27,7 @@
 
 <style type="text/stylus" lang="stylus">
   #dash-board
+    min-height: 500px
     h1
       margin-top: 100px
 </style>
