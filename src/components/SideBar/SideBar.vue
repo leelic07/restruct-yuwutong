@@ -166,7 +166,7 @@
         users: 'users'//获取用户登录时的信息
       }),
       role(){
-        return this.users.role ? this.users.role : sessionStorage.getItem('role')
+        return sessionStorage.getItem('role')
       }
     },
     methods: {}

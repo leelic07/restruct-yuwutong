@@ -28,89 +28,42 @@ import 'babel-polyfill'
 
 Vue.use(Vuex);
 
-let actions = Object.assign(registrations.actions,
-  meetings.actions,
-  prisoners.actions,
-  families.actions,
-  terminals.actions,
-  versions.actions,
-  breadCrumb.actions,
-  search.actions,
-  accounts.actions,
-  goods.actions,
-  login.actions,
-  mailboxes.actions,
-  familyOrders.actions,
-  jailsInformation.actions,
-  lawsInformation.actions,
-  news.actions,
-  prisonDataManagement.actions,
-  ordersManagement.actions);
+let actions = {};
+let mutations = {};
+let getters = {};
+let state = {};
 
-let mutations = Object.assign(
-  registrations.mutations,
-  meetings.mutations,
-  prisoners.mutations,
-  families.mutations,
-  terminals.mutations,
-  versions.mutations,
-  breadCrumb.mutations,
-  search.mutations,
-  accounts.mutations,
-  goods.mutations,
-  login.mutations,
-  mailboxes.mutations,
-  familyOrders.mutations,
-  jailsInformation.mutations,
-  lawsInformation.mutations,
-  news.mutations,
-  loading.mutations,
-  prisonDataManagement.mutations,
-  ordersManagement.mutations,
-  logout.mutations,
-  passwordModification.mutations
+let merge = (...args) =>
+  args.map(arg => {
+    for (let key in arg) {
+      Object.assign(eval(key), arg[key]);
+    }
+  });
+
+//将对应的actions,mutations,getters,state 添加到声明的对象中
+merge(
+  registrations,
+  meetings,
+  prisoners,
+  families,
+  terminals,
+  versions,
+  breadCrumb,
+  search,
+  accounts,
+  goods,
+  login,
+  mailboxes,
+  familyOrders,
+  jailsInformation,
+  lawsInformation,
+  news,
+  loading,
+  prisonDataManagement,
+  ordersManagement,
+  logout,
+  passwordModification
 );
-
-let getters = Object.assign(
-  registrations.getters,
-  meetings.getters,
-  prisoners.getters,
-  families.getters,
-  terminals.getters,
-  versions.getters,
-  breadCrumb.getters,
-  search.getters,
-  accounts.getters,
-  goods.getters,
-  login.getters,
-  mailboxes.getters,
-  familyOrders.getters,
-  jailsInformation.getters,
-  lawsInformation.getters,
-  news.getters,
-  loading.getters,
-  prisonDataManagement.getters,
-  ordersManagement.getters);
-
-let state = Object.assign(
-  registrations.state,
-  meetings.state,
-  prisoners.state,
-  families.state,
-  terminals.state,
-  versions.state,
-  breadCrumb.state,
-  search.state,
-  accounts.state,
-  goods.state,
-  login.state,
-  mailboxes.state,
-  familyOrders.state,
-  jailsInformation.state,
-  lawsInformation.state,
-  news.state, loading.state,
-  prisonDataManagement.state,
-  ordersManagement.state);
 
 export default new Vuex.Store({
   actions,

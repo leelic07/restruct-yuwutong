@@ -21,15 +21,12 @@
         <el-upload
           class="upload-demo"
           ref="upload"
-          :action="_$baseUrl + '/prisoner_orders/upload'"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
+          :action="_$agency + '/prisoner_orders/upload'"
           :on-success="handleSuccess"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
-          accept=".xls"
-        >
+          accept=".xls">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           <div slot="tip" class="el-upload__tip">只能上传.xls文件</div>
@@ -47,18 +44,8 @@
     data() {
       return {
         breadcrumb: ['主页', '订单信息管理'],
-//        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         fileList: [],
-        prisonerHref: this._$baseUrl + '/upload/order_template.xls'
-      }
-    },
-    watch: {
-      prisonerOrdersResult(newValue){
-        if (newValue.code === 200)
-          this.$message({
-            type: 'success',
-            message: '家属订单导入成功！'
-          })
+        prisonerHref: this._$agency + '/upload/order_template.xls'
       }
     },
     computed: {
@@ -76,14 +63,8 @@
       submitUpload() {
         this.$refs.upload.submit();
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleSuccess(response, file, fileList){
-        this.importPrisonerOrders({'filepath': response.path})
+      handleSuccess(response){
+        response.code === 200 && this.importPrisonerOrders({'filepath': response.path});
       }
     },
     mounted(){

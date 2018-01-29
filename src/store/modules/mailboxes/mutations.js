@@ -59,9 +59,9 @@ export default {
   },
   //监狱回复家属的邮件
   replyComment(state, commentResult){
-    state.comment = commentResult.comment;
+    state.commentResult = commentResult;
     //将监狱回复家属的信息压入到当前查看的邮件对象
-    state.mailDetail.comments.push(state.comment);
+    state.mailDetail.comments.push(commentResult.comment);
   }
 
 }

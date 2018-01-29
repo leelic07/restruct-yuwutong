@@ -32,7 +32,6 @@ instance.interceptors.request.use(
           config.data += `&jail_id=${jail_id}`;
       }
     } else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
-      console.log(sessionStorage['token']);
       Message({type: 'warning', message: '当前用户无权限，请先登录！'});
       router.push({
         path: '/login'
@@ -62,6 +61,10 @@ instance.interceptors.response.use(
           Message.error('未找到相应数据');
           break;
         case 200:
+          Message({
+            type: 'success',
+            message: response.data.msg
+          });
           break;
         case 500:
           Message.error(response.data.msg);
@@ -113,10 +116,8 @@ export let get = (url, params = {}) =>
  * @param data
  * @returns {Promise}
  */
-export let post = (url, data = {}) => {
-  console.log(data, qs.stringify(data));
+export let post = (url, data = {}) =>
   instance.post(url, qs.stringify(data)).then(res => res.data).catch(err => err);
-};
 
 
 /**

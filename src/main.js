@@ -22,6 +22,8 @@ Vue.config.productionTip = false;
 
 Vue.prototype._$baseUrl = 'https://www.fushuile.com';
 
+Vue.prototype._$agency = '/ywt';
+
 // Vue.prototype._$baseUrl = 'http://10.10.10.117:3000';
 //声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));

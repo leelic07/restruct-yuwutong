@@ -16,37 +16,23 @@
       </el-col>
     </el-row>
 
-    <!--<el-row :gutter="0" class="button-box">-->
-    <!--<el-col :span="23" :offset="1">-->
-    <!--<input type="file">-->
-    <!--<el-button>选择本地文件</el-button>-->
-    <!--</el-col>-->
-    <!--<el-col :span="22" :offset="2">-->
-    <!--<el-button type="primary">导入文件</el-button>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
-
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
-          :action="_$baseUrl + '/prison_term/upload'"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
+          :action="_$agency + '/prison_term/upload'"
           :file-list="fileList"
           :on-success="handleSuccess"
           :auto-upload="false"
           :limit="1"
-          accept=".xls"
-        >
+          accept=".xls">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           <div slot="tip" class="el-upload__tip">只能上传.xls文件</div>
         </el-upload>
       </el-col>
     </el-row>
-
   </el-row>
 </template>
 
@@ -57,17 +43,8 @@
     data() {
       return {
         breadcrumb: ['主页', '刑期变动信息管理'],
-        prisonTermHref: this._$baseUrl + '/upload/prison_term_template.xls',
+        prisonTermHref: this._$agency + '/upload/prison_term_template.xls',
         fileList: []
-      }
-    },
-    watch: {
-      prisonTermResult(newValue){
-        if (newValue.code === 200)
-          this.$message({
-            type: 'success',
-            message: newValue.msg
-          })
       }
     },
     computed: {
@@ -82,17 +59,11 @@
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
-      submitUpload() {
+      submitUpload(){
         this.$refs.upload.submit();
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleSuccess(response, file, fileList){
-        this.importPrisonTerm({'filepath': response.path});
+      handleSuccess(response){
+        response.code === 200 && this.importPrisonTerm({'filepath': response.path});
       }
     },
     mounted(){

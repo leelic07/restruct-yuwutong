@@ -10,6 +10,6 @@ export default {
 
 
   //获取用户登录时的信息
-  getUsers: params =>
+  getUsers: () =>
     service.get(`${service.agency}/users`).then(res => res).catch(err => err)
 }

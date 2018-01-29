@@ -8,5 +8,5 @@ export default {
 
   mailDetail: state => state.mailDetail,
 
-  comment: state => state.comment
+  commentResult: state => state.commentResult
 }

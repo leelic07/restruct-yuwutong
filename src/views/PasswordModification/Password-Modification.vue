@@ -36,7 +36,7 @@
   export default {
     data() {
       //验证密码和确认密码是否一致
-      var validatePasswordReview = (state, rule, value, callback) => {
+      var validatePasswordReview = (rule, value, callback) => {
         if (value === '')
           callback(new Error('请输入确认密码'));
         else if (value !== this.ruleForm2.password)

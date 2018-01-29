@@ -10,7 +10,7 @@ export default {
     http.getAuthentication(regs).then(res => {
       commit('getAuthentication', res);
       //获取登录用户信息
-      http.getUsers(regs).then(res => commit('getUsers', res)).catch(err => console.log(err));
+      http.getUsers().then(res => commit('getUsers', res)).catch(err => console.log(err));
     }).catch(err => console.log(err));
   }
 }

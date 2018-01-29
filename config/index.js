@@ -11,8 +11,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/ywt': {
-        target: 'https://www.fushuile.com',
-        // target: 'http://10.10.10.117:3000',
+        // target: 'https://www.fushuile.com',
+        target: 'http://10.10.10.117:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/ywt': '/'

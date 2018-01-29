@@ -100,8 +100,8 @@
             <el-option v-for="remark,index in remarks"
                        :value="remark"
                        :label="remark"
-                       :key="index"
-            ></el-option>
+                       :key="index">
+            </el-option>
           </el-select>
         </el-col>
         <el-col :span="24">
@@ -174,13 +174,13 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.$set(this.pagination, 'page', 0);
-        this.$set(this.pagination, 'limit', limit);
+        this.pagination.page = 0;
+        this.pagination.limit = limit;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination, 'page', page - 1);
+        this.pagination.page = page - 1;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
@@ -197,7 +197,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination, 'page', 0);
+        this.pagination.page = 0;
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -222,9 +222,11 @@
           this.disagreeText = '返回';
         } else {
           if (agreeText === '提交')
-            this.$set(this.authorization, 'status', 'DENIED');
-          else
-            this.$set(this.authorization, 'status', 'PASSED');
+            this.authorization.status = 'DENIED';
+          else {
+            this.authorization.remarks = '';
+            this.authorization.status = 'PASSED';
+          }
           this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
         }
       },

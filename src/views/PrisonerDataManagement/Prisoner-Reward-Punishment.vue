@@ -16,24 +16,12 @@
       </el-col>
     </el-row>
 
-    <!--<el-row :gutter="0" class="button-box">-->
-    <!--<el-col :span="23" :offset="1">-->
-    <!--<input type="file">-->
-    <!--<el-button>选择本地文件</el-button>-->
-    <!--</el-col>-->
-    <!--<el-col :span="22" :offset="2">-->
-    <!--<el-button type="primary">导入文件</el-button>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
-
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
-          :action="_$baseUrl + '/prisoner_reward_punishment/upload'"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
+          :action="_$agency + '/prisoner_reward_punishment/upload'"
           :on-success="handleSuccess"
           :file-list="fileList"
           :auto-upload="false"
@@ -57,17 +45,8 @@
     data() {
       return {
         breadcrumb: ['主页', '罪犯奖惩信息管理'],
-        prisonerRewardHref: this._$baseUrl + '/upload/prisoner_reward_punishment_template.xls',
+        prisonerRewardHref: this._$agency + '/upload/prisoner_reward_punishment_template.xls',
         fileList: []
-      }
-    },
-    watch: {
-      prisonerRewardPunishmentResult(newValue){
-        if (newValue.code === 200)
-          this.$message({
-            type: 'success',
-            message: newValue.msg
-          })
       }
     },
     computed: {
@@ -85,14 +64,8 @@
       submitUpload() {
         this.$refs.upload.submit();
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleSuccess(response, file, fileList){
-        this.importPrisonerRewardPunishment({'filepath': response.path});
+      handleSuccess(response){
+        response.code === 200 && this.importPrisonerRewardPunishment({'filepath': response.path});
       }
     },
     mounted(){

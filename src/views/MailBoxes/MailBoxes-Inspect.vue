@@ -61,9 +61,19 @@
         breadcrumb: ['主页', '监狱长信箱', '邮件详情']
       }
     },
+    watch: {
+      commentResult(newValue){
+        newValue.code === 200 && this.$message({
+          type: 'success',
+          message: '回复邮件成功!'
+        });
+        this.replyContent = '';
+      }
+    },
     computed: {
       ...mapGetters({
         mailDetail: 'mailDetail',//邮件详情信息
+        commentResult: 'commentResult'//评论结果
       })
     },
     methods: {
