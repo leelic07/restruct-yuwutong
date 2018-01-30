@@ -17,7 +17,7 @@
               <el-table-column
                 label="商品图片">
                 <template slot-scope="scope">
-                  <img :src="_$baseUrl + scope.row.avatar_url" alt="">
+                  <img :src="_$agency + scope.row.avatar_url" alt="">
                 </template>
               </el-table-column>
               <el-table-column
@@ -54,10 +54,9 @@
                 label="生产厂家"
               ></el-table-column>
               <el-table-column
-                label="商品类部"
-              >
+                label="商品类部">
                 <template slot-scope="scope">
-                  {{scope.row.category_id}}
+                  {{scope.row.category | goodsCategory}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -66,15 +65,13 @@
                   <el-button
                     size="mini"
                     @click="handleDelete(scope.$index, scope.row)"
-                    type="danger"
-                  >
+                    type="danger">
                     删除
                   </el-button>
                   <el-button
                     size="mini"
                     @click="handleEdit(scope.$index,scope.row)"
-                    type="primary"
-                  >
+                    type="primary">
                     编辑
                   </el-button>
                 </template>
@@ -120,13 +117,12 @@
     },
     watch: {
       //从商品管理页面跳转到商品编辑页面使商品列表显示
-      $route(to, from) {
+      $route(to) {
         if (to.path === '/goods_management') {
           this.isGoodsEditor = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
-        } else {
+        } else
           this.isGoodsEditor = true;
-        }
       }
     },
     computed: {
@@ -137,24 +133,25 @@
       })
     },
     methods: {
+      //映射actions方法
+      ...mapActions({
+        getGoods: 'getGoods',//获取商品列表
+        searchGoods: 'searchGoods',//获取带搜索条件的商品列表
+        deleteGoods: 'deleteGoods'//删除指定商品
+      }),
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
       }),
-      //映射actions方法
-      ...mapActions({
-        getGoods: 'getGoods',//获取商品列表
-        searchGoods: 'searchGoods'//获取带搜索条件的商品列表
-      }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.$set(this.pagination, 'page', 0);
-        this.$set(this.pagination, 'limit', limit);
+        this.pagination.page = 0;
+        this.pagination.limit = limit;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination, 'page', page - 1);
+        this.pagination.page = page - 1;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
@@ -163,7 +160,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination, 'page', 0);
+        this.pagination.page = 0;
         this.searchGoods(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -177,11 +174,8 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-        })
+          this.deleteGoods(row.id);
+        });
       },
       //点击编辑时执行的方法
       handleEdit(index, row){

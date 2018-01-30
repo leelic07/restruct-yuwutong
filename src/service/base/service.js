@@ -73,7 +73,8 @@ instance.interceptors.response.use(
           Message.error(response.data.msg);
           break;
       }
-    }
+    } else if (response.errors)
+      Message.error(response.errors[0]);
     //隐藏loading遮罩层
     store.commit('hideLoading');
     return response;
@@ -114,20 +115,22 @@ export let get = (url, params = {}) =>
  * 封装post请求
  * @param url
  * @param data
+ * @param config
  * @returns {Promise}
  */
-export let post = (url, data = {}) =>
-  instance.post(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+export let post = (url, data = {}, config = {}) =>
+  instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
 
 /**
  * 封装patch请求
  * @param url
  * @param data
+ * @param config
  * @returns {Promise}
  */
-export let patch = (url, data = {}) =>
-  instance.patch(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+export let patch = (url, data = {}, config = {}) =>
+  instance.patch(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
 
 /**
@@ -138,6 +141,15 @@ export let patch = (url, data = {}) =>
  */
 export let put = (url, data = {}) =>
   instance.put(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+
+/**
+ * 封装delete请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+export let del = (url, data = {}) =>
+  instance.delete(url, qs.stringify(data)).then(res => res.data).catch(err => err);
 
 /**
  * 封装all请求

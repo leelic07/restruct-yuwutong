@@ -1,7 +1,7 @@
 <template>
   <el-row id="goods-editor">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="goodsForEdit" label-width="80px">
         <el-form-item label="商品条码">
           <el-input v-model="goodsForEdit.barcode"></el-input>
         </el-form-item>
@@ -20,10 +20,12 @@
         <el-form-item>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
+            ref="upload"
+            :action="_$agency + '/items/' + $route.params.id"
+            name="avatar"
             :file-list="fileList"
+            :on-change="handleChange"
+            :on-remove="handleRemove"
             :auto-upload="false"
             :limit="1"
             :with-credentials="true"
@@ -60,18 +62,9 @@
   export default {
     data() {
       return {
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
         breadcrumb: ['主页', '商品信息管理', '商品编辑管理'],
         fileList: [],
+        image: {},//上传的图片
         options: {
           '洗化日用': 1,
           '食品饮料': 2,
@@ -83,27 +76,32 @@
     },
     computed: {
       ...mapGetters({
-        goodsForEdit: 'goodsForEdit'//获取编辑的商品对象
+        goodsForEdit: 'goodsForEdit',//获取编辑的商品对象
+        editGoodsResult: 'editGoodsResult'//获取编辑商品结果
       })
     },
     methods: {
+      ...mapActions({
+        editGoods: 'editGoods'//编辑商品信息
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        editGoods: 'editGoods'//根据id获取要编辑的商品信息
+        getGoodsById: 'getGoodsById'//根据id获取要编辑的商品信息
       }),
-      onSubmit() {
-        console.log('submit!');
+      onSubmit(){
+        this.editGoods(Object.assign(this.goodsForEdit, {avatar: this.image}, {id: this.$route.params.id}));
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      //选择上传文件时的方法
+      handleChange(file){
+        this.image = file;
       },
-      handlePreview(file) {
-        console.log(file);
+      handleRemove(){
+        this.image = {};
       }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-      this.editGoods(this.$route.params.id);
+      this.getGoodsById(this.$route.params.id);
     }
   }
 </script>

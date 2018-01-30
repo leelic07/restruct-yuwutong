@@ -20,7 +20,7 @@
             class="upload-demo"
             name="dir"
             :action="_$agency + '/prisoners/upload_img'"
-            :headers="{'Content-Type':'multipart/form-data'}"
+            :headers="{common:{'Authorization':token}}"
             :on-success="handleSuccess"
             :file-list="fileList"
             :auto-upload="true"
@@ -49,8 +49,6 @@
           <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
             :file-list="fileList"
             :auto-upload="false"
             :limit="1"
@@ -79,6 +77,7 @@
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],//上传图片列表
+        token: sessionStorage['token'],//验证token
         editorOption: {
           modules: {
 //            toolbar: '#toolbar',
@@ -133,13 +132,7 @@
       onSubmit() {
         console.log('submit!');
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleSuccess(response, file, fileList){
+      handleSuccess(response){
         console.log(response);
       },
       onEditorBlur(editor){

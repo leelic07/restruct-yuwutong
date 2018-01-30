@@ -9,5 +9,11 @@ export default {
   goodsTotal: state => state.goodsTotal,
 
   //获取用作编辑的商品信息
-  goodsForEdit: state => state.goodsForEdit
+  goodsForEdit: state => state.goodsForEdit,
+
+  //获取编辑商品的结果
+  editGoodsResult: state => state.editGoodsResult,
+
+  //删除商品结果
+  deleteGoodsResult: state => state.deleteGoodsResult
 }
