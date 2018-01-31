@@ -13,5 +13,6 @@ export default {
   complaintsProposals: [],//投诉建议信息
   complaintsProposalsOrigin: [],//投诉建议最初的信息
   complaintsProposalsTotal: 0,//投诉建议的记录条数
-  newsForEdit: {}//待编辑的新闻信息对象
+  newsForEdit: {},//待编辑的新闻信息对象
+  uploadImageResult:{}//富文本图片上传结果
 }

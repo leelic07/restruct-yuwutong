@@ -18,10 +18,8 @@
           <el-upload
             v-show="false"
             class="upload-demo"
-            name="dir"
             :action="_$agency + '/prisoners/upload_img'"
-            :headers="{common:{'Authorization':token}}"
-            :on-success="handleSuccess"
+            :before-upload="uploadImage"
             :file-list="fileList"
             :auto-upload="true"
             :limit="1"
@@ -51,6 +49,7 @@
             action="https://jsonplaceholder.typicode.com/posts/"
             :file-list="fileList"
             :auto-upload="false"
+            :on-change="handleChange"
             :limit="1"
             :with-credentials="true"
             accept="image/*"
@@ -80,7 +79,6 @@
         token: sessionStorage['token'],//验证token
         editorOption: {
           modules: {
-//            toolbar: '#toolbar',
             toolbar: {
               container: [
                 ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -114,9 +112,22 @@
         }//富文本编辑器的配置
       }
     },
+    watch: {
+      uploadImageResult(newValue){
+        if (newValue.code === 200) {//图片添加成功时执行的操作
+          this.$message({
+            type: 'success',
+            message: newValue.msg
+          });
+          //将服务端的图片添加到富文本当中
+          this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.url}`)
+        } else this.$message.error(newValue.msg);//图片添加失败时执行的操作
+      }
+    },
     computed: {
       ...mapGetters({
-        jails: 'jails'//获取编辑的监狱基本信息
+        jails: 'jails',//获取编辑的监狱基本信息
+        uploadImageResult: 'uploadImageResult'//获取富文本上传图片结果
       }),
       editor() {
         return this.$refs.myQuillEditor.quill
@@ -124,16 +135,24 @@
     },
     methods: {
       ...mapActions({
-        uploadImage: 'uploadImage'//富文本上传图片执行的方法
+        uploadImageFromEditor: 'uploadImageFromEditor',//富文本上传图片执行的方法
+        editJails: 'editJails'//点击更新执行的方法
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      onSubmit() {
-        console.log('submit!');
+      onSubmit(){
+        this.editJails(this.jails);
+      },
+      uploadImage(file){
+        this.uploadImageFromEditor(file);
+        return false;
       },
       handleSuccess(response){
         console.log(response);
+      },
+      handleChange(file){
+        this.jails.image = file;
       },
       onEditorBlur(editor){
 //        console.log(editor);

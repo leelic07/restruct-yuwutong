@@ -21,5 +21,8 @@ export default {
   complaintsProposalsTotal: state => state.complaintsProposalsTotal,
 
   //获取待编辑的新闻信息
-  newsForEdit: state => state.newsForEdit
+  newsForEdit: state => state.newsForEdit,
+
+  //富文本上传图片结果
+  uploadImageResult: state => state.uploadImageResult
 }

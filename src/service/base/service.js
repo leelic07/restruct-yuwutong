@@ -15,6 +15,46 @@ let jail_id = '';//用户调接口时传入的监狱id
 //代理服务器
 export let agency = '/ywt';
 
+//处理服务端错误的方法
+let handleError = (error) => {
+  if (error.response !== undefined) {
+    switch (error.response.status) {
+      case 401:
+        Message.error('当前用户无权限，请重新登录！');
+        router.push({
+          path: '/login'
+        });
+        break;
+      case 404:
+        Message.error('找不到对应的资源！');
+        break;
+      case 500:
+        Message.error('服务器内部错误！');
+        break;
+      default:
+        break;
+    }
+    return true;
+  } else return false;
+};
+
+//服务端成功的处理
+let handleSuccess = (res) => {
+  if (res.data.code)
+    switch (res.data.code) {
+      case 200:
+        Message({
+          type: 'success',
+          message: response.data.msg
+        });
+        break;
+      default:
+        Message.error(response.data.msg);
+        break;
+    }
+  return res.data;
+};
+
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
@@ -55,50 +95,17 @@ instance.interceptors.response.use(
     //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
     //   })
     // }
-    if (response.data.code) {
-      switch (response.data.code) {
-        case 404:
-          Message.error('未找到相应数据');
-          break;
-        case 200:
-          Message({
-            type: 'success',
-            message: response.data.msg
-          });
-          break;
-        case 500:
-          Message.error(response.data.msg);
-          break;
-        default:
-          Message.error(response.data.msg);
-          break;
-      }
-    } else if (response.errors)
-      Message.error(response.errors[0]);
+    handleSuccess(response) && response.errors ? Message.error(response.errors[0]) : '';
     //隐藏loading遮罩层
     store.commit('hideLoading');
     return response;
   },
   error => {
-    switch (error.response.status) {
-      case 401:
-        Message.error('当前用户无权限，请重新登录！');
-        router.push({
-          path: '/login'
-        });
-        break;
-      case 404:
-        Message.error('找不到对应的资源！');
-        break;
-      case 500:
-        Message.error('服务器内部错误！');
-        break;
-      default:
-        break;
+    if (handleError(error)) {
+      //隐藏loading遮罩层
+      store.commit('hideLoading');
+      Promise.reject(error);
     }
-    //隐藏loading遮罩层
-    store.commit('hideLoading');
-    Promise.reject(error);
   }
 );
 
@@ -121,6 +128,27 @@ export let get = (url, params = {}) =>
 export let post = (url, data = {}, config = {}) =>
   instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
+/**
+ * 封装post文件请求
+ * @param url
+ * @param data
+ * @param file
+ * @returns {Promise}
+ */
+export let postFile = (url, file = new FormData(), data = {}) => {
+  store.commit('showLoading');//显示加载遮罩层
+  return axios.post(data.toString() === {}.toString() ? `${url}?jail_id=${sessionStorage['jail_id']}` : `${url}?jail_id=${sessionStorage['jail_id']}&${qs.stringify(data)}`, file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      common: {
+        'Authorization': sessionStorage['token']
+      }
+    }
+  }).then(res => res.data).catch(err => err).finally(() => {
+    store.commit('hideLoading');//隐藏加载遮罩层
+  });
+};
+
 
 /**
  * 封装patch请求
@@ -132,6 +160,26 @@ export let post = (url, data = {}, config = {}) =>
 export let patch = (url, data = {}, config = {}) =>
   instance.patch(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
+/**
+ * 封装patch文件请求
+ * @param url
+ * @param data
+ * @param file
+ * @returns {Promise}
+ */
+export let patchFile = (url, file = new FormData(), data = {}) => {
+  store.commit('showLoading');//显示加载遮罩层
+  return axios.patch(data.toString() === {}.toString() ? `${url}?jail_id=${sessionStorage['jail_id']}` : `${url}?jail_id=${sessionStorage['jail_id']}&${qs.stringify(data)}`, file, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      common: {
+        'Authorization': sessionStorage['token']
+      }
+    }
+  }).then(res => res.data).catch(err => err).finally(() => {
+    store.commit('hideLoading');//隐藏加载遮罩层
+  });
+};
 
 /**
  * 封装put请求
