@@ -9,21 +9,16 @@
           <!-- bidirectional data binding（双向数据绑定） -->
           <quill-editor v-model="jails.description"
                         ref="myQuillEditor"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)"
-                        @change="onEditorChange($event)">
+                        :options="editorOption">
           </quill-editor>
           <el-upload
             v-show="false"
             class="upload-demo"
             :action="_$agency + '/prisoners/upload_img'"
             :before-upload="uploadImage"
-            :file-list="fileList"
+            :file-list="fileListForEditor"
             :auto-upload="true"
             :limit="1"
-            :with-credentials="true"
             accept="image/*">
             <el-button class="custom-input" size="normal" type="primary" plain>添加富文本图片</el-button>
           </el-upload>
@@ -41,7 +36,8 @@
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <img :src="_$baseUrl + '/system/jails/images/000/000/001/thumb/' + jails.image_file_name" alt="">
+          <img :src="_$agency + jails.image_url"
+               alt="">
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -50,8 +46,8 @@
             :file-list="fileList"
             :auto-upload="false"
             :on-change="handleChange"
+            :on-remove="handleRemove"
             :limit="1"
-            :with-credentials="true"
             accept="image/*"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加监狱图片</el-button>
@@ -76,60 +72,22 @@
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],//上传图片列表
-        token: sessionStorage['token'],//验证token
-        editorOption: {
-          modules: {
-            toolbar: {
-              container: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
-
-                [{'header': 1}, {'header': 2}],               // custom button values
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-                [{'direction': 'rtl'}],                         // text direction
-
-                [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
-                [{'header': [1, 2, 3, 4, 5, 6, false]}],
-
-                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-                [{'font': []}],
-                [{'align': []}],
-                ['image', 'link'],
-                ['clean']                                         // remove formatting button
-              ],
-              handlers: {
-                'image': function (value) {
-                  if (value)
-                    this.quill.format('image', _this.$el.querySelector('.custom-input').click());
-                  else
-                    this.quill.format('image', false);
-                }
-              }
-            }
-          }
-        }//富文本编辑器的配置
+        fileListForEditor: [],//富文本上传图片列表
+        token: sessionStorage['token']//验证token
       }
     },
     watch: {
       uploadImageResult(newValue){
-        if (newValue.code === 200) {//图片添加成功时执行的操作
-          this.$message({
-            type: 'success',
-            message: newValue.msg
-          });
-          //将服务端的图片添加到富文本当中
-          this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.url}`)
-        } else this.$message.error(newValue.msg);//图片添加失败时执行的操作
+        newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.url}`)
       }
     },
     computed: {
       ...mapGetters({
         jails: 'jails',//获取编辑的监狱基本信息
+        editorOption: 'editorOption',//获取富文本配置信息
         uploadImageResult: 'uploadImageResult'//获取富文本上传图片结果
       }),
-      editor() {
+      editor(){
         return this.$refs.myQuillEditor.quill
       }
     },
@@ -141,35 +99,22 @@
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      onSubmit(){
-        this.editJails(this.jails);
-      },
       uploadImage(file){
         this.uploadImageFromEditor(file);
         return false;
       },
-      handleSuccess(response){
-        console.log(response);
-      },
+      //选择图片执行的方法
       handleChange(file){
         this.jails.image = file;
       },
-      onEditorBlur(editor){
-//        console.log(editor);
+      //移除图片执行的方法
+      handleRemove(){
+        this.jails.image = '';
       },
-      onEditorFocus(editor){
-//        console.log(editor);
+      //点击更新执行的方法
+      onSubmit(){
+        this.editJails(this.jails);
       },
-      onEditorReady(editor){
-//        console.log(editor);
-      },
-      onEditorChange(editor){
-//        console.log('editor has been changed' + editor);
-      },
-      upload(e){
-        console.log(e.target.files[0]);
-        this.uploadImage(e.target.files[0]);
-      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);

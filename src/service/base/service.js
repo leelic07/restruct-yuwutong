@@ -32,6 +32,7 @@ let handleError = (error) => {
         Message.error('服务器内部错误！');
         break;
       default:
+        Message.error('出错了！');
         break;
     }
     return true;
@@ -40,19 +41,21 @@ let handleError = (error) => {
 
 //服务端成功的处理
 let handleSuccess = (res) => {
-  if (res.data.code)
+  if (res.data.code) {
     switch (res.data.code) {
       case 200:
         Message({
           type: 'success',
-          message: response.data.msg
+          message: res.data.msg
         });
         break;
       default:
-        Message.error(response.data.msg);
+        Message.error(res.data.msg);
         break;
     }
-  return res.data;
+    return true;
+  }
+  return false;
 };
 
 //http request 拦截器
@@ -61,16 +64,16 @@ instance.interceptors.request.use(
     if (sessionStorage['token']) {
       config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
       //每次发起请求将jail_id发送给服务器端
-      if (jail_id = sessionStorage['jail_id']) {//每次请求时加上jail_id属性
-        if (config.method === 'get') {
-          if (config.params)
-            Object.assign(config.params, {'jail_id': jail_id});
-          else
-            config.url += `?jail_id=${jail_id}`;
-        }
-        if (config.method === 'post' && config.url !== `${agency}/users`)
-          config.data += `&jail_id=${jail_id}`;
-      }
+      // if (jail_id = sessionStorage['jail_id']) {//每次请求时加上jail_id属性
+      // if (config.method === 'get') {
+      // if (config.params)
+      //   Object.assign(config.params, {'jail_id': jail_id});
+      // else
+      //   config.url += `?jail_id=${jail_id}`;
+      // }
+      // if (config.method === 'post' && config.url !== `${agency}/users`)
+      //   config.data += `&jail_id=${jail_id}`;
+      // }
     } else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
       Message({type: 'warning', message: '当前用户无权限，请先登录！'});
       router.push({
@@ -95,7 +98,7 @@ instance.interceptors.response.use(
     //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
     //   })
     // }
-    handleSuccess(response) && response.errors ? Message.error(response.errors[0]) : '';
+    handleSuccess(response) || (response.errors && Message.error(response.errors[0]));
     //隐藏loading遮罩层
     store.commit('hideLoading');
     return response;
@@ -116,7 +119,7 @@ instance.interceptors.response.use(
  * @returns {Promise}
  */
 export let get = (url, params = {}) =>
-  instance.get(url, {params: params}).then(res => res.data).catch(err => err);
+  instance.get(`${url}?jail_id=${sessionStorage['jail_id']}`, {params: params}).then(res => res.data).catch(err => err);
 
 /**
  * 封装post请求
@@ -126,27 +129,21 @@ export let get = (url, params = {}) =>
  * @returns {Promise}
  */
 export let post = (url, data = {}, config = {}) =>
-  instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
+  instance.post(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
 /**
  * 封装post文件请求
  * @param url
  * @param data
- * @param file
  * @returns {Promise}
  */
-export let postFile = (url, file = new FormData(), data = {}) => {
-  store.commit('showLoading');//显示加载遮罩层
-  return axios.post(data.toString() === {}.toString() ? `${url}?jail_id=${sessionStorage['jail_id']}` : `${url}?jail_id=${sessionStorage['jail_id']}&${qs.stringify(data)}`, file, {
+export let postFile = (url, data = {}) => {
+  data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
+  return instance.post(url, data, {
     headers: {
-      'Content-Type': 'multipart/form-data',
-      common: {
-        'Authorization': sessionStorage['token']
-      }
+      'Content-Type': 'multipart/form-data'
     }
-  }).then(res => res.data).catch(err => err).finally(() => {
-    store.commit('hideLoading');//隐藏加载遮罩层
-  });
+  }).then(res => res.data).catch(err => err)
 };
 
 
@@ -158,28 +155,7 @@ export let postFile = (url, file = new FormData(), data = {}) => {
  * @returns {Promise}
  */
 export let patch = (url, data = {}, config = {}) =>
-  instance.patch(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
-
-/**
- * 封装patch文件请求
- * @param url
- * @param data
- * @param file
- * @returns {Promise}
- */
-export let patchFile = (url, file = new FormData(), data = {}) => {
-  store.commit('showLoading');//显示加载遮罩层
-  return axios.patch(data.toString() === {}.toString() ? `${url}?jail_id=${sessionStorage['jail_id']}` : `${url}?jail_id=${sessionStorage['jail_id']}&${qs.stringify(data)}`, file, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      common: {
-        'Authorization': sessionStorage['token']
-      }
-    }
-  }).then(res => res.data).catch(err => err).finally(() => {
-    store.commit('hideLoading');//隐藏加载遮罩层
-  });
-};
+  instance.patch(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
 /**
  * 封装put请求
@@ -197,7 +173,7 @@ export let put = (url, data = {}) =>
  * @returns {Promise}
  */
 export let del = (url, data = {}) =>
-  instance.delete(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+  instance.delete(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data)).then(res => res.data).catch(err => err);
 
 /**
  * 封装all请求
@@ -205,5 +181,5 @@ export let del = (url, data = {}) =>
  * @returns {Promise}
  */
 export let all = (urls = []) =>
-  axios.all(urls.map(url => instance.get(url))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
+  axios.all(urls.map(url => instance.get(`${url}?jail_id=${sessionStorage['jail_id']}`))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
 

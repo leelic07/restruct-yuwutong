@@ -10,15 +10,15 @@ export default {
 
   //编辑监狱信息
   editJails({commit}, regs){
-    regs.image ? new FormData().append('image', regs.image) : '';
-    let jails = {
-      title: regs.title,
-      description: regs.description,
-      street: regs.street,
-      district: regs.district,
-      city: regs.city,
-      state: regs.state,
-    };
-    http.editJails(regs.image, jails, regs.id).then(res => commit('editJails', res)).catch(err => err);
+    let formData = new FormData();
+    regs.image && formData.append('image', regs.image.raw);
+    formData.append('title', regs.title);
+    formData.append('description', regs.description);
+    formData.append('street', regs.street);
+    formData.append('district', regs.district);
+    formData.append('city', regs.city);
+    formData.append('state', regs.state);
+    formData.append('zipcode', regs.zipcode);
+    http.editJails(formData).then(res => commit('editJails', res)).catch(err => err);
   }
 }

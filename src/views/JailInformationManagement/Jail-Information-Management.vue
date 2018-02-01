@@ -2,7 +2,7 @@
   <el-row id="jail-information-management" :gutter="0">
     <el-row :gutter="0" v-if="!isJailEdit">
       <el-col :span="12">
-        <img :src="_$baseUrl + '/system/jails/images/000/000/00' + jails.id + '/thumb/' + jails.image_file_name" alt="">
+        <img :src="_$agency + jails.image_url" alt="">
       </el-col>
       <el-col :span="12">
         <el-col :span="24">
@@ -44,7 +44,7 @@
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
-        <el-col :span="24">
+        <el-col :span="24" class="description">
           <p>监狱简介</p>
           <p v-html="jails.description"></p>
         </el-col>
@@ -129,7 +129,10 @@
       .el-col.line
         border-bottom: 1px solid #F3F3F3
         margin-bottom: 10px
-      .el-col-24
+      & /deep/ .el-col-24
+        &.description
+          img
+            width: 100%
         .el-col-12
           &:nth-child(2)
             p

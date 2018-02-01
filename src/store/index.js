@@ -24,6 +24,7 @@ import prisonDataManagement from './modules/prisoner-data-management'
 import ordersManagement from './modules/orders-management'
 import logout from './modules/logout'
 import passwordModification from './modules/password-modification'
+import quillEditor from './modules/quill-editor'
 import 'babel-polyfill'
 
 Vue.use(Vuex);
@@ -62,7 +63,8 @@ merge(
   prisonDataManagement,
   ordersManagement,
   logout,
-  passwordModification
+  passwordModification,
+  quillEditor
 );
 
 export default new Vuex.Store({

@@ -8,17 +8,14 @@
         <el-form-item label="法律简介">
           <quill-editor v-model="law.description"
                         ref="myQuillEditor"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
+                        :options="editorOption">
           </quill-editor>
         </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :on-change="handleChange"
             :on-remove="handleRemove"
             :file-list="fileList"
             :auto-upload="false"
@@ -46,7 +43,9 @@
     data() {
       return {
         law: {//需要添加的法律信息
-          title: ''
+          title: '',
+          contents: '',
+          image: ''
         },
         breadcrumb: ['主页', '法律法规信息管理', '添加法律信息'],
         fileList: [],
@@ -63,24 +62,16 @@
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      onSubmit() {
-        console.log('submit!');
-      },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
-      handlePreview(file) {
-        console.log(file);
+      handleChange(){
+
       },
-      onEditorBlur(editor){
-        console.log(editor);
+      //点击提交时执行的方法
+      onSubmit(){
+
       },
-      onEditorFocus(editor){
-        console.log(editor);
-      },
-      onEditorReady(editor){
-        console.log(editor);
-      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);

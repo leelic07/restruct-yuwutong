@@ -3,16 +3,16 @@
  */
 export default {
   //请求地址
-  url: '/',
+  // url: '/',
   //请求方式
-  method: 'get',
+  // method: 'get',
   //基础url前缀
   // baseURL: 'https://www.fushuile.com/',
   // baseURL: 'http://10.10.10.117:3000/',
   //请求发送之前对出参进行处理
-  transformRequest: [data => data],
+  // transformRequest: [data => data],
   //请求发送之后对入参进行处理
-  transformResponse: [data => data],
+  // transformResponse: [data => data],
   //设置请求头
   headers: {
     //   'X-Requested-With': 'XMLHttpRequest',
@@ -20,11 +20,11 @@ export default {
     //   'Content-Type': 'application/json'
   },
   //post 请求参数
-  data: {},
+  // data: {},
   //get 请求参数
-  params: {},
+  // params: {},
   //设置请求超时时间
-  // timeout: 100000,
+  timeout: 10000,
   //请求数据返回类型
   responseType: 'json',
   //设置跨域请求的令牌

@@ -129,7 +129,8 @@
           </router-link>
         </li>
         <li>
-          <a href="#" @click="toggleIcon($event)">
+          <!--<a href="#" @click="toggleIcon($event)">-->
+          <a href="#">
             <i class="iconfont icon-folder"></i>
             <span>狱务公开信息管理</span>
             <span class="pull-right-container">
