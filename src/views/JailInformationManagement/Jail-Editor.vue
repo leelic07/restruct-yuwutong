@@ -6,22 +6,7 @@
           <el-input v-model="jails.title" placeholder="请填写监狱名称"></el-input>
         </el-form-item>
         <el-form-item label="监狱简介">
-          <!-- bidirectional data binding（双向数据绑定） -->
-          <quill-editor v-model="jails.description"
-                        ref="myQuillEditor"
-                        :options="editorOption">
-          </quill-editor>
-          <el-upload
-            v-show="false"
-            class="upload-demo"
-            :action="_$agency + '/prisoners/upload_img'"
-            :before-upload="uploadImage"
-            :file-list="fileListForEditor"
-            :auto-upload="true"
-            :limit="1"
-            accept="image/*">
-            <el-button class="custom-input" size="normal" type="primary" plain>添加富文本图片</el-button>
-          </el-upload>
+          <vue-quill-editor :contents="jails.description" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item label="街道">
           <el-input v-model="jails.street" placeholder="请填写街道名称"></el-input>
@@ -64,45 +49,37 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import {quillEditor} from 'vue-quill-editor'
+  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
   export default {
     data() {
-      const _this = this;
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
         fileList: [],//上传图片列表
-        fileListForEditor: [],//富文本上传图片列表
-        token: sessionStorage['token']//验证token
       }
     },
     watch: {
-      uploadImageResult(newValue){
-        newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.url}`)
+      editJailsResult(newValue){
+        this.getJailsInformation();
+        this.$router.push({
+          path: '/jails'
+        });
       }
     },
     computed: {
       ...mapGetters({
         jails: 'jails',//获取编辑的监狱基本信息
-        editorOption: 'editorOption',//获取富文本配置信息
-        uploadImageResult: 'uploadImageResult'//获取富文本上传图片结果
-      }),
-      editor(){
-        return this.$refs.myQuillEditor.quill
-      }
+        editJailsResult: 'editJailsResult'//获取监狱编辑的结果
+      })
     },
     methods: {
       ...mapActions({
-        uploadImageFromEditor: 'uploadImageFromEditor',//富文本上传图片执行的方法
+        getJailsInformation: 'getJailsInformation',//获取法律法规信息
         editJails: 'editJails'//点击更新执行的方法
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      uploadImage(file){
-        this.uploadImageFromEditor(file);
-        return false;
-      },
       //选择图片执行的方法
       handleChange(file){
         this.jails.image = file;
@@ -115,6 +92,13 @@
       onSubmit(){
         this.editJails(this.jails);
       },
+      //富文本内容发生改变时执行的方法
+      editorChange(contents){
+        this.jails.description = contents;
+      }
+    },
+    components: {
+      VueQuillEditor
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);

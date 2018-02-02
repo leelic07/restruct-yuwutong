@@ -6,15 +6,12 @@
           <el-input v-model="law.title" placeholder="请填写法律名称"></el-input>
         </el-form-item>
         <el-form-item label="法律简介">
-          <quill-editor v-model="law.description"
-                        ref="myQuillEditor"
-                        :options="editorOption">
-          </quill-editor>
+          <vue-quill-editor :contents="law.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :action="_$agency"
             :on-change="handleChange"
             :on-remove="handleRemove"
             :file-list="fileList"
@@ -37,7 +34,7 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import {quillEditor} from 'vue-quill-editor'
+  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
   export default {
     data() {
@@ -45,39 +42,56 @@
         law: {//需要添加的法律信息
           title: '',
           contents: '',
-          image: ''
+          image: '',
+          sys_flag: 1
         },
         breadcrumb: ['主页', '法律法规信息管理', '添加法律信息'],
         fileList: [],
-        editorOption: {}//富文本编辑器的配置
+      }
+    },
+    watch: {
+      addLawResult(newValue){
+        this.getLawsInformation();
+        this.$router.push({
+          path: '/laws'
+        });
       }
     },
     computed: {
-      ...mapGetters({}),
-      editor() {
-        return this.$refs.myQuillEditor.quill
-      }
+      ...mapGetters({
+        addLawResult: 'addLawResult'//获取添加法律法规结果
+      }),
     },
     methods: {
+      ...mapActions({
+        getLawsInformation: 'getLawsInformation',//获取法律法规信息
+        addLaw: 'addLaw'//添加法律法规信息
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      //移除图片执行的方法
+      handleRemove(){
+        this.law.image = '';
       },
-      handleChange(){
-
+      //选择图片时执行的方法
+      handleChange(file){
+        this.law.image = file;
       },
       //点击提交时执行的方法
       onSubmit(){
-
+        this.addLaw(this.law);
       },
+      //富文本内容发生改变时执行的方法
+      editorChange(contents){
+        this.law.contents = contents;
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
     },
     components: {
-      quillEditor
+      VueQuillEditor
     }
   }
 </script>

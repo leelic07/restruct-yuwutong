@@ -8,6 +8,7 @@ export default {
     let lawListTemp = [];
     //将laws变成由长度为10的子数组构成
     for (let i = 0; i < laws.length; i++) {
+      laws[i].image_url = laws[i].image_url ? laws[i].image_url.substring(6) : '';
       lawListTemp.push(laws[i]);
       if ((i + 1) % 10 === 0) {
         lawList.push(lawListTemp);
@@ -33,5 +34,9 @@ export default {
         state.lawForEdit = law;
       }
     }
-  }
+  },
+  //添加法律法规信息
+  addLaw: (state, addLawResult) => state.addLawResult = addLawResult,
+  //编辑法律法规信息
+  editLaw: (state, editLawResult) => state.editLawResult = editLawResult
 }

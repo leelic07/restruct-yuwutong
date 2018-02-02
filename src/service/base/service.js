@@ -4,7 +4,7 @@
 import base from '../config/base';
 import axios from 'axios';
 import store from '@/store';
-import router from '@/router'
+import router from '@/router';
 import {Message} from 'element-ui';
 import qs from 'qs';
 

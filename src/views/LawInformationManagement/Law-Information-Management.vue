@@ -45,7 +45,7 @@
           <!-- /.box-header -->
           <el-row :gutter="0" class="box-body no-padding">
             <!-- /.mail-box-messages -->
-            <img :src="_$baseUrl + lawDetail.image_url" alt="">
+            <img :src="_$agency + lawDetail.image_url" alt="">
             <p v-html="lawDetail.contents"></p>
           </el-row>
           <!-- /.box-body -->
@@ -131,21 +131,20 @@
       },
       //点击删除法律法规
       deleteLaw(){
-        this.$confirm('此操作将删除法律法规，是否继续？','提示',{
-          confirmButtonText:'确定',
-          cancelButtonText:'取消',
-          type:'warning'
+        this.$confirm('此操作将删除法律法规，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
         }).then(() => {
           this.$message({
-            type:'success',
-            message:'删除成功'
+            type: 'success',
+            message: '删除成功'
           })
         })
       }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-
       this.getLawsInformation();
     }
   }

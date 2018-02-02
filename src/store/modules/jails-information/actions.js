@@ -19,6 +19,6 @@ export default {
     formData.append('city', regs.city);
     formData.append('state', regs.state);
     formData.append('zipcode', regs.zipcode);
-    http.editJails(formData).then(res => commit('editJails', res)).catch(err => err);
+    http.editJails(formData).then(res => res.code === 200 && commit('editJails', res)).catch(err => err);
   }
 }

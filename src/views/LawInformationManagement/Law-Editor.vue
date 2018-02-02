@@ -6,23 +6,17 @@
           <el-input v-model="lawForEdit.title" placeholder="请填写监狱名称"></el-input>
         </el-form-item>
         <el-form-item label="法律简介">
-          <quill-editor v-model="lawForEdit.contents"
-                        ref="myQuillEditor"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
-          </quill-editor>
+          <vue-quill-editor :contents="lawForEdit.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
-          <img :src="_$baseUrl + lawForEdit.image_url" alt="">
+          <img :src="_$agency + lawForEdit.image_url" alt="">
         </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :action="_$agency"
             :on-remove="handleRemove"
+            :on-change="handleChange"
             :file-list="fileList"
             :auto-upload="false"
             :limit="1"
@@ -43,7 +37,7 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import {quillEditor} from 'vue-quill-editor'
+  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
   export default {
     data() {
@@ -53,45 +47,54 @@
         editorOption: {}//富文本编辑器的配置
       }
     },
+    watch: {
+      editLawResult(newValue){
+        this.getLawsInformation();
+        this.$router.push({
+          path: '/laws'
+        });
+      }
+    },
     computed: {
       ...mapGetters({
-        lawForEdit: 'lawForEdit'//获取编辑的监狱基本信息
+        lawForEdit: 'lawForEdit',//获取编辑的监狱基本信息
+        editLawResult: 'editLawResult'//获取编辑法律法规结果
       }),
       editor() {
         return this.$refs.myQuillEditor.quill
       }
     },
     methods: {
+      ...mapActions({
+        editLaw: 'editLaw',//编辑法律法规执行的方法
+        getLawsInformation: 'getLawsInformation'//获取法律法规列表信息
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
         getLawById: 'getLawById'//根据id获取需要编辑的法律信息
       }),
-      onSubmit() {
-        console.log('submit!');
+      //点击更新执行的方法
+      onSubmit(){
+        this.editLaw(this.lawForEdit);
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      //移除图片时执行的方法
+      handleRemove(){
+        this.lawForEdit.image = '';
       },
-      handlePreview(file) {
-        console.log(file);
+      handleChange(file){
+        this.lawForEdit.image = file;
       },
-      onEditorBlur(editor){
-        console.log(editor);
-      },
-      onEditorFocus(editor){
-        console.log(editor);
-      },
-      onEditorReady(editor){
-        console.log(editor);
+      //富文本内容发生变化时执行的方法
+      editorChange(contents){
+        this.lawForEdit.contents = contents;
       }
+    },
+    components: {
+      VueQuillEditor
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-
       this.getLawById(this.$route.params.id);
-    },
-    components: {
-//      quillEditor
     }
   }
 </script>
@@ -101,7 +104,7 @@
     padding-top: 35px
     .el-form-item
       .el-form-item__label
-        float:none
+        float: none
       .upload-demo
         .el-upload
           input
