@@ -3,11 +3,9 @@
     <el-row class="law-information-box" :gutter="0" v-if="!isLawNew">
       <div class="col-md-4 lawsList">
         <el-button type="primary" size="normal" @click="$router.push({path:'/laws/new'})">添加法律法规信息</el-button>
-
         <div class="box box-solid">
           <div class="box-header with-border">
             <h3 class="box-title">法律法规列表</h3>
-
             <div class="box-tools">
               <button type="button" class="btn btn-box-tool" data-widget="collapse">
                 <i class="el-icon-circle-plus"></i>
@@ -16,17 +14,17 @@
           </div>
           <div class="box-body no-padding" style="display: block;">
             <ul class="nav nav-pills nav-stacked">
-              <li v-for="law in laws[page]">
+              <li v-for="law in laws[lawManagementPage]">
                 <a href="#" @click="showLawDetail(law,$event)"><i class="el-icon-message"></i>
                   {{law.title}}
                 </a>
               </li>
               <el-col tag="li" :span="24">
                 <p class="pull-left">总共{{laws.length}}页</p>
-                <el-button plain size="mini" @click="page++"><i class="el-icon-arrow-right"></i>
+                <el-button plain size="mini" @click="nextPage()"><i class="el-icon-arrow-right"></i>
                 </el-button>
-                <p class="pull-right">第{{page + 1}}页</p>
-                <el-button plain size="mini" @click="page--"><i class="el-icon-arrow-left"></i>
+                <p class="pull-right">第{{lawManagementPage + 1}}页</p>
+                <el-button plain size="mini" @click="prePage()"><i class="el-icon-arrow-left"></i>
                 </el-button>
               </el-col>
             </ul>
@@ -52,7 +50,7 @@
           <!--<div class="box-footer no-padding">-->
           <el-row :gutter="0" class="box-footer no-padding">
             <el-col :span="12">
-              <el-button type="danger" size="small" @click="deleteLaw()">删除</el-button>
+              <el-button type="danger" size="small" @click="deleteLaw(lawDetail.id)">删除</el-button>
             </el-col>
             <el-col :span="12">
               <el-button type="primary" size="small" @click="editLaw(lawDetail.id)">编辑</el-button>
@@ -64,7 +62,6 @@
       </div>
       <!-- /.col -->
     </el-row>
-
     <!--添加法律法规路由-->
     <router-view></router-view>
   </el-row>
@@ -77,8 +74,6 @@
     data() {
       return {
         breadcrumb: ['主页', '法律法规信息管理'],//法律法规信息管理面包屑信息
-        page: 0,//当前页数
-        lawDetail: {},//法律法规的详情信息,
         isLawNew: false//是否是添加法律法规信息页面
       }
     },
@@ -92,31 +87,29 @@
           this.isLawNew = true;
         }
       },
-      //控制分页的页数不超出数组的长度
-      page(newValue){
-        if (newValue < 0) {
-          this.page = 0;
-        } else if (newValue > this.laws.length - 1) {
-          this.page = this.laws.length - 1;
-        }
-      },
-      //监听laws的变化
-      laws(newValue){
-        //将第一页第一条法律信息赋值给法律详情
-        this.lawDetail = newValue[0][0];
-      }
+//      //监听laws的变化
+//      laws(newValue){
+//        //将第一页第一条法律信息赋值给法律详情
+//        this.lawDetail = newValue[0][0];
+//      }
     },
     computed: {
       ...mapGetters({
-        laws: 'laws'//获取法律法规信息
+        laws: 'laws',//获取法律法规信息
+        deleteLawResult: 'deleteLawResult',//根据id删除法律法规的结果
+        lawManagementPage: 'lawManagementPage',//法律法规页码
+        lawDetail: 'lawDetail'//右侧内容区域显示的法律法规信息
       })
     },
     methods: {
       ...mapActions({
-        getLawsInformation: 'getLawsInformation'//获取法律法规信息
+        getLawsInformation: 'getLawsInformation',//获取法律法规信息
+        deleteLawById: 'deleteLawById'//根据id删除法律法规
       }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb'//设置法律法规信息管理页面的面包屑信息
+        breadCrumb: 'breadCrumb',//设置法律法规信息管理页面的面包屑信息
+        nextPage: 'nextPage',//点击下一页执行的方法
+        prePage: 'prePage'//点击上一页执行的方法
       }),
       //点击法律法规详情标题来显示法律法规详情
       showLawDetail(law, e){
@@ -130,17 +123,14 @@
         });
       },
       //点击删除法律法规
-      deleteLaw(){
+      deleteLaw(id){
         this.$confirm('此操作将删除法律法规，是否继续？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          })
-        })
+          this.deleteLawById(id);
+        });
       }
     },
     mounted(){
@@ -184,6 +174,7 @@
               padding: 10px 0 10px 2%
             .box-body
               img
+                max-width: 100%
                 display: block
                 margin: 10px auto 0 auto
               > p

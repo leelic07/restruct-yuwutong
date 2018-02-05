@@ -25,5 +25,8 @@ export default {
     formData.append('id', regs.id);
     formData.append('sys_flag', regs.sys_flag);
     http.editLaw(formData).then(res => res.code === 200 && commit('editLaw', res)).catch(err => console.log(err))
-  }
+  },
+  //根据id删除法律法规
+  deleteLawById: ({commit}, regs) =>
+    http.deleteLawById(regs).then(res => res.code === 200 && commit('deleteLawById', Object.assign(res, {id: regs}))).catch(err => console.log(err))
 }

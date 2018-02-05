@@ -61,7 +61,15 @@ export default {
   deleteGoods(state, deleteGoodsResult){
     let id = deleteGoodsResult.id;
     delete deleteGoodsResult.id;
-    state.goods.map((good, index) => good.id === Number(id) && state.goods.splice(index, 1));
+    state.goods.map((good, index) => {
+      if (good.id === Number(id)) {
+        state.goods.splice(index, 1);
+        state.goodsOrigin.forEach((good, index, goodsOrigin) => {
+          good.id === Number(id) && goodsOrigin.splice(index, 1);
+        });
+        state.goodsTotal--;
+      }
+    });
     state.deleteGoodsResult = deleteGoodsResult;
   }
 }

@@ -12,5 +12,8 @@ export default {
     service.postFile(`${service.agency}/laws`, law).then(res => res).catch(err => err),
   //编辑法律法规信息
   editLaw: law =>
-    service.postFile(`${service.agency}/laws/update`, law).then(res => res).catch(err => err)
+    service.postFile(`${service.agency}/laws/update`, law).then(res => res).catch(err => err),
+  //根据id删除法律法规
+  deleteLawById: id =>
+    service.remove(`${service.agency}/laws/${id}`).then(res => res).catch(err => err)
 }

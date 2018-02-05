@@ -113,7 +113,7 @@
         &:first-child
           padding: 3% 2% 0 2%
           img
-            width: 100%
+            max-width: 100%
             float: left
         &:nth-child(2)
           padding: 18px 2% 0 0
@@ -132,7 +132,7 @@
       & /deep/ .el-col-24
         &.description
           img
-            width: 100%
+            max-width: 100%
         .el-col-12
           &:nth-child(2)
             p

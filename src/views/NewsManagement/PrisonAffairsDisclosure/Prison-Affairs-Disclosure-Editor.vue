@@ -6,27 +6,20 @@
           <el-input v-model="newsForEdit.title" placeholder="请填写新闻名称"></el-input>
         </el-form-item>
         <el-form-item label="新闻详情">
-          <quill-editor v-model="newsForEdit.contents"
-                        ref="myQuillEditor"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
-          </quill-editor>
+          <vue-quill-editor :contents="newsForEdit.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
-          <img :src="_$baseUrl + newsForEdit.image_url" alt="">
+          <img :src="_$agency + newsForEdit.image_url" alt="">
         </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :action="_$agency"
             :on-remove="handleRemove"
+            :on-change="handleChange"
             :file-list="fileList"
             :auto-upload="false"
             :limit="1"
-            :with-credentials="true"
             accept="image/*"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加图片</el-button>
@@ -47,51 +40,51 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import {quillEditor} from 'vue-quill-editor'
+  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
   export default {
     data() {
       return {
         breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
-        fileList: [],
-        editorOption: {}//富文本编辑器的配置
+        fileList: []
       }
     },
     computed: {
       ...mapGetters({
-        newsForEdit: 'newsForEdit'//获取编辑的监狱基本信息
-      }),
-      editor() {
-        return this.$refs.myQuillEditor.quill
-      }
+        newsForEdit: 'newsForEdit',//获取编辑的狱务公开基本信息
+        editNewsResult: 'editNewsResult'//获取编辑狱务公开信息的结果
+      })
     },
     methods: {
+      ...mapActions({
+        editNews: 'editNews'//编辑狱务公开信息
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
         getNewsById: 'getNewsById'//根据id获取需要编辑的新闻信息
       }),
-      onSubmit() {
-        console.log('submit!');
+      //添加图片选中图片时执行的方法
+      handleChange(file){
+        this.lawsForEdit.image = file;
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      //移除选中的图片时执行的方法
+      handleRemove(){
+        this.lawsForEdit.image = '';
       },
-      handlePreview(file) {
-        console.log(file);
+      //当富文本内容发生变化时执行的方法
+      editorChange(contents){
+        this.newForEdit.contents = contents;
       },
-      onEditorBlur(editor){
-        console.log(editor);
-      },
-      onEditorFocus(editor){
-        console.log(editor);
-      },
-      onEditorReady(editor){
-        console.log(editor);
+      //点击更新时执行的方法
+      onSubmit(){
+        this.editNews(this.newsForEdit);
       }
+    },
+    components: {
+      VueQuillEditor
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-
       this.getNewsById(this.$route.params.id);
     }
   }
@@ -102,7 +95,7 @@
     padding-top: 35px
     .el-form-item
       .el-form-item__label
-        float:none
+        float: none
       .upload-demo
         .el-upload
           input

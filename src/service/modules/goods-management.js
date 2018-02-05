@@ -16,5 +16,5 @@ export default {
     }).then(res => res).catch(err => err),
   //删除商品
   deleteGoods: id =>
-    service.del(`${service.agency}/items/${id}`).then(res => res).catch(err => err)
+    service.remove(`${service.agency}/items/${id}`).then(res => res).catch(err => err)
 }

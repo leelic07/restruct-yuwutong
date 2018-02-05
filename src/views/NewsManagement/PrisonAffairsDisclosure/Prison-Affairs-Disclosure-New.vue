@@ -16,24 +16,17 @@
           <el-input v-model="news.title" placeholder="请填写新闻名称"></el-input>
         </el-form-item>
         <el-form-item label="新闻简介">
-          <quill-editor v-model="news.contents"
-                        ref="myQuillEditor"
-                        :options="editorOption"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)">
-          </quill-editor>
+          <vue-quill-editor :contents="news.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
+            :action="_$agency"
+            :on-change="handleChange"
             :on-remove="handleRemove"
             :file-list="fileList"
             :auto-upload="false"
             :limit="1"
-            :with-credentials="true"
             accept="image/*"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加图片</el-button>
@@ -42,7 +35,7 @@
         </el-form-item>
         <el-form-item>
           <!-- `checked` 为 true 或 false -->
-          <el-checkbox v-model="news.checked">是否设为焦点新闻</el-checkbox>
+          <el-checkbox v-model="news.is_focus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
@@ -54,7 +47,7 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import {quillEditor} from 'vue-quill-editor'
+  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
   export default {
     data() {
@@ -63,7 +56,8 @@
           type_id: 1,
           title: '',
           contents: '',
-          checked: false
+          is_focus: false,
+          sys_flag: 1
         },
         breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
         fileList: [],
@@ -78,13 +72,13 @@
     watch: {
 //      $route(to, from){
 //        switch (from.path) {
-//          case '/news/prison_affairs_disclosure':
+//          case '/news-management/prison_affairs_disclosure':
 //            this.breadCrumb(['主页', '狱务公开信息管理', '狱务公开', '新闻信息管理']);
 //            break;
-//          case '/news/working_dynamics':
+//          case '/news-management/working_dynamics':
 //            this.breadCrumb(['主页', '狱务公开信息管理', '工作动态', '新闻信息管理']);
 //            break;
-//          case '/news/complaints_proposals':
+//          case '/news-management/complaints_proposals':
 //            this.breadCrumb(['主页', '狱务公开信息管理', '投诉建议公示', '新闻信息管理']);
 //            break;
 //          default:
@@ -95,32 +89,30 @@
     },
     computed: {
       ...mapGetters({}),
-      editor() {
-        return this.$refs.myQuillEditor.quill
-      }
     },
     methods: {
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
       }),
-      onSubmit() {
-        console.log('submit!');
+      //添加图片选中图片时执行的方法
+      handleChange(file){
+        this.news.image = file;
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
+      //移除选中图片时执行的方法
+      handleRemove(){
+        this.news.image = '';
       },
-      handlePreview(file) {
-        console.log(file);
+      //当富文本内容发生改变时执行的方法
+      editorChange(contents){
+        this.news.contents = contents;
       },
-      onEditorBlur(editor){
-        console.log(editor);
-      },
-      onEditorFocus(editor){
-        console.log(editor);
-      },
-      onEditorReady(editor){
-        console.log(editor);
+      //点击更新时执行的方法
+      onSubmit(){
+        this.addNews(this.news);
       }
+    },
+    components: {
+      VueQuillEditor
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
@@ -133,7 +125,7 @@
     padding-top: 35px
     & /deep/ .el-form-item
       .el-form-item__label
-        float:none
+        float: none
       .upload-demo
         .el-upload
           .el-upload__input

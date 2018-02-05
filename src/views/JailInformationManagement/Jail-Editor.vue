@@ -118,7 +118,7 @@
             display: none
       img
         float: left
-        width: 100%
+        max-width: 100%
       &:last-child
         .el-button
           float: right

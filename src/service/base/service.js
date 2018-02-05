@@ -172,7 +172,7 @@ export let put = (url, data = {}) =>
  * @param data
  * @returns {Promise}
  */
-export let del = (url, data = {}) =>
+export let remove = (url, data = {}) =>
   instance.delete(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data)).then(res => res.data).catch(err => err);
 
 /**

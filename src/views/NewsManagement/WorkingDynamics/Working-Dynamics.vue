@@ -9,7 +9,6 @@
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
-
       <!--标签页表格-->
       <el-col :span="24">
         <el-table
@@ -38,31 +37,26 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleDelete(scope.$index, scope.row)"
-                type="danger"
-              >
+                @click="handleDelete(scope.row.id)"
+                type="danger">
                 删除
               </el-button>
               <el-button
                 size="mini"
                 @click="handleEdit(scope.row.id)"
-                type="primary"
-              >
+                type="primary">
                 编辑
               </el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
-
       <!--分页组件-->
       <pagination :total="workingDynamicsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                   @currentChange="currentChange"></pagination>
     </el-row>
-
     <!--子路由-->
     <router-view></router-view>
-
   </el-row>
 </template>
 
@@ -102,7 +96,8 @@
       //映射getters方法获取state状态
       ...mapGetters({
         workingDynamics: 'workingDynamics',//获取狱务公开信息
-        workingDynamicsTotal: 'workingDynamicsTotal'//获取狱务公开记录条数
+        workingDynamicsTotal: 'workingDynamicsTotal',//获取狱务公开记录条数
+        deleteNewsResult: 'deleteNewsResult'//获取删除狱务公开信息的结果
       })
     },
     methods: {
@@ -114,17 +109,17 @@
       //映射actions方法
       ...mapActions({
         getNews: 'getNews',//获取狱务公开信息
-        searchGoods: 'searchGoods'
+        deleteNewsById: 'deleteNewsById'//根据id删除狱务公开信息
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
-        this.$set(this.pagination, 'page', 0);
-        this.$set(this.pagination, 'limit', limit);
+        this.pagination.page = 0;
+        this.pagination.limit = limit;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination, 'page', page - 1);
+        this.pagination.page = page - 1;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
@@ -133,7 +128,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination, 'page', 0);
+        this.pagination.page = 0;
         this.searchPrisonAffairsDisclosure(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
@@ -141,16 +136,16 @@
         this.searching.value = searching;
       },
       //点击删除时执行的方法
-      handleDelete(index, row){
+      handleDelete(id){
         this.$confirm('确定删除？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
+          this.deleteNewsById({
+            id: id,
+            c: this.searching.c
+          });
         })
       },
       //点击编辑时执行的方法

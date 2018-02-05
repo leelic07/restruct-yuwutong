@@ -66,5 +66,23 @@ export default {
     }
     state[pagination.c] = prisonAffairsDisclosure;
   },
-
+  //编辑狱务公开信息
+  editNews: (state, editNewsResult) => state.editNewsResult = editNewsResult,
+  //根据id删除狱务公开信息
+  deleteNewsById(state, deleteNewsResult){
+    let id = deleteNewsResult.id;
+    let c = deleteNewsResult.c;
+    delete deleteNewsResult.id;
+    delete deleteNewsResult.c;
+    state[c].forEach((item, index, pad) => {
+      if (item.id === Number(id)) {
+        pad.splice(index, 1);
+        state[`${c}Origin`].forEach((item, index, pado) => {
+          item.id === Number(id) && pado.splice(index, 1);
+        });
+        state[`${c}Total`]--;
+      }
+    });
+    state.deleteNewsResult = deleteNewsResult
+  }
 }

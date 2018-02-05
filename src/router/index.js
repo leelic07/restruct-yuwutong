@@ -159,43 +159,43 @@ export default new Router({
       }]
     },
     {
-      path: '/news/prison_affairs_disclosure',
+      path: '/news-management/prison_affairs_disclosure',
       name: 'PrisonAffairsDisclosure',
       component: PrisonAffairsDisclosure,
       children: [{
-        path: '/news/prison_affairs_disclosure/new',
+        path: '/news-management/prison_affairs_disclosure/new',
         name: 'PrisonAffairsDisclosureNew',
         component: PrisonAffairsDisclosureNew
       }, {
-        path: '/news/prison_affairs_disclosure/:id/edit',
+        path: '/news-management/prison_affairs_disclosure/:id/edit',
         name: 'PrisonAffairsDisclosureEditor',
         component: PrisonAffairsDisclosureEditor
       }]
     },
     {
-      path: '/news/working_dynamics',
+      path: '/news-management/working_dynamics',
       name: 'WorkingDynamics',
       component: WorkingDynamics,
       children: [{
-        path: '/news/working_dynamics/new',
+        path: '/news-management/working_dynamics/new',
         name: 'WorkingDynamicsNew',
         component: PrisonAffairsDisclosureNew
       }, {
-        path: '/news/working_dynamics/:id/edit',
+        path: '/news-management/working_dynamics/:id/edit',
         name: 'WorkingDynamicsEditor',
         component: PrisonAffairsDisclosureEditor
       }]
     },
     {
-      path: '/news/complaints_proposals',
+      path: '/news-management/complaints_proposals',
       name: 'ComplaintsProposal',
       component: ComplaintsProposal,
       children: [{
-        path: '/news/complaints_proposals/new',
+        path: '/news-management/complaints_proposals/new',
         name: 'ComplaintsProposalNew',
         component: PrisonAffairsDisclosureNew
       }, {
-        path: '/news/complaints_proposals/:id/edit',
+        path: '/news-management/complaints_proposals/:id/edit',
         name: 'ComplaintsProposalEditor',
         component: PrisonAffairsDisclosureEditor
       }]

@@ -18,6 +18,7 @@ export default {
       }
     }
     state.laws = lawList;
+    state.lawDetail = lawList[0][0];
   },
   //根据id获取需要编辑的法律信息
   getLawById(state, id){
@@ -27,16 +28,36 @@ export default {
     for (let i = 0; i < laws.length; i++) {
       lawsTemp = lawsTemp.concat(laws[i]);
     }
-
     //根据id找法律信息
     for (let law of lawsTemp) {
-      if (law.id === Number(id)) {
-        state.lawForEdit = law;
-      }
+      law.id === Number(id) && (state.lawForEdit = law);
     }
   },
   //添加法律法规信息
-  addLaw: (state, addLawResult) => state.addLawResult = addLawResult,
+  addLaw(state, addLawResult){
+    state.addLawResult = addLawResult;
+    state.lawManagementPage = state.laws.length - 1;
+    state.lawDetail = state.laws[state.lawManagementPage][state.laws[state.lawManagementPage].length - 1]
+  },
   //编辑法律法规信息
-  editLaw: (state, editLawResult) => state.editLawResult = editLawResult
+  editLaw: (state, editLawResult) => state.editLawResult = editLawResult,
+  //根据id删除法律法规
+  deleteLawById (state, deleteLawResult){
+    let id = deleteLawResult.id;
+    delete deleteLawResult.id;
+    state.laws.forEach((laws, index) => {
+      laws.forEach((law, index, arr) => {
+        law.id === Number(id) && arr.splice(index, 1);
+      });
+      if (laws.length === 0) {
+        state.laws.splice(index, 1);//如果当前数组没有数据则删除当前数组
+        state.lawManagementPage > 0 && state.lawManagementPage--;
+      }
+    });
+    state.deleteLawResult = deleteLawResult;
+  },
+  //点击下一页执行的方法
+  nextPage: state => state.lawManagementPage < state.laws.length - 1 && state.lawManagementPage++,
+  //点击上一页执行的方法
+  prePage: state => state.lawManagementPage > 0 && state.lawManagementPage--
 }
