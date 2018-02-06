@@ -25,7 +25,7 @@
           </el-upload>
         </el-form-item>
         <el-form-item>
-          <el-button native-type="submit" type="primary" @click="onSubmit" size="small">提交</el-button>
+          <el-button type="primary" @click="onSubmit" size="small">提交</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -51,7 +51,6 @@
     },
     watch: {
       addLawResult(newValue){
-//        this.getLawsInformation();
         this.$router.push({
           path: '/laws'
         });

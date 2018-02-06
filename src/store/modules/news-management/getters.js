@@ -17,6 +17,8 @@ export default {
   newsForEdit: state => state.newsForEdit,
   //获取编辑狱务公开信息的结果
   editNewsResult: state => state.editNewsResult,
+  //添加狱务公开信息的结果
+  addNewsResult: state => state.addNewsResult,
   //获取删除狱务公开信息的结果
   deleteNewsResult: state => state.deleteNewsResult
 }

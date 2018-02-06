@@ -38,10 +38,9 @@
     },
     methods: {
       hideBar() {
-        if (this.$route.path === loginUrl) {//进入登陆页面
+        if (this.$route.path === loginUrl) //进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
-        }
-      },
+      }
     },
     components: {
       'side-bar': SideBar,
@@ -51,7 +50,6 @@
     },
     mounted() {
       this.hideBar();
-//      this.login();
     }
   }
 </script>

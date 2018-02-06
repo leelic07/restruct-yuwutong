@@ -14,7 +14,12 @@ export default {
     formData.append('title', regs.title);
     formData.append('contents', regs.contents);
     formData.append('sys_flag', regs.sys_flag);
-    http.addLaw(formData).then(res => res.code === 200 && commit('addLaw', res)).catch(err => console.log(err))
+    http.addLaw(formData).then(res => res.code === 200 &&
+      http.getLawsInformation().then(response => {
+        commit('getLawsInformation', response);
+        commit('addLaw', res);
+      }).catch(err => console.log(err))
+    ).catch(err => console.log(err))
   },
   //编辑法律法规信息
   editLaw({commit}, regs){
@@ -24,7 +29,12 @@ export default {
     formData.append('contents', regs.contents);
     formData.append('id', regs.id);
     formData.append('sys_flag', regs.sys_flag);
-    http.editLaw(formData).then(res => res.code === 200 && commit('editLaw', res)).catch(err => console.log(err))
+    http.editLaw(formData).then(res => res.code === 200 &&
+      http.getLawsInformation().then(response => {
+        commit('getLawsInformation', response);
+        commit('editLaw', Object.assign(res, {id: regs.id}));
+      }).catch(err => console.log(err))
+    ).catch(err => console.log(err))
   },
   //根据id删除法律法规
   deleteLawById: ({commit}, regs) =>

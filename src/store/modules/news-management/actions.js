@@ -17,7 +17,11 @@ export default {
     formData.append('contents', regs.contents);
     formData.append('is_focus', regs.is_focus);
     formData.append('sys_flag', regs.sys_flag);
-    http.editNews(formData).then(res => commit('editNews', res)).catch(err => console.log(err));
+    http.editNews(formData).then(res => res.code === 200 &&
+    http.getNews().then(response => {
+      commit('getNews', response);
+      commit('editNews', res);
+    }).catch(err => console.log(err))).catch(err => console.log(err));
   },
   //添加狱务公开信息
   addNews({commit}, regs){
@@ -28,7 +32,11 @@ export default {
     formData.append('contents', regs.contents);
     formData.append('is_focus', regs.is_focus);
     formData.append('sys_flag', regs.sys_flag);
-    http.addNews(formData).then(res => commit('addNews', res)).catch(err => console.log(err));
+    http.addNews(formData).then(res => res.code === 200 &&
+    http.getNews().then(response => {
+      commit('getNews', response);
+      commit('addNews', res);
+    }).catch(err => console.log(err))).catch(err => console.log(err));
   },
   //根据id删除狱务公开信息
   deleteNewsById({commit}, regs){

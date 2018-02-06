@@ -49,7 +49,6 @@
     },
     watch: {
       editLawResult(newValue){
-        this.getLawsInformation();
         this.$router.push({
           path: '/laws'
         });

@@ -22,7 +22,7 @@
           <el-table-column
             label="新闻图片">
             <template slot-scope="scope">
-              <img :src="_$baseUrl + scope.row.image_url" alt="">
+              <img :src="_$agency + scope.row.image_url" alt="">
             </template>
           </el-table-column>
           <el-table-column
@@ -115,7 +115,7 @@
         this.pagination.limit = limit;
         this.change();
       },
-      //当前页发生变化时执行的方法
+      //当前页码发生变化时执行的方法
       currentChange(page){
         this.pagination.page = page - 1;
         this.change();
@@ -127,7 +127,7 @@
       //点击搜索时执行的方法
       search(searching){
         this.pagination.page = 0;
-        this.searchPrisonAffairsDisclosure(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.searchPrisonAffairsDisclosure(Object.assign(this.searching, this.pagination));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
@@ -144,7 +144,7 @@
             id: id,
             c: this.searching.c
           });
-        })
+        });
       },
       //点击编辑时执行的方法
       handleEdit(id){

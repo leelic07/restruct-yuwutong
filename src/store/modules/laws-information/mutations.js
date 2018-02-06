@@ -37,21 +37,32 @@ export default {
   addLaw(state, addLawResult){
     state.addLawResult = addLawResult;
     state.lawManagementPage = state.laws.length - 1;
-    state.lawDetail = state.laws[state.lawManagementPage][state.laws[state.lawManagementPage].length - 1]
+    let lastPage = state.laws[state.lawManagementPage];//最末尾一页的数组
+    state.lawDetail = lastPage[lastPage.length - 1];//将最末尾的数据(新增数据)赋值给lawDetail
   },
   //编辑法律法规信息
-  editLaw: (state, editLawResult) => state.editLawResult = editLawResult,
+  editLaw(state, editLawResult){
+    let id = editLawResult.id;
+    delete editLawResult.id;
+    state.laws.forEach((law, index) =>
+      law.forEach((l, i) => l.id === Number(id) && (state.lawDetail = l)));//将当前修改的法律法规信息赋值给lawDetail
+    state.editLawResult = editLawResult;
+  },
   //根据id删除法律法规
   deleteLawById (state, deleteLawResult){
     let id = deleteLawResult.id;
     delete deleteLawResult.id;
     state.laws.forEach((laws, index) => {
-      laws.forEach((law, index, arr) => {
-        law.id === Number(id) && arr.splice(index, 1);
+      laws.forEach((law, i, arr) => {
+        if (law.id === Number(id)) {
+          arr.splice(i, 1);
+          let preArr = state.laws[index - 1];//当前数组的上一个数组
+          arr.length && (state.lawDetail = arr[i - 1]) || preArr.length && (state.lawDetail = preArr[preArr.length - 1] );
+        }
       });
       if (laws.length === 0) {
         state.laws.splice(index, 1);//如果当前数组没有数据则删除当前数组
-        state.lawManagementPage > 0 && state.lawManagementPage--;
+        state.lawManagementPage && state.lawManagementPage--;//当前页数减1
       }
     });
     state.deleteLawResult = deleteLawResult;
@@ -59,5 +70,7 @@ export default {
   //点击下一页执行的方法
   nextPage: state => state.lawManagementPage < state.laws.length - 1 && state.lawManagementPage++,
   //点击上一页执行的方法
-  prePage: state => state.lawManagementPage > 0 && state.lawManagementPage--
+  prePage: state => state.lawManagementPage && state.lawManagementPage--,
+  //设置法律法规的详情信息
+  setLawDetail: (state, lawDetail) => state.lawDetail = lawDetail
 }

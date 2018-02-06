@@ -109,12 +109,13 @@
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置法律法规信息管理页面的面包屑信息
         nextPage: 'nextPage',//点击下一页执行的方法
-        prePage: 'prePage'//点击上一页执行的方法
+        prePage: 'prePage',//点击上一页执行的方法
+        setLawDetail: 'setLawDetail'//设置法律法规的详情页面
       }),
       //点击法律法规详情标题来显示法律法规详情
       showLawDetail(law, e){
         e.preventDefault();
-        this.lawDetail = law;
+        this.setLawDetail(law);
       },
       //编辑法律法规
       editLaw(id){

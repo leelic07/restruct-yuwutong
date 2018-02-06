@@ -86,13 +86,22 @@
 //            break;
 //        }
 //      }
+      //返回添加狱务公开信息结果时跳转到狱务公开信息管理页
+      addNewsResult(newValue){
+        window.history.back();
+      }
     },
     computed: {
-      ...mapGetters({}),
+      ...mapGetters({
+        addNewsResult: 'addNewsResult'//获取添加狱务公开信息的结果
+      }),
     },
     methods: {
+      ...mapActions({
+        addNews: 'addNews'//添加狱务公开信息
+      }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
+        breadCrumb: 'breadCrumb'//设置商品编辑页面的面包屑信息
       }),
       //添加图片选中图片时执行的方法
       handleChange(file){

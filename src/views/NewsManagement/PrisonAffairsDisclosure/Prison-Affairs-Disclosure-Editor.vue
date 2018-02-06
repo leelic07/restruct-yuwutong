@@ -46,7 +46,14 @@
     data() {
       return {
         breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
-        fileList: []
+        fileList: [],
+        fromPath: ''//来自哪个页面
+      }
+    },
+    watch: {
+      //监听编辑狱务公开信息的结果
+      editNewsResult(newValue){
+        window.history.back();
       }
     },
     computed: {
@@ -65,15 +72,15 @@
       }),
       //添加图片选中图片时执行的方法
       handleChange(file){
-        this.lawsForEdit.image = file;
+        this.newsForEdit.image = file;
       },
       //移除选中的图片时执行的方法
       handleRemove(){
-        this.lawsForEdit.image = '';
+        this.newsForEdit.image = '';
       },
       //当富文本内容发生变化时执行的方法
       editorChange(contents){
-        this.newForEdit.contents = contents;
+        this.newsForEdit.contents = contents;
       },
       //点击更新时执行的方法
       onSubmit(){
