@@ -96,7 +96,3 @@
     }
   }
 </script>
-
-<style type="text/stylus" lang="stylus" scoped>
-
-</style>

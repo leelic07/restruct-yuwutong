@@ -46,11 +46,11 @@ let handleSuccess = (res) => {
       case 200:
         Message({
           type: 'success',
-          message: res.data.msg
+          message: res.data.msg ? res.data.msg : '查询数据成功'
         });
         break;
       default:
-        Message.error(res.data.msg);
+        Message.error(res.data.msg ? res.data.msg : '无法找到对应的信息');
         break;
     }
     return true;
@@ -130,6 +130,7 @@ export let get = (url, params = {}) =>
  */
 export let post = (url, data = {}, config = {}) =>
   instance.post(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
+  // instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 
 /**
  * 封装post文件请求

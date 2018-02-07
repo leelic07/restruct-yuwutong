@@ -11,10 +11,6 @@ export default {
   editGoods: ({commit}, regs) => {
     let id = regs.id;
     delete regs.id;
-    // let formData = new FormData();
-    // for (let key in regs) {
-    //   formData.append(key, regs[key]);
-    // }
     http.editGoods({
       barcode: regs.barcode,
       title: regs.title,

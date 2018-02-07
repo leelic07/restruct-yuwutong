@@ -74,6 +74,14 @@
         }
       }
     },
+    watch: {
+      //监听编辑商品列表的结果
+      editGoodsResult(){
+        this.$router.push({
+          path: '/goods_management'
+        });
+      }
+    },
     computed: {
       ...mapGetters({
         goodsForEdit: 'goodsForEdit',//获取编辑的商品对象

@@ -7,19 +7,16 @@
         </el-col>
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
                  class="demo-ruleForm">
-          <el-form-item label-width="0" prop="username">
-            <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="用户名"></el-input>
-          </el-form-item>
-
           <el-form-item label-width="0" prop="password">
-            <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
+            <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="原密码"></el-input>
           </el-form-item>
-
+          <el-form-item label-width="0" prop="new_password">
+            <el-input type="password" v-model="ruleForm2.new_password" auto-complete="off" placeholder="新密码"></el-input>
+          </el-form-item>
           <el-form-item label-width="0" prop="passwordReview">
             <el-input type="password" v-model="ruleForm2.passwordReview" auto-complete="off"
                       placeholder="重新输入密码"></el-input>
           </el-form-item>
-
           <el-form-item label-width="0" class="btn-box">
             <!-- `checked` 为 true 或 false -->
             <el-button type="" @click="submitForm('ruleForm2')">提交</el-button>
@@ -31,7 +28,7 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations} from 'vuex'
+  import {mapActions, mapMutations, mapGetters} from 'vuex'
 
   export default {
     data() {
@@ -39,7 +36,7 @@
       var validatePasswordReview = (rule, value, callback) => {
         if (value === '')
           callback(new Error('请输入确认密码'));
-        else if (value !== this.ruleForm2.password)
+        else if (value !== this.ruleForm2.new_password)
           callback(new Error('输入密码不一致'));
         else
           callback();
@@ -47,14 +44,14 @@
       return {
         ruleForm2: {
           password: '',
-          username: '',
+          new_password: '',
           passwordReview: '',
         },
         rules2: {
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'}
           ],
-          username: [
+          new_password: [
             {required: true, message: '请输入用户名', trigger: 'blur'}
           ],
           passwordReview: [
@@ -64,15 +61,31 @@
         breadcrumb: ['主页', '修改用户密码']
       };
     },
+    watch: {
+      modifyPasswordResult(){
+        setTimeout(() => {
+          this.logout();//修改用户密码成功以后重新登录
+        }, 1000);
+      }
+    },
+    computed: {
+      ...mapGetters({
+        modifyPasswordResult: 'modifyPasswordResult'//修改用户名密码的结果
+      })
+    },
     methods: {
+      ...mapActions({
+        modifyPassword: 'modifyPassword'//修改用户密码的方法
+      }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb'
+        breadCrumb: 'breadCrumb',
+        logout: 'logout'//修改用户密码成功以后重新登录
       }),
       //点击提交按钮执行的方法
-      submitForm(formName) {
+      submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.modifyPassword(this.ruleForm2);
           } else {
             console.log('error submit!!');
             return false;

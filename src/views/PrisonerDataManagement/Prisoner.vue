@@ -22,7 +22,7 @@
           class="upload-demo"
           ref="upload"
           :action="_$agency + '/prisoners/upload'"
-          :on-success="handleSuccess"
+          :before-upload="beforeUpload"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
@@ -49,14 +49,21 @@
         prisonerHref: this._$agency + '/upload/prison_template.xls'
       }
     },
+    watch: {
+      uploadTemplateResult(newValue){
+        this.importPrisoner({filepath: newValue.path});
+      }
+    },
     computed: {
       ...mapGetters({
-        prisonerResult: 'prisonerResult'//获取罪犯模板导入结果
+        prisonerResult: 'prisonerResult',//获取罪犯模板导入结果
+        uploadTemplateResult: 'uploadTemplateResult'//获取上传罪犯模板文件的结果
       })
     },
     methods: {
       ...mapActions({
-        importPrisoner: 'importPrisoner'//罪犯数据模板上传成功后将罪犯数据模板导入到服务端
+        importPrisoner: 'importPrisoner',//罪犯数据模板上传成功后将罪犯数据模板导入到服务端
+        uploadTemplate: 'uploadTemplate'//上传罪犯数据模板文件到服务端
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
@@ -64,8 +71,9 @@
       submitUpload(){
         this.$refs.upload.submit();
       },
-      handleSuccess(response){
-        response.code === 200 && this.importPrisoner({'filepath': response.path});
+      beforeUpload(file){
+        this.uploadTemplate(file);
+        return false;
       }
     },
     mounted(){

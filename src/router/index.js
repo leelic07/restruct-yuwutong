@@ -13,6 +13,8 @@ import PrisonerImportIndex from '@/views/PrisonerDataManagement/Prisoner'
 import PrisonTermImportIndex from '@/views/PrisonerDataManagement/Prison-Term'
 import PrisonerRewardPunishment from '@/views/PrisonerDataManagement/Prisoner-Reward-Punishment'
 import Terminals from '@/views/Terminals/Terminals'
+import TerminalsNew from '@/views/Terminals/Terminals-New'
+import TerminalsEdit from '@/views/Terminals/Terminals-Edit'
 import Versions from '@/views/Versions/Versions'
 import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
 import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
@@ -97,7 +99,16 @@ export default new Router({
     {
       path: '/terminals',
       name: 'Terminals',
-      component: Terminals
+      component: Terminals,
+      children: [{
+        path: '/terminals/new',
+        name: 'TerminalsNew',
+        component: TerminalsNew
+      }, {
+        path: '/terminals/:id/edit',
+        name: 'TerminalsEdit',
+        component: TerminalsEdit
+      }]
     },
     {
       path: '/versions',

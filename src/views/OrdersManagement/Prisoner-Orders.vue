@@ -6,7 +6,6 @@
         <a :href="prisonerHref">家属订单导入模板</a>
       </el-col>
     </el-row>
-
     <el-row :gutter="0" class="title-box">
       <el-col :span="22" :offset="2">
         <p>上传模板文件：</p>
@@ -15,14 +14,13 @@
         </p>
       </el-col>
     </el-row>
-
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
           :action="_$agency + '/prisoner_orders/upload'"
-          :on-success="handleSuccess"
+          :before-upload="beforeUpload"
           :file-list="fileList"
           :auto-upload="false"
           :limit="1"
@@ -33,7 +31,6 @@
         </el-upload>
       </el-col>
     </el-row>
-
   </el-row>
 </template>
 
@@ -45,30 +42,39 @@
       return {
         breadcrumb: ['主页', '订单信息管理'],
         fileList: [],
-        prisonerHref: this._$agency + '/upload/order_template.xls'
+        prisonerHref: this._$agency + '/upload/order_template.xls'//下载家属订单模板的地址
+      }
+    },
+    watch: {
+      uploadTemplateResult(newValue){
+        this.importPrisonerOrders({'filepath': newValue.path});//家属订单模板文件上传成功以后将数据解析到服务端
       }
     },
     computed: {
       ...mapGetters({
-        prisonerOrdersResult: 'prisonerOrdersResult'//获取家属订单导入结果
+        prisonerOrdersResult: 'prisonerOrdersResult',//获取家属订单导入结果
+        uploadTemplateResult: 'uploadTemplateResult'//获取家属订单上传的结果
       })
     },
     methods: {
       ...mapActions({
-        importPrisonerOrders: 'importPrisonerOrders'//家属订单模板上传成功后将家属订单模板导入到服务端
+        importPrisonerOrders: 'importPrisonerOrders',//家属订单模板上传成功后将家属订单模板导入到服务端
+        uploadTemplate: 'uploadTemplate'//上传模板文件的方法
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
-      submitUpload() {
+      //点击上传到服务器执行的方法
+      submitUpload(){
         this.$refs.upload.submit();
       },
-      handleSuccess(response){
-        response.code === 200 && this.importPrisonerOrders({'filepath': response.path});
+      //上传订单模板文件
+      beforeUpload(file){
+        this.uploadTemplate(file);
       }
     },
     mounted(){
-      this.breadCrumb(this.breadcrumb)
+      this.breadCrumb(this.breadcrumb);
     }
   }
 </script>
@@ -91,5 +97,4 @@
           float: left
         input[type=file]
           display: none
-
 </style>

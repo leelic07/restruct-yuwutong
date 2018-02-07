@@ -42,10 +42,10 @@ export default {
     if (pagination.value !== '') {
       for (let pado of state[`${pagination.c}Origin`]) {
         for (let key in pado) {
-          let value = new RegExp(`^${pado[key].toString()}$`);
-          // console.log(new RegExp(pado[key].toString()).test(pagination.value), pado[key].toString() === pagination.value);
-          pado[key].toString() && value.test(pagination.value) && prisonAffairsDisclosure.push(pado);
-          // pado[key].toString() === pagination.value && prisonAffairsDisclosure.push(pado);
+          if (pado[key] && new RegExp(pagination.value).test(pado[key].toString())) {
+            prisonAffairsDisclosure.push(pado);
+            break;
+          }
         }
       }
       prisonAffairsDisclosure.length && (state[`${pagination.c}Total`] = prisonAffairsDisclosure.length);

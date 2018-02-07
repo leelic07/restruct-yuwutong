@@ -33,14 +33,13 @@ export default {
     if (pagination.value !== '') {
       for (let good of state.goodsOrigin) {
         for (let key in good) {
-          if (good[key].toString() === pagination.value) {
+          if (good[key] && new RegExp(pagination.value).test(good[key].toString())) {
             goodsList.push(good);
+            break;
           }
         }
       }
-      if (goodsList.length) {
-        state.goodsTotal = goodsList.length;
-      }
+      goodsList.length && (state.goodsTotal = goodsList.length);
       goodsList = goodsList.slice(pagination.page, pagination.page + pagination.limit);
     } else {//当不带搜索条件时执行的操作
       state.goodsTotal = state.goodsOrigin.length;

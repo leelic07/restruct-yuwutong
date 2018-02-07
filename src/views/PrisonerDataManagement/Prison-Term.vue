@@ -6,7 +6,6 @@
         <a :href="prisonTermHref">刑期变动信息导入模板</a>
       </el-col>
     </el-row>
-
     <el-row :gutter="0" class="title-box">
       <el-col :span="22" :offset="2">
         <p>上传模板文件：</p>
@@ -15,15 +14,14 @@
         </p>
       </el-col>
     </el-row>
-
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
           class="upload-demo"
           ref="upload"
           :action="_$agency + '/prison_term/upload'"
+          :before-upload="beforeUpload"
           :file-list="fileList"
-          :on-success="handleSuccess"
           :auto-upload="false"
           :limit="1"
           accept=".xls">
@@ -43,27 +41,37 @@
     data() {
       return {
         breadcrumb: ['主页', '刑期变动信息管理'],
-        prisonTermHref: this._$agency + '/upload/prison_term_template.xls',
+        prisonTermHref: this._$agency + '/upload/prison_term_template.xls',//下载罪犯刑期模板文件的地址
         fileList: []
+      }
+    },
+    watch: {
+      uploadTemplateResult(newValue){
+        this.importPrisonTerm({filepath: newValue.path});//罪犯刑期模板上传成功后将罪犯刑期数据给服务端解析
       }
     },
     computed: {
       ...mapGetters({
-        prisonTermResult: 'prisonTermResult'//获取刑期变动模板导入结果
+        prisonTermResult: 'prisonTermResult',//获取刑期变动模板导入结果
+        uploadTemplateResult: 'uploadTemplateResult'//获取上传罪犯刑期模板文件的结果
       })
     },
     methods: {
       ...mapActions({
-        importPrisonTerm: 'importPrisonTerm'//刑期变动模板上传成功后将刑期变动模板导入到服务端
+        importPrisonTerm: 'importPrisonTerm',//刑期变动模板上传成功后将刑期变动模板导入到服务端
+        uploadTemplate: 'uploadTemplate'//上传罪犯刑期模板文件到服务端
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
+      //上传罪犯刑期模板文件到服务端
+      beforeUpload(file){
+        this.uploadTemplate(file);
+        return false;
+      },
+      //点击上传到服务器执行的方法
       submitUpload(){
         this.$refs.upload.submit();
-      },
-      handleSuccess(response){
-        response.code === 200 && this.importPrisonTerm({'filepath': response.path});
       }
     },
     mounted(){
@@ -71,7 +79,3 @@
     }
   }
 </script>
-
-<style type="text/stylus" lang="stylus">
-
-</style>

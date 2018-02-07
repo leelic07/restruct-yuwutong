@@ -1,61 +1,66 @@
 <template>
-  <el-row id="families" :gutter="0">
-    <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
-    <!--标签页表格-->
-    <el-col :span="24">
-      <el-tabs v-model="tabNum" type="card">
-        <el-tab-pane label="终端管理" name="first">
-          <el-table
-            :data="terminals"
-            border
-            stripe
-            style="width: 100%">
-            <el-table-column
-              prop="terminal_number"
-              label="终端号">
-            </el-table-column>
-            <el-table-column
-              prop="room_number"
-              label="会议室号">
-            </el-table-column>
-            <el-table-column
-              prop="host_password"
-              label="主持人密码">
-            </el-table-column>
-            <el-table-column
-              prop="metting_password"
-              label="参与密码">
-            </el-table-column>
-            <el-table-column
-              label="创建时间">
-              <template slot-scope="scope">
-                {{scope.row.created_at}}
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="最后更新时间">
-              <template slot-scope="scope">
-                {{scope.row.updated_at}}
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
-    </el-col>
-
-    <!--分页组件-->
-    <pagination :total="terminalsTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
-                @currentChange="currentChange"></pagination>
-
-    <!--家属信息弹出框-->
-    <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
-
-    <el-dialog title="服刑人员: 张三的账户详情" :visible.sync="dialogTableVisible">
-
-    </el-dialog>
-
+  <el-row id="terminals" :gutter="0">
+    <el-row :gutter="0" v-if="!isTerminals">
+      <!--添加终端信息-->
+      <el-col :span="24">
+        <el-button size="small" type="primary" plain @click="newTerminal()">添加狱务公开信息</el-button>
+      </el-col>
+      <!--选择显示页数和搜索框内容组件-->
+      <select-and-search @sizeChange="sizeChange" @search="search"
+                         @searchingChange="searchingChange"></select-and-search>
+      <!--标签页表格-->
+      <el-col :span="24">
+        <el-tabs v-model="tabNum" type="card">
+          <el-tab-pane label="终端管理" name="first">
+            <el-table
+              :data="terminals"
+              border
+              stripe
+              style="width: 100%">
+              <el-table-column
+                prop="terminal_number"
+                label="终端号">
+              </el-table-column>
+              <el-table-column
+                prop="room_number"
+                label="会议室号">
+              </el-table-column>
+              <el-table-column
+                prop="host_password"
+                label="主持人密码">
+              </el-table-column>
+              <el-table-column
+                prop="metting_password"
+                label="参与密码">
+              </el-table-column>
+              <el-table-column
+                label="创建时间">
+                <template slot-scope="scope">
+                  {{scope.row.created_at}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="最后更新时间">
+                <template slot-scope="scope">
+                  {{scope.row.updated_at}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作">
+                <template slot-scope="scope">
+                  <el-button type="primary" size="mini" @click="editTerminal(scope.row.id)">编辑</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+      <!--分页组件-->
+      <pagination :total="terminalsTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
+                  @currentChange="currentChange"></pagination>
+    </el-row>
+    <!--终端管理页面子路由-->
+    <router-view></router-view>
   </el-row>
 </template>
 
@@ -72,7 +77,7 @@
         pagination: {
           length: 10,//每页显示记录条数
           draw: 1,//当前显示第几页
-          start:0
+          start: 0
         },
         searching: {
           c: 'terminals',//搜索的模块类型
@@ -86,13 +91,22 @@
           status: ''//授权状态
         },
         dialogTableVisible: false,
+        isTerminals: false
+      }
+    },
+    watch: {
+      $route(to){
+        if (to.path === '/terminals') {
+          this.isTerminals = false;
+          this.breadCrumb(this.breadcrumb);
+        } else this.isTerminals = true;
       }
     },
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        terminals: 'terminals',
-        terminalsTotal:'terminalsTotal'//总共记录条数
+        terminals: 'terminals',//获取终端列表
+        terminalsTotal: 'terminalsTotal'//总共记录条数
       })
     },
     methods: {
@@ -102,12 +116,12 @@
       }),
       //映射actions方法
       ...mapActions({
-        getTerminals: 'getTerminals',//获取家属注册列表
-        searchAction: 'searchAction',//获取带搜索条件的家属注册列表
+        getTerminals: 'getTerminals',//获取终端列表
+        searchAction: 'searchAction',//获取带搜索条件的终端列表
       }),
       //每页条数发生变化时执行的方法
       sizeChange(length){
-        this.$set(this.pagination,'draw',1);
+        this.pagination.draw = 1;
         this.change({'length': length});
       },
       //当前页发生变化时执行的方法
@@ -116,7 +130,7 @@
       },
       //根据是否有搜索内容调用不同的接口
       change(changeParams){
-        if (this.searching.value != '') {
+        if (this.searching.value !== '') {
           this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
         } else {
           if (this.pagination.hasOwnProperty('value')) {
@@ -128,12 +142,24 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination,'draw',1);
+        this.pagination.draw = 1;
         this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
         this.searching.value = searching;
+      },
+      //添加终端信息
+      newTerminal(){
+        this.$router.push({
+          path: '/terminals/new'
+        });
+      },
+      //编辑终端信息
+      editTerminal(id){
+        this.$router.push({
+          path: `/terminals/${id}/edit`
+        });
       }
     },
     mounted(){
@@ -151,12 +177,23 @@
 
 <style type="text/stylus" lang="stylus" scoped>
   white = #fff
-  #families
+  #terminals
     padding: 20px 1% 0 1%
+    > .el-row
+      > .el-col
+        &:first-child
+          .el-button
+            float: right
+            margin-bottom: 10px
     & /deep/ .el-tabs__item
       background: white
     & /deep/ .el-table__body-wrapper
       overflow: visible
+      .el-table__row
+        td:nth-child(7)
+          .el-button
+            display: block
+            margin: 0 auto
     & /deep/ .el-dialog
       width: 45%
       .el-dialog__body

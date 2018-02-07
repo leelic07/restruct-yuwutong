@@ -64,13 +64,13 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    @click="handleDelete(scope.$index, scope.row)"
+                    @click="handleDelete(scope.row.id)"
                     type="danger">
                     删除
                   </el-button>
                   <el-button
                     size="mini"
-                    @click="handleEdit(scope.$index,scope.row)"
+                    @click="handleEdit(scope.row.id)"
                     type="primary">
                     编辑
                   </el-button>
@@ -168,19 +168,19 @@
         this.searching.value = searching;
       },
       //点击删除时执行的方法
-      handleDelete(index, row){
+      handleDelete(id){
         this.$confirm('确定删除？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.deleteGoods(row.id);
+          this.deleteGoods(id);
         });
       },
       //点击编辑时执行的方法
-      handleEdit(index, row){
+      handleEdit(id){
         this.$router.push({
-          path: `/goods_management/${row.id}`
+          path: `/goods_management/${id}`
         });
       }
     },
