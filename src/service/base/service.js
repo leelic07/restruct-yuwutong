@@ -10,11 +10,8 @@ import qs from 'qs';
 
 const instance = axios.create(base);
 let token = '';//用户登录时的token
-let jail_id = '';//用户调接口时传入的监狱id
-
 //代理服务器
 export let agency = '/ywt';
-
 //处理服务端错误的方法
 let handleError = (error) => {
   if (error.response !== undefined) {
@@ -38,7 +35,6 @@ let handleError = (error) => {
     return true;
   } else return false;
 };
-
 //服务端成功的处理
 let handleSuccess = (res) => {
   if (res.data.code) {
@@ -57,24 +53,12 @@ let handleSuccess = (res) => {
   }
   return false;
 };
-
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
-    if (sessionStorage['token']) {
+    if (sessionStorage['token'])
       config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
-      //每次发起请求将jail_id发送给服务器端
-      // if (jail_id = sessionStorage['jail_id']) {//每次请求时加上jail_id属性
-      // if (config.method === 'get') {
-      // if (config.params)
-      //   Object.assign(config.params, {'jail_id': jail_id});
-      // else
-      //   config.url += `?jail_id=${jail_id}`;
-      // }
-      // if (config.method === 'post' && config.url !== `${agency}/users`)
-      //   config.data += `&jail_id=${jail_id}`;
-      // }
-    } else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
+    else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
       Message({type: 'warning', message: '当前用户无权限，请先登录！'});
       router.push({
         path: '/login'
@@ -87,17 +71,9 @@ instance.interceptors.request.use(
   },
   error => Promise.reject(err)
 );
-
-
 //http response 拦截器
 instance.interceptors.response.use(
   response => {
-    // if(response.data.errCode === 2){
-    //   router.push({
-    //     path:"/login",
-    //     querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
-    //   })
-    // }
     handleSuccess(response) || (response.errors && Message.error(response.errors[0]));
     //隐藏loading遮罩层
     store.commit('hideLoading');
@@ -111,7 +87,6 @@ instance.interceptors.response.use(
     }
   }
 );
-
 /**
  * 封装get方法
  * @param url
@@ -120,7 +95,6 @@ instance.interceptors.response.use(
  */
 export let get = (url, params = {}) =>
   instance.get(`${url}?jail_id=${sessionStorage['jail_id']}`, {params: params}).then(res => res.data).catch(err => err);
-
 /**
  * 封装post请求
  * @param url
@@ -130,8 +104,7 @@ export let get = (url, params = {}) =>
  */
 export let post = (url, data = {}, config = {}) =>
   instance.post(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
-  // instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
-
+// instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 /**
  * 封装post文件请求
  * @param url
@@ -146,8 +119,6 @@ export let postFile = (url, data = {}) => {
     }
   }).then(res => res.data).catch(err => err)
 };
-
-
 /**
  * 封装patch请求
  * @param url
@@ -157,7 +128,7 @@ export let postFile = (url, data = {}) => {
  */
 export let patch = (url, data = {}, config = {}) =>
   instance.patch(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
-
+// instance.patch(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 /**
  * 封装put请求
  * @param url
@@ -166,7 +137,6 @@ export let patch = (url, data = {}, config = {}) =>
  */
 export let put = (url, data = {}) =>
   instance.put(url, qs.stringify(data)).then(res => res.data).catch(err => err);
-
 /**
  * 封装delete请求
  * @param url
@@ -175,7 +145,6 @@ export let put = (url, data = {}) =>
  */
 export let remove = (url, data = {}) =>
   instance.delete(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data)).then(res => res.data).catch(err => err);
-
 /**
  * 封装all请求
  * @param urls

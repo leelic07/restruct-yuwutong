@@ -4,7 +4,6 @@
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
-
       <!--标签页表格-->
       <el-col :span="24">
         <el-tabs v-model="tabNum" type="card">
@@ -56,7 +55,7 @@
               <el-table-column
                 label="商品类部">
                 <template slot-scope="scope">
-                  {{scope.row.category | goodsCategory}}
+                  {{scope.row.category_id | goodsCategory}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -64,15 +63,15 @@
                 <template slot-scope="scope">
                   <el-button
                     size="mini"
-                    @click="handleDelete(scope.row.id)"
-                    type="danger">
-                    删除
-                  </el-button>
-                  <el-button
-                    size="mini"
                     @click="handleEdit(scope.row.id)"
                     type="primary">
                     编辑
+                  </el-button>
+                  <el-button
+                    size="mini"
+                    @click="handleDelete(scope.row.id)"
+                    type="danger">
+                    删除
                   </el-button>
                 </template>
               </el-table-column>
@@ -80,15 +79,12 @@
           </el-tab-pane>
         </el-tabs>
       </el-col>
-
       <!--分页组件-->
       <pagination :total="goodsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                   @currentChange="currentChange"></pagination>
     </el-row>
-
     <!--子路由-->
     <router-view></router-view>
-
   </el-row>
 </template>
 
@@ -136,12 +132,12 @@
       //映射actions方法
       ...mapActions({
         getGoods: 'getGoods',//获取商品列表
-        searchGoods: 'searchGoods',//获取带搜索条件的商品列表
         deleteGoods: 'deleteGoods'//删除指定商品
       }),
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
+        searchGoods: 'searchGoods',//获取带搜索条件的商品列表
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -161,7 +157,7 @@
       //点击搜索时执行的方法
       search(searching){
         this.pagination.page = 0;
-        this.searchGoods(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.searchGoods(Object.assign(this.searching, this.pagination));
       },
       //监听搜索框的内容变化
       searchingChange(searching){

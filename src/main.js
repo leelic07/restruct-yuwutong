@@ -10,13 +10,10 @@ import filters from './filters'
 import '@/assets/icons/iconfont.css'
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.snow.css'
-import VueJsonp from 'vue-jsonp'
 
 Vue.use(ElementUI);
 
 Vue.use(VueQuillEditor);
-
-Vue.use(VueJsonp);
 
 Vue.config.productionTip = false;
 

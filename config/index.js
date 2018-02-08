@@ -84,6 +84,16 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    proxyTable: {
+      '/ywt': {
+        // target: 'https://www.fushuile.com',
+        target: 'http://10.10.10.117:3000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ywt': '/'
+        }
+      }
+    }
   }
 }

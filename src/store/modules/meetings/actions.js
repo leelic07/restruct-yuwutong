@@ -5,9 +5,13 @@ import http from '@/service'
 
 export default {
   //获取家属会见信息列表
-  getMeetings: ({commit}, regs) =>
-    http.getMeetings(regs).then(res => commit('getMeetings', res)).catch(err => console.log(err)),
-
+  getMeetings({commit}, regs){
+    if (regs.value) {
+      delete regs.c;
+      delete regs.value;
+    }
+    http.getMeetings(regs).then(res => commit('getMeetings', res)).catch(err => console.log(err))
+  },
   //授权家属会见信息列表
   authorizeMeetings: ({commit}, regs) => {
     let id = regs.id;//获取要授权的家属会见id

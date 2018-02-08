@@ -37,15 +37,15 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleDelete(scope.row.id)"
-                type="danger">
-                删除
-              </el-button>
-              <el-button
-                size="mini"
                 @click="handleEdit(scope.row.id)"
                 type="primary">
                 编辑
+              </el-button>
+              <el-button
+                size="mini"
+                @click="handleDelete(scope.row.id)"
+                type="danger">
+                删除
               </el-button>
             </template>
           </el-table-column>

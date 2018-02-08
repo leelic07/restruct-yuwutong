@@ -9,7 +9,7 @@
         </div>
         <div class="pull-left info">
           <p>英山监狱</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+          <a href="#" @click="$event.preventDefault()"><i class="fa fa-circle text-success"></i> 在线</a>
         </div>
       </div>
       <!-- /.search form -->
@@ -81,7 +81,6 @@
           </ul>
         </li>
       </ul>
-
       <!--商品侧边栏-->
       <ul class="sidebar-menu" v-if="role == 2">
         <li class="header">导航</li>
@@ -112,7 +111,6 @@
           </ul>
         </li>
       </ul>
-
       <!--信息侧边栏-->
       <ul class="sidebar-menu" v-if="role == 3">
         <li class="header">导航</li>
@@ -129,7 +127,6 @@
           </router-link>
         </li>
         <li>
-          <!--<a href="#" @click="toggleIcon($event)">-->
           <a href="#">
             <i class="iconfont icon-folder"></i>
             <span>狱务公开信息管理</span>
@@ -180,4 +177,6 @@
       bottom: 0
       a
         font-size: 14px
+    .icon-more
+      line-height: 15px
 </style>

@@ -4,12 +4,10 @@
     <section class="content-header" v-if="isNotLogin">
       <ol class="breadcrumb">
         <li v-for="bc in breadcrumb">
-          <router-link to="/">
-            <!--<i class="fa fa-dashboard"></i> -->
+          <a href="#" @click="$event.preventDefault()">
             {{bc}}
-          </router-link>
+          </a>
         </li>
-        <!--<li class="active">Dashboard</li>-->
       </ol>
     </section>
     <!-- Main content -->
@@ -20,10 +18,9 @@
       element-loading-background="rgba(255, 255, 255, 0.5)">
       <!--页面路由窗口-->
       <!--<keep-alive>-->
-        <router-view></router-view>
+      <router-view></router-view>
       <!--</keep-alive>-->
     </section>
-    <!-- /.content -->
   </div>
 </template>
 
@@ -33,8 +30,8 @@
   export default {
     props: {
       isNotLogin: {
-        type:Boolean,
-        required:true
+        type: Boolean,
+        required: true
       }, //是否为登录界面
     },
     data() {

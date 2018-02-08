@@ -53,10 +53,8 @@
         </el-col>
       </el-col>
     </el-row>
-
     <!--监狱基本信息修改路由-->
     <router-view></router-view>
-
   </el-row>
 </template>
 

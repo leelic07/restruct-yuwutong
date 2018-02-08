@@ -2,7 +2,6 @@
   <el-row id="meeting" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
     <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -45,9 +44,7 @@
               label="终端号">
             </el-table-column>
             <el-table-column :class="{'application-status':true}"
-                             label="申请状态"
-
-            >
+                             label="申请状态">
               <template slot-scope="scope">
                 {{scope.row.status | registrationsStatus}}
               </template>
@@ -57,11 +54,11 @@
               <template slot-scope="scope">
                 <el-button v-if="scope.row.status == 'PENDING'"
                            size="mini"
-                           @click="handleAuthorization(scope.$index, scope.row)">授权
+                           @click="handleAuthorization(scope.row.id)">授权
                 </el-button>
                 <el-button v-else-if="scope.row.status == 'PASSED'"
                            size="mini"
-                           @click="handleWithdraw(scope.$index, scope.row)">撤回
+                           @click="handleWithdraw(scope.row.id)">撤回
                 </el-button>
               </template>
             </el-table-column>
@@ -69,11 +66,9 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-
     <!--分页组件-->
     <pagination :total="meetingsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                 @currentChange="currentChange"></pagination>
-
     <!--家属信息授权弹出框-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
       <!--点击授权时显示的对话框内容-->
@@ -99,8 +94,8 @@
               <el-option v-for="remark,index in remarks"
                          :value="remark"
                          :label="remark"
-                         :key="index"
-              ></el-option>
+                         :key="index">
+              </el-option>
             </el-select>
           </el-col>
           <el-col :span="24">
@@ -113,27 +108,22 @@
             <el-button type="danger" plain @click="dialogVisible = false">关闭</el-button>
           </el-col>
         </el-row>
-
       </el-row>
-
       <!--点击撤回时显示的对话框内容-->
       <el-row :gutter="0" v-if="isWithdraw">
         <el-row :gutter="0">
           <el-input type="textarea"
                     autosize
                     placeholder="请输入撤回理由"
-                    v-model="authorization.remarks"
-          ></el-input>
+                    v-model="authorization.remarks">
+          </el-input>
         </el-row>
-
         <el-row :gutter="0" class="btn-box">
           <el-button type="danger" @click="dialogVisible = false">取消</el-button>
           <el-button @click="confirmWithdraw()">确定</el-button>
         </el-row>
       </el-row>
-
     </el-dialog>
-
   </el-row>
 </template>
 
@@ -203,15 +193,7 @@
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching, this.pagination));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getMeetings(Object.assign(this.pagination));
-        }
+        this.searching.value !== '' && this.searchAction(Object.assign(this.searching, this.pagination)) || this.getMeetings(Object.assign(this.pagination));
       },
       //点击搜索时执行的方法
       search(searching){
@@ -223,22 +205,22 @@
         this.searching.value = searching;
       },
       //点击授权时执行的方法
-      handleAuthorization(index, row){
+      handleAuthorization(id){
         this.showRemarks = false;
         this.dialogTitle = '授权';
         this.authorization.remarks = '您的身份信息错误';
         this.isWithdraw = false;
         this.dialogVisible = true;
-        this.authorizeId = row.id;//获取授权消息的id
+        this.authorizeId = id;//获取授权消息的id
         this.agreeText = '同意';
         this.disagreeText = '不同意';
         this.setAuthMeetingsResult({});//重置家属会见授权结果
       },
       //点击撤回执行的方法
-      handleWithdraw(index, row){
+      handleWithdraw(id){
         this.dialogTitle = '撤回';
         this.authorization.remarks = '';
-        this.authorizeId = row.id;//获取撤回消息的id
+        this.authorizeId = id;//获取撤回消息的id
         this.isWithdraw = true;
         this.dialogVisible = true;
       },
@@ -273,12 +255,14 @@
         }
       }
     },
-    mounted(){
+    mounted()
+    {
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
       //获取家属注册信息列表
       this.getMeetings(this.pagination);
-    },
+    }
+    ,
     components: {
       SelectAndSearch,
       Pagination

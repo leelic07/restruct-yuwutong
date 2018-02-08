@@ -2,7 +2,6 @@
   <el-row id="registration" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
     <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -38,8 +37,7 @@
             </el-table-column>
             <el-table-column
               prop="status"
-              label="申请状态"
-            >
+              label="申请状态">
               <template slot-scope="scope">
                 {{scope.row.status | registrationsStatus}}
               </template>
@@ -49,7 +47,7 @@
               <template slot-scope="scope">
                 <el-button v-if="scope.row.status == 'PENDING'"
                            size="mini"
-                           @click="handleAuthorization(scope.$index, scope.row)">授权
+                           @click="handleAuthorization(scope.row.id)">授权
                 </el-button>
               </template>
             </el-table-column>
@@ -57,13 +55,18 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-
     <!--分页组件-->
     <pagination :total="registrationsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
                 @currentChange="currentChange"></pagination>
-
     <!--家属信息授权弹出框-->
     <el-dialog title="授权" :visible.sync="dialogVisible">
+      <!--内层的对话框-->
+      <el-dialog
+        width="30%"
+        :visible.sync="innerVisible"
+        append-to-body>
+        <img style="max-width:100%" :src="_$agency + imgSrc" alt="">
+      </el-dialog>
       <el-row :gutter="0" v-show="authRegistrationsResult.code">
         <el-col :span="24">
           <el-alert v-if="authRegistrationsResult.code == 200"
@@ -82,15 +85,13 @@
           </el-alert>
         </el-col>
       </el-row>
-
       <el-row :gutter="0">
         <el-col :span="24">
           <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1" :key="$index">
-            <img :src='_$baseUrl + imgSrc' alt="" @mouseover="amplifyImage($event)">
+            <img :src='_$agency + imgSrc' alt="" @click="amplifyImage(imgSrc)">
           </el-col>
         </el-col>
       </el-row>
-
       <el-row :gutter="0" v-show="!authRegistrationsResult.code">
         <el-col :span="24" v-if="showRemarks" class="refuse-reason">
           <el-col :span="24">
@@ -114,9 +115,7 @@
           <el-button type="danger" plain @click="dialogVisible = false">关闭</el-button>
         </el-col>
       </el-row>
-
     </el-dialog>
-
   </el-row>
 </template>
 
@@ -139,16 +138,17 @@
           value: ''//搜索的条件
         },
         dialogVisible: false,//弹出框的显示和隐藏
+        innerVisible: false,//内层弹框的显示和隐藏
         agreeText: '同意',
         disagreeText: '不同意',
         authorization: {
           remarks: '',//授权评语
           status: ''//授权状态
         },
-        showRemarks: false//是否显示拒绝家属注册理由
+        showRemarks: false,//是否显示拒绝家属注册理由
+        imgSrc: ''//放大查看家属注册的照片地址
       }
     },
-    watch: {},
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
@@ -185,15 +185,7 @@
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching, this.pagination));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getRegistrations(this.pagination);
-        }
+        this.searching.value !== '' && this.searchAction(Object.assign(this.searching, this.pagination)) || this.getRegistrations(this.pagination);
       },
       //点击搜索时执行的方法
       search(searching){
@@ -205,14 +197,14 @@
         this.searching.value = searching;
       },
       //点击授权时执行的方法
-      handleAuthorization(index, row) {
+      handleAuthorization(id) {
         this.showRemarks = false;
         this.dialogVisible = true;
         this.authorization.remarks = '您的身份信息错误';
-        this.authorizeId = row.id;
+        this.authorizeId = id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
-        this.getUuidImage(row.id);
+        this.getUuidImage(id);
         this.setAuthRegistrationsResult({});//重置家属注册授权结果
       },
       //点击同意或者确定申请通过执行的方法
@@ -243,8 +235,9 @@
         }
       },
       //图片放大执行的方法
-      amplifyImage(e){
-//        console.log(e.target);
+      amplifyImage(imgSrc){
+        this.innerVisible = true;
+        this.imgSrc = imgSrc;
       }
     },
     mounted(){
@@ -276,15 +269,18 @@
       float: left
       color: #3C8DBC
       font-weight: bold
-    .el-dialog__body
-      img
-        float: left
-        width: 150px
-        height: 150px
-      .el-col-24
-        &.refuse-reason
-          margin-bottom: 10px
-        margin-top: 5px
-        .el-select, .el-button
-          width: 100%
+    .el-dialog__wrapper
+      .el-dialog__body
+        img
+          float: left
+          width: 150px
+          height: 150px
+          &:hover
+            cursor: pointer
+        .el-col-24
+          &.refuse-reason
+            margin-bottom: 10px
+          margin-top: 5px
+          .el-select, .el-button
+            width: 100%
 </style>

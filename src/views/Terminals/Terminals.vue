@@ -49,6 +49,7 @@
                 label="操作">
                 <template slot-scope="scope">
                   <el-button type="primary" size="mini" @click="editTerminal(scope.row.id)">编辑</el-button>
+                  <!--<el-button type="danger" size="mini" @click="deleteTerminal(scope.row.id)">删除</el-button>-->
                 </template>
               </el-table-column>
             </el-table>
@@ -118,6 +119,7 @@
       ...mapActions({
         getTerminals: 'getTerminals',//获取终端列表
         searchAction: 'searchAction',//获取带搜索条件的终端列表
+        deleteTerminalById: 'deleteTerminalById'//根据id删除终端信息
       }),
       //每页条数发生变化时执行的方法
       sizeChange(length){
@@ -143,7 +145,7 @@
       //点击搜索时执行的方法
       search(searching){
         this.pagination.draw = 1;
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.searchAction(Object.assign(this.searching, this.pagination));
       },
       //监听搜索框的内容变化
       searchingChange(searching){
@@ -159,6 +161,16 @@
       editTerminal(id){
         this.$router.push({
           path: `/terminals/${id}/edit`
+        });
+      },
+      //删除终端信息
+      deleteTerminal(id){
+        this.$confirm('确定删除？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteTerminalById(id);
         });
       }
     },
@@ -192,6 +204,8 @@
       .el-table__row
         td:nth-child(7)
           .el-button
+            /*float: left*/
+            /*margin-left: 6%*/
             display: block
             margin: 0 auto
     & /deep/ .el-dialog

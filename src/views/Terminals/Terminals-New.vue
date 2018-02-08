@@ -33,6 +33,7 @@
   export default {
     data() {
       return {
+        breadcrumb: ['主页', '终端管理', '添加终端信息'],
         terminal: {
           terminal_number: '',
           room_number: '',
@@ -42,6 +43,7 @@
       }
     },
     watch: {
+      //添加终端信息成功返回到终端管理页面
       addTerminalResult(newValue){
         this.$router.push({
           path: '/terminals'
@@ -57,10 +59,16 @@
       ...mapActions({
         addTerminal: 'addTerminal'//添加终端信息
       }),
+      ...mapMutations({
+        breadCrumb: 'breadCrumb'//设置添加终端页面面包屑的信息
+      }),
       //点击更新时执行的方法
       onSubmit(){
         this.addTerminal(this.terminal);
       }
+    },
+    mounted(){
+      this.breadCrumb(this.breadcrumb);
     }
   }
 </script>
@@ -73,7 +81,7 @@
         &:first-child
           h3
             float: left
-            margin: 0 0 25px 30%
+            margin: 0 0 35px 30%
         &:last-child
           .el-button
             float: right
