@@ -6,10 +6,10 @@ import * as service from '../base/service'
 export default {
   //获取家属会见信息列表
   getMeetings: params =>
-    service.get(`${service.agency}/meetings.json`, params).then(res => res).catch(err => err),
+    service.get(`/meetings.json`, params).then(res => res).catch(err => err),
 
   //授权家属会见信息列表
   authorizeMeetings: (params, id) =>
-    service.patch(`${service.agency}/meetings/${id}`, params).then(res => res).catch(err => err)
+    service.patch(`/meetings/${id}`, params).then(res => res).catch(err => err)
 
 }

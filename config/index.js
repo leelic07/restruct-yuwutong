@@ -12,7 +12,7 @@ module.exports = {
     proxyTable: {
       '/ywt': {
         // target: 'https://www.fushuile.com',
-        target: 'http://10.10.10.117:3000',
+        target: 'http://10.10.10.109:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/ywt': '/'

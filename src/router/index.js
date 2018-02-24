@@ -18,6 +18,7 @@ import TerminalsEdit from '@/views/Terminals/Terminals-Edit'
 import Versions from '@/views/Versions/Versions'
 import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
 import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
+import GoodsNew from '@/views/GoodsManagement/Goods-New'
 import PasswordModification from '@/views/PasswordModification/Password-Modification'
 import FamilyOrders from '@/views/FamilyOrders/Family-Orders'
 import PrisonerOrders from '@/views/OrdersManagement/Prisoner-Orders'
@@ -120,9 +121,13 @@ export default new Router({
       name: 'GoodsManagement',
       component: GoodsManagement,
       children: [{
-        path: '/goods_management/:id',
+        path: '/goods_management/edit/:id',
         name: 'GoodsEditor',
         component: GoodsEditor
+      }, {
+        path: '/goods_management/new',
+        name: 'GoodsNew',
+        component: GoodsNew
       }]
     },
     {

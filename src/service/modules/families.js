@@ -6,5 +6,5 @@ import * as service from '../base/service'
 export default {
   //获取家属注册信息列表
   getFamilies: params =>
-    service.get(`${service.agency}/families.json`, params).then(res => res).catch(err => err)
+    service.get(`/families.json`, params).then(res => res).catch(err => err)
 }

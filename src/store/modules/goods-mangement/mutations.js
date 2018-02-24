@@ -52,6 +52,10 @@ export default {
   getGoodsById(state, id){
     state.goods.map(good => good.id === Number(id) && (state.goodsForEdit = good));
   },
+  //添加商品
+  addGoods(state, addGoodsResult){
+    state.addGoodsResult = addGoodsResult
+  },
   //编辑商品
   editGoods(state, editGoodsResult){
     state.editGoodsResult = editGoodsResult;

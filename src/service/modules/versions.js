@@ -6,5 +6,5 @@ import * as service from '../base/service'
 export default {
   //更新狱务通版本信息
   updateVersion: params =>
-    service.post(`${service.agency}/versions/update`, params).then(res => res).catch(err => err),
+    service.post(`/versions/update`, params).then(res => res).catch(err => err),
 }

@@ -1,6 +1,11 @@
 <template>
   <el-row id="goods-management" :gutter="0">
     <el-row :gutter="0" v-if="!isGoodsEditor">
+      <el-row class="add-goods" v-if="true">
+        <el-col :span="3" :offset="21">
+          <el-button type="primary" @click="newGoods">添加商品信息</el-button>
+        </el-col>
+      </el-row>
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
@@ -117,8 +122,7 @@
         if (to.path === '/goods_management') {
           this.isGoodsEditor = false;
           this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
-        } else
-          this.isGoodsEditor = true;
+        } else this.isGoodsEditor = true;
       }
     },
     computed: {
@@ -176,7 +180,13 @@
       //点击编辑时执行的方法
       handleEdit(id){
         this.$router.push({
-          path: `/goods_management/${id}`
+          path: `/goods_management/edit/${id}`
+        });
+      },
+      //点击添加商品信息按钮执行的方法
+      newGoods(){
+        this.$router.push({
+          path: '/goods_management/new'
         });
       }
     },
@@ -197,6 +207,8 @@
   white = #fff
   #goods-management
     padding: 20px 1% 0 1%
+    .add-goods
+      margin-bottom: 15px
     & /deep/ .el-tabs__item
       background: white
     & /deep/ .el-table__body-wrapper

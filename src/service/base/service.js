@@ -9,9 +9,10 @@ import {Message} from 'element-ui';
 import qs from 'qs';
 
 const instance = axios.create(base);
-let token = '';//用户登录时的token
 //代理服务器
 export let agency = '/ywt';
+//获取异步请求的url
+let getUrl = (url) => `${agency}${url}?jail_id=${sessionStorage['jail_id']}`;
 //处理服务端错误的方法
 let handleError = (error) => {
   if (error.response !== undefined) {
@@ -58,7 +59,7 @@ instance.interceptors.request.use(
   config => {
     if (sessionStorage['token'])
       config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
-    else if (config.url !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
+    else if (config.url.substring(0, config.url.lastIndexOf('?')) !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
       Message({type: 'warning', message: '当前用户无权限，请先登录！'});
       router.push({
         path: '/login'
@@ -94,7 +95,7 @@ instance.interceptors.response.use(
  * @returns {Promise}
  */
 export let get = (url, params = {}) =>
-  instance.get(`${url}?jail_id=${sessionStorage['jail_id']}`, {params: params}).then(res => res.data).catch(err => err);
+  instance.get(getUrl(url), {params: params}).then(res => res.data).catch(err => err);
 /**
  * 封装post请求
  * @param url
@@ -103,7 +104,7 @@ export let get = (url, params = {}) =>
  * @returns {Promise}
  */
 export let post = (url, data = {}, config = {}) =>
-  instance.post(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
+  instance.post(getUrl(url), qs.stringify(data), config).then(res => res.data).catch(err => err);
 // instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 /**
  * 封装post文件请求
@@ -113,7 +114,21 @@ export let post = (url, data = {}, config = {}) =>
  */
 export let postFile = (url, data = {}) => {
   data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
-  return instance.post(url, data, {
+  return instance.post(agency + url, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }).then(res => res.data).catch(err => err)
+};
+/**
+ * 封装patch文件请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+export let patchFile = (url, data = {}) => {
+  data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
+  return instance.patch(agency + url, data, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -127,7 +142,7 @@ export let postFile = (url, data = {}) => {
  * @returns {Promise}
  */
 export let patch = (url, data = {}, config = {}) =>
-  instance.patch(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data), config).then(res => res.data).catch(err => err);
+  instance.patch(getUrl(url), qs.stringify(data), config).then(res => res.data).catch(err => err);
 // instance.patch(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 /**
  * 封装put请求
@@ -136,7 +151,7 @@ export let patch = (url, data = {}, config = {}) =>
  * @returns {Promise}
  */
 export let put = (url, data = {}) =>
-  instance.put(url, qs.stringify(data)).then(res => res.data).catch(err => err);
+  instance.put(getUrl(url), qs.stringify(data)).then(res => res.data).catch(err => err);
 /**
  * 封装delete请求
  * @param url
@@ -144,12 +159,12 @@ export let put = (url, data = {}) =>
  * @returns {Promise}
  */
 export let remove = (url, data = {}) =>
-  instance.delete(`${url}?jail_id=${sessionStorage['jail_id']}`, qs.stringify(data)).then(res => res.data).catch(err => err);
+  instance.delete(getUrl(url), qs.stringify(data)).then(res => res.data).catch(err => err);
 /**
  * 封装all请求
  * @param urls
  * @returns {Promise}
  */
 export let all = (urls = []) =>
-  axios.all(urls.map(url => instance.get(`${url}?jail_id=${sessionStorage['jail_id']}`))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
+  axios.all(urls.map(url => instance.get(getUrl(url)))).then(axios.spread((...res) => res.map(res => res.data))).catch(err => err);
 
