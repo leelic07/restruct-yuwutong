@@ -179,6 +179,7 @@
         getMeetings: 'getMeetings',//获取家属注册列表
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
         authorizeMeetings: 'authorizeMeetings',//家属注册信息授权
+        withDrawMeetings: 'withDrawMeetings'//撤回家属会见申请
       }),
       //每页条数发生变化时执行的方法
       sizeChange(limit){
@@ -225,7 +226,8 @@
         this.dialogVisible = true;
       },
       confirmWithdraw(){
-        this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId, status: 'DENIED'}));
+        this.authorization.status = 'DENIED';
+        this.withDrawMeetings({id: this.authorizeId, ...this.authorization});
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){
@@ -239,7 +241,7 @@
             this.authorization.remarks = '';
             this.authorization.status = 'PASSED';
           }
-          this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
+          this.authorizeRegistrations({id: this.authorizeId, ...this.authorization});
         }
       },
       //点击不同意或者返回执行的方法

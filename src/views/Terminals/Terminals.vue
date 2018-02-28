@@ -3,7 +3,7 @@
     <el-row :gutter="0" v-if="!isTerminals">
       <!--添加终端信息-->
       <el-col :span="24">
-        <el-button size="small" type="primary" plain @click="newTerminal()">添加狱务公开信息</el-button>
+        <el-button size="small" type="primary" plain @click="newTerminal()">添加终端信息</el-button>
       </el-col>
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search @sizeChange="sizeChange" @search="search"

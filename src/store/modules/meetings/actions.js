@@ -13,13 +13,25 @@ export default {
     http.getMeetings(regs).then(res => commit('getMeetings', res)).catch(err => console.log(err))
   },
   //授权家属会见信息列表
-  authorizeMeetings: ({commit}, regs) => {
+  authorizeMeetings({commit}, regs){
     let id = regs.id;//获取要授权的家属会见id
-    let status = regs.status;//授权或者是拒绝授权家属会见
+    let status = regs.status;//授权家属会见的状态
     delete regs.id;
-    http.authorizeMeetings(regs, id).then(res => commit('authorizeMeetings', Object.assign(res, {
+    http.authorizeMeetings(regs, id).then(res => res.code === 200 && commit('authorizeMeetings', {
+      ...res,
       'id': id,
       'status': status
-    }))).catch(err => console.log(err))
+    })).catch(err => console.log(err))
   },
+  //撤回家属会见
+  withDrawMeetings({commit}, regs){
+    let id = regs.id;//家属会见的id
+    let status = regs.status;//撤回家属会见的状态
+    delete regs.id;
+    http.withDrawMeetings(regs, id).then(res => res.code === 200 && commit('withDrawMeetings', {
+      ...res,
+      'id': id,
+      'status': status
+    })).catch(err => console.log(err))
+  }
 }

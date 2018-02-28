@@ -21,6 +21,7 @@
               <el-table-column
                 label="商品图片">
                 <template slot-scope="scope">
+                  <!--<img :src="_$baseUrl + '/' + scope.row.avatar_url" alt="">-->
                   <img :src="_$agency + scope.row.avatar_url" alt="">
                 </template>
               </el-table-column>

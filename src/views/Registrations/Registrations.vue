@@ -65,7 +65,8 @@
         width="30%"
         :visible.sync="innerVisible"
         append-to-body>
-        <img style="max-width:100%" :src="_$agency + imgSrc" alt="">
+        <img style="max-width:100%" :src="_$baseUrl + imgSrc" alt="">
+        <!--<img style="max-width:100%" :src="_$agency + imgSrc" alt="">-->
       </el-dialog>
       <el-row :gutter="0" v-show="authRegistrationsResult.code">
         <el-col :span="24">
@@ -88,7 +89,8 @@
       <el-row :gutter="0">
         <el-col :span="24">
           <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1" :key="$index">
-            <img :src='_$agency + imgSrc' alt="" @click="amplifyImage(imgSrc)">
+            <img :src='_$baseUrl + imgSrc' alt="" @click="amplifyImage(imgSrc)">
+            <!--<img :src='_$agency + imgSrc' alt="" @click="amplifyImage(imgSrc)">-->
           </el-col>
         </el-col>
       </el-row>

@@ -17,7 +17,7 @@ import FamilyOrders from './modules/family-orders'
 import PrisonerOrders from './modules/order-management'
 import JailInformationManagement from './modules/jail-information'
 import LawInformationManagement from './modules/laws-information'
-import PrisonAffairsDisclosure from './modules/prisoner-data-management'
+import PrisonAffairsDisclosure from './modules/news-management'
 
 Vue.use(Router);
 

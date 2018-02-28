@@ -17,7 +17,7 @@ Vue.use(VueQuillEditor);
 
 Vue.config.productionTip = false;
 
-Vue.prototype._$baseUrl = 'https://www.fushuile.com';
+Vue.prototype._$baseUrl = 'https://www.yuwugongkai.com';
 
 Vue.prototype._$agency = '/ywt';
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="login" @keyup.enter="submitForm('ruleForm2')">
     <el-row :gutter="0" class="loginBackground">
       <el-col :span="6" :offset="9">
         <el-col :span="24">
@@ -82,7 +82,7 @@
             return false;
           }
         });
-      }
+      },
     }
   }
 </script>

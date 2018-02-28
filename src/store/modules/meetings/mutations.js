@@ -10,15 +10,17 @@ export default {
   //给家属会见信息授权
   authorizeMeetings(state, authorizationResult){
     for (let meet of state.meetings) {
-      if (meet.id === Number(authorizationResult.id)) {
-        if (authorizationResult.code === 200)
-          meet.status = authorizationResult.status;
-      }
+      meet.id === Number(authorizationResult.id) && (meet.status = authorizationResult.status);
     }
     state.authorizationResult = authorizationResult;
   },
   //设置家属会见授权结果
   setAuthMeetingsResult(state, authorizationResult){
     state.authorizationResult = authorizationResult;
+  },
+  //撤回家属会见信息
+  withDrawMeetings(state, withDrawMeetingsResult){
+    state.meetings.forEach(meet => meet.id === Number(withDrawMeetingsResult.id) && (meet.status = withDrawMeetingsResult.status));
+    state.withDrawMeetingsResult = withDrawMeetingsResult;
   }
 }

@@ -7,7 +7,7 @@ export default {
   //请求方式
   // method: 'get',
   //基础url前缀
-  // baseURL: 'https://www.fushuile.com/',
+  // baseURL: 'https://www.yuwugongkai.com/',
   // baseURL: 'http://10.10.10.117:3000/',
   //请求发送之前对出参进行处理
   // transformRequest: [data => data],
