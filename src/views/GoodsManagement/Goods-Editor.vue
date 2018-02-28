@@ -1,7 +1,7 @@
 <template>
   <el-row id="goods-editor">
     <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="goodsForEdit" label-width="80px">
+      <el-form ref="form" :model="goodsForEdit" :rules="rule" label-width="80px">
         <el-form-item label="商品条码">
           <el-input v-model="goodsForEdit.barcode"></el-input>
         </el-form-item>
@@ -14,7 +14,7 @@
         <el-form-item label="单位">
           <el-input v-model="goodsForEdit.unit"></el-input>
         </el-form-item>
-        <el-form-item label="单价">
+        <el-form-item label="单价" prop="price">
           <el-input v-model="goodsForEdit.price"></el-input>
         </el-form-item>
         <el-form-item>
@@ -71,6 +71,11 @@
           '服饰鞋帽': 3,
           '医药保健': 4,
           '电话卡': 5
+        },
+        rule: {
+          price: [
+            {pattern: /^(?:[1-9][0-9]*\.[0-9]+|0\.(?!0+$)[0-9]+|[1-9]+\d*)$/, message: '单价必须为数字', trigger: 'blur'}
+          ]
         }
       }
     },
@@ -104,7 +109,7 @@
         this.image = file;
       },
       handleRemove(){
-        this.image = {};
+        this.image = '';
       }
     },
     mounted(){
