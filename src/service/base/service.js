@@ -29,6 +29,9 @@ let handleError = (error) => {
       case 500:
         Message.error('服务器内部错误！');
         break;
+      case 504:
+        Message.error('请检查服务是否启动！');
+        break;
       default:
         Message.error('出错了！');
         break;

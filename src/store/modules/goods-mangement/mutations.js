@@ -10,7 +10,7 @@ export default {
     state.goodsOrigin = [];
     //将页面显示的数据信息保存到goodsOrigin里面
     for (let good of goodsList) {
-      good.avatar_url = good.avatar_url.substring(6);//截取商品图片的路径
+      good.avatar_url && (good.avatar_url = good.avatar_url.substring(6));//截取商品图片的路径
       state.goodsOrigin.push({
         id: good.id,
         title: good.title,
