@@ -1,8 +1,8 @@
 <template>
-  <el-row id="families" :gutter="0">
+  <el-row id="accounts" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
+    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
+                       @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -38,7 +38,7 @@
               label="对应罪犯">
               <template slot-scope="scope">
                 <el-button type="text" size="small"
-                           @click="showAccountsDetail(scope.row.account_id,scope.row.name)">
+                           @click="showAccountsDetail(scope.row.id,scope.row.name)">
                   查看账户记录
                 </el-button>
               </template>
@@ -47,13 +47,10 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-
     <!--分页组件-->
-    <pagination :total="accountsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+    <pagination :total="accountsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
-
     <!--家属信息弹出框-->
-
     <el-dialog :title="accountName" :visible.sync="dialogTableVisible">
       <el-table
         :data="accountDetail"
@@ -74,7 +71,6 @@
         </el-table-column>
       </el-table>
     </el-dialog>
-
   </el-row>
 </template>
 
@@ -82,19 +78,19 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '囚犯账户管理'],//面包屑数组
         tabNum: 'first',
         pagination: {
-          limit: 10,//每页显示记录条数
-          page: 0,//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1,//当前显示第几页
         },
+        c: 'accounts',//页面模块名称
         searching: {
-          c: 'families',//搜索的模块类型
-          value: ''//搜索的条件
+          name: '',//服刑人员姓名
+          prisonerNumber: ''//服刑人员编号
         },
         dialogVisible: false,//弹出框的显示和隐藏
         agreeText: '同意',
@@ -112,7 +108,7 @@
       ...mapGetters({
         accounts: 'accounts',
         accountsTotal: 'accountsTotal',//总共记录条数
-        accountDetail: 'accountDetail'//账户详情信息
+//        accountDetail: 'accountDetail'//账户详情信息
       })
     },
     methods: {
@@ -123,40 +119,32 @@
       //映射actions方法
       ...mapActions({
         getAccounts: 'getAccounts',//获取囚犯账户列表
-        searchAction: 'searchAction',//获取带搜索条件的囚犯账户列表
         getAccountDetail: 'getAccountDetail'//获取囚犯账户详情信息
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(limit){
-        this.$set(this.pagination, 'page', 0);
-        this.$set(this.pagination, 'limit', limit);
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination, 'page', page - 1);
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching, this.pagination));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getAccounts(Object.assign(this.pagination));
-        }
+        this.getAccounts({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination, 'page', 0);
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getAccounts({...this.searching, ...this.pagination});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //根据账户id囚犯账户详情信息
       showAccountsDetail(account_id, accountName){
@@ -180,7 +168,7 @@
 
 <style type="text/stylus" lang="stylus" scoped>
   white = #fff
-  #families
+  #accounts
     padding: 20px 1% 0 1%
     & /deep/ .el-tabs__item
       background: white

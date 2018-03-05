@@ -1,8 +1,8 @@
 <template>
   <el-row id="prisoners" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
+    <select-and-search :c="c" @sizeChange="sizeChange" :searching="searching" @search="search"
+                       @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -17,7 +17,7 @@
               label="姓名">
             </el-table-column>
             <el-table-column
-              prop="prisoner_number"
+              prop="prisonerNumber"
               label="囚号">
             </el-table-column>
             <el-table-column
@@ -27,8 +27,8 @@
             <el-table-column
               label="刑期起止">
               <template slot-scope="scope">
-                {{scope.row.prison_term_started_at}}/
-                {{scope.row.prison_term_ended_at}}
+                {{scope.row.prisonTermStartedAt | Date}}/
+                {{scope.row.prisonTermEndedAt | Date}}
               </template>
             </el-table-column>
             <el-table-column
@@ -46,7 +46,7 @@
     </el-col>
 
     <!--分页组件-->
-    <pagination :total="prisonersTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
+    <pagination :total="prisonersTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
 
     <!--家属信息弹出框-->
@@ -75,8 +75,8 @@
         <el-col :span="12">
           <el-col :span="12">
             <span>照片：</span>
-            <!--<img :src="family.image_url" alt="">-->
-            <img :src="_$agency + family.image_url" alt="">
+            <!--<img :src="_$agency + family.imageUrl" alt="">-->
+            <img :src="_$baseUrl + family.imageUrl" alt="">
           </el-col>
         </el-col>
       </el-row>
@@ -95,13 +95,14 @@
         breadcrumb: ['主页', '服刑人员信息管理'],//面包屑数组
         tabNum: 'first',
         pagination: {
-          length: 10,//每页显示记录条数
-          draw: 1//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
         searching: {
-          c: 'prisoners',//搜索的模块类型
-          value: ''//搜索的条件
+          name: '',//服刑人员姓名
+          prisonerNumber: ''//服刑人员编号
         },
+        c: 'prisoners',//页面模块名称
         dialogVisible: false,//弹出框的显示和隐藏
         agreeText: '同意',
         disagreeText: '不同意',
@@ -131,34 +132,29 @@
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(length){
-        this.pagination.draw = 1;
-        this.change({'length': length});
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
+        this.change();
       },
       //当前页发生变化时执行的方法
-      currentChange(draw){
-        this.change({'draw': draw});
+      currentChange(page){
+        this.pagination.page = page;
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getPrisoners(Object.assign(this.pagination, changeParams));
-        }
+      change(){
+        this.getPrisoners({...this.pagination, ...this.searching});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.draw = 1;
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getPrisoners({...this.pagination, ...this.searching});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //显示家属详细信息
       showFamilyDetail(family){

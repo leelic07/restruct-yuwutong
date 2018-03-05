@@ -47,14 +47,14 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapActions, mapMutations} from 'vuex'
 
   export default {
     data() {
       return {}
     },
     methods: {
-      ...mapMutations({
+      ...mapActions({
         logout: 'logout'//点击确定退出登录时执行的方法
       }),
       //点击退出登录执行的方法

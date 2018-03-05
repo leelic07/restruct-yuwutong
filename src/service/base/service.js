@@ -12,7 +12,7 @@ const instance = axios.create(base);
 //代理服务器
 export let agency = '/ywt';
 //获取异步请求的url
-let getUrl = (url) => `${agency}${url}?jail_id=${sessionStorage['jail_id']}`;
+let getUrl = (url) => `${agency}${url}`;
 //处理服务端错误的方法
 let handleError = (error) => {
   if (error.response !== undefined) {
@@ -60,15 +60,15 @@ let handleSuccess = (res) => {
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
-    if (sessionStorage['token'])
-      config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
-    else if (config.url.substring(0, config.url.lastIndexOf('?')) !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
-      Message({type: 'warning', message: '当前用户无权限，请先登录！'});
-      router.push({
-        path: '/login'
-      });
-      return;
-    }
+    // if (sessionStorage['token'])
+    //   config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
+    // else if (config.url.substring(0, config.url.lastIndexOf('?')) !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
+    //   Message({type: 'warning', message: '当前用户无权限，请先登录！'});
+    //   router.push({
+    //     path: '/login'
+    //   });
+    //   return;
+    // }
     //加载loading遮罩层
     store.commit('showLoading');
     return config;

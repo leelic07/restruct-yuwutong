@@ -19,6 +19,7 @@ import prisonerDataManagement from './modules/prisoner-data-management'
 import ordersManagement from './modules/orders-management'
 import login from './modules/login'
 import passwordModification from './modules/password-modification'
+import logout from './modules/logout'
 
 export default Object.assign(
   registrations,
@@ -38,5 +39,6 @@ export default Object.assign(
   prisonerDataManagement,
   ordersManagement,
   login,
-  passwordModification
+  passwordModification,
+  logout
 )

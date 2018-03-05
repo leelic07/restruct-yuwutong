@@ -12,7 +12,9 @@ module.exports = {
     proxyTable: {
       '/ywt': {
         // target: 'https://www.fushuile.com',
-        target: 'http://10.10.10.109:3000',
+        // target: 'http://10.10.10.109:3000',
+        // target: 'http://10.10.10.122:8080',
+        target: 'http://10.10.10.2:8081/ywgk',
         changeOrigin: true,
         pathRewrite: {
           '^/ywt': '/'
@@ -84,15 +86,5 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report,
-    proxyTable: {
-      '/ywt': {
-        // target: 'https://www.fushuile.com',
-        target: 'http://10.10.10.117:3000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/ywt': '/'
-        }
-      }
-    }
   }
 }

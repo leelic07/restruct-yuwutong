@@ -1,7 +1,8 @@
 <template>
   <el-row id="registration" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
+    <select-and-search :c="searching.c" @sizeChange="sizeChange" @search="search"
+                       @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">

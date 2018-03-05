@@ -1,8 +1,8 @@
 <template>
   <el-row id="families" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
-
+    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
+                       @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -32,8 +32,8 @@
               label="对应罪犯">
               <template slot-scope="scope">
                 <el-button type="text" size="small"
-                           @click="showPrisonerDetail(scope.row.prisoner)">
-                  {{scope.row.prisoner.name}}
+                           @click="showPrisonerDetail(scope.row.prisoners)">
+                  {{scope.row.prisoners.name}}
                 </el-button>
               </template>
             </el-table-column>
@@ -41,14 +41,11 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-
     <!--分页组件-->
-    <pagination :total="familiesTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
+    <pagination :total="familiesTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
-
     <!--家属信息弹出框-->
     <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
-
     <el-dialog title="囚犯信息" :visible.sync="dialogTableVisible">
       <el-row :gutter="0">
         <el-col :span="12">
@@ -67,7 +64,7 @@
         </el-col>
         <el-col :span="12">
           <label for="">监区：</label>
-          <span v-text="prisoner.prison_area"></span>
+          <span v-text="prisoner.prisonArea"></span>
         </el-col>
       </el-row>
       <el-row :gutter="0">
@@ -77,7 +74,6 @@
         </el-col>
       </el-row>
     </el-dialog>
-
   </el-row>
 </template>
 
@@ -85,19 +81,19 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '家属信息管理'],//面包屑数组
         tabNum: 'first',
         pagination: {
-          length: 10,//每页显示记录条数
-          draw: 1//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
+        c: 'families',//页面模块类型
         searching: {
-          c: 'families',//搜索的模块类型
-          value: ''//搜索的条件
+          name: '',//搜索的模块类型
+          uuid: ''//搜索的条件
         },
         dialogVisible: false,//弹出框的显示和隐藏
         agreeText: '同意',
@@ -128,36 +124,29 @@
         searchAction: 'searchAction',//获取带搜索条件的家属注册列表
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(length){
-        this.$set(this.pagination, 'draw', 1);
-        this.$set(this.pagination, 'length', length);
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
-      currentChange(draw){
-        this.$set(this.pagination, 'draw', draw);
+      currentChange(page){
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.searching,this.pagination));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getFamilies(Object.assign(this.pagination));
-        }
+        this.getFamilies({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.$set(this.pagination,'draw',1);
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getFamilies({...this.searching, ...this.pagination});
       },
-      //监听搜索框的内容变化
+      //监听搜索框的内容变化{
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //显示家属详细信息
       showPrisonerDetail(prisoner){

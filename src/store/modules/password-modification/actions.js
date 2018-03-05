@@ -7,10 +7,8 @@ export default {
   //修改用户名密码的方法
   modifyPassword({commit}, regs){
     let params = {
-      password: regs.password,
-      new_password: regs.new_password,
-      zipcode: sessionStorage['zipcode'],
-      user_name: sessionStorage['username']
+      old_password: regs.password,
+      new_password: regs.new_password
     };
     http.modifyPassword(params).then(res => res.code === 200 && commit('modifyPassword', res)).catch(err => console.log(err))
   }
