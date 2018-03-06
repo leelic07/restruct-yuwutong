@@ -23,6 +23,12 @@ let handleError = (error) => {
           path: '/login'
         });
         break;
+      case 403:
+        Message.error('当前用户无权限，请重新登录！');
+        router.push({
+          path: '/login'
+        });
+        break;
       case 404:
         Message.error('找不到对应的资源！');
         break;
@@ -60,8 +66,8 @@ let handleSuccess = (res) => {
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
-    // if (sessionStorage['token'])
-    //   config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
+    if (sessionStorage['token'])
+      config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
     // else if (config.url.substring(0, config.url.lastIndexOf('?')) !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
     //   Message({type: 'warning', message: '当前用户无权限，请先登录！'});
     //   router.push({

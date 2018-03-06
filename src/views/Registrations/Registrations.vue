@@ -1,7 +1,7 @@
 <template>
   <el-row id="registration" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search :c="searching.c" @sizeChange="sizeChange" @search="search"
+    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
                        @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
@@ -25,11 +25,13 @@
               label="身份证">
             </el-table-column>
             <el-table-column
-              prop="created_at"
               label="申请时间">
+              <template slot-scope="scope">
+                {{scope.row.createdAt | Date}}
+              </template>
             </el-table-column>
             <el-table-column
-              prop="prisoner_number"
+              prop="prisonerNumber"
               label="囚号">
             </el-table-column>
             <el-table-column
@@ -57,7 +59,7 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <pagination :total="registrationsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+    <pagination :total="registrationsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
     <!--家属信息授权弹出框-->
     <el-dialog title="授权" :visible.sync="dialogVisible">
@@ -132,13 +134,15 @@
       return {
         breadcrumb: ['主页', '家属注册管理'],//面包屑数组
         tabNum: 'first',
+        c: 'registrations',
         pagination: {
-          limit: 10,//每页显示记录条数
-          page: 0//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
         searching: {
-          c: 'registrations',//搜索的模块类型
-          value: ''//搜索的条件
+          name: '',//家属姓名
+          prisonerNumber: '',//囚号
+          uuid: ''//身份证号
         },
         dialogVisible: false,//弹出框的显示和隐藏
         innerVisible: false,//内层弹框的显示和隐藏
@@ -176,28 +180,29 @@
         authorizeRegistrations: 'authorizeRegistrations'//家属注册信息授权
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(limit){
-        this.pagination.page = 0;
-        this.pagination.limit = limit;
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.pagination.page = page - 1;
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        this.searching.value !== '' && this.searchAction(Object.assign(this.searching, this.pagination)) || this.getRegistrations(this.pagination);
+        this.getRegistrations({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 0;
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getRegistrations({...this.searching, ...this.pagination});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //点击授权时执行的方法
       handleAuthorization(id) {
@@ -222,7 +227,7 @@
             this.authorization.remarks = '';
             this.authorization.status = 'PASSED';
           }
-          this.authorizeRegistrations(Object.assign(this.authorization, {id: this.authorizeId}));
+          this.authorizeRegistrations({...this.authorization, id: this.authorizeId});
         }
       },
       //点击不同意或者返回执行的方法

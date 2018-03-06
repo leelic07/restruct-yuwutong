@@ -6,11 +6,11 @@ import * as service from '../base/service'
 export default {
   //获取家属会见信息列表
   getMeetings: params =>
-    service.get(`/meetings.json`, params).then(res => res).catch(err => err),
+    service.get('/meetings/page', params).then(res => res).catch(err => err),
   //授权家属会见信息列表
-  authorizeMeetings: (params, id) =>
-    service.patch(`/meetings/${id}`, params).then(res => res).catch(err => err),
+  authorizeMeetings: params =>
+    service.post('/meetings/authorize', params).then(res => res).catch(err => err),
   //撤回家属会见信息
-  withDrawMeetings: (params, id) =>
-    service.patch(`/meetings/${id}`, params).then(res => res).catch(err => err)
+  withDrawMeetings: params =>
+    service.post('/meetings/withdraw', params).then(res => res).catch(err => err)
 }

@@ -1,7 +1,8 @@
 <template>
   <el-row id="meeting" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
+    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
+                       @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -67,7 +68,7 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <pagination :total="meetingsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+    <pagination :total="meetingsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
     <!--家属信息授权弹出框-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
@@ -112,11 +113,15 @@
       <!--点击撤回时显示的对话框内容-->
       <el-row :gutter="0" v-if="isWithdraw">
         <el-row :gutter="0">
-          <el-input type="textarea"
-                    autosize
-                    placeholder="请输入撤回理由"
-                    v-model="authorization.remarks">
-          </el-input>
+          <el-form :model="authorization" :rules="rule" ref="withdrawForm">
+            <el-form-item prop="remarks">
+              <el-input type="textarea"
+                        autosize
+                        placeholder="请输入撤回理由"
+                        v-model="authorization.remarks">
+              </el-input>
+            </el-form-item>
+          </el-form>
         </el-row>
         <el-row :gutter="0" class="btn-box">
           <el-button type="danger" @click="dialogVisible = false">取消</el-button>
@@ -138,12 +143,14 @@
         breadcrumb: ['主页', '会见申请管理'],//面包屑数组
         tabNum: 'first',
         pagination: {
-          limit: 10,//每页显示记录条数
-          page: 0//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
+        c: 'meetings',
         searching: {
-          c: 'meetings',//搜索的模块类型
-          value: ''//搜索的条件
+          name: '',//家属姓名
+          prisonerNumber: '',//囚号
+          uuid: ''//身份证号
         },
         dialogVisible: false,//弹出框的显示和隐藏
         agreeText: '同意',
@@ -156,7 +163,15 @@
         dialogTitle: '',//对话框的标题文字
         showRemarks: false,//是否显示拒绝家属会见理由
         authorizeId: '',//授权家属会见id
-        callbackId: ''//撤回家属会见id
+        callbackId: '',//撤回家属会见id
+        rule: {
+          remarks: [{required: true, message: '请填写撤回理由', trigger: 'blur'}]
+        }
+      }
+    },
+    watch: {
+      withDrawMeetingsResult(newValue){
+        this.dialogVisible = false;//撤回家属会见成功关闭撤回对话框
       }
     },
     computed: {
@@ -165,7 +180,8 @@
         meetings: 'meetings',//获取家属会见的数据列表
         meetingsTotal: 'meetingsTotal',//获取家属会见的总记录数
         authMeetingsResult: 'authMeetingsResult',//获取家属会见的授权结果
-        remarks: 'remarks'//获取家属会见拒绝理由
+        remarks: 'remarks',//获取家属会见拒绝理由
+        withDrawMeetingsResult: 'withDrawMeetingsResult'//撤回家属会见的结果
       })
     },
     methods: {
@@ -182,28 +198,29 @@
         withDrawMeetings: 'withDrawMeetings'//撤回家属会见申请
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(limit){
-        this.pagination.page = 0;
-        this.pagination.limit = limit;
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.pagination.page = page - 1;
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        this.searching.value !== '' && this.searchAction(Object.assign(this.searching, this.pagination)) || this.getMeetings(Object.assign(this.pagination));
+        this.getMeetings({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 0;
-        this.searchAction(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getMeetings({...this.searching, ...this.pagination});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //点击授权时执行的方法
       handleAuthorization(id){
@@ -225,9 +242,17 @@
         this.isWithdraw = true;
         this.dialogVisible = true;
       },
+      //确定撤回执行的方法
       confirmWithdraw(){
-        this.authorization.status = 'DENIED';
-        this.withDrawMeetings({id: this.authorizeId, ...this.authorization});
+        this.$refs['withdrawForm'].validate(valid => {
+          if (valid) {
+            this.authorization.status = 'DENIED';
+            this.withDrawMeetings({id: this.authorizeId, ...this.authorization});
+          } else {
+            console.log('submit err!');
+            return false;
+          }
+        });
       },
       //点击同意或者确定申请通过执行的方法
       agreeAuthorization(agreeText){
@@ -241,7 +266,7 @@
             this.authorization.remarks = '';
             this.authorization.status = 'PASSED';
           }
-          this.authorizeRegistrations({id: this.authorizeId, ...this.authorization});
+          this.authorizeMeetings({id: this.authorizeId, ...this.authorization});
         }
       },
       //点击不同意或者返回执行的方法
@@ -257,8 +282,7 @@
         }
       }
     },
-    mounted()
-    {
+    mounted(){
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
       //获取家属注册信息列表

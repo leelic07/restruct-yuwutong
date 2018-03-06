@@ -14,16 +14,24 @@
     </el-col>
     <!--搜索框-->
     <el-col :span="16">
-      <el-col :span="8" :offset="2">
+      <el-col :span="6">
+        <el-input v-if="c==='registrations'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='meetings'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
+      </el-col>
+      <el-col :span="6" :offset="1">
         <!--搜索框-->
         <el-input v-if="c==='prisoners'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
         <el-input v-if="c==='families'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
         <el-input v-if="c==='accounts'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='registrations'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
+        <el-input v-if="c==='meetings'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
       </el-col>
-      <el-col :span="8" :offset="1">
+      <el-col :span="6" :offset="1">
         <el-input v-if="c==='prisoners'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
-        <el-input v-if="c==='families'" placeholder="请输入家属身份证号" v-model="searching.uuid"></el-input>
+        <el-input v-if="c==='families'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
         <el-input v-if="c==='accounts'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
+        <el-input v-if="c==='registrations'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
+        <el-input v-if="c==='meetings'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
       </el-col>
       <el-col :span="3" :offset="1">
         <el-button icon="el-icon-search" @click.native="search"></el-button>

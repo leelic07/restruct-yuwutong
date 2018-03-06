@@ -19,8 +19,10 @@ export default {
   //获取用户登录的结果
   login(state, loginResult){
     let users = loginResult.data.users;
+    let token = loginResult.data.token;
     sessionStorage.setItem('user_id', users.id);
     sessionStorage.setItem('role', users.role);
+    token && sessionStorage.setItem('token', token);
     state.loginResult = loginResult;
     state.users = users;
   }

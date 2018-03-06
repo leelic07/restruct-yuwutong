@@ -8,10 +8,10 @@
       <div class="mailbox-read-info">
         <h5>来自：
           <!--<span class="mailbox-read-time pull-right">15 Feb. 2016 11:03 PM</span></h5>-->
-          <span>{{mailDetail.poster}} &nbsp;&nbsp;&nbsp; &lt;{{mailDetail.prisonerName}} 的 {{mailDetail.relationship}}&gt;</span>
+          <span>{{mailDetail.name}} &nbsp;&nbsp;&nbsp; &lt;{{mailDetail.prisonerName}} 的 {{mailDetail.relationship}}&gt;</span>
         </h5>
         <h5>日期：
-          <span>{{mailDetail.created_at}}</span>
+          <span>{{mailDetail.created_at | Date}}</span>
         </h5>
       </div>
 
@@ -27,18 +27,22 @@
       <el-row :gutter="0" v-for="comments in mailDetail.comments" :key="comments.id">
         <el-col :span="24">
           <el-button type="text">监狱回复：</el-button>
-          <span>{{comments.updated_at}}</span>
+          <span>{{comments.created_at | Date}}</span>
         </el-col>
         <el-col :span="24">
           <p class="contents">{{comments.contents}}</p>
         </el-col>
       </el-row>
-      <el-input
-        type="textarea"
-        :rows="3"
-        placeholder="快速回复"
-        v-model="replyContent">
-      </el-input>
+      <el-form :model="comments" :rules="rule" ref="replyForm">
+        <el-form-item prop="content">
+          <el-input
+            type="textarea"
+            :rows="3"
+            placeholder="快速回复"
+            v-model="comments.content">
+          </el-input>
+        </el-form-item>
+      </el-form>
     </div>
     <!-- /.box-footer -->
     <div class="box-footer">
@@ -53,21 +57,21 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-
   export default {
     data() {
       return {
-        replyContent: '',//回复的内容
-        breadcrumb: ['主页', '监狱长信箱', '邮件详情']
+        comments: {
+          content: ''//回复的内容
+        },
+        breadcrumb: ['主页', '监狱长信箱', '邮件详情'],
+        rule: {
+          content: [{required: true, message: '请输入回复的内容', trigger: 'blur'}]
+        }
       }
     },
     watch: {
       commentResult(newValue){
-        newValue.code === 200 && this.$message({
-          type: 'success',
-          message: '回复邮件成功!'
-        });
-        this.replyContent = '';
+        this.comments.content = '';//回复成功将回复内容置为空
       }
     },
     computed: {
@@ -86,11 +90,17 @@
       }),
       //点击回复按钮执行的方法
       reply(){
-        this.replyComment({
-          'id': this.$route.params.id,
-          'contents': this.replyContent,
-          'family_id': this.mailDetail.family_id,
-          'user_id': sessionStorage['user_id']
+        this.$refs['replyForm'].validate(valid => {
+          if (valid) {
+            this.replyComment({
+              'id': this.$route.params.id,
+              'contents': this.comments.content,
+              'family_id': this.mailDetail.family_id,
+            });
+          } else {
+            console.log('submit err');
+            return false;
+          }
         });
       }
     },

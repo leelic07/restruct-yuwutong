@@ -4,8 +4,8 @@
 export default {
   //获取家属会见信息
   getMeetings(state, meetingList){
-    state.meetings = meetingList.meetings;
-    state.meetingsTotal = meetingList.total;
+    state.meetings = meetingList.data.meetings;
+    state.meetingsTotal = meetingList.data.total;
   },
   //给家属会见信息授权
   authorizeMeetings(state, authorizationResult){

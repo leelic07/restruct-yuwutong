@@ -4,16 +4,13 @@
 export default {
   //获取家属注册信息
   getRegistrations(state, registrationList){
-    state.registrations = registrationList.registrations;
-    state.registrationsTotal = registrationList.total;
+    state.registrations = registrationList.data.registrations;
+    state.registrationsTotal = registrationList.data.total;
   },
   //给家属注册信息授权
   authorizeRegistrations(state, authorizationResult){
     for (let reg of state.registrations) {
-      if (reg.id === Number(authorizationResult.id)) {
-        if (authorizationResult.code === 200)
-          reg.status = authorizationResult.status;
-      }
+      if (reg.id === Number(authorizationResult.id)) reg.status = authorizationResult.status;
     }
     state.authorizationResult = authorizationResult;
   },

@@ -4,10 +4,9 @@
       <el-col :span="24">
         <el-button size="mini" @click="refreshMailBoxes()">刷新</el-button>
       </el-col>
-
       <el-col :span="24">
         <el-table
-          :data="mailBoxes[pagination.page - 1]"
+          :data="mailBoxes"
           stripe
           style="width: 100%">
           <el-table-column
@@ -25,7 +24,7 @@
             width="180">
           </el-table-column>
           <el-table-column
-            prop="poster"
+            prop="name"
             label="发件人">
           </el-table-column>
           <el-table-column
@@ -34,33 +33,28 @@
           </el-table-column>
         </el-table>
       </el-col>
-
       <!--分页组件-->
-      <pagination :total="mailBoxesTotal" :pageSize="pagination.limit" :currentPage="pagination.page"
+      <pagination :total="mailBoxesTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
-
     <!--邮件详情路由页面-->
     <router-view></router-view>
   </el-row>
-
 </template>
 
 <script>
   import {mapMutations, mapActions, mapGetters} from 'vuex'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '监狱长信箱'],//面包屑数组
-        total: 1000,//总共记录条数
         pagination: {
-          limit: 10,//每页显示记录条数
+          rows: 10,//每页显示记录条数
           page: 1//当前显示第几页
         },
         isMailBoxesInspect: false,//是否是查看邮箱信息页面
-        type:1
+        type: 1
       }
     },
     watch: {
@@ -74,10 +68,10 @@
         }
       }
     },
-    computed:{
+    computed: {
       ...mapGetters({
-        mailBoxes:'mailBoxes',
-        mailBoxesTotal:'mailBoxesTotal'
+        mailBoxes: 'mailBoxes',
+        mailBoxesTotal: 'mailBoxesTotal'
       })
     },
     methods: {
@@ -85,11 +79,12 @@
         breadCrumb: 'breadCrumb'//设置家属注册页面的面包屑信息
       }),
       ...mapActions({
-        getMailBoxes:'getMailBoxes',//获取监狱长邮箱列表信息
+        getMailBoxes: 'getMailBoxes',//获取监狱长邮箱列表信息
       }),
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.$set(this.pagination,'page',page);
+        this.pagination.page = page;
+        this.getMailBoxes(this.pagination);
       },
       //点击邮件标题时执行的方法
       inspectMail(row){
@@ -99,8 +94,7 @@
       },
       //刷新监狱长邮箱信息
       refreshMailBoxes(){
-        this.$set(this.pagination,'page',1);
-        this.getMailBoxes(this.type);
+        this.getMailBoxes(this.pagination);
       }
     },
     components: {
@@ -108,8 +102,7 @@
     },
     mounted(){
       this.breadCrumb(this.breadcrumb);
-
-      this.getMailBoxes(this.type);
+      this.getMailBoxes(this.pagination);
     }
   }
 </script>

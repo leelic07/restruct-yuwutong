@@ -44,14 +44,11 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-
     <!--分页组件-->
     <pagination :total="prisonersTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
-
     <!--家属信息弹出框-->
     <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
-
     <el-dialog title="家属信息" :visible.sync="dialogTableVisible">
       <el-row :gutter="0">
         <el-col :span="12">
@@ -88,7 +85,6 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
