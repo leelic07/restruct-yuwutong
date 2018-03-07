@@ -33,7 +33,7 @@
               <template slot-scope="scope">
                 <el-button type="text" size="small"
                            @click="showPrisonerDetail(scope.row.prisoners)">
-
+                  {{scope.row.prisoners.name}}
                 </el-button>
               </template>
             </el-table-column>

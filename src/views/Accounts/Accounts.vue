@@ -108,7 +108,7 @@
       ...mapGetters({
         accounts: 'accounts',
         accountsTotal: 'accountsTotal',//总共记录条数
-//        accountDetail: 'accountDetail'//账户详情信息
+        accountDetail: 'accountDetail'//账户详情信息
       })
     },
     methods: {
