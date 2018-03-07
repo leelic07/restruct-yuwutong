@@ -125,7 +125,6 @@
       //映射actions方法
       ...mapActions({
         getPrisoners: 'getPrisoners',//获取家属注册列表
-        searchAction: 'searchAction',//获取带搜索条件的家属注册列表
       }),
       //每页条数发生变化时执行的方法
       sizeChange(rows){

@@ -46,13 +46,13 @@
     },
     computed: {
       ...mapGetters({
-        terminalForEdit: 'terminalForEdit',//获取添加终端信息的结果
+        terminalForEdit: 'terminalForEdit',//获取需要编辑的终端信息
         editTerminalResult: 'editTerminalResult'//获取编辑终端信息的结果
       })
     },
     methods: {
       ...mapActions({
-        editTerminal: 'editTerminal'//添加终端信息
+        editTerminal: 'editTerminal'//编辑终端信息
       }),
       ...mapMutations({
         getTerminalById: 'getTerminalById'//根据id获取终端信息

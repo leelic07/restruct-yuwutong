@@ -6,9 +6,7 @@ import http from '@/service'
 export default {
   //获取家属注册信息列表
   getTerminals({commit}, regs){
-    let start = (regs.draw - 1) * regs.length;//计算从第几条开始获取数据
-    Object.assign(regs, {'start': start});
-    http.getTerminals(regs).then(res => commit('getTerminals', res)).catch(err => console.log(err));
+    http.getTerminals(regs).then(res => res.code === 200 && commit('getTerminals', res)).catch(err => console.log(err));
   },
   //添加终端信息
   addTerminal: ({commit}, regs) =>
@@ -24,11 +22,12 @@ export default {
   //编辑终端信息
   editTerminal({commit}, regs){
     let terminal = {
-      terminal_number: regs.terminal_number,
-      room_number: regs.room_number,
-      host_password: regs.host_password,
-      metting_password: regs.metting_password
+      terminalNumber: regs.terminal_number,
+      roomNumber: regs.room_number,
+      hostPassword: regs.host_password,
+      mettingPassword: regs.metting_password,
+      id: regs.id
     };
-    http.editTerminal(terminal, regs.id).then(res => res.code === 200 && commit('editTerminal', res)).catch(err => console.log(err))
+    http.editTerminal(terminal).then(res => res.code === 200 && commit('editTerminal', res)).catch(err => console.log(err))
   }
 }

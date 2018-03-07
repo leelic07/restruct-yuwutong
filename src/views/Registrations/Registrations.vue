@@ -128,7 +128,6 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {

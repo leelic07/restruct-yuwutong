@@ -6,7 +6,7 @@
         <el-button size="small" type="primary" plain @click="newTerminal()">添加终端信息</el-button>
       </el-col>
       <!--选择显示页数和搜索框内容组件-->
-      <select-and-search @sizeChange="sizeChange" @search="search"
+      <select-and-search :c="c" @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
       <!--标签页表格-->
       <el-col :span="24">
@@ -57,7 +57,7 @@
         </el-tabs>
       </el-col>
       <!--分页组件-->
-      <pagination :total="terminalsTotal" :pageSize="pagination.length" :currentPage="pagination.draw"
+      <pagination :total="terminalsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
     <!--终端管理页面子路由-->
@@ -69,20 +69,15 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '终端管理'],//面包屑数组
         tabNum: 'first',
+        c: 'terminals',
         pagination: {
-          length: 10,//每页显示记录条数
-          draw: 1,//当前显示第几页
-          start: 0
-        },
-        searching: {
-          c: 'terminals',//搜索的模块类型
-          value: ''//搜索的条件
+          rows: 10,//每页显示记录条数
+          page: 1,//当前显示第几页
         },
         dialogVisible: false,//弹出框的显示和隐藏
         agreeText: '同意',
@@ -122,30 +117,24 @@
         deleteTerminalById: 'deleteTerminalById'//根据id删除终端信息
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(length){
-        this.pagination.draw = 1;
-        this.change({'length': length});
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
+        this.change();
       },
       //当前页发生变化时执行的方法
-      currentChange(draw){
-        this.change({'draw': draw});
+      currentChange(page){
+        this.pagination.page = page;
+        this.change();
       },
       //根据是否有搜索内容调用不同的接口
-      change(changeParams){
-        if (this.searching.value !== '') {
-          this.searchAction(Object.assign(this.pagination, this.searching, changeParams));
-        } else {
-          if (this.pagination.hasOwnProperty('value')) {
-            delete this.pagination.c;
-            delete this.pagination.value;
-          }
-          this.getTerminals(Object.assign(this.pagination, changeParams));
-        }
+      change(){
+        this.getTerminals(this.pagination);
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.draw = 1;
-        this.searchAction(Object.assign(this.searching, this.pagination));
+        this.pagination.page = 1;
+        this.getTerminals(this.pagination);
       },
       //监听搜索框的内容变化
       searchingChange(searching){

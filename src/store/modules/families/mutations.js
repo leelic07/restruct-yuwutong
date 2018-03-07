@@ -6,6 +6,7 @@ export default {
   getFamilies(state, familyList) {
     let families = familyList.data.families;
     let total = familyList.data.familiesSize;
+    console.log(families, total);
     //判断是调用search接口还是调用families接口得到不同的入参
     // if (familyList.data !== undefined) {
     //   families = familyList.data.families_data;

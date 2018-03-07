@@ -32,20 +32,12 @@
         <el-input v-if="c==='accounts'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
         <el-input v-if="c==='registrations'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
         <el-input v-if="c==='meetings'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
+        <el-input v-if="c==='versions'" placeholder="请输入版本号" v-model="searching.versionNumber"></el-input>
       </el-col>
       <el-col :span="3" :offset="1">
-        <el-button icon="el-icon-search" @click.native="search"></el-button>
+        <el-button v-if="c !== 'terminals'" icon="el-icon-search" @click.native="search"></el-button>
       </el-col>
     </el-col>
-    <!--搜索框-->
-    <!--<el-col :span="16" v-else>-->
-    <!--<el-col :span="8" :offset="16">-->
-    <!--&lt;!&ndash;搜索框&ndash;&gt;-->
-    <!--<el-input placeholder="请输入内容" v-model="searching.name">-->
-    <!--<el-button slot="append" icon="el-icon-search" @click.native="search"></el-button>-->
-    <!--</el-input>-->
-    <!--</el-col>-->
-    <!--</el-col>-->
   </el-col>
 </template>
 
@@ -66,8 +58,11 @@
       }
     },
     watch: {
-      searching(newValue){
-        this.$emit('searchingChange', newValue)
+      'searching': {
+        handler: function (newValue) {
+          this.$emit('searchingChange', newValue)
+        },
+        deep: true
       }
     },
     methods: {

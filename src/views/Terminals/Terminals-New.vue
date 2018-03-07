@@ -5,16 +5,16 @@
       <el-row :gutter="0">
         <el-form :model="terminal" ref="terminal" label-position="left" label-width="90px">
           <el-form-item label="终端号">
-            <el-input v-model="terminal.terminal_number" placeholder="请填写终端号"></el-input>
+            <el-input v-model="terminal.terminalNumber" placeholder="请填写终端号"></el-input>
           </el-form-item>
           <el-form-item label="会议室号">
-            <el-input v-model="terminal.room_number" placeholder="请填写会议室号"></el-input>
+            <el-input v-model="terminal.roomNumber" placeholder="请填写会议室号"></el-input>
           </el-form-item>
           <el-form-item label="主持人密码">
-            <el-input v-model="terminal.host_password" placeholder="请填写主持人密码"></el-input>
+            <el-input v-model="terminal.hostPassword" placeholder="请填写主持人密码"></el-input>
           </el-form-item>
           <el-form-item label="参与密码">
-            <el-input v-model="terminal.metting_password" placeholder="请填写参与密码"></el-input>
+            <el-input v-model="terminal.mettingPassword" placeholder="请填写参与密码"></el-input>
           </el-form-item>
         </el-form>
       </el-row>
@@ -35,10 +35,10 @@
       return {
         breadcrumb: ['主页', '终端管理', '添加终端信息'],
         terminal: {
-          terminal_number: '',
-          room_number: '',
-          host_password: '',
-          metting_password: ''
+          terminalNumber: '',
+          roomNumber: '',
+          hostPassword: '',
+          mettingPassword: ''
         }
       }
     },
