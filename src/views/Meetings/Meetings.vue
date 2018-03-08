@@ -25,15 +25,15 @@
               label="身份证">
             </el-table-column>
             <el-table-column
-              prop="application_date"
+              prop="applicationDate"
               label="申请时间">
             </el-table-column>
             <el-table-column
-              prop="meeting_time"
+              prop="meetingTime"
               label="预约时间">
             </el-table-column>
             <el-table-column
-              prop="prisoner_number"
+              prop="prisonerNumber"
               label="囚号">
             </el-table-column>
             <el-table-column
@@ -41,7 +41,7 @@
               label="关系">
             </el-table-column>
             <el-table-column
-              prop="terminal_number"
+              prop="terminalNumber"
               label="终端号">
             </el-table-column>
             <el-table-column :class="{'application-status':true}"

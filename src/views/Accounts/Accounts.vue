@@ -13,7 +13,7 @@
             stripe
             style="width: 100%">
             <el-table-column
-              prop="prisoner_number"
+              prop="prisonerNumber"
               label="囚号">
             </el-table-column>
             <el-table-column
@@ -25,7 +25,7 @@
               label="罪名">
             </el-table-column>
             <el-table-column
-              prop="prison_area"
+              prop="prisonArea"
               label="监区">
             </el-table-column>
             <el-table-column
@@ -66,8 +66,10 @@
           label="操作原因">
         </el-table-column>
         <el-table-column
-          prop="created_at"
           label="操作时间">
+          <template slot-scope="scope">
+            {{scope.row.createdAt | Date}}
+          </template>
         </el-table-column>
       </el-table>
     </el-dialog>

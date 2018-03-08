@@ -33,6 +33,7 @@
         <el-input v-if="c==='registrations'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
         <el-input v-if="c==='meetings'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
         <el-input v-if="c==='versions'" placeholder="请输入版本号" v-model="searching.versionNumber"></el-input>
+        <el-input v-if="c==='goods'" placeholder="请输入商品名称" v-model="searching.title"></el-input>
       </el-col>
       <el-col :span="3" :offset="1">
         <el-button v-if="c !== 'terminals'" icon="el-icon-search" @click.native="search"></el-button>

@@ -39,7 +39,7 @@
           <el-input v-model="goodsForEdit.factory"></el-input>
         </el-form-item>
         <el-form-item label="请选择商品部类">
-          <el-select v-model="goodsForEdit.category_id" placeholder="请选择">
+          <el-select v-model="goodsForEdit.categoryId" placeholder="请选择">
             <el-option
               v-for="item,key in options"
               :key="item"
@@ -58,7 +58,6 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-
   export default {
     data() {
       return {
@@ -95,14 +94,19 @@
     },
     methods: {
       ...mapActions({
-        editGoods: 'editGoods'//编辑商品信息
+        editGoods: 'editGoods',//编辑商品信息
+        getGoodsById: 'getGoodsById'//根据id获取要编辑的商品信息
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getGoodsById: 'getGoodsById'//根据id获取要编辑的商品信息
       }),
+      //点击更新按钮执行的方法
       onSubmit(){
-        this.editGoods(Object.assign(this.goodsForEdit, {avatar: this.image}, {id: this.$route.params.id}));
+        this.$refs.form.validate(valid => {
+          if (valid) this.editGoods({...this.goodsForEdit, avatar: this.image, id: this.$route.params.id});
+          else return false;
+        });
+
       },
       //选择上传文件时的方法
       handleChange(file){

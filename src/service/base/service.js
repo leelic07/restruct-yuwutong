@@ -122,7 +122,7 @@ export let post = (url, data = {}, config = {}) =>
  * @returns {Promise}
  */
 export let postFile = (url, data = {}) => {
-  data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
+  // data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
   return instance.post(agency + url, data, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -136,7 +136,7 @@ export let postFile = (url, data = {}) => {
  * @returns {Promise}
  */
 export let patchFile = (url, data = {}) => {
-  data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
+  // data.toString() !== {}.toString() && data.append('jail_id', sessionStorage['jail_id']);
   return instance.patch(agency + url, data, {
     headers: {
       'Content-Type': 'multipart/form-data'

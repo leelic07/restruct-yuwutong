@@ -6,7 +6,13 @@ import http from '@/service'
 export default {
   //获取商品列表信息
   getGoods: ({commit}, regs) =>
-    http.getGoods(regs).then(res => commit('getGoods', res)).catch(err => console.log(err)),
+    http.getGoods({
+      ...regs,
+      // jailId: sessionStorage['jail_id']
+    }).then(res => commit('getGoods', res)).catch(err => console.log(err)),
+  //根据id获取商品信息
+  getGoodsById: ({commit}, regs) =>
+    http.getGoodsById({id: regs}).then(res => res.code === 200 && commit('getGoodsById', res)).catch(err => console.log(err)),
   //添加商品
   addGoods({commit}, regs){
     let formData = new FormData();
@@ -24,9 +30,11 @@ export default {
       commit('getGoods', response);
       commit('addGoods', res);
     }).catch(err => console.log(err))).catch(err => console.log(err));
-  },
+  }
+  ,
   //编辑商品
-  editGoods({commit}, regs){
+  editGoods({commit}, regs)
+  {
     let id = regs.id;
     delete regs.id;
     let formData = new FormData();
@@ -44,8 +52,12 @@ export default {
       commit('getGoods', response);
       commit('editGoods', res)
     }).catch(err => console.log(err))).catch(err => console.log(err))
-  },
+  }
+  ,
   //删除商品
   deleteGoods: ({commit}, regs) =>
-    http.deleteGoods(regs).then(res => res.code === 200 && commit('deleteGoods', Object.assign(res, {id: regs}))).catch(err => console.log(err))
+    http.deleteGoods({id: regs}).then(res => res.code === 200 && commit('deleteGoods', {
+      ...res,
+      id: regs
+    })).catch(err => console.log(err))
 }

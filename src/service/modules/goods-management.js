@@ -5,8 +5,11 @@ import * as service from '../base/service'
 
 export default {
   //获取商品列表信息
-  getGoods: params =>
-    service.get(`/items.json`, params).then(res => res).catch(err => err),
+  getGoods: pagination =>
+    service.get('/items/page', pagination).then(res => res).catch(err => err),
+  //根据id获取商品信息
+  getGoodsById: id =>
+    service.get('/items/description', id).then(res => res).catch(err => err),
   //添加商品
   addGoods: goods =>
     service.postFile(`/items`, goods).then(res => res).catch(err => err),
@@ -15,5 +18,5 @@ export default {
     service.patchFile(`/items/${id}`, goodsForEdit).then(res => res).catch(err => err),
   //删除商品
   deleteGoods: id =>
-    service.remove(`/items/${id}`).then(res => res).catch(err => err)
+    service.post('/items/delete', id).then(res => res).catch(err => err)
 }

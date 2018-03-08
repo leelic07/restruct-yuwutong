@@ -22,6 +22,7 @@ export default {
     let token = loginResult.data.token;
     sessionStorage.setItem('user_id', users.id);
     sessionStorage.setItem('role', users.role);
+    sessionStorage.setItem('jail_id', users.jailId)
     token && sessionStorage.setItem('token', token);
     state.loginResult = loginResult;
     state.users = users;

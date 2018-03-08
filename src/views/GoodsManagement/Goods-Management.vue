@@ -7,7 +7,7 @@
         </el-col>
       </el-row>
       <!--选择显示页数和搜索框内容组件-->
-      <select-and-search @sizeChange="sizeChange" @search="search"
+      <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
       <!--标签页表格-->
       <el-col :span="24">
@@ -22,7 +22,7 @@
                 label="商品图片">
                 <template slot-scope="scope">
                   <!--<img :src="_$baseUrl + '/' + scope.row.avatar_url" alt="">-->
-                  <img :src="_$agency + scope.row.avatar_url" alt="">
+                  <img :src="_$agency + scope.row.avatarUrl" alt="">
                 </template>
               </el-table-column>
               <el-table-column
@@ -61,7 +61,7 @@
               <el-table-column
                 label="商品类部">
                 <template slot-scope="scope">
-                  {{scope.row.category_id | goodsCategory}}
+                  {{scope.row.categoryId | goodsCategory}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -86,7 +86,7 @@
         </el-tabs>
       </el-col>
       <!--分页组件-->
-      <pagination :total="goodsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+      <pagination :total="goodsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
     <!--子路由-->
@@ -98,20 +98,18 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '商品信息管理'],//面包屑数组
         tabNum: 'first',
-        total: 1000,//总共记录条数
         pagination: {
-          limit: 10,//每页显示记录条数
-          page: 0//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
+        c: 'goods',
         searching: {
-          c: 'goods',//搜索的模块类型
-          value: ''//搜索的条件
+          title: ''//商品名称
         },
         isGoodsEditor: false,//是否是商品信息列表页面
         goodsDescription: ''//商品简介信息
@@ -145,28 +143,29 @@
         searchGoods: 'searchGoods',//获取带搜索条件的商品列表
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(limit){
-        this.pagination.page = 0;
-        this.pagination.limit = limit;
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.pagination.page = page - 1;
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        this.searchGoods(Object.assign(this.searching, this.pagination));
+        this.getGoods({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 0;
-        this.searchGoods(Object.assign(this.searching, this.pagination));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getGoods({...this.searching, ...this.pagination});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //点击删除时执行的方法
       handleDelete(id){
@@ -176,7 +175,7 @@
           type: 'warning'
         }).then(() => {
           this.deleteGoods(id);
-        });
+        }).catch(err => console.log(err));
       },
       //点击编辑时执行的方法
       handleEdit(id){

@@ -14,8 +14,8 @@ module.exports = {
         // target: 'https://www.yuwugongkai.com',
         // target: 'http://10.10.10.109:3000',
         // target: 'http://10.10.10.122:8080',
-        target: 'http://10.10.10.2:8081/ywgk',
-        // target: 'http://localhost:3000',
+        // target: 'http://10.10.10.2:8081/ywgk',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/ywt': '/'

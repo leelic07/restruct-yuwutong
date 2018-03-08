@@ -46,27 +46,27 @@
       }
     },
     watch: {
-      uploadTemplateResult(newValue){
+      uploadResult(newValue){
         this.importPrisonerRewardPunishment({filepath: newValue.path});//上传罪犯奖惩模板文件成功后将罪犯奖惩数据给服务端解析
       }
     },
     computed: {
       ...mapGetters({
         prisonerRewardPunishmentResult: 'prisonerRewardPunishmentResult',//获取罪犯奖惩模板导入结果
-        uploadTemplateResult: 'uploadTemplateResult'//上传罪犯奖惩模板文件的结果
+        uploadResult: 'uploadResult'//上传罪犯奖惩模板文件的结果
       })
     },
     methods: {
       ...mapActions({
         importPrisonerRewardPunishment: 'importPrisonerRewardPunishment',//罪犯奖惩模板上传成功后将罪犯奖惩模板导入到服务端
-        uploadTemplate: 'uploadTemplate'//上传罪犯奖惩信息到服务端
+        uploadFile: 'uploadFile'//上传罪犯奖惩信息到服务端
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
       }),
       //上传罪犯奖惩模板文件到服务端
       beforeUpload(file){
-        this.uploadTemplate(file);
+        this.uploadFile(file);
         return false;
       },
       //点击上传到服务器执行的方法

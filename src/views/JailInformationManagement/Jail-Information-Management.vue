@@ -70,10 +70,8 @@
     },
     watch: {
       $route(to){
-        if (to.path === '/jails')
-          this.isJailEdit = false;
-        else
-          this.isJailEdit = true;
+        if (to.path === '/jails') this.isJailEdit = false;
+        else this.isJailEdit = true;
       }
     },
     computed: {
@@ -95,11 +93,9 @@
         });
       }
     },
-    created(){
-      this.getJailsInformation();
-    },
     mounted(){
       this.breadCrumb(this.breadcrumb);
+      this.getJailsInformation();
     }
   }
 </script>

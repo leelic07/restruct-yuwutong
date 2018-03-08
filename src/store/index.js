@@ -25,6 +25,8 @@ import ordersManagement from './modules/orders-management'
 import logout from './modules/logout'
 import passwordModification from './modules/password-modification'
 import quillEditor from './modules/quill-editor'
+import downloadFile from './modules/download-file'
+import uploadFile from './modules/upload-file'
 import 'babel-polyfill'
 
 Vue.use(Vuex);
@@ -64,7 +66,9 @@ merge(
   ordersManagement,
   logout,
   passwordModification,
-  quillEditor
+  quillEditor,
+  downloadFile,
+  uploadFile
 );
 
 export default new Vuex.Store({

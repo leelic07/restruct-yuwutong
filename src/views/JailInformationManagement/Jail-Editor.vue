@@ -24,21 +24,21 @@
           <img :src="_$agency + jails.image_url"
                alt="">
         </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :file-list="fileList"
-            :auto-upload="false"
-            :on-change="handleChange"
-            :on-remove="handleRemove"
-            :limit="1"
-            accept="image/*"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加监狱图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
-        </el-form-item>
+        <!--<el-form-item>-->
+        <!--<el-upload-->
+        <!--class="upload-demo"-->
+        <!--action="https://jsonplaceholder.typicode.com/posts/"-->
+        <!--:file-list="fileList"-->
+        <!--:auto-upload="false"-->
+        <!--:on-change="handleChange"-->
+        <!--:on-remove="handleRemove"-->
+        <!--:limit="1"-->
+        <!--accept="image/*"-->
+        <!--list-type="picture">-->
+        <!--<el-button size="normal" type="primary" plain>添加监狱图片</el-button>-->
+        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
+        <!--</el-upload>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
         </el-form-item>
@@ -50,7 +50,6 @@
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-
   export default {
     data() {
       return {

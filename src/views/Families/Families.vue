@@ -45,7 +45,6 @@
     <pagination :total="familiesTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
     <!--家属信息弹出框-->
-    <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
     <el-dialog title="囚犯信息" :visible.sync="dialogTableVisible">
       <el-row :gutter="0">
         <el-col :span="12">
@@ -70,7 +69,7 @@
       <el-row :gutter="0">
         <el-col :span="12">
           <label for="">性别：</label>
-          <span>{{prisoner.gender | gender}}</span>
+          <span>{{prisoner.gender}}</span>
         </el-col>
       </el-row>
     </el-dialog>
@@ -158,7 +157,7 @@
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
       //获取家属注册信息列表
-      this.getFamilies(this.pagination);
+      this.getFamilies({...this.searching, ...this.pagination});
     },
     components: {
       SelectAndSearch,

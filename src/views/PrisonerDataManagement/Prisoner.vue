@@ -6,7 +6,6 @@
         <a :href="prisonerHref">罪犯信息导入模板</a>
       </el-col>
     </el-row>
-
     <el-row :gutter="0" class="title-box">
       <el-col :span="22" :offset="2">
         <p>上传模板文件：</p>
@@ -15,7 +14,6 @@
         </p>
       </el-col>
     </el-row>
-
     <el-row :gutter="0">
       <el-col :span="6" :offset="1">
         <el-upload
@@ -33,37 +31,34 @@
         </el-upload>
       </el-col>
     </el-row>
-
   </el-row>
 </template>
 
 <script>
-
   import {mapMutations, mapActions, mapGetters} from 'vuex'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '囚犯信息管理'],
         fileList: [],
-        prisonerHref: this._$agency + '/upload/prison_template.xls'
+        prisonerHref: this._$agency + '/download/downloadfile?filepath=prison_template.xls'
       }
     },
     watch: {
-      uploadTemplateResult(newValue){
+      uploadResult(newValue){
         this.importPrisoner({filepath: newValue.path});
       }
     },
     computed: {
       ...mapGetters({
         prisonerResult: 'prisonerResult',//获取罪犯模板导入结果
-        uploadTemplateResult: 'uploadTemplateResult'//获取上传罪犯模板文件的结果
+        uploadResult: 'uploadResult',//获取上传罪犯模板文件的结果
       })
     },
     methods: {
       ...mapActions({
         importPrisoner: 'importPrisoner',//罪犯数据模板上传成功后将罪犯数据模板导入到服务端
-        uploadTemplate: 'uploadTemplate'//上传罪犯数据模板文件到服务端
+        uploadFile: 'uploadFile'//上传罪犯数据模板文件到服务端
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
@@ -72,9 +67,9 @@
         this.$refs.upload.submit();
       },
       beforeUpload(file){
-        this.uploadTemplate(file);
+        this.uploadFile(file);
         return false;
-      }
+      },
     },
     mounted(){
       this.breadCrumb(this.breadcrumb)

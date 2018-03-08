@@ -20,6 +20,8 @@ import ordersManagement from './modules/orders-management'
 import login from './modules/login'
 import passwordModification from './modules/password-modification'
 import logout from './modules/logout'
+import downloadFile from './modules/download-file'
+import uploadFile from './modules/upload-file'
 
 export default Object.assign(
   registrations,
@@ -40,5 +42,7 @@ export default Object.assign(
   ordersManagement,
   login,
   passwordModification,
-  logout
+  logout,
+  downloadFile,
+  uploadFile
 )
