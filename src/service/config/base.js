@@ -9,6 +9,8 @@ export default {
   //基础url前缀
   // baseURL: 'https://www.yuwugongkai.com/',
   // baseURL: 'http://10.10.10.117:3000/',
+  // baseURL: 'http://10.10.10.122:8080/',
+  // baseURL: 'http://10.10.10.2:8081/',
   //请求发送之前对出参进行处理
   // transformRequest: [data => data],
   //请求发送之后对入参进行处理

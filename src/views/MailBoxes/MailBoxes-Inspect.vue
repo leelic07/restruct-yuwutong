@@ -11,7 +11,7 @@
           <span>{{mailDetail.name}} &nbsp;&nbsp;&nbsp; &lt;{{mailDetail.prisonerName}} 的 {{mailDetail.relationship}}&gt;</span>
         </h5>
         <h5>日期：
-          <span>{{mailDetail.created_at | Date}}</span>
+          <span>{{mailDetail.createdAt | Date}}</span>
         </h5>
       </div>
 
@@ -27,7 +27,7 @@
       <el-row :gutter="0" v-for="comments in mailDetail.comments" :key="comments.id">
         <el-col :span="24">
           <el-button type="text">监狱回复：</el-button>
-          <span>{{comments.created_at | Date}}</span>
+          <span>{{comments.createdAt | Date}}</span>
         </el-col>
         <el-col :span="24">
           <p class="contents">{{comments.contents}}</p>

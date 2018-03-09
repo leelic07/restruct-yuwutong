@@ -5,7 +5,7 @@ export default {
   //家属注册状态过滤器
   registrationsStatus(val){
     let status = '';
-    switch(val) {
+    switch (val) {
       case 'PENDING' :
         status = '未授权';
         break;

@@ -28,8 +28,10 @@
             label="发件人">
           </el-table-column>
           <el-table-column
-            prop="created_at"
             label="发送日期">
+            <template slot-scope="scope">
+              {{scope.row.createdAt | Date}}
+            </template>
           </el-table-column>
         </el-table>
       </el-col>

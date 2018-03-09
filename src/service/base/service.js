@@ -10,7 +10,7 @@ import qs from 'qs';
 
 const instance = axios.create(base);
 //代理服务器
-export let agency = '/ywt';
+export let agency = '/ywgk';
 //获取异步请求的url
 let getUrl = (url) => `${agency}${url}`;
 //处理服务端错误的方法

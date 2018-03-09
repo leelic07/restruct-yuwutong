@@ -19,7 +19,7 @@ Vue.config.productionTip = false;
 
 Vue.prototype._$baseUrl = 'https://www.yuwugongkai.com';
 
-Vue.prototype._$agency = '/ywt';
+Vue.prototype._$agency = '/ywgk';
 
 // Vue.prototype._$baseUrl = 'http://10.10.10.117:3000';
 //声明过滤器

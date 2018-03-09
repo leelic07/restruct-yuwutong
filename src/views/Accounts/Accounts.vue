@@ -24,10 +24,10 @@
               prop="crimes"
               label="罪名">
             </el-table-column>
-            <el-table-column
-              prop="prisonArea"
-              label="监区">
-            </el-table-column>
+            <!--<el-table-column-->
+              <!--prop="prisonArea"-->
+              <!--label="监区">-->
+            <!--</el-table-column>-->
             <el-table-column
               label="账号余额">
               <template slot-scope="scope">

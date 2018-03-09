@@ -18,31 +18,31 @@
               stripe
               style="width: 100%">
               <el-table-column
-                prop="terminal_number"
+                prop="terminalNumber"
                 label="终端号">
               </el-table-column>
               <el-table-column
-                prop="room_number"
+                prop="roomNumber"
                 label="会议室号">
               </el-table-column>
               <el-table-column
-                prop="host_password"
+                prop="hostPassword"
                 label="主持人密码">
               </el-table-column>
               <el-table-column
-                prop="metting_password"
+                prop="mettingPassword"
                 label="参与密码">
               </el-table-column>
               <el-table-column
                 label="创建时间">
                 <template slot-scope="scope">
-                  {{scope.row.created_at}}
+                  {{scope.row.createdAt | Date}}
                 </template>
               </el-table-column>
               <el-table-column
                 label="最后更新时间">
                 <template slot-scope="scope">
-                  {{scope.row.updated_at}}
+                  {{scope.row.updatedAt | Date}}
                 </template>
               </el-table-column>
               <el-table-column
