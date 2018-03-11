@@ -14,7 +14,6 @@
           <span>{{mailDetail.createdAt | Date}}</span>
         </h5>
       </div>
-
       <!-- /.mailbox-controls -->
       <div class="mailbox-read-message">
         <h5>信件内容：</h5>
@@ -95,7 +94,7 @@
             this.replyComment({
               'id': this.$route.params.id,
               'contents': this.comments.content,
-              'family_id': this.mailDetail.family_id,
+              'family_id': this.mailDetail.familyId,
             });
           } else {
             console.log('submit err');

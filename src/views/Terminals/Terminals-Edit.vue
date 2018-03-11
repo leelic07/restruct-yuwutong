@@ -5,16 +5,16 @@
       <el-row :gutter="0">
         <el-form :model="terminalForEdit" ref="terminal" label-position="left" label-width="90px">
           <el-form-item label="终端号">
-            <el-input v-model="terminalForEdit.terminal_number" placeholder="请填写终端号"></el-input>
+            <el-input v-model="terminalForEdit.terminalNumber" placeholder="请填写终端号"></el-input>
           </el-form-item>
           <el-form-item label="会议室号">
-            <el-input v-model="terminalForEdit.room_number" placeholder="请填写会议室号"></el-input>
+            <el-input v-model="terminalForEdit.roomNumber" placeholder="请填写会议室号"></el-input>
           </el-form-item>
           <el-form-item label="主持人密码">
-            <el-input v-model="terminalForEdit.host_password" placeholder="请填写主持人密码"></el-input>
+            <el-input v-model="terminalForEdit.hostPassword" placeholder="请填写主持人密码"></el-input>
           </el-form-item>
           <el-form-item label="参与密码">
-            <el-input v-model="terminalForEdit.metting_password" placeholder="请填写参与密码"></el-input>
+            <el-input v-model="terminalForEdit.mettingPassword" placeholder="请填写参与密码"></el-input>
           </el-form-item>
         </el-form>
       </el-row>

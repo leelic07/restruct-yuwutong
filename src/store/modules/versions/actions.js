@@ -12,9 +12,9 @@ export default {
   updateVersion({commit}, regs){
     let params = {
       id: regs.id,
-      version_code: regs.version_code,
-      version_number: regs.version_number,
-      is_force: regs.is_force
+      versionCode: regs.versionCode,
+      versionNumber: regs.versionNumber,
+      isForce: regs.isForce
     };
     //更新狱务通版本信息
     http.updateVersion(params).then(res => res.code === 200 && commit('updateVersion', res)).catch(err => err);
