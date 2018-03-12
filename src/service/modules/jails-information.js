@@ -12,6 +12,6 @@ export default {
     service.postFile(`/prisoners/upload_img`, image).then(res => res).catch(err => err),
   //编辑监狱信息
   editJails: jails =>
-    service.postFile('/jails/update', jails).then(res => res).catch(err => err)
+    service.post('/jails/update', jails).then(res => res).catch(err => err)
 }
 

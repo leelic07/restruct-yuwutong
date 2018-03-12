@@ -3,17 +3,17 @@
     <el-col :span="9" :offset="7">
       <el-row :gutter="0"><h3>添加终端信息</h3></el-row>
       <el-row :gutter="0">
-        <el-form :model="terminal" ref="terminal" label-position="left" label-width="90px">
-          <el-form-item label="终端号">
+        <el-form :model="terminal" ref="terminal" :rules="rule" label-position="left" label-width="100px">
+          <el-form-item label="终端号" prop="terminalNumber">
             <el-input v-model="terminal.terminalNumber" placeholder="请填写终端号"></el-input>
           </el-form-item>
           <el-form-item label="会议室号">
             <el-input v-model="terminal.roomNumber" placeholder="请填写会议室号"></el-input>
           </el-form-item>
-          <el-form-item label="主持人密码">
+          <el-form-item label="主持人密码" prop="hostPassword">
             <el-input v-model="terminal.hostPassword" placeholder="请填写主持人密码"></el-input>
           </el-form-item>
-          <el-form-item label="参与密码">
+          <el-form-item label="参与密码" prop="mettingPassword">
             <el-input v-model="terminal.mettingPassword" placeholder="请填写参与密码"></el-input>
           </el-form-item>
         </el-form>
@@ -39,6 +39,11 @@
           roomNumber: '',
           hostPassword: '',
           mettingPassword: ''
+        },
+        rule: {
+          terminalNumber: [{required: true, message: '请填写终端号', trigger: 'blur'}],
+          hostPassword: [{required: true, message: '请填写主持人密码', trigger: 'blur'}],
+          mettingPassword: [{required: true, message: '请填写参与密码', trigger: 'blur'}]
         }
       }
     },
@@ -64,7 +69,10 @@
       }),
       //点击更新时执行的方法
       onSubmit(){
-        this.addTerminal(this.terminal);
+        this.$refs.terminal.validate(valid => {
+          if (valid) this.addTerminal(this.terminal);
+          else return false;
+        });
       }
     },
     mounted(){

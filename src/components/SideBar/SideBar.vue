@@ -120,12 +120,12 @@
             <span>监狱基本信息管理</span>
           </router-link>
         </li>
-        <li class="treeview">
-          <router-link to="/laws">
-            <i class="iconfont icon-folder"></i>
-            <span>法律法规信息管理</span>
-          </router-link>
-        </li>
+        <!--<li class="treeview">-->
+        <!--<router-link to="/laws">-->
+        <!--<i class="iconfont icon-folder"></i>-->
+        <!--<span>法律法规信息管理</span>-->
+        <!--</router-link>-->
+        <!--</li>-->
         <li>
           <a href="#">
             <i class="iconfont icon-folder"></i>
