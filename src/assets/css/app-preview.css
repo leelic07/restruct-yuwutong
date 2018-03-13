@@ -59,6 +59,10 @@
   .app-family-preview .remind-modal {
     font-size: 10px;
   }
+
+  .col-xs-12 h3{
+    font-size: 22px;
+  }
 }
 
 @media screen and (max-width: 360px) {
@@ -67,9 +71,15 @@
     margin-bottom: 8px;
     font-size: 10px;
   }
-
+  .app-download .col-xs-12 .col-xs-6 .iconfont{
+    font-size: 10px;
+  }
   .app-family-preview .remind-modal {
     font-size: 9px;
+  }
+
+  .col-xs-12 h3{
+    font-size: 20px;
   }
 }
 
@@ -83,6 +93,12 @@
   .app-family-preview .remind-modal {
     font-size: 8px;
   }
+  .app-download .col-xs-12 .col-xs-6 .iconfont{
+    font-size: 8px;
+  }
+  .col-xs-12 h3{
+    font-size: 18px;
+  }
 }
 
 .app-download .col-xs-12 .col-xs-8 {
@@ -92,6 +108,10 @@
 .app-download .col-xs-12 .col-xs-8 .btn, .app-download .col-xs-12 .col-xs-6 .btn {
   margin-top: 10px;
   margin-bottom: 8px;
+  min-width: 50px;
+}
+.app-download .col-xs-12 .col-xs-6 img{
+  min-width: 50px;
 }
 
 .app-download .col-xs-12 .col-xs-8 img {

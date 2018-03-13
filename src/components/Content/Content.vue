@@ -54,9 +54,12 @@
       margin-left: 0
     .breadcrumb
       left: 3%
-    .content-not-login
-      margin-top: 30px
     .content
+      padding: 0;
       > div
         background: white
+    .content-not-login
+      margin-top: 30px
+      padding: 15px
+
 </style>
