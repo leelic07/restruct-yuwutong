@@ -3,7 +3,7 @@
     <el-col :span="11" :offset="6">
       <el-form ref="form" :model="news">
         <el-form-item label="新闻类型">
-          <el-select v-model="news.type_id" placeholder="请选择">
+          <el-select v-model="news.typeId" placeholder="请选择">
             <el-option
               v-for="item,key in newsType"
               :key="item"
@@ -35,7 +35,7 @@
         </el-form-item>
         <el-form-item>
           <!-- `checked` 为 true 或 false -->
-          <el-checkbox v-model="news.is_focus">是否设为焦点新闻</el-checkbox>
+          <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
@@ -48,16 +48,15 @@
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-
   export default {
     data() {
       return {
         news: {//需要添加的法律信息
-          type_id: 1,
+          typeId: 1,
           title: '',
           contents: '',
-          is_focus: false,
-          sys_flag: 1
+          isFocus: false,
+          sysFlag: 1
         },
         breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
         fileList: [],
@@ -70,22 +69,6 @@
       }
     },
     watch: {
-//      $route(to, from){
-//        switch (from.path) {
-//          case '/news-management/prison_affairs_disclosure':
-//            this.breadCrumb(['主页', '狱务公开信息管理', '狱务公开', '新闻信息管理']);
-//            break;
-//          case '/news-management/working_dynamics':
-//            this.breadCrumb(['主页', '狱务公开信息管理', '工作动态', '新闻信息管理']);
-//            break;
-//          case '/news-management/complaints_proposals':
-//            this.breadCrumb(['主页', '狱务公开信息管理', '投诉建议公示', '新闻信息管理']);
-//            break;
-//          default:
-//            this.breadCrumb([]);
-//            break;
-//        }
-//      }
       //返回添加狱务公开信息结果时跳转到狱务公开信息管理页
       addNewsResult(newValue){
         window.history.back();

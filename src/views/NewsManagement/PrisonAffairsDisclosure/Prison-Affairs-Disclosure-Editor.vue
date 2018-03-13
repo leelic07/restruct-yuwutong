@@ -9,26 +9,26 @@
           <vue-quill-editor :contents="newsForEdit.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
-          <img :src="_$agency + newsForEdit.image_url" alt="">
+          <img :src="_$agency + newsForEdit.imageUrl" alt="">
         </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            :action="_$agency"
-            :on-remove="handleRemove"
-            :on-change="handleChange"
-            :file-list="fileList"
-            :auto-upload="false"
-            :limit="1"
-            accept="image/*"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
-        </el-form-item>
+        <!--<el-form-item>-->
+        <!--<el-upload-->
+        <!--class="upload-demo"-->
+        <!--:action="_$agency"-->
+        <!--:on-remove="handleRemove"-->
+        <!--:on-change="handleChange"-->
+        <!--:file-list="fileList"-->
+        <!--:auto-upload="false"-->
+        <!--:limit="1"-->
+        <!--accept="image/*"-->
+        <!--list-type="picture">-->
+        <!--<el-button size="normal" type="primary" plain>添加图片</el-button>-->
+        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
+        <!--</el-upload>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <!-- `checked` 为 true 或 false -->
-          <el-checkbox v-model="newsForEdit.is_focus">是否设为焦点新闻</el-checkbox>
+          <el-checkbox v-model="newsForEdit.isFocus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
@@ -41,7 +41,6 @@
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-
   export default {
     data() {
       return {

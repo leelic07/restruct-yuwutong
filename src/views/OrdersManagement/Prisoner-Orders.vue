@@ -42,7 +42,7 @@
       return {
         breadcrumb: ['主页', '订单信息管理'],
         fileList: [],
-        prisonerHref: this._$agency + '/upload/order_template.xls'//下载家属订单模板的地址
+        prisonerHref: this._$agency + '/download/downloadfile?filepath=order_template.xls'//下载家属订单模板的地址
       }
     },
     watch: {
@@ -59,7 +59,7 @@
     methods: {
       ...mapActions({
         importPrisonerOrders: 'importPrisonerOrders',//家属订单模板上传成功后将家属订单模板导入到服务端
-        uploadTemplate: 'uploadTemplate'//上传模板文件的方法
+        uploadFile: 'uploadFile'//上传罪犯订单模板文件
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb'
@@ -70,7 +70,7 @@
       },
       //上传订单模板文件
       beforeUpload(file){
-        this.uploadTemplate(file);
+        this.uploadFile(file);
       }
     },
     mounted(){

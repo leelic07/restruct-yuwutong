@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/1/24/024.
  */
 import * as service from '../base/service'
+import qs from 'qs'
 
 export default {
   //获取用户登录时的token
@@ -12,5 +13,5 @@ export default {
   //   service.get(`/users`).then(res => res).catch(err => err)
   //用户登录
   login: userInfo =>
-    service.post('/users/login', userInfo).then(res => res).catch(err => err)
+    service.post('/users/login', qs.stringify(userInfo)).then(res => res).catch(err => err)
 }

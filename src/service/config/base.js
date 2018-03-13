@@ -21,7 +21,7 @@ export default {
   headers: {
     //   'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded',
-    //   'Content-Type': 'application/json'
+    // 'Content-Type': 'application/json'
   },
   //post 请求参数
   // data: {},

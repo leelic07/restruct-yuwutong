@@ -7,7 +7,6 @@ import store from '@/store';
 import router from '@/router';
 import {Message} from 'element-ui';
 import qs from 'qs';
-
 const instance = axios.create(base);
 //代理服务器
 export let agency = '/ywgk';
@@ -113,7 +112,8 @@ export let get = (url, params = {}) =>
  * @returns {Promise}
  */
 export let post = (url, data = {}, config = {}) =>
-  instance.post(getUrl(url), qs.stringify(data), config).then(res => res.data).catch(err => err);
+  instance.post(getUrl(url), data, config).then(res => res.data).catch(err => err);
+// instance.post(getUrl(url), qs.stringify(data), config).then(res => res.data).catch(err => err);
 // instance.post(url, qs.stringify(data), config).then(res => res.data).catch(err => err);
 /**
  * 封装post文件请求
