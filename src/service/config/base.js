@@ -10,7 +10,7 @@ export default {
   // baseURL: 'https://www.yuwugongkai.com/',
   // baseURL: 'http://10.10.10.117:3000/',
   // baseURL: 'http://10.10.10.122:8080/',
-  // baseURL: 'http://10.10.10.2:8081/',
+  baseURL: 'http://10.10.10.2:8081/',
   //请求发送之前对出参进行处理
   // transformRequest: [data => data],
   //请求发送之后对入参进行处理
@@ -30,7 +30,7 @@ export default {
   //请求数据返回类型
   responseType: 'json',
   //设置跨域请求的令牌
-  // withCredentials: true,
+  withCredentials: true,
   // 'proxy' 定义代理服务器的主机名称和端口
   // `auth` 表示 HTTP 基础验证应当用于连接代理，并提供凭据
   // 这将会设置一个 `Proxy-Authorization` 头，覆写掉已有的通过使用 `header` 设置的自定义 `Proxy-Authorization` 头。
