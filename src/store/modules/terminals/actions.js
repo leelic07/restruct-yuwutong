@@ -22,10 +22,10 @@ export default {
   //编辑终端信息
   editTerminal({commit}, regs){
     let terminal = {
-      terminalNumber: regs.terminal_number,
-      roomNumber: regs.room_number,
-      hostPassword: regs.host_password,
-      mettingPassword: regs.metting_password,
+      terminalNumber: regs.terminalNumber,
+      roomNumber: regs.roomNumber,
+      hostPassword: regs.hostNassword,
+      mettingPassword: regs.mettingNassword,
       id: regs.id
     };
     http.editTerminal(terminal).then(res => res.code === 200 && commit('editTerminal', res)).catch(err => console.log(err))

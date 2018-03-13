@@ -1,6 +1,6 @@
 <template>
   <el-row id="jail-editor" :gutter="0">
-    <el-col :span="11" :offset="6">
+    <el-col :span="13" :offset="5">
       <el-form ref="form" :model="jails">
         <el-form-item label="监狱名称">
           <el-input v-model="jails.title" placeholder="请填写监狱名称"></el-input>

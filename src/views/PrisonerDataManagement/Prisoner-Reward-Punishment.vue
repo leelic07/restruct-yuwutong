@@ -41,7 +41,7 @@
     data() {
       return {
         breadcrumb: ['主页', '罪犯奖惩信息管理'],
-        prisonerRewardHref: this._$agency + '/upload/prisoner_reward_punishment_template.xls',
+        prisonerRewardHref: this._$agency + '/download/downloadfile?filepath=prisoner_reward_punishment_template.xls',
         fileList: []
       }
     },
