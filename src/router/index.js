@@ -18,6 +18,7 @@ import PrisonerOrders from './modules/order-management'
 import JailInformationManagement from './modules/jail-information'
 import LawInformationManagement from './modules/laws-information'
 import PrisonAffairsDisclosure from './modules/news-management'
+import AppPreview from './modules/app-preview'
 
 Vue.use(Router);
 
@@ -41,6 +42,7 @@ export default new Router({
     ...JailInformationManagement,
     ...LawInformationManagement,
     ...PrisonAffairsDisclosure,
+    ...AppPreview,
     {
       path: '/',
       redirect: '/login'
