@@ -20,7 +20,7 @@
       </div>
     </div>
     <!--请在浏览器中打开提示模态框-->
-    <div class="remind-modal">
+    <div class="remind-modal" v-if="isMobile">
       <div class="modal-content">
         <p class="text-center">请点击右上角选择“浏览器中打开”</p>
         <i class="pull-right iconfont icon-aaa"></i>
@@ -32,7 +32,9 @@
 <script>
   export default {
     data() {
-      return {}
+      return {
+        isMobile: false
+      }
     },
     methods: {
       init(){
@@ -57,13 +59,13 @@
 
         if (browser.versions.mobile) {
           let ua = navigator.userAgent.toLowerCase();
-          if (ua.match(/MicroMessenger/i) === "micromessenger") {
-            this.$el.querySelector('.remind-modal').style.display = 'block';
+          if (ua.match(/MicroMessenger/i)[0] === "micromessenger") {
+            this.isMobile = true;
           } else {
-            this.$el.querySelector('.remind-modal').style.display = 'none';
+            this.isMobile = false;
           }
         } else {
-          this.$el.querySelector('.remind-modal').style.display = 'block';
+          this.isMobile = false;
         }
       }
     },

@@ -4,7 +4,7 @@
       <div class="col-xs-3">
         <img class="bg-primary pull-left phone-img" src="../../assets/images/phone.png" alt="">
       </div>
-      <div class="col-xs-9">
+      <div class="col-xs-9" style="margin-bottom: 15px;">
         <div class="col-xs-12">
           <h3 class="app-title">狱务通</h3>
         </div>
@@ -27,7 +27,7 @@
       </div>
     </div>
     <!--请在浏览器中打开提示模态框-->
-    <div class="remind-modal">
+    <div class="remind-modal" v-if="isMobile">
       <div class="modal-content">
         <p class="pull-left text-center">请点击右上角选择“浏览器中打开”</p>
         <i class="pull-right iconfont icon-aaa"></i>
@@ -35,11 +35,12 @@
     </div>
   </section>
 </template>
-
 <script>
   export default {
     data() {
-      return {}
+      return {
+        isMobile: false
+      }
     },
     methods: {
       init(){
@@ -64,13 +65,13 @@
 
         if (browser.versions.mobile) {
           let ua = navigator.userAgent.toLowerCase();
-          if (ua.match(/MicroMessenger/i) === "micromessenger") {
-            this.$el.querySelector('.remind-modal').style.display = 'block';
+          if (ua.match(/MicroMessenger/i)[0] === "micromessenger") {
+            this.isMobile = true;
           } else {
-            this.$el.querySelector('.remind-modal').style.display = 'none';
+            this.isMobile = false;
           }
         } else {
-          this.$el.querySelector('.remind-modal').style.display = 'block';
+          this.isMobile = false;
         }
       }
     },
@@ -80,6 +81,6 @@
   }
 </script>
 
-<style type="text/css" lang="css" scoped>
-  @import '../../assets/css/app-preview.css';
+<style type="text/stylus" lang="stylus" scoped>
+@import '../../assets/css/app-preview.css';
 </style>
