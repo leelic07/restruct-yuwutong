@@ -5,7 +5,7 @@ export default {
   //家属注册状态过滤器
   gender(val){
     let gender = '';
-    switch(val) {
+    switch (val) {
       case 'm' :
         gender = '男';
         break;
@@ -13,7 +13,7 @@ export default {
         gender = '女';
         break;
       default :
-        gender = ''
+        gender = val
     }
     return gender;
   }
