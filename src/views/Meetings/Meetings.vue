@@ -26,14 +26,14 @@
             </el-table-column>
             <el-table-column
               label="申请时间">
-              <template slot-scope="socpe">
+              <template slot-scope="scope">
                 {{scope.row.applicationDate | Date}}
               </template>
             </el-table-column>
             <el-table-column
               label="预约时间">
               <template slot-scope="scope">
-                {{scope.row.mettingTime | Date}}
+                {{scope.row.meetingTime | Date}}
               </template>
             </el-table-column>
             <el-table-column
