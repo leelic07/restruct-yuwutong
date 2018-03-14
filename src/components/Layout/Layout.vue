@@ -21,17 +21,19 @@
   const loginUrl = "/login";//登录路由地址
   const familyDownload = '/app_preview/family_download';//家属app路由
   const prisonDownload = '/app_preview/prison_download';//监狱app路由
+  const newDownload = '/app_preview/new';//监狱app路由
   export default {
     name: 'layout',
     data() {
       return {
-        isNotLogin: true
+        isNotLogin: false
       }
     },
     watch: {
       $route(to){//监听路由变化
         window.scrollTo(0, 0);//每次路由变化页面回到最顶部
-        if (to.path === loginUrl || to.path === familyDownload || to.path === prisonDownload) //进入登陆页面
+        console.log(to.path);
+        if (to.path === loginUrl || to.path === familyDownload || to.path === prisonDownload || to.path === newDownload) //进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
         else
           this.isNotLogin = true;

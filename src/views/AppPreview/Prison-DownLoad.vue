@@ -1,34 +1,35 @@
 <template>
-  <section class="app-family-preview bg-primary">
-    <div class="app-download row">
-      <div class="col-xs-3">
-        <img class="bg-primary pull-left scanner-img" src="../../assets/images/scanner.png" alt="">
-      </div>
-      <div class="col-xs-9">
-        <div class="col-xs-12">
-          <h3 class="text-center">狱务通(监狱端)</h3>
+  <main>
+    <section class="blue-block">
+      <div class="blue-container">
+        <div class="img-box">
+          <img class="img-prison" src="../../assets/images/scanner.png" alt="">
         </div>
-        <div class="col-xs-12">
-          <div class="col-xs-8 col-xs-offset-2">
-            <a href="https://www.yuwugongkai.com/app/yuwutong_p.apk?from=wechat"
-               class="btn btn-block btn-sm btn-success hidden-xs"><i class="iconfont icon-android "></i>Android下载</a>
-            <a href="https://www.yuwugongkai.com/app/yuwutong_p.apk?from=wechat"
-               class="btn btn-block btn-xs btn-success visible-xs"><i class="iconfont icon-android "></i>Android</a>
-            <img class="img-thumbnail" src="../../assets/images/yuwutong_p.png" alt="">
+        <div class="download-box">
+          <h3 style="text-align: center;">狱务通(监狱端)</h3>
+          <div class="download prison">
+            <div class="android">
+              <a href="https://www.yuwugongkai.com/app/yuwutong_p.apk?from=wechat">
+                <el-button><i class="iconfont icon-android"></i>Android下载</el-button>
+              </a>
+              <img src="../../assets/images/yuwutong_f.png" alt="">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!--请在浏览器中打开提示模态框-->
-    <div class="remind-modal" v-if="isMobile">
-      <div class="modal-content">
-        <p class="text-center">请点击右上角选择“浏览器中打开”</p>
-        <i class="pull-right iconfont icon-aaa"></i>
+      <div class="tips" v-if="isMobile">
+        <p>请点击右上角选择“浏览器中打开”</p>
+        <i class="iconfont icon-aaa"></i>
       </div>
-    </div>
-  </section>
+    </section>
+    <footer class="main-footer">
+      <p><strong>Copyright © 2014-2018 <a href="http://www.sinog2c.com">国科政信科技(北京)股份有限公司</a></strong> 版权所有.</p>
+      <div>
+        <b>版本</b> 1.0.0
+      </div>
+    </footer>
+  </main>
 </template>
-
 <script>
   export default {
     data() {
@@ -75,6 +76,13 @@
   }
 </script>
 
-<style type="text/css" lang="css">
-  @import '../../assets/css/app-preview.css';
+<style type="text/stylus" lang="stylus" scoped>
+@import '../../assets/css/new.css';
+.blue-block
+  background: #337AB7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  position: relative;
 </style>
