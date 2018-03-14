@@ -21,7 +21,7 @@
 
           <el-form-item label-width="0" class="btn-box">
             <!-- `checked` 为 true 或 false -->
-            <el-checkbox v-model="ruleForm2.checked">记住密码</el-checkbox>
+            <!--<el-checkbox v-model="ruleForm2.checked">记住密码</el-checkbox>-->
             <el-button type="" @click="submitForm('ruleForm2')">提交</el-button>
           </el-form-item>
         </el-form>

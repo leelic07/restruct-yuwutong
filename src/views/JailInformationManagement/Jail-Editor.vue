@@ -21,24 +21,24 @@
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <img :src="_$agency + jails.image_url"
-               alt="">
+          <!--<img :src="_$agency + jails.image_url" alt="">-->
+          <img src="../../assets/images/default.jpg" alt="">
         </el-form-item>
-        <!--<el-form-item>-->
-        <!--<el-upload-->
-        <!--class="upload-demo"-->
-        <!--action="https://jsonplaceholder.typicode.com/posts/"-->
-        <!--:file-list="fileList"-->
-        <!--:auto-upload="false"-->
-        <!--:on-change="handleChange"-->
-        <!--:on-remove="handleRemove"-->
-        <!--:limit="1"-->
-        <!--accept="image/*"-->
-        <!--list-type="picture">-->
-        <!--<el-button size="normal" type="primary" plain>添加监狱图片</el-button>-->
-        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
-        <!--</el-upload>-->
-        <!--</el-form-item>-->
+        <el-form-item>
+          <el-upload
+            class="upload-demo"
+            :action="_$agency"
+            :file-list="fileList"
+            :auto-upload="false"
+            :on-change="handleChange"
+            :on-remove="handleRemove"
+            :limit="1"
+            accept="image/*"
+            list-type="picture">
+            <el-button size="normal" type="primary" plain>添加监狱图片</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+          </el-upload>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
         </el-form-item>

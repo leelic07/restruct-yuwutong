@@ -3,51 +3,48 @@
     <!--表格头部信息-->
     <el-row :gutter="0" class="title-box">
       <el-col :span="7">
-        <h4>订单号：{{orderDetail.trade_no}}</h4>
+        <h4>订单号：{{orderDetailInfo.tradeNo}}</h4>
       </el-col>
-      <el-col :span="2">
-        <h4>{{orderDetail.prisoner_name}}</h4>
+      <el-col :span="3" :offset="1">
+        <h4>罪犯名字：{{orderDetailInfo.name}}</h4>
       </el-col>
-      <el-col :span="2">
-        <h4>{{orderDetail.jail_id}}</h4>
+      <el-col :span="3" :offset="1">
+        <h4>监狱名字：{{orderDetailInfo.title}}</h4>
       </el-col>
-      <el-col :span="13">
-        <p>{{orderDetail.gmt_payment}}</p>
+      <el-col :span="9">
+        <p>支付时间：{{orderDetailInfo.gmtPayment | Date}}</p>
       </el-col>
     </el-row>
-
     <!--表格部分-->
     <el-row :gutter="0" class="table-box">
       <el-table
-        :data="orderDetail.goods"
+        :data="orderDetailList"
         stripe
         border
         style="width: 100%">
         <el-table-column
-          prop="goodsName"
+          prop="title"
           label="商品名称">
         </el-table-column>
         <el-table-column
-          prop="goodsPrice"
+          prop="price"
           label="商品单价">
         </el-table-column>
         <el-table-column
-          prop="goodsCounts"
+          prop="quantity"
           label="商品数量">
         </el-table-column>
       </el-table>
     </el-row>
-
     <!--总计部分-->
     <el-row :gutter="0" class="total-box">
-      <h3>总计：{{orderDetail.amount}}</h3>
+      <h3>总计：{{orderDetailInfo.amount}}</h3>
     </el-row>
   </el-row>
 </template>
 
 <script>
-  import {mapMutations, mapGetters} from 'vuex'
-
+  import {mapActions, mapMutations, mapGetters} from 'vuex'
   export default {
     data() {
       return {
@@ -56,13 +53,17 @@
     },
     computed: {
       ...mapGetters({
-        orderDetail: 'orderDetail'//获取订单的详情信息
+        orderDetailList: 'orderDetailList',//获取订单的详情信息
+        orderDetailTotal: 'orderDetailTotal',//获取商品订单详情总计
+        orderDetailInfo: 'orderDetailInfo'//获取商品详情信息
       })
     },
     methods: {
+      ...mapActions({
+        getOrderById: 'getOrderById'//根据id过去家属订单详情信息
+      }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',
-        getOrderById:'getOrderById'//根据id过去家属订单详情信息
       })
     },
     mounted(){
@@ -85,7 +86,7 @@
             font-size: 15px
             float: right
             margin-right: 1%
-            margin-top:10px
+            margin-top: 10px
     .total-box
       margin-top: 10px
       h3

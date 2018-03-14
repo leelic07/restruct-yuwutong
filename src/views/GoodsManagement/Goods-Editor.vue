@@ -1,7 +1,7 @@
 <template>
   <el-row id="goods-editor">
-    <el-col :span="10" :offset="7">
-      <el-form ref="form" :model="goodsForEdit" :rules="rule" label-width="80px">
+    <el-col :span="10" :offset="6">
+      <el-form ref="form" :model="goodsForEdit" :rules="rule" label-width="110px">
         <el-form-item label="商品条码">
           <el-input v-model="goodsForEdit.barcode"></el-input>
         </el-form-item>
@@ -21,14 +21,13 @@
           <el-upload
             class="upload-demo"
             ref="upload"
-            :action="_$agency + '/items/' + $route.params.id"
+            :action="_$agency + '/items/image'"
             name="avatar"
             :file-list="fileList"
             :on-change="handleChange"
             :on-remove="handleRemove"
             :auto-upload="false"
             :limit="1"
-            :with-credentials="true"
             accept="image/*"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加商品图片</el-button>
@@ -103,17 +102,16 @@
       //点击更新按钮执行的方法
       onSubmit(){
         this.$refs.form.validate(valid => {
-          if (valid) this.editGoods({...this.goodsForEdit, avatar: this.image, id: this.$route.params.id});
+          if (valid) this.editGoods({...this.goodsForEdit, id: this.$route.params.id});
           else return false;
         });
-
       },
       //选择上传文件时的方法
       handleChange(file){
-        this.image = file;
+        this.goodsForEdit.image = file;
       },
       handleRemove(){
-        this.image = '';
+        this.goodsForEdit.image = '';
       }
     },
     mounted(){

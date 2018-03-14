@@ -22,12 +22,12 @@
 
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
-
   export default {
     props: {
       contents: {
         type: String,
-        required: true
+        required: true,
+        default: ''
       }//初始化富文本的内容
     },
     data() {

@@ -1,7 +1,7 @@
 <template>
   <el-row id="goods-new">
-    <el-col :span="10" :offset="7">
-      <el-form ref="form-new" :model="goods" :rules="rule" label-width="80px">
+    <el-col :span="10" :offset="6">
+      <el-form ref="form-new" :model="goods" :rules="rule" label-width="110px">
         <el-form-item label="商品条码">
           <el-input v-model="goods.barcode"></el-input>
         </el-form-item>
@@ -17,29 +17,29 @@
         <el-form-item label="单价" prop="price">
           <el-input v-model="goods.price"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            ref="upload"
-            :action="_$agency + '/items/' + $route.params.id"
-            name="avatar"
-            :file-list="fileList"
-            :on-change="handleChange"
-            :on-remove="handleRemove"
-            :auto-upload="false"
-            :limit="1"
-            :with-credentials="true"
-            accept="image/*"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加商品图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
-        </el-form-item>
+        <!--<el-form-item>-->
+        <!--<el-upload-->
+        <!--class="upload-demo"-->
+        <!--ref="upload"-->
+        <!--:action="_$agency + '/items/' + $route.params.id"-->
+        <!--name="avatar"-->
+        <!--:file-list="fileList"-->
+        <!--:on-change="handleChange"-->
+        <!--:on-remove="handleRemove"-->
+        <!--:auto-upload="false"-->
+        <!--:limit="1"-->
+        <!--:with-credentials="true"-->
+        <!--accept="image/*"-->
+        <!--list-type="picture">-->
+        <!--<el-button size="normal" type="primary" plain>添加商品图片</el-button>-->
+        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
+        <!--</el-upload>-->
+        <!--</el-form-item>-->
         <el-form-item label="生产厂家">
           <el-input v-model="goods.factory"></el-input>
         </el-form-item>
         <el-form-item label="请选择商品部类">
-          <el-select v-model="goods.category_id" placeholder="请选择">
+          <el-select v-model="goods.categoryId" placeholder="请选择">
             <el-option
               v-for="item,key in options"
               :key="item"
@@ -78,9 +78,9 @@
           unit: '',
           price: '',
           factory: '',
-          category_id: '',
+          categoryId: '',
           image: '',
-          sys_flag: 1,
+          sysFlag: 1,
           ranking: 0
         },
         rule: {

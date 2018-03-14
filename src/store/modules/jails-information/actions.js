@@ -9,26 +9,26 @@ export default {
     http.getJailsInformation().then(res => commit('getJailsInformation', res)).catch(err => console.log(err)),
   //编辑监狱信息
   editJails({commit}, regs){
-    // let formData = new FormData();
-    // regs.image && formData.append('image', regs.image.raw);
-    // formData.append('title', regs.title);
-    // formData.append('description', regs.description);
-    // formData.append('street', regs.street);
-    // formData.append('district', regs.district);
-    // formData.append('city', regs.city);
-    // formData.append('state', regs.state);
-    // formData.append('zipcode', regs.zipcode);
-    // formData.append('jailId', sessionStorage['jail_id']);
-    let data = {
-      title: regs.title,
-      description: regs.description,
-      street: regs.street,
-      district: regs.district,
-      city: regs.city,
-      state: regs.state,
-      zipcode: regs.zipcode,
-      id: sessionStorage['jail_id']
-    };
-    http.editJails(data).then(res => res.code === 200 && commit('editJails', res)).catch(err => err);
+    let formData = new FormData();
+    regs.image && formData.append('image', regs.image.raw);
+    formData.append('title', regs.title);
+    formData.append('description', regs.description);
+    formData.append('street', regs.street);
+    formData.append('district', regs.district);
+    formData.append('city', regs.city);
+    formData.append('state', regs.state);
+    formData.append('zipcode', regs.zipcode);
+    formData.append('id', regs.id);
+    // let data = {
+    //   title: regs.title,
+    //   description: regs.description,
+    //   street: regs.street,
+    //   district: regs.district,
+    //   city: regs.city,
+    //   state: regs.state,
+    //   zipcode: regs.zipcode,
+    //   id: sessionStorage['jail_id']
+    // };
+    http.editJails(formData).then(res => res.code === 200 && commit('editJails', res)).catch(err => err);
   }
 }

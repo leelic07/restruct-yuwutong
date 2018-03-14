@@ -7,12 +7,12 @@
         <el-button size="small" type="primary" plain @click="newPrisonAffairsDisclosure()">添加狱务公开信息</el-button>
       </el-col>
       <!--选择显示页数和搜索框内容组件-->
-      <select-and-search @sizeChange="sizeChange" @search="search"
+      <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
                          @searchingChange="searchingChange"></select-and-search>
       <!--标签页表格-->
       <el-col :span="24">
         <el-table
-          :data="workingDynamics"
+          :data="news"
           border
           stripe
           style="width: 100%">
@@ -23,13 +23,14 @@
           <el-table-column
             label="新闻图片">
             <template slot-scope="scope">
-              <img :src="_$agency + scope.row.image_url" alt="">
+              <!--<img :src="_$agency + scope.row.imageUrl" alt="">-->
+              <img src="../../../assets/images/default.jpg" alt="">
             </template>
           </el-table-column>
           <el-table-column
             label="焦点">
             <template slot-scope="scope">
-              {{scope.row.is_focus?'是':'否'}}
+              {{scope.row.isFocus?'是':'否'}}
             </template>
           </el-table-column>
           <el-table-column
@@ -52,7 +53,7 @@
         </el-table>
       </el-col>
       <!--分页组件-->
-      <pagination :total="workingDynamicsTotal" :pageSize="pagination.limit" :currentPage="pagination.page + 1"
+      <pagination :total="newsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
     <!--子路由-->
@@ -64,18 +65,18 @@
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
   import Pagination from '@/components/Pagination/Pagination'
-
   export default {
     data() {
       return {
         breadcrumb: ['主页', '狱务公开信息管理', '工作动态'],//面包屑数组
         pagination: {
-          limit: 10,//每页显示记录条数
-          page: 0//当前显示第几页
+          rows: 10,//每页显示记录条数
+          page: 1//当前显示第几页
         },
+        c: 'prisonAffairsDisclosure',
         searching: {
-          c: 'workingDynamics',//搜索的模块类型
-          value: ''//搜索的条件
+          title: '',//新闻标题
+          type: 2//狱务公开新闻类型
         },
         isWorkingDynamics: false,//是否是商品信息列表页面
         goodsDescription: ''//商品简介信息
@@ -95,8 +96,10 @@
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-        workingDynamics: 'workingDynamics',//获取狱务公开信息
-        workingDynamicsTotal: 'workingDynamicsTotal',//获取狱务公开记录条数
+//        workingDynamics: 'workingDynamics',//获取狱务公开信息
+//        workingDynamicsTotal: 'workingDynamicsTotal',//获取狱务公开记录条数
+        news: 'news',//狱务公开信息列表
+        newsTotal: 'newsTotal',//狱务公开信息记录数
         deleteNewsResult: 'deleteNewsResult'//获取删除狱务公开信息的结果
       })
     },
@@ -112,24 +115,25 @@
         deleteNewsById: 'deleteNewsById'//根据id删除狱务公开信息
       }),
       //每页条数发生变化时执行的方法
-      sizeChange(limit){
-        this.pagination.page = 0;
-        this.pagination.limit = limit;
+      sizeChange(rows){
+        this.pagination.page = 1;
+        this.pagination.rows = rows;
         this.change();
       },
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.pagination.page = page - 1;
+        this.pagination.page = page;
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
       change(){
-        this.searchPrisonAffairsDisclosure(Object.assign(this.searching, this.pagination));
+        this.getNews({...this.searching, ...this.pagination});
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 0;
-        this.searchPrisonAffairsDisclosure(Object.assign(this.searching, this.pagination, {value: searching}));
+        this.pagination.page = 1;
+        this.searching = searching;
+        this.getNews({...this.searching, ...this.pagination});
       },
       //监听搜索框的内容变化
       searchingChange(searching){
@@ -142,11 +146,8 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.deleteNewsById({
-            id: id,
-            c: this.searching.c
-          });
-        })
+          this.deleteNewsById(id);
+        }).catch(err => console.log(err));
       },
       //点击编辑时执行的方法
       handleEdit(id){
@@ -164,8 +165,7 @@
     mounted(){
       //将面包屑数组传递给Content组件
       this.breadCrumb(this.breadcrumb);
-
-      this.getNews();
+      this.getNews({...this.searching, ...this.pagination});
     },
     components: {
       SelectAndSearch,

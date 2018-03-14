@@ -68,8 +68,9 @@
         width="30%"
         :visible.sync="innerVisible"
         append-to-body>
-        <img style="max-width:100%" :src="_$baseUrl + imgSrc" alt="">
+        <!--<img style="max-width:100%" :src="_$baseUrl + imgSrc" alt="">-->
         <!--<img style="max-width:100%" :src="_$agency + imgSrc" alt="">-->
+        <img src="../../assets/images/default.jpg" alt="">
       </el-dialog>
       <el-row :gutter="0" v-show="authRegistrationsResult.code">
         <el-col :span="24">
@@ -92,8 +93,9 @@
       <el-row :gutter="0">
         <el-col :span="24">
           <el-col v-for="imgSrc,$index in uuidImages" :span="6" :offset="$index == 0?2:1" :key="$index">
-            <img :src='_$baseUrl + imgSrc' alt="" @click="amplifyImage(imgSrc)">
+            <!--<img :src='_$baseUrl + imgSrc' alt="" @click="amplifyImage(imgSrc)">-->
             <!--<img :src='_$agency + imgSrc' alt="" @click="amplifyImage(imgSrc)">-->
+            <img src="../../assets/images/default.jpg" alt="" @click="amplifyImage(imgSrc)">
           </el-col>
         </el-col>
       </el-row>
@@ -211,7 +213,7 @@
         this.authorizeId = id;
         this.agreeText = '同意';
         this.disagreeText = '不同意';
-        this.getUuidImage(id);
+//        this.getUuidImage(id);
         this.setAuthRegistrationsResult({});//重置家属注册授权结果
       },
       //点击同意或者确定申请通过执行的方法

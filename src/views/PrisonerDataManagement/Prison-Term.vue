@@ -48,6 +48,9 @@
     watch: {
       uploadResult(newValue){
         this.importPrisonTerm({filepath: newValue.path});//罪犯刑期模板上传成功后将罪犯刑期数据给服务端解析
+      },
+      prisonTermResult(newValue){
+        this.alertInformation(newValue);
       }
     },
     computed: {
@@ -72,6 +75,18 @@
       //点击上传到服务器执行的方法
       submitUpload(){
         this.$refs.upload.submit();
+      },
+      //解析文件成功后执行的方法
+      alertInformation(information){
+        this.$notify({
+          title: '解析结果提示',
+          dangerouslyUseHTMLString: true,
+          message: `<p>新增：${information.add_total}</p>
+                    <p>成功：${information.success_total}</p>
+                    <p>修改：${information.update_total}</p>`,
+          duration: 5000,
+          offset: 100
+        });
       }
     },
     mounted(){

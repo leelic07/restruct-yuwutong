@@ -60,6 +60,12 @@
           </router-link>
         </li>
         <li class="treeview">
+          <router-link to="/versions">
+            <i class="iconfont icon-folder"></i>
+            <span>版本管理</span>
+          </router-link>
+        </li>
+        <li class="treeview">
           <a href="#">
             <i class="iconfont icon-folder"></i>
             <span>数据管理</span>

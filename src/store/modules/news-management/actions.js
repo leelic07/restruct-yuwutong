@@ -13,12 +13,12 @@ export default {
     regs.image && formData.append('image', regs.image.raw);
     formData.append('id', regs.id);
     formData.append('title', regs.title);
-    formData.append('type_id', regs.type_id);
+    formData.append('typeId', regs.typeId);
     formData.append('contents', regs.contents);
-    formData.append('is_focus', regs.is_focus);
-    formData.append('sys_flag', regs.sys_flag);
+    formData.append('isFocus', regs.isFocus);
+    formData.append('sysFlag', regs.sysFlag);
     http.editNews(formData).then(res => res.code === 200 &&
-    http.getNews().then(response => {
+    http.getNews({type: regs.typeId}).then(response => {
       commit('getNews', response);
       commit('editNews', res);
     }).catch(err => console.log(err))).catch(err => console.log(err));
@@ -28,23 +28,21 @@ export default {
     let formData = new FormData();
     regs.image && formData.append('image', regs.image.raw);
     formData.append('title', regs.title);
-    formData.append('type_id', regs.type_id);
+    formData.append('typeId', regs.typeId);
     formData.append('contents', regs.contents);
-    formData.append('is_focus', regs.is_focus);
-    formData.append('sys_flag', regs.sys_flag);
+    formData.append('isFocus', regs.isFocus);
+    formData.append('sysFlag', regs.sysFlag);
     http.addNews(formData).then(res => res.code === 200 &&
-    http.getNews().then(response => {
+    http.getNews({type: regs.typeId}).then(response => {
       commit('getNews', response);
       commit('addNews', res);
     }).catch(err => console.log(err))).catch(err => console.log(err));
   },
   //根据id删除狱务公开信息
   deleteNewsById({commit}, regs){
-    let id = regs.id;
-    let c = regs.c;
-    http.deleteNewsById(id).then(res => commit('deleteNewsById', Object.assign(res, {
-      'id': id,
-      'c': c
-    }))).catch(err => console.log(err));
+    http.deleteNewsById({id: regs}).then(res => commit('deleteNewsById', {
+      ...res,
+      'id': regs
+    })).catch(err => console.log(err));
   }
 }
