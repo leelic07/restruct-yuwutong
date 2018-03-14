@@ -25,7 +25,7 @@
     name: 'layout',
     data() {
       return {
-        isNotLogin: false
+        isNotLogin: true
       }
     },
     watch: {
