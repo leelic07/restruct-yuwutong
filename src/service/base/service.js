@@ -9,7 +9,8 @@ import {Message} from 'element-ui';
 import qs from 'qs';
 const instance = axios.create(base);
 //代理服务器
-export let agency = '/ywgk';
+export let agency = '';
+// export let agency = '/ywgk';
 //获取异步请求的url
 let getUrl = (url) => `${agency}${url}`;
 //处理服务端错误的方法
@@ -65,8 +66,7 @@ let handleSuccess = (res) => {
 //http request 拦截器
 instance.interceptors.request.use(
   config => {
-    if (sessionStorage['token'])
-      config.headers.common['Authorization'] = sessionStorage['token'];//每次发送请求是给请求头加上token
+    sessionStorage['token'] && (config.headers.common['Authorization'] = sessionStorage['token']);//每次发送请求是给请求头加上token
     // else if (config.url.substring(0, config.url.lastIndexOf('?')) !== `${agency}/authentication`) {//没有token提示‘先登录’再跳转到登录页面
     //   Message({type: 'warning', message: '当前用户无权限，请先登录！'});
     //   router.push({
