@@ -22,6 +22,8 @@ Vue.config.productionTip = false;
 
 Vue.prototype._$agency = 'http://10.10.10.2:8081/ywgk';
 
+// Vue.prototype._$agency = '/ywgk';
+
 //声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
 

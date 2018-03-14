@@ -24,10 +24,14 @@ export default {
     let terminal = {
       terminalNumber: regs.terminalNumber,
       roomNumber: regs.roomNumber,
-      hostPassword: regs.hostNassword,
-      mettingPassword: regs.mettingNassword,
+      hostPassword: regs.hostPassword,
+      mettingPassword: regs.mettingPassword,
       id: regs.id
     };
-    http.editTerminal(terminal).then(res => res.code === 200 && commit('editTerminal', res)).catch(err => console.log(err))
+    http.editTerminal(terminal).then(res => res.code === 200 &&
+    http.getTerminals().then(response => {
+      commit('getTerminals', response);
+      commit('editTerminal', res);
+    }).catch(err => console.log(err))).catch(err => console.log(err))
   }
 }

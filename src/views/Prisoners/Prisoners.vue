@@ -48,7 +48,6 @@
     <pagination :total="prisonersTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                 @currentChange="currentChange"></pagination>
     <!--家属信息弹出框-->
-    <!--<el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>-->
     <el-dialog title="家属信息" :visible.sync="dialogTableVisible">
       <el-row :gutter="0">
         <el-col :span="12">
@@ -72,8 +71,8 @@
         <el-col :span="12">
           <el-col :span="12">
             <span>照片：</span>
-            <!--<img :src="_$agency + family.imageUrl" alt="">-->
-            <img :src="_$baseUrl + family.imageUrl" alt="">
+            <img :src="_$agency + family.imageUrl" alt="">
+            <!--<img :src="_$baseUrl + family.imageUrl" alt="">-->
           </el-col>
         </el-col>
       </el-row>

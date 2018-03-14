@@ -30,29 +30,28 @@ export default {
       commit('getGoods', response);
       commit('addGoods', res);
     }).catch(err => console.log(err))).catch(err => console.log(err));
-  }
-  ,
+  },
   //编辑商品
   editGoods({commit}, regs){
-    // let id = regs.id;
-    // delete regs.id;
-    // let formData = new FormData();
-    // regs.avatar.raw && formData.append('avatar', regs.avatar.raw);
-    // formData.append('barcode', regs.barcode);
-    // formData.append('title', regs.title);
-    // formData.append('description', regs.description);
-    // formData.append('unit', regs.unit);
-    // formData.append('price', regs.price);
-    // formData.append('factory', regs.factory);
-    // formData.append('category_id', regs.category_id);
-    // formData.append('ranking', regs.ranking);
-    // formData.append('sys_flag', regs.sys_flag);
-    http.editGoods(regs).then(res => res.code === 200 && http.getGoods().then(response => {
+    let id = regs.id;
+    delete regs.id;
+    let formData = new FormData();
+    regs.image && formData.append('image', regs.image.raw);
+    formData.append('barcode', regs.barcode);
+    formData.append('title', regs.title);
+    formData.append('description', regs.description);
+    formData.append('unit', regs.unit);
+    formData.append('price', regs.price);
+    formData.append('factory', regs.factory);
+    formData.append('categoryId', regs.categoryId);
+    formData.append('ranking', regs.ranking);
+    formData.append('sysFlag', regs.sysFlag);
+    formData.append('id', Number(id));
+    http.editGoods(formData).then(res => res.code === 200 && http.getGoods().then(response => {
       commit('getGoods', response);
       commit('editGoods', res)
     }).catch(err => console.log(err))).catch(err => console.log(err))
-  }
-  ,
+  },
   //删除商品
   deleteGoods: ({commit}, regs) =>
     http.deleteGoods({id: regs}).then(res => res.code === 200 && commit('deleteGoods', {

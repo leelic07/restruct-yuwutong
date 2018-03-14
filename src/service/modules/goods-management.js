@@ -16,11 +16,7 @@ export default {
     service.post('/items/add', goods).then(res => res).catch(err => err),
   //编辑商品
   editGoods: goodsForEdit =>
-    service.post('/items/add', goodsForEdit, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res).catch(err => err),
+    service.postFile('/items/add', goodsForEdit).then(res => res).catch(err => err),
   //删除商品
   deleteGoods: id =>
     service.post('/items/delete', id).then(res => res).catch(err => err)

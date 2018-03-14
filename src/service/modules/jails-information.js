@@ -10,9 +10,9 @@ export default {
     service.get('/jails/index').then(res => res).catch(err => err),
   //富文本上传图片
   uploadImageFromEditor: image =>
-    service.postFile(`/prisoners/upload_img`, image).then(res => res).catch(err => err),
+    service.postFile('/prisoners/upload_img', image).then(res => res).catch(err => err),
   //编辑监狱信息
   editJails: jails =>
-    service.post('/jails/update', qs.stringify(jails)).then(res => res).catch(err => err)
+    service.postFile('/jails/update', jails).then(res => res).catch(err => err)
 }
 

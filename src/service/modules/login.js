@@ -13,5 +13,5 @@ export default {
   //   service.get(`/users`).then(res => res).catch(err => err)
   //用户登录
   login: userInfo =>
-    service.post('/users/login', qs.stringify(userInfo)).then(res => res).catch(err => err)
+    service.post('/users/login', userInfo).then(res => res).catch(err => err)
 }
