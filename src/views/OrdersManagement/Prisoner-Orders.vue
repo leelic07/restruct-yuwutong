@@ -46,14 +46,17 @@
       }
     },
     watch: {
-      uploadTemplateResult(newValue){
+      uploadResult(newValue){
         this.importPrisonerOrders({'filepath': newValue.path});//家属订单模板文件上传成功以后将数据解析到服务端
+      },
+      prisonerOrdersResult(newValue){
+        this.alertInformation(newValue);
       }
     },
     computed: {
       ...mapGetters({
         prisonerOrdersResult: 'prisonerOrdersResult',//获取家属订单导入结果
-        uploadTemplateResult: 'uploadTemplateResult'//获取家属订单上传的结果
+        uploadResult: 'uploadResult'//获取家属订单上传的结果
       })
     },
     methods: {
@@ -71,6 +74,19 @@
       //上传订单模板文件
       beforeUpload(file){
         this.uploadFile(file);
+        return false;
+      },
+      //解析文件成功后执行的方法
+      alertInformation(information){
+        this.$notify({
+          title: '解析结果提示',
+          dangerouslyUseHTMLString: true,
+          message: `<p>新增：${information.add_total}</p>
+                    <p>成功：${information.success_total}</p>
+                    <p>修改：${information.update_total}</p>`,
+          duration: 5000,
+          offset: 100
+        });
       }
     },
     mounted(){

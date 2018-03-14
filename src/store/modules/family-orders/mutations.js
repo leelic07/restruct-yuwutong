@@ -23,6 +23,7 @@ export default {
     orderInfo.gmtPayment = orderList.order.gmtPayment;
     orderInfo.prisonerName = orderList.prisoner.name;
     orderInfo.prisonName = orderList.jail.title;
+    orderInfo.amount = orderList.order.amount;
     state.orderDetailInfo = orderInfo;
   },
   editFamilyOrders(state, editFamilyResult){

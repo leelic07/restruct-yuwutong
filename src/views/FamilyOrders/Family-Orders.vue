@@ -91,7 +91,7 @@
       }),
       //当前页发生变化时执行的方法
       currentChange(page){
-        this.pagination = page;
+        this.pagination.page = page;
         this.getFamilyOrders(this.pagination);
       },
       //点击配送完成执行的方法
@@ -101,12 +101,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          row.status = 'TRADE_FINISHED';//修改交易状态为交易完成
           this.editFamilyOrders(row);
         }).catch(err => console.log(err));
       },
       //点击订单详情执行的方法
       orderDetail(row){
-//        console.log(row.id);
         this.$router.push({
           path: `/orders/${row.id}`
         });
@@ -114,8 +114,7 @@
     },
     components: {
       Pagination
-    }
-    ,
+    },
     mounted()
     {
       this.breadCrumb(this.breadcrumb);

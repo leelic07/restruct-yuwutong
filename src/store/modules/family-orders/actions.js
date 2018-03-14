@@ -11,6 +11,13 @@ export default {
   getOrderById: ({commit}, regs) =>
     http.getOrderById({id: regs}).then(res => res.code === 200 && commit('getOrderById', res)).catch(err => console.log(err)),
   //编辑家属订单详情信息
-  editFamilyOrders: ({commit}, regs) =>
-    http.editFamilyOrders(regs.status = 'TRADE_FINISHED').then(res => res.code === 200 && commit('editFamilyOrders', res)).catch(err => console.log(err))
+  editFamilyOrders: ({commit}, regs) => {
+    http.editFamilyOrders({
+      id: regs.id,
+      status: regs.status
+    }).then(res => res.code === 200 && http.getFamilyOrders().then(response => {
+      commit('getFamilyOrders', response);
+      commit('editFamilyOrders', res);
+    }).catch(err => console.log(err))).catch(err => console.log(err))
+  }
 }

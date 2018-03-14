@@ -18,7 +18,7 @@ export default {
     formData.append('city', regs.city);
     formData.append('state', regs.state);
     formData.append('zipcode', regs.zipcode);
-    formData.append('jailId', sessionStorage['jail_id']);
+    formData.append('id', regs.id);
     // let data = {
     //   title: regs.title,
     //   description: regs.description,

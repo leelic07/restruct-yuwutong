@@ -69,7 +69,7 @@
       <el-row :gutter="0">
         <el-col :span="12">
           <label for="">性别：</label>
-          <span>{{prisoner.gender}}</span>
+          <span>{{prisoner.gender | gender}}</span>
         </el-col>
       </el-row>
     </el-dialog>

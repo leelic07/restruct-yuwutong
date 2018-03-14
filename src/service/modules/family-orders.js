@@ -10,11 +10,7 @@ export default {
   //根据id查询家属订单详情信息
   getOrderById: id =>
     service.get('/orders/description', id).then(res => res).catch(err => err),
-  //编辑家属订单详情信息
+  //编辑家属订单详情信息f
   editFamilyOrders: order =>
-    service.post('/orders/update', order, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res).catch(err => err)
+    service.post('/orders/update', order).then(res => res).catch(err => err)
 }

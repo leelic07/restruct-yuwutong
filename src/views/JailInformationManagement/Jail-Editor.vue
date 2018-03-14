@@ -21,8 +21,8 @@
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <img :src="_$agency + jails.image_url"
-               alt="">
+          <!--<img :src="_$agency + jails.image_url" alt="">-->
+          <img src="../../assets/images/default.jpg" alt="">
         </el-form-item>
         <el-form-item>
           <el-upload

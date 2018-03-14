@@ -71,8 +71,9 @@
         <el-col :span="12">
           <el-col :span="12">
             <span>照片：</span>
-            <img :src="_$agency + family.imageUrl" alt="">
+            <!--<img :src="_$agency + family.imageUrl" alt="">-->
             <!--<img :src="_$baseUrl + family.imageUrl" alt="">-->
+            <img src="../../assets/images/default.jpg" alt="">
           </el-col>
         </el-col>
       </el-row>

@@ -15,18 +15,18 @@ export default {
     http.getGoodsById({id: regs}).then(res => res.code === 200 && commit('getGoodsById', res)).catch(err => console.log(err)),
   //添加商品
   addGoods({commit}, regs){
-    // let formData = new FormData();
-    // regs.image.raw && formData.append('image', regs.image.raw);
-    // formData.append('barcode', regs.barcode);
-    // formData.append('title', regs.title);
-    // formData.append('description', regs.description);
-    // formData.append('unit', regs.unit);
-    // formData.append('price', regs.price);
-    // formData.append('factory', regs.factory);
-    // formData.append('category_id', regs.category_id);
-    // formData.append('sys_flag', regs.sys_flag);
-    // formData.append('ranking', regs.ranking);
-    http.addGoods(regs).then(res => res.code === 200 && http.getGoods().then(response => {
+    let formData = new FormData();
+    regs.image && formData.append('file', regs.image.raw);
+    formData.append('barcode', regs.barcode);
+    formData.append('title', regs.title);
+    formData.append('description', regs.description);
+    formData.append('unit', regs.unit);
+    formData.append('price', regs.price);
+    formData.append('factory', regs.factory);
+    formData.append('categoryId', regs.categoryId);
+    formData.append('sysFlag', regs.sysFlag);
+    formData.append('ranking', regs.ranking);
+    http.addGoods(formData).then(res => res.code === 200 && http.getGoods().then(response => {
       commit('getGoods', response);
       commit('addGoods', res);
     }).catch(err => console.log(err))).catch(err => console.log(err));
@@ -36,7 +36,7 @@ export default {
     let id = regs.id;
     delete regs.id;
     let formData = new FormData();
-    regs.image && formData.append('image', regs.image.raw);
+    regs.image && formData.append('file', regs.image.raw);
     formData.append('barcode', regs.barcode);
     formData.append('title', regs.title);
     formData.append('description', regs.description);

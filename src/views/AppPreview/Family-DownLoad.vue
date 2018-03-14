@@ -82,5 +82,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-@import '../../assets/css/app-preview.css';
+  @import '../../assets/css/app-preview.css';
 </style>

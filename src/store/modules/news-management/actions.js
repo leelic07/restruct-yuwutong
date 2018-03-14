@@ -9,15 +9,15 @@ export default {
     http.getNews(regs).then(res => commit('getNews', res)).catch(err => console.log(err)),
   //编辑狱务公开信息
   editNews({commit}, regs){
-    // let formData = new FormData();
-    // regs.image && formData.append('image', regs.image.raw);
-    // formData.append('id', regs.id);
-    // formData.append('title', regs.title);
-    // formData.append('type_id', regs.type_id);
-    // formData.append('contents', regs.contents);
-    // formData.append('is_focus', regs.is_focus);
-    // formData.append('sys_flag', regs.sys_flag);
-    http.editNews(regs).then(res => res.code === 200 &&
+    let formData = new FormData();
+    regs.image && formData.append('image', regs.image.raw);
+    formData.append('id', regs.id);
+    formData.append('title', regs.title);
+    formData.append('typeId', regs.typeId);
+    formData.append('contents', regs.contents);
+    formData.append('isFocus', regs.isFocus);
+    formData.append('sysFlag', regs.sysFlag);
+    http.editNews(formData).then(res => res.code === 200 &&
     http.getNews({type: regs.typeId}).then(response => {
       commit('getNews', response);
       commit('editNews', res);
@@ -25,14 +25,14 @@ export default {
   },
   //添加狱务公开信息
   addNews({commit}, regs){
-    // let formData = new FormData();
-    // regs.image && formData.append('image', regs.image.raw);
-    // formData.append('title', regs.title);
-    // formData.append('type_id', regs.type_id);
-    // formData.append('contents', regs.contents);
-    // formData.append('is_focus', regs.is_focus);
-    // formData.append('sys_flag', regs.sys_flag);
-    http.addNews(regs).then(res => res.code === 200 &&
+    let formData = new FormData();
+    regs.image && formData.append('image', regs.image.raw);
+    formData.append('title', regs.title);
+    formData.append('typeId', regs.typeId);
+    formData.append('contents', regs.contents);
+    formData.append('isFocus', regs.isFocus);
+    formData.append('sysFlag', regs.sysFlag);
+    http.addNews(formData).then(res => res.code === 200 &&
     http.getNews({type: regs.typeId}).then(response => {
       commit('getNews', response);
       commit('addNews', res);

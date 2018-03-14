@@ -10,6 +10,7 @@ export default {
   // baseURL: 'https://www.yuwugongkai.com/',
   // baseURL: 'http://10.10.10.117:3000/',
   // baseURL: 'http://10.10.10.122:8080/',
+  // baseURL: 'http://10.10.10.127:8080/',
   baseURL: 'http://10.10.10.2:8081/',
   // baseURL: 'http://localhost:8081',
   // baseURL: 'localhost:8081',

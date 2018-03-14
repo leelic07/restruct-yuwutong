@@ -47,6 +47,9 @@
     watch: {
       uploadResult(newValue){
         this.importPrisoner({filepath: newValue.path});
+      },
+      prisonerResult(newValue){
+        this.alertInformation(newValue);
       }
     },
     computed: {
@@ -70,6 +73,18 @@
         this.uploadFile(file);
         return false;
       },
+      //解析文件成功后执行的方法
+      alertInformation(information){
+        this.$notify({
+          title: '解析结果提示',
+          dangerouslyUseHTMLString: true,
+          message: `<p>新增：${information.add_total}</p>
+                    <p>成功：${information.success_total}</p>
+                    <p>修改：${information.update_total}</p>`,
+          duration: 5000,
+          offset: 100
+        });
+      }
     },
     mounted(){
       this.breadCrumb(this.breadcrumb)

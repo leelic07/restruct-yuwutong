@@ -38,7 +38,7 @@
     </el-row>
     <!--总计部分-->
     <el-row :gutter="0" class="total-box">
-      <h3>总计：{{orderDetailTotal}}</h3>
+      <h3>总计：{{orderDetailInfo.amount}}</h3>
     </el-row>
   </el-row>
 </template>
