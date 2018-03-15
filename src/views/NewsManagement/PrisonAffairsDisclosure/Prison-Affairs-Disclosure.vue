@@ -95,8 +95,6 @@
     computed: {
       //映射getters方法获取state状态
       ...mapGetters({
-//        prisonAffairsDisclosure: 'prisonAffairsDisclosure',//获取狱务公开信息
-//        prisonAffairsDisclosureTotal: 'prisonAffairsDisclosureTotal',//获取狱务公开记录条数
         news: 'news',//狱务公开信息列表
         newsTotal: 'newsTotal',//狱务公开信息记录数
         deleteNewsResult: 'deleteNewsResult'//获取删除狱务公开信息的结果
@@ -106,7 +104,6 @@
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-//        searchPrisonAffairsDisclosure: 'searchPrisonAffairsDisclosure'//获取带搜索条件的狱务公开信息
       }),
       //映射actions方法
       ...mapActions({
