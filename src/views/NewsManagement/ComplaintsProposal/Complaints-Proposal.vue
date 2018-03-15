@@ -11,7 +11,7 @@
       <!--标签页表格-->
       <el-col :span="24">
         <el-table
-          :data="complaintsProposals"
+          :data="news"
           border
           stripe
           style="width: 100%">
@@ -29,7 +29,7 @@
           <el-table-column
             label="焦点">
             <template slot-scope="scope">
-              {{scope.row.is_focus?'是':'否'}}
+              {{scope.row.isFocus?'是':'否'}}
             </template>
           </el-table-column>
           <el-table-column
@@ -106,7 +106,6 @@
       //映射mutations方法
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-        searchPrisonAffairsDisclosure: 'searchPrisonAffairsDisclosure'//获取带搜索条件的投诉建议信息
       }),
       //映射actions方法
       ...mapActions({
