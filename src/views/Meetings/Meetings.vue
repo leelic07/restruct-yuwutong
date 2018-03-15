@@ -89,7 +89,6 @@
             </el-alert>
           </el-col>
         </el-row>
-
         <el-row :gutter="0" v-show="!authMeetingsResult.code">
           <el-col :span="24" v-if="showRemarks" class="refuse-reason">
             <el-col :span="24">
@@ -291,8 +290,7 @@
       this.breadCrumb(this.breadcrumb);
       //获取家属注册信息列表
       this.getMeetings(this.pagination);
-    }
-    ,
+    },
     components: {
       SelectAndSearch,
       Pagination

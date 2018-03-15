@@ -55,6 +55,12 @@ let handleSuccess = (res) => {
           message: res.data.msg ? res.data.msg : '查询数据成功'
         });
         break;
+      case 20002://用户登录超时，返回登录页面
+        Message.error(res.data.msg);
+        router.push({
+          path: '/login'
+        });
+        break;
       default:
         Message.error(res.data.msg ? res.data.msg : '无法找到对应的信息');
         break;

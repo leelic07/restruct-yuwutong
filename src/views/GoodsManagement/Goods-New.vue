@@ -17,24 +17,24 @@
         <el-form-item label="单价" prop="price">
           <el-input v-model="goods.price"></el-input>
         </el-form-item>
-        <!--<el-form-item>-->
-        <!--<el-upload-->
-        <!--class="upload-demo"-->
-        <!--ref="upload"-->
-        <!--:action="_$agency + '/items/' + $route.params.id"-->
-        <!--name="avatar"-->
-        <!--:file-list="fileList"-->
-        <!--:on-change="handleChange"-->
-        <!--:on-remove="handleRemove"-->
-        <!--:auto-upload="false"-->
-        <!--:limit="1"-->
-        <!--:with-credentials="true"-->
-        <!--accept="image/*"-->
-        <!--list-type="picture">-->
-        <!--<el-button size="normal" type="primary" plain>添加商品图片</el-button>-->
-        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
-        <!--</el-upload>-->
-        <!--</el-form-item>-->
+        <el-form-item>
+          <el-upload
+            class="upload-demo"
+            ref="upload"
+            :action="_$agency"
+            name="avatar"
+            :file-list="fileList"
+            :on-change="handleChange"
+            :on-remove="handleRemove"
+            :auto-upload="false"
+            :limit="1"
+            :with-credentials="true"
+            accept="image/*"
+            list-type="picture">
+            <el-button size="normal" type="primary" plain>添加商品图片</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="生产厂家">
           <el-input v-model="goods.factory"></el-input>
         </el-form-item>

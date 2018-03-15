@@ -12,8 +12,8 @@ export default {
   updateVersion({commit}, regs){
     let params = {
       id: regs.id,
-      versionCode: regs.versionCode,
-      versionNumber: regs.versionNumber,
+      code: regs.versionCode,
+      number: regs.versionNumber,
       isForce: regs.isForce
     };
     //更新狱务通版本信息

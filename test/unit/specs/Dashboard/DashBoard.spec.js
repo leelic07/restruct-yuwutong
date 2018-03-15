@@ -1,9 +1,6 @@
-import Vue from 'vue'
-import ElementUI from 'element-ui'
 import DashBoard from '@/views/DashBoard/DashBoard'
-import Vuex from 'vuex'
-Vue.use(ElementUI);
-Vue.use(Vuex);
+import {destroyVM, createTest} from '../util'
+import store from './store'
 
 describe('DashBoard.vue', () => {
   it('should render correct contents', () => {
