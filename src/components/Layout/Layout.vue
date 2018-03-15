@@ -30,8 +30,7 @@
     },
     watch: {
       $route(to){//监听路由变化
-        window.scrollTo(0, 0);//每次路由变化页面回到最顶部
-        console.log(to.path);
+        // window.scrollTo(0, 0);//每次路由变化页面回到最顶部
         if (to.path === loginUrl || to.path === familyDownload || to.path === prisonDownload) //进入登陆页面
           this.isNotLogin = false;//将侧边栏和顶栏隐藏
         else
