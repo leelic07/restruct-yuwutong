@@ -1,6 +1,6 @@
 <template>
   <el-row id="prison-affairs-disclosure-editor" :gutter="0">
-    <el-col :span="11" :offset="6">
+    <el-col :span="13" :offset="5">
       <el-form ref="form" :model="newsForEdit">
         <el-form-item label="新闻名称">
           <el-input v-model="newsForEdit.title" placeholder="请填写新闻名称"></el-input>
@@ -12,21 +12,21 @@
           <!--<img :src="_$agency + newsForEdit.imageUrl" alt="">-->
           <img src="../../../assets/images/default.jpg" alt="">
         </el-form-item>
-        <!--<el-form-item>-->
-        <!--<el-upload-->
-        <!--class="upload-demo"-->
-        <!--:action="_$agency"-->
-        <!--:on-remove="handleRemove"-->
-        <!--:on-change="handleChange"-->
-        <!--:file-list="fileList"-->
-        <!--:auto-upload="false"-->
-        <!--:limit="1"-->
-        <!--accept="image/*"-->
-        <!--list-type="picture">-->
-        <!--<el-button size="normal" type="primary" plain>添加图片</el-button>-->
-        <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>-->
-        <!--</el-upload>-->
-        <!--</el-form-item>-->
+        <el-form-item>
+          <el-upload
+            class="upload-demo"
+            :action="_$agency"
+            :on-remove="handleRemove"
+            :on-change="handleChange"
+            :file-list="fileList"
+            :auto-upload="false"
+            :limit="1"
+            accept="image/*"
+            list-type="picture">
+            <el-button size="normal" type="primary" plain>添加图片</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+          </el-upload>
+        </el-form-item>
         <el-form-item>
           <!-- `checked` 为 true 或 false -->
           <el-checkbox v-model="newsForEdit.isFocus">是否设为焦点新闻</el-checkbox>

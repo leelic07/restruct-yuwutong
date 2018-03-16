@@ -8,7 +8,7 @@
           <img src="../../../static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>监狱</p>
+          <p>{{jailName}}</p>
           <a href="#" @click="$event.preventDefault()"><i class="fa fa-circle text-success"></i> 在线</a>
         </div>
       </div>
@@ -171,6 +171,9 @@
       }),
       role(){
         return sessionStorage.getItem('role')
+      },
+      jailName(){
+        return sessionStorage.getItem('jail_name');
       }
     },
     methods: {}

@@ -10,7 +10,7 @@ export default {
   //编辑狱务公开信息
   editNews({commit}, regs){
     let formData = new FormData();
-    regs.image && formData.append('image', regs.image.raw);
+    regs.image && formData.append('file', regs.image.raw);
     formData.append('id', regs.id);
     formData.append('title', regs.title);
     formData.append('typeId', regs.typeId);
@@ -26,7 +26,7 @@ export default {
   //添加狱务公开信息
   addNews({commit}, regs){
     let formData = new FormData();
-    regs.image && formData.append('image', regs.image.raw);
+    regs.image && formData.append('file', regs.image.raw);
     formData.append('title', regs.title);
     formData.append('typeId', regs.typeId);
     formData.append('contents', regs.contents);

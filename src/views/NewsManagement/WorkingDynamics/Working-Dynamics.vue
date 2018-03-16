@@ -135,7 +135,7 @@
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //点击删除时执行的方法
       handleDelete(id){

@@ -59,7 +59,7 @@
       <el-row :gutter="0">
         <el-col :span="12">
           <label for="">囚号：</label>
-          <span v-text="prisoner.crimes"></span>
+          <span v-text="prisoner.prisonerNumber"></span>
         </el-col>
         <el-col :span="12">
           <label for="">监区：</label>

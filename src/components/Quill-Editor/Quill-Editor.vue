@@ -96,3 +96,9 @@
     }
   }
 </script>
+
+<style type="text/stylus" lang="stylus">
+  #quill-editor
+    /deep/ .ql-editor
+      min-height: 145px
+</style>

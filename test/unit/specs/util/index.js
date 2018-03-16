@@ -2,9 +2,10 @@
  * Created by Administrator on 2018/3/15/015.
  */
 import Vue from 'vue';
-import Element from 'element-ui'
-
-Vue.use(Element);
+import ElementUI from 'element-ui'
+import Vuex from 'vuex'
+Vue.use(ElementUI);
+Vue.use(Vuex);
 
 let id = 0;
 
