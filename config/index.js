@@ -9,17 +9,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/ywgk': {
-        // target: 'http://10.10.10.122:8080/ywgk',
-        // target: 'http://10.10.10.2:8081/ywgk',
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/ywgk': '/'
-        }
-      }
-    },
+    // proxyTable: {
+    //   '/ywgk': {
+    //     // target: 'http://10.10.10.122:8080/ywgk',
+    //     // target: 'http://10.10.10.2:8081/ywgk',
+    //     target: 'http://localhost:3000',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/ywgk': '/'
+    //     }
+    //   }
+    // },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
