@@ -2,8 +2,8 @@
   <el-row id="jail-information-management" :gutter="0">
     <el-row :gutter="0" v-if="!isJailEdit">
       <el-col :span="12">
-        <!--<img :src="_$agency + jails.imageUrl" alt="">-->
-        <img src="../../assets/images/default.jpg" alt="">
+        <img :src="_$agency + jails.imageUrl" alt="">
+        <!--<img src="../../assets/images/default.jpg" alt="">-->
       </el-col>
       <el-col :span="12">
         <el-col :span="24">

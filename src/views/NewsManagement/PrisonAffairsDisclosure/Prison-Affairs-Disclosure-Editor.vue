@@ -9,8 +9,8 @@
           <vue-quill-editor :contents="newsForEdit.contents" @editorChange="editorChange"></vue-quill-editor>
         </el-form-item>
         <el-form-item>
-          <!--<img :src="_$agency + newsForEdit.imageUrl" alt="">-->
-          <img src="../../../assets/images/default.jpg" alt="">
+          <img :src="_$agency + newsForEdit.imageUrl" alt="">
+          <!--<img src="../../../assets/images/default.jpg" alt="">-->
         </el-form-item>
         <el-form-item>
           <el-upload

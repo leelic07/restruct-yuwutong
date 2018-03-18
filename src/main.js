@@ -11,7 +11,7 @@ import '@/assets/fonts/iconfont.css'
 import '@/assets/icons/iconfont.css'
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.snow.css'
-console.log(store);
+
 Vue.use(ElementUI);
 
 Vue.use(VueQuillEditor);
@@ -24,7 +24,7 @@ Vue.config.productionTip = false;
 
 // Vue.prototype._$agency = 'http://10.10.10.127:8081';
 
-Vue.prototype._$agency = 'http://localhost:3000/';
+Vue.prototype._$agency = 'http://localhost:3000';
 
 //声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
