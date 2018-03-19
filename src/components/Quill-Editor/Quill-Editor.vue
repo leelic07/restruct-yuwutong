@@ -68,13 +68,13 @@
     },
     watch: {
       //图片上传成功后获取上传图片的地址放入到编辑器当中
-      uploadImageResult(newValue){
-        newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.url}`)
+      uploadResult(newValue){
+        newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.path.substring(6)}`);
       }
     },
     computed: {
       ...mapGetters({
-        uploadImageResult: 'uploadImageResult'//获取富文本上传图片结果
+        uploadResult: 'uploadResult'
       }),
       editor() {
         return this.$refs.myQuillEditor.quill
@@ -82,7 +82,7 @@
     },
     methods: {
       ...mapActions({
-        uploadImageFromEditor: 'uploadImageFromEditor',//富文本上传图片执行的方法
+        uploadFile: 'uploadFile'//富文本上传图片执行的方法
       }),
       //当富文本的内容发生改变的时候传给父组件
       editorChange({editor, html, text}){
@@ -90,7 +90,7 @@
       },
       //富文本上传图片执行的方法
       uploadImage(file){
-        this.uploadImageFromEditor(file);
+        this.uploadFile(file);
         return false;
       }
     }
