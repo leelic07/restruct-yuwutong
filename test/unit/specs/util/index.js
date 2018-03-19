@@ -2,9 +2,12 @@
  * Created by Administrator on 2018/3/15/015.
  */
 import Vue from 'vue';
+import Vuex from 'vuex'
 import Element from 'element-ui'
+import store from '@/store'
 
 Vue.use(Element);
+Vue.use(Vuex);
 
 let id = 0;
 
@@ -36,7 +39,7 @@ exports.destroyVM = function (vm) {
  */
 exports.createVue = function (Compo, mounted = false) {
   if (Object.prototype.toString.call(Compo) === '[object String]') {
-    Compo = {template: Compo};
+    Compo = {template: Compo, store};
   }
   return new Vue(Compo).$mount(mounted === false ? null : createElm());
 };
@@ -56,7 +59,7 @@ exports.createTest = function (Compo, propsData = {}, mounted = false) {
   }
   const elm = createElm();
   const Ctor = Vue.extend(Compo);
-  return new Ctor({propsData}).$mount(mounted === false ? null : elm);
+  return new Ctor({propsData, store}).$mount(mounted === false ? null : elm);
 };
 
 /**
