@@ -1,44 +1,45 @@
-/**
- * Created by Administrator on 2018/3/15/015.
- */
-import loginActions from '@/store/modules/login/actions'
+import Vue from 'vue';
+import Vuex from 'vuex';
 import Login from '@/views/Login/Login'
-import {destroyVM, createTest} from './util'
+// import {destroyVM, createTest} from '../util'
+import store from '@/store'
+Vue.use(Vuex);
 
-describe('login.vue', () => {
-  let vm;
-  afterEach(() => {
-    destroyVM(vm)
-  });
-  //测试登录的异步请求
+// describe('DashBoard.vue', () => {
+//   it('dashboard内容正确', () => {
+//     const Constructor = Vue.extend(DashBoard)
+//     const vm = new Constructor().$mount()
+//     expect(vm.$el.querySelector("#dash-board h1").textContent).to.equal('欢迎来到狱务公开管理平台')
+//   })
+// })
+
+
+describe('Login.vue', () => {
+  // let vm = createTest(Login, {}, true);
+
+  // afterEach(() => {
+    // destroyVM(vm);
+  // });
+
   it('获取登录的异步请求', done => {
-    vm = createTest(Login, {}, true);
-    loginActions.login({}, {
-      prison: '4501',
-      username: '4501_sh',
-      password: '123456'
-    }).then(res => {
-      expect(res.code).to.equal(200);
-      done();
-    }).catch(err => console.log(err));
-    // store._actions.login[0]({
+    const Constructor = Vue.extend(Login)
+    const vm = new Constructor({ store }).$mount()
+    vm.ruleForm2 = { password: '123456', username: '4501_sh', prison: '4501' }
+    vm.submitForm('ruleForm2')
+    setTimeout(() => {
+      expect(vm.$store.state.users).should.have.property('id')
+    }, 300)
+    // vm.$nextTick(() => {
+    //   expect(vm.$store.state.users).should.have.property('id')
+    // })
+    done()
+    // store.dispatch('login', {
     //   prison: '4501',
     //   username: '4501_sh',
     //   password: '123456'
     // }).then(res => {
-    //   expect(res.code).to.be.an(200);
+    //   expect(res.code).to.be.an(200)
     //   done();
-    // }).catch(err => console.log(err));
-    // vm.ruleForm2 = {
-    //   prison: '4501',
-    //   username: '4501_sh',
-    //   password: '123456'
-    // };
-    // vm.$store.dispatch('login', ruleForm2);
-    // // vm.submitForm('ruleForm2');
-    // // vm.$el.querySelector('.btn-box button').click();
-    // setTimeout(() => {
-    //   expect(vm.users.hasOwnProperty('id')).to.equal('123');
-    // }, 500);
+    // });
   });
 });
