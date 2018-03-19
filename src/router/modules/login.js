@@ -1,10 +1,10 @@
 /**
  * Created by Administrator on 2018/1/29/029.
  */
-import Login from '@/views/Login/Login'
+import Login from '@/views/login/login'
 
 export default [{
   path: '/login',
-  name: 'Login',
+  name: 'login',
   component: Login
 }]

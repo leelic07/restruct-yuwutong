@@ -11,16 +11,16 @@ export default {
   // baseURL: 'http://10.10.10.117:3000/',
   // baseURL: 'http://10.10.10.122:8080/',
   // baseURL: 'http://10.10.10.127:8080/',
-  baseURL: 'http://10.10.10.2:8081/',
+  // baseURL: 'http://10.10.10.2:8081/',
   // baseURL: 'http://localhost:8081',
-  // baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:3000',
   //请求发送之前对出参进行处理
   // transformRequest: [data => data],
   //请求发送之后对入参进行处理
   // transformResponse: [data => data],
   //设置请求头
   headers: {
-    //   'X-Requested-With': 'XMLHttpRequest',
+    //  'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/x-www-form-urlencoded',
     // 'Content-Type': 'application/json'
   },

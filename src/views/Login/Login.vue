@@ -39,7 +39,7 @@
           password: '',
           username: '',
           prison: '',
-          checked: false//是否选总记住密码
+//          checked: false//是否选总记住密码
         },
         rules2: {
           password: [
@@ -81,7 +81,7 @@
             return false;
           }
         });
-      },
+      }
     }
   }
 </script>

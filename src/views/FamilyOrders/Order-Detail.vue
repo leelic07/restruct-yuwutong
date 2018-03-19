@@ -5,10 +5,10 @@
       <el-col :span="7">
         <h4>订单号：{{orderDetailInfo.tradeNo}}</h4>
       </el-col>
-      <el-col :span="3" :offset="1">
+      <el-col :span="4">
         <h4>罪犯名字：{{orderDetailInfo.name}}</h4>
       </el-col>
-      <el-col :span="3" :offset="1">
+      <el-col :span="4">
         <h4>监狱名字：{{orderDetailInfo.title}}</h4>
       </el-col>
       <el-col :span="9">

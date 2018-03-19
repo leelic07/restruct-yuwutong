@@ -23,8 +23,8 @@
           <el-table-column
             label="新闻图片">
             <template slot-scope="scope">
-              <!--<img :src="_$agency + scope.row.imageUrl" alt="">-->
-              <img src="../../../assets/images/default.jpg" alt="">
+              <img :src="_$agency + scope.row.imageUrl" alt="">
+              <!--<img src="../../../assets/images/default.jpg" alt="">-->
             </template>
           </el-table-column>
           <el-table-column
@@ -135,7 +135,7 @@
       },
       //监听搜索框的内容变化
       searchingChange(searching){
-        this.searching.value = searching;
+        this.searching = searching;
       },
       //点击删除时执行的方法
       handleDelete(id){
