@@ -5,7 +5,6 @@ import Vue from 'vue';
 import Vuex from 'vuex'
 import Element from 'element-ui'
 import store from '@/store'
-
 Vue.use(Element);
 Vue.use(Vuex);
 
