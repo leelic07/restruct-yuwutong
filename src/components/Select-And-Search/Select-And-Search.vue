@@ -13,20 +13,11 @@
       条记录
     </el-col>
     <!--搜索框-->
-    <el-col :span="16">
-      <el-col :span="6">
-        <el-input v-if="c==='registrations'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
-        <el-input v-if="c==='meetings'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
+    <el-col :span="16" class="search-box">
+      <el-col>
+        <el-button v-if="c !== 'terminals'" icon="el-icon-search" @click.native="search"></el-button>
       </el-col>
-      <el-col :span="6" :offset="1">
-        <!--搜索框-->
-        <el-input v-if="c==='prisoners'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
-        <el-input v-if="c==='families'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
-        <el-input v-if="c==='accounts'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
-        <el-input v-if="c==='registrations'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
-        <el-input v-if="c==='meetings'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
-      </el-col>
-      <el-col :span="6" :offset="1">
+      <el-col>
         <el-input v-if="c==='prisoners'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
         <el-input v-if="c==='families'" placeholder="请输入身份证号" v-model="searching.uuid"></el-input>
         <el-input v-if="c==='accounts'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
@@ -36,8 +27,17 @@
         <el-input v-if="c==='goods'" placeholder="请输入商品名称" v-model="searching.title"></el-input>
         <el-input v-if="c==='prisonAffairsDisclosure'" placeholder="请输入新闻标题" v-model="searching.title"></el-input>
       </el-col>
-      <el-col :span="3" :offset="1">
-        <el-button v-if="c !== 'terminals'" icon="el-icon-search" @click.native="search"></el-button>
+      <el-col>
+        <!--搜索框-->
+        <el-input v-if="c==='prisoners'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='families'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='accounts'" placeholder="请输入囚犯姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='registrations'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
+        <el-input v-if="c==='meetings'" placeholder="请输入囚犯号" v-model="searching.prisonerNumber"></el-input>
+      </el-col>
+      <el-col>
+        <el-input v-if="c==='registrations'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
+        <el-input v-if="c==='meetings'" placeholder="请输入家属姓名" v-model="searching.name"></el-input>
       </el-col>
     </el-col>
   </el-col>
@@ -83,4 +83,11 @@
 <style type="text/stylus" lang="stylus">
   #select-search-box
     margin-bottom: 25px
+    .search-box
+      .el-col
+        &:first-child
+          width: 8%
+        float: right
+        width: 22%
+        margin-left: 3%
 </style>

@@ -10,7 +10,7 @@ export default {
   //编辑监狱信息
   editJails({commit}, regs){
     let formData = new FormData();
-    regs.image && formData.append('image', regs.image.raw);
+    regs.image && formData.append('file', regs.image.raw);
     formData.append('title', regs.title);
     formData.append('description', regs.description);
     formData.append('street', regs.street);

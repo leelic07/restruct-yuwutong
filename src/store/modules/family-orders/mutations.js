@@ -21,8 +21,8 @@ export default {
     state.orderDetailTotal = orderList.total;
     orderInfo.tradeNo = orderList.order.tradeNo;
     orderInfo.gmtPayment = orderList.order.gmtPayment;
-    orderInfo.prisonerName = orderList.prisoner.name;
-    orderInfo.prisonName = orderList.jail.title;
+    orderInfo.name = orderList.prisoner.name;
+    orderInfo.title = orderList.jail.title;
     orderInfo.amount = orderList.order.amount;
     state.orderDetailInfo = orderInfo;
   },

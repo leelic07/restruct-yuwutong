@@ -42,7 +42,8 @@
       return {
         breadcrumb: ['主页', '订单信息管理'],
         fileList: [],
-        prisonerHref: this._$agency + '/download/downloadfile?filepath=order_template.xls'//下载家属订单模板的地址
+//        prisonerHref: this._$agency + '/download/downloadfile?filepath=order_template.xls',//下载家属订单模板的地址
+        prisonerHref: this._$agency + '/download/order_template.xls'//下载家属订单模板的地址
       }
     },
     watch: {

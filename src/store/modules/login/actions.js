@@ -14,7 +14,7 @@ export default {
   //   }).catch(err => console.log(err));
   // }
   login({commit}, regs){
-    delete regs.checked;
+    // delete regs.checked;
     http.login(regs).then(res => res.code === 200 && commit('login', res)).catch(err => console.log(err))
   }
 }

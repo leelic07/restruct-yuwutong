@@ -5,6 +5,9 @@
 export default {
   //获取商品列表信息
   getGoods(state, goodsList){
+    goodsList.data.items.forEach(item => {
+      item.avatarUrl = item.avatarUrl.substring(6) || '';//截取商品图片的路径
+    });
     state.goods = goodsList.data.items;
     state.goodsTotal = goodsList.data.itemSize;
     //将页面显示的数据信息保存到goodsOrigin里面
