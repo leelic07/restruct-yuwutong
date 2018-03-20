@@ -1,45 +1,35 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import {destroyVM, createTest, createVue} from './util'
 import Login from '@/views/Login/Login'
-// import {destroyVM, createTest} from '../util'
-import store from '@/store'
-Vue.use(Vuex);
 
-// describe('DashBoard.vue', () => {
-//   it('dashboard内容正确', () => {
-//     const Constructor = Vue.extend(DashBoard)
-//     const vm = new Constructor().$mount()
-//     expect(vm.$el.querySelector("#dash-board h1").textContent).to.equal('欢迎来到狱务公开管理平台')
-//   })
-// })
+describe('Login.vue', function() {
 
+  this.timeout(5000)
+  const vm = createTest(Login, {}, true);
 
-describe('Login.vue', () => {
-  // let vm = createTest(Login, {}, true);
-
-  // afterEach(() => {
-    // destroyVM(vm);
-  // });
-
-  it('获取登录的异步请求', done => {
-    const Constructor = Vue.extend(Login)
-    const vm = new Constructor({ store }).$mount()
-    vm.ruleForm2 = { password: '123456', username: '4501_sh', prison: '4501' }
-    vm.submitForm('ruleForm2')
-    setTimeout(() => {
-      expect(vm.$store.state.users).should.have.property('id')
-    }, 300)
-    // vm.$nextTick(() => {
-    //   expect(vm.$store.state.users).should.have.property('id')
-    // })
-    done()
-    // store.dispatch('login', {
-    //   prison: '4501',
-    //   username: '4501_sh',
-    //   password: '123456'
-    // }).then(res => {
-    //   expect(res.code).to.be.an(200)
-    //   done();
-    // });
+  afterEach(() => {
+    destroyVM(vm);
   });
-});
+
+  it('验证通过', () => {
+    vm.ruleForm2.password = '123456'
+    vm.ruleForm2.username = '4501_sh'
+    vm.ruleForm2.prison = '4501'
+    vm.$refs.ruleForm2.$el.querySelectorAll('input').forEach(item => { item.focus(); item.blur(); })
+
+    vm.$refs.ruleForm2.validate(valid => {
+      expect(valid).to.true
+    })
+  })
+  it('登陆成功', (done) => {
+    vm.ruleForm2.password = '123456'
+    vm.ruleForm2.username = '4501_sh'
+    vm.ruleForm2.prison = '4501'
+
+    vm.login(vm.ruleForm2)
+    setTimeout(function() {
+      expect(vm.$store.state.users).to.have.property('id')
+      done()
+    }, 300)
+
+  })
+})
