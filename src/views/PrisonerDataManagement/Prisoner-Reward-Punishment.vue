@@ -41,7 +41,8 @@
     data() {
       return {
         breadcrumb: ['主页', '罪犯奖惩信息管理'],
-        prisonerRewardHref: this._$agency + '/download/downloadfile?filepath=prisoner_reward_punishment_template.xls',
+//        prisonerRewardHref: this._$agency + '/download/downloadfile?filepath=prisoner_reward_punishment_template.xls',
+        prisonerRewardHref: this._$agency + '/download/prisoner_reward_punishment_template.xls',//下载家属订单模板的地址
         fileList: []
       }
     },
