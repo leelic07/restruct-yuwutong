@@ -30,6 +30,5 @@ describe('Login.vue', function() {
       expect(vm.$store.state.users).to.have.property('id')
       done()
     }, 300)
-
   })
 })
