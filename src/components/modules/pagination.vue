@@ -5,7 +5,7 @@
         layout="prev, pager, next"
         :total="total"
         :page-size="pageSize"
-        :current-page="currentPage"
+        :current-page.sync="currentPage"
         prev-text="上一页"
         next-text="下一页"
         @size-change="handleSizeChange"
@@ -37,6 +37,7 @@ export default {
   methods: {
     handleSizeChange(e) {
       this.pageSize = e
+      this.currentPage = 1
       this.$parent.$parent.pagination = {
         rows: e,
         page: 1

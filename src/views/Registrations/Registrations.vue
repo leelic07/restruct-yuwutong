@@ -59,8 +59,6 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <!-- <pagination :total="registrationsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
-                @currentChange="currentChange"></pagination> -->
     <m-pagination ref="pagination" :total="registrationsTotal" @onPageChange="change"></m-pagination>
     <!--家属信息授权弹出框-->
     <el-dialog title="授权" :visible.sync="dialogVisible">
