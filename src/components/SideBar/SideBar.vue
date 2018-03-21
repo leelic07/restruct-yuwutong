@@ -14,145 +14,30 @@
       </div>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <!--审核侧边栏-->
-      <ul class="sidebar-menu" v-if="role == 1">
+      <ul class="sidebar-menu">
         <li class="header">导航</li>
-        <li class="treeview">
-          <router-link to="/registrations">
-            <i class="iconfont icon-folder"></i>
-            <span>家属注册管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/meetings">
-            <i class="iconfont icon-folder"></i>
-            <span>会见申请管理</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/mailboxes">
-            <i class="iconfont icon-folder"></i>
-            <span>监狱长信箱</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/prisoners">
-            <i class="iconfont icon-folder"></i>
-            <span>服刑人员信息管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/families">
-            <i class="iconfont icon-folder"></i>
-            <span>家属信息管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/accounts">
-            <i class="iconfont icon-folder"></i>
-            <span>囚犯账户管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/terminals">
-            <i class="iconfont icon-folder"></i>
-            <span>终端管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/versions">
-            <i class="iconfont icon-folder"></i>
-            <span>版本管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="iconfont icon-folder"></i>
-            <span>数据管理</span>
-            <span class="pull-right-container">
-              <i class="iconfont icon-more pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <router-link to="/prisoner/import_index"><i class="iconfont icon-circle-o"></i>罪犯数据导入</router-link>
-            </li>
-            <li>
-              <router-link to="/prison_term/import_index"><i class="iconfont icon-circle-o"></i>刑期变动数据导入</router-link>
-            </li>
-            <li>
-              <router-link to="/prison_reward_punishment/import_index"><i class="iconfont icon-circle-o"></i>罪犯奖惩数据导入
-              </router-link>
-            </li>
-          </ul>
+        <li v-for="(first, index) in menus[role - 1]" :key="index">
+          <template v-if="!first.children">
+            <router-link :to="first.path">
+              <i :class="first.icon"></i>
+              <span>{{ first.title }}</span>
+            </router-link>
+          </template>
+          <template v-else>
+            <a href="javascript:;" @click="first.active = !first.active">
+              <i :class="first.icon"></i>
+              <span>{{ first.title }}</span>
+              <i class="el-submenu__icon-arrow" :class="first.active ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"></i>
+            </a>
+            <ul class="treeview-menu">
+              <li v-for="(second, order) in first.children" :key="order">
+                <router-link :to="second.path"><i :class="second.icon"></i>{{ second.title }}</router-link>
+              </li>
+            </ul>
+          </template>
         </li>
       </ul>
       <!--商品侧边栏-->
-      <ul class="sidebar-menu" v-if="role == 2">
-        <li class="header">导航</li>
-        <li class="treeview">
-          <router-link to="/goods_management">
-            <i class="iconfont icon-folder"></i>
-            <span>商品管理</span>
-          </router-link>
-        </li>
-        <li class="treeview">
-          <router-link to="/orders">
-            <i class="iconfont icon-folder"></i>
-            <span>家属订单</span>
-          </router-link>
-        </li>
-        <li>
-          <a href="#">
-            <i class="iconfont icon-folder"></i>
-            <span>订单管理</span>
-            <span class="pull-right-container">
-              <i class="iconfont icon-more pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <router-link to="/prisoner_orders/import_index"><i class="iconfont icon-circle-o"></i>罪犯数据导入</router-link>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <!--信息侧边栏-->
-      <ul class="sidebar-menu" v-if="role == 3">
-        <li class="header">导航</li>
-        <li class="treeview">
-          <router-link to="/jails">
-            <i class="iconfont icon-folder"></i>
-            <span>监狱基本信息管理</span>
-          </router-link>
-        </li>
-        <!--<li class="treeview">-->
-        <!--<router-link to="/laws">-->
-        <!--<i class="iconfont icon-folder"></i>-->
-        <!--<span>法律法规信息管理</span>-->
-        <!--</router-link>-->
-        <!--</li>-->
-        <li>
-          <a href="#">
-            <i class="iconfont icon-folder"></i>
-            <span>狱务公开信息管理</span>
-            <span class="pull-right-container">
-              <i class="iconfont icon-more pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li>
-              <router-link to="/news/prison_affairs_disclosure"><i class="iconfont icon-circle-o"></i>狱务公开</router-link>
-            </li>
-            <li>
-              <router-link to="/news/working_dynamics"><i class="iconfont icon-circle-o"></i>工作动态</router-link>
-            </li>
-            <li>
-              <router-link to="/news/complaints_proposals"><i class="iconfont icon-circle-o"></i>投诉建议公示</router-link>
-            </li>
-          </ul>
-        </li>
-      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -163,7 +48,108 @@
 
   export default {
     data() {
-      return {}
+      let checkMenu = [{
+          path: '/registrations',
+          title: '家属注册管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/meetings',
+          title: '会见申请管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/mailboxes',
+          title: '监狱长信箱',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/prisoners',
+          title: '服刑人员信息管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/families',
+          title: '家属信息管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/accounts',
+          title: '囚犯账户管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/terminals',
+          title: '终端管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/versions',
+          title: '版本管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/prisoner',
+          title: '数据管理',
+          icon: 'iconfont icon-folder',
+          active: false,
+          children: [
+            {
+              path: '/prisoner/import_index',
+              title: '罪犯数据导入',
+              icon: 'iconfont icon-circle-o'
+            }, {
+              path: '/prison_term/import_index',
+              title: '刑期变动数据导入',
+              icon: 'iconfont icon-circle-o'
+            }, {
+              path: '/prison_reward_punishment/import_index',
+              title: '罪犯奖惩数据导入',
+              icon: 'iconfont icon-circle-o'
+            }
+          ]
+        }]
+      let shopMenu = [{
+          path: '/goods_management',
+          title: '商品管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/orders',
+          title: '家属订单',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/prisoner_orders',
+          title: '订单管理',
+          icon: 'iconfont icon-folder',
+          active: false,
+          children: [
+            {
+              path: '/prisoner_orders/import_index',
+              title: '罪犯数据导入',
+              icon: 'iconfont icon-circle-o'
+            }
+          ]
+        }]
+      let infoMenu = [{
+          path: '/jails',
+          title: '监狱基本信息管理',
+          icon: 'iconfont icon-folder'
+        }, {
+          path: '/news',
+          title: '狱务公开信息管理',
+          icon: 'iconfont icon-folder',
+          active: false,
+          children: [
+            {
+              path: '/news/prison_affairs_disclosure',
+              title: '狱务公开',
+              icon: 'iconfont icon-circle-o'
+            }, {
+              path: '/news/working_dynamics',
+              title: '工作动态',
+              icon: 'iconfont icon-circle-o'
+            }, {
+              path: '/news/complaints_proposals',
+              title: '投诉建议公示',
+              icon: 'iconfont icon-circle-o'
+            }
+          ]
+        }]
+      return {
+        menus: [checkMenu, shopMenu, infoMenu]
+      }
     },
     computed: {
       ...mapGetters({
@@ -183,9 +169,6 @@
 <style type="text/stylus" lang="stylus">
   #main-sidebar
     &.main-sidebar
-      bottom: 0
       a
         font-size: 14px
-    .icon-more
-      line-height: 15px
 </style>

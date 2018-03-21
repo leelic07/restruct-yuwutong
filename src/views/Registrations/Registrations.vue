@@ -1,7 +1,7 @@
 <template>
   <el-row id="registration" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
+    <select-and-search c="registrations" :searching="searching" @sizeChange="sizeChange" @search="search"
                        @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
@@ -59,8 +59,9 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <pagination :total="registrationsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
-                @currentChange="currentChange"></pagination>
+    <!-- <pagination :total="registrationsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
+                @currentChange="currentChange"></pagination> -->
+    <m-pagination ref="pagination" :total="registrationsTotal" @onPageChange="change"></m-pagination>
     <!--家属信息授权弹出框-->
     <el-dialog title="授权" :visible.sync="dialogVisible">
       <!--内层的对话框-->
@@ -129,17 +130,14 @@
 <script>
   import {mapActions, mapMutations, mapGetters} from 'vuex'
   import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-  import Pagination from '@/components/Pagination/Pagination'
   export default {
+    components: {
+      SelectAndSearch
+    },
     data() {
       return {
         breadcrumb: ['主页', '家属注册管理'],//面包屑数组
         tabNum: 'first',
-        c: 'registrations',
-        pagination: {
-          rows: 10,//每页显示记录条数
-          page: 1//当前显示第几页
-        },
         searching: {
           name: '',//家属姓名
           prisonerNumber: '',//囚号
@@ -167,6 +165,12 @@
         remarks: 'remarks'//获取拒绝家属注册的理由
       })
     },
+    mounted(){
+      //将面包屑数组传递给Content组件
+      this.breadCrumb(this.breadcrumb);
+      //获取家属注册信息列表
+      this.getRegistrations(this.pagination);
+    },
     methods: {
       //映射mutations方法
       ...mapMutations({
@@ -182,13 +186,7 @@
       }),
       //每页条数发生变化时执行的方法
       sizeChange(rows){
-        this.pagination.page = 1;
-        this.pagination.rows = rows;
-        this.change();
-      },
-      //当前页发生变化时执行的方法
-      currentChange(page){
-        this.pagination.page = page;
+        this.$refs.pagination.handleSizeChange(rows)
         this.change();
       },
       //根据是否有搜索内容调用不同的接口
@@ -248,16 +246,6 @@
         this.innerVisible = true;
         this.imgSrc = imgSrc;
       }
-    },
-    mounted(){
-      //将面包屑数组传递给Content组件
-      this.breadCrumb(this.breadcrumb);
-      //获取家属注册信息列表
-      this.getRegistrations(this.pagination);
-    },
-    components: {
-      SelectAndSearch,
-      Pagination
     }
   }
 </script>
