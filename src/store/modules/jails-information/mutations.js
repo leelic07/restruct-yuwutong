@@ -4,7 +4,7 @@
 export default {
   //获取监狱基本信息
   getJailsInformation: (state, jails) => {
-    jails.data.jails.imageUrl = jails.data.jails.imageUrl.substring(6) || '';
+    jails.data.jails.imageUrl = jails.data.jails.imageUrl ? jails.data.jails.imageUrl.substring(6) : '';
     state.jails = jails.data.jails;
   },
 

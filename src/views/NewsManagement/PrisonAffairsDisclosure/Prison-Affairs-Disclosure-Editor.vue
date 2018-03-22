@@ -15,13 +15,16 @@
         <el-form-item>
           <el-upload
             class="upload-demo"
-            :action="_$agency"
+            :action="_$agency + '/avatars'"
+            name="avatar"
+            :headers="authorization"
             :on-remove="handleRemove"
-            :on-change="handleChange"
+            :on-success="handleSuccess"
+            :on-exceed="handleExceed"
             :file-list="fileList"
-            :auto-upload="false"
             :limit="1"
-            accept="image/*"
+            :with-credentials="true"
+            accept="image/jpeg,image/jpg"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加图片</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
@@ -59,7 +62,8 @@
     computed: {
       ...mapGetters({
         newsForEdit: 'newsForEdit',//获取编辑的狱务公开基本信息
-        editNewsResult: 'editNewsResult'//获取编辑狱务公开信息的结果
+        editNewsResult: 'editNewsResult',//获取编辑狱务公开信息的结果
+        authorization: 'authorization',//设置上传图片的请求头
       })
     },
     methods: {
@@ -68,12 +72,9 @@
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getNewsById: 'getNewsById'//根据id获取需要编辑的新闻信息
+        getNewsById: 'getNewsById',//根据id获取需要编辑的新闻信息
+        uploadImg: 'uploadImg'//处理设置上传图片的结果
       }),
-      //添加图片选中图片时执行的方法
-      handleChange(file){
-        this.newsForEdit.image = file;
-      },
       //移除选中的图片时执行的方法
       handleRemove(){
         this.newsForEdit.image = '';
@@ -81,6 +82,17 @@
       //当富文本内容发生变化时执行的方法
       editorChange(contents){
         this.newsForEdit.contents = contents;
+      },
+      //上传图片成功时执行的方法
+      handleSuccess(res){
+        this.uploadImg(res);
+      },
+      //超过上传图片数量限制执行的方法
+      handleExceed(){
+        this.$message({
+          type: 'warning',
+          message: '每次只能上传一张图片'
+        });
       },
       //点击更新时执行的方法
       onSubmit(){

@@ -27,6 +27,7 @@ import passwordModification from './modules/password-modification'
 import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
+import uploadImg from './modules/upload-img'
 import 'babel-polyfill'
 
 Vue.use(Vuex);
@@ -68,7 +69,8 @@ merge(
   passwordModification,
   quillEditor,
   downloadFile,
-  uploadFile
+  uploadFile,
+  uploadImg
 );
 
 export default new Vuex.Store({

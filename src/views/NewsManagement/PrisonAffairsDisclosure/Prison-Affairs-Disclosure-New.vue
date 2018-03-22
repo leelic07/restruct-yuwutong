@@ -21,13 +21,15 @@
         <el-form-item>
           <el-upload
             class="upload-demo"
-            :action="_$agency"
-            :on-change="handleChange"
+            :action="_$agency + '/avatars'"
+            :headers="authorization"
+            name="avatar"
+            :on-success="handleSuccess"
             :on-remove="handleRemove"
+            :on-exceed="handleExceed"
             :file-list="fileList"
-            :auto-upload="false"
             :limit="1"
-            accept="image/*"
+            accept="image/jpeg,image/jpg"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加图片</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
@@ -76,7 +78,9 @@
     },
     computed: {
       ...mapGetters({
-        addNewsResult: 'addNewsResult'//获取添加狱务公开信息的结果
+        addNewsResult: 'addNewsResult',//获取添加狱务公开信息的结果
+        uploadImgResult: 'uploadImgResult',//获取上传图片的结果
+        authorization: 'authorization'//上传图片的请求头
       }),
     },
     methods: {
@@ -84,7 +88,8 @@
         addNews: 'addNews'//添加狱务公开信息
       }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb'//设置商品编辑页面的面包屑信息
+        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
+        uploadImg: 'uploadImg'//设置上传图片的结果
       }),
       //添加图片选中图片时执行的方法
       handleChange(file){
@@ -93,6 +98,17 @@
       //移除选中图片时执行的方法
       handleRemove(){
         this.news.image = '';
+      },
+      //上传图片成功执行的方法
+      handleSuccess(res){
+        this.uploadImg(res);
+      },
+      //超过上传图片数量限制执行的方法
+      handleExceed(){
+        this.$message({
+          type: 'warning',
+          message: '每次只能上传一张图片'
+        });
       },
       //当富文本内容发生改变时执行的方法
       editorChange(contents){

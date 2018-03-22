@@ -56,14 +56,22 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
+        breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息新增'],
         fileList: [],//上传图片列表
+        jails: {
+          title: '',//监狱名
+          description: '',//监狱描述
+          state: '',//省
+          city: '',//市
+          district: '',//地区
+          street: '',//街道
+          zipcode: ''//监狱邮编
+        }
       }
     },
     watch: {
       //编辑监狱信息成功跳转到监狱信息页面
-      editJailsResult(newValue){
-        this.getJailsInformation()
+      addJailsResult(newValue){
         this.$router.push({
           path: '/jails'
         })
@@ -71,15 +79,15 @@
     },
     computed: {
       ...mapGetters({
-        jails: 'jails',//获取编辑的监狱基本信息
-        editJailsResult: 'editJailsResult',//获取监狱编辑的结果
+//        jails: 'jails',//获取编辑的监狱基本信息
+        addJailsResult: 'addJailsResult',//获取监狱编辑的结果
         authorization: 'authorization',//上传图片的头部设置
       })
     },
     methods: {
       ...mapActions({
         getJailsInformation: 'getJailsInformation',//获取法律法规信息
-        editJails: 'editJails',//点击更新执行的方法
+        addJails: 'addJails',//点击更新执行的方法
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
@@ -107,7 +115,7 @@
       },
       //点击更新执行的方法
       onSubmit(){
-        this.editJails(this.jails);
+        this.addJails(this.jails);
       },
       //富文本内容发生改变时执行的方法
       editorChange(contents){

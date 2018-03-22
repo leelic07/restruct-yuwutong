@@ -36,7 +36,7 @@ export default {
     //将新闻内容的null转换成空值
     news.forEach(nw => {
       nw.contents = nw.contents || '';
-      nw.imageUrl = nw.imageUrl.substring(6) || '';//截取图片路径地址
+      nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : '';//截取图片路径地址
     });
     state.news = news;
     state.newsTotal = newsList.data.newsSize;

@@ -50,7 +50,8 @@
           <p v-html="jails.description"></p>
         </el-col>
         <el-col :span="24">
-          <el-button type="text" @click="editJails(jails.id)">编辑</el-button>
+          <el-button type="primary" size="mini" @click="addJails">新增</el-button>
+          <el-button type="primary" size="mini" @click="editJails(jails.id)">编辑</el-button>
         </el-col>
       </el-col>
     </el-row>
@@ -90,7 +91,13 @@
       editJails(id){
         this.$router.push({
           path: `/jails/${id}/edit`
-        });
+        })
+      },
+      //新增监狱基本信息
+      addJails(){
+        this.$router.push({
+          path: '/jails/add'
+        })
       }
     },
     mounted(){
@@ -120,6 +127,8 @@
             &:last-child
               .el-button
                 float: right
+                margin-right: 3%
+                margin-bottom: 20px
       .el-col.line
         border-bottom: 1px solid #F3F3F3
         margin-bottom: 10px
