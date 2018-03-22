@@ -46,6 +46,7 @@ export default {
     handleCurrentChange(e) {
       this.$parent.$parent.pagination.page = e
       this.$emit('onPageChange')
+      this.currentPage = e
     }
   }
 }

@@ -49,9 +49,13 @@
   export default {
     data() {
       let checkMenu = [{
-          path: '/registrations',
-          title: '家属注册管理',
+          path: '/user-add',
+          title: '平台监狱用户管理',
           icon: 'iconfont icon-folder'
+        }, {
+            path: '/registrations',
+            title: '家属注册管理',
+            icon: 'iconfont icon-folder'
         }, {
           path: '/meetings',
           title: '会见申请管理',

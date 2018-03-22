@@ -193,7 +193,7 @@
       },
       //点击搜索时执行的方法
       search(searching){
-        this.pagination.page = 1;
+        this.$refs.pagination.handleCurrentChange(1)
         this.searching = searching;
         this.getRegistrations({...this.searching, ...this.pagination});
       },

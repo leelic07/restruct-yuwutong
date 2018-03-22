@@ -19,7 +19,7 @@ import JailInformationManagement from './modules/jail-information'
 import LawInformationManagement from './modules/laws-information'
 import PrisonAffairsDisclosure from './modules/news-management'
 import AppPreview from './modules/app-preview'
-
+import UserManagement from './modules/userManagement'
 Vue.use(Router);
 
 export default new Router({
@@ -43,6 +43,7 @@ export default new Router({
     ...LawInformationManagement,
     ...PrisonAffairsDisclosure,
     ...AppPreview,
+    ...UserManagement,
     {
       path: '/',
       redirect: '/login'

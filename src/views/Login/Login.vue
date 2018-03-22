@@ -36,9 +36,9 @@
     data() {
       return {
         ruleForm2: {
-          password: '',
-          username: '',
-          prison: '',
+          password: '123456',
+          username: '4501_sh',
+          prison: '4501',
 //          checked: false//是否选总记住密码
         },
         rules2: {
