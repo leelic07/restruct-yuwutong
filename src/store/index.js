@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/12/13/013.
- */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import registrations from './modules/registrations'
@@ -30,21 +27,15 @@ import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import 'babel-polyfill'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-let actions = {};
-let mutations = {};
-let getters = {};
-let state = {};
-
-let merge = (...args) =>
+let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
   args.map(arg => {
     for (let key in arg) {
-      Object.assign(eval(key), arg[key]);
+      Object.assign(eval(key), arg[key])
     }
-  });
-
-//将对应的actions,mutations,getters,state 添加到声明的对象中
+  })
+// 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
   registrations,
   meetings,
@@ -71,11 +62,11 @@ merge(
   downloadFile,
   uploadFile,
   uploadImg
-);
+)
 
 export default new Vuex.Store({
   actions,
   mutations,
   getters,
   state
-});
+})

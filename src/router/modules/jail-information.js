@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import JailInformationManagement from '@/views/JailInformationManagement/Jail-Information-Management'
 import JailEditor from '@/views/JailInformationManagement/Jail-Editor'
 import JailAdd from '@/views/JailInformationManagement/Jail-Add'

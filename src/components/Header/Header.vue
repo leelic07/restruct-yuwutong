@@ -55,17 +55,17 @@
     },
     methods: {
       ...mapActions({
-        logout: 'logout'//点击确定退出登录时执行的方法
+        logout: 'logout'// 点击确定退出登录时执行的方法
       }),
-      //点击退出登录执行的方法
+      // 点击退出登录执行的方法
       confirmExit(e) {
-        e.preventDefault();
+        e.preventDefault()
         this.$confirm('是否退出登录？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.logout();
+          this.logout()
         })
       }
     }

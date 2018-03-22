@@ -91,16 +91,13 @@
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
         uploadImg: 'uploadImg'//设置上传图片的结果
       }),
-      //添加图片选中图片时执行的方法
-      handleChange(file){
-        this.news.image = file;
-      },
       //移除选中图片时执行的方法
       handleRemove(){
-        this.news.image = '';
+        this.news.anotherImageUrl = ''
       },
       //上传图片成功执行的方法
       handleSuccess(res){
+        this.news.anotherImageUrl = res.url;
         this.uploadImg(res);
       },
       //超过上传图片数量限制执行的方法

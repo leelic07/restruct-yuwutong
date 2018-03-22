@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import PrisonAffairsDisclosure from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure'
 import PrisonAffairsDisclosureNew from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-New'
 import PrisonAffairsDisclosureEditor from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-Editor'
@@ -21,31 +18,31 @@ export default [{
     component: PrisonAffairsDisclosureEditor
   }]
 },
-  {
-    path: '/news/working_dynamics',
-    name: 'WorkingDynamics',
-    component: WorkingDynamics,
-    children: [{
-      path: '/news/working_dynamics/new',
-      name: 'WorkingDynamicsNew',
-      component: PrisonAffairsDisclosureNew
-    }, {
-      path: '/news/working_dynamics/:id/edit',
-      name: 'WorkingDynamicsEditor',
-      component: PrisonAffairsDisclosureEditor
-    }]
-  },
-  {
-    path: '/news/complaints_proposals',
-    name: 'ComplaintsProposal',
-    component: ComplaintsProposal,
-    children: [{
-      path: '/news/complaints_proposals/new',
-      name: 'ComplaintsProposalNew',
-      component: PrisonAffairsDisclosureNew
-    }, {
-      path: '/news/complaints_proposals/:id/edit',
-      name: 'ComplaintsProposalEditor',
-      component: PrisonAffairsDisclosureEditor
-    }]
+{
+  path: '/news/working_dynamics',
+  name: 'WorkingDynamics',
+  component: WorkingDynamics,
+  children: [{
+    path: '/news/working_dynamics/new',
+    name: 'WorkingDynamicsNew',
+    component: PrisonAffairsDisclosureNew
+  }, {
+    path: '/news/working_dynamics/:id/edit',
+    name: 'WorkingDynamicsEditor',
+    component: PrisonAffairsDisclosureEditor
   }]
+},
+{
+  path: '/news/complaints_proposals',
+  name: 'ComplaintsProposal',
+  component: ComplaintsProposal,
+  children: [{
+    path: '/news/complaints_proposals/new',
+    name: 'ComplaintsProposalNew',
+    component: PrisonAffairsDisclosureNew
+  }, {
+    path: '/news/complaints_proposals/:id/edit',
+    name: 'ComplaintsProposalEditor',
+    component: PrisonAffairsDisclosureEditor
+  }]
+}]

@@ -20,9 +20,8 @@
         <el-form-item label="省">
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
-        <el-form-item>
-          <img :src="_$agency + jails.imageUrl" alt="">
-          <!--<img src="../../assets/images/default.jpg" alt="">-->
+        <el-form-item label="监狱邮编">
+          <el-input v-model="jails.zipcode" placeholder="请填写监狱邮编"></el-input>
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -79,7 +78,6 @@
     },
     computed: {
       ...mapGetters({
-//        jails: 'jails',//获取编辑的监狱基本信息
         addJailsResult: 'addJailsResult',//获取监狱编辑的结果
         authorization: 'authorization',//上传图片的头部设置
       })
@@ -87,7 +85,7 @@
     methods: {
       ...mapActions({
         getJailsInformation: 'getJailsInformation',//获取法律法规信息
-        addJails: 'addJails',//点击更新执行的方法
+        addJails: 'addJails',//点击更新添加监狱信息执行的方法
       }),
       ...mapMutations({
         breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息

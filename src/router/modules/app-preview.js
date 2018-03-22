@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/3/13/013.
- */
 import FamilyDownloadOld from '@/views/AppPreview/Family-DownLoad-Old'
 import FamilyDownload from '@/views/AppPreview/Family-DownLoad'
 import PrisonDownload from '@/views/AppPreview/Prison-DownLoad'

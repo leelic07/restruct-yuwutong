@@ -77,7 +77,7 @@
       }),
       //移除选中的图片时执行的方法
       handleRemove(){
-        this.newsForEdit.image = '';
+        this.newsForEdit.anotherImageUrl = ''
       },
       //当富文本内容发生变化时执行的方法
       editorChange(contents){
@@ -85,6 +85,7 @@
       },
       //上传图片成功时执行的方法
       handleSuccess(res){
+        this.newsForEdit.anotherImageUrl = res.url;
         this.uploadImg(res);
       },
       //超过上传图片数量限制执行的方法

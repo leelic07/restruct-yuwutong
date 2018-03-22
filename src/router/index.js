@@ -19,8 +19,8 @@ import JailInformationManagement from './modules/jail-information'
 import LawInformationManagement from './modules/laws-information'
 import PrisonAffairsDisclosure from './modules/news-management'
 import AppPreview from './modules/app-preview'
-
-Vue.use(Router);
+import UserManagement from './modules/userManagement'
+Vue.use(Router)
 
 export default new Router({
   routes: [
@@ -43,6 +43,7 @@ export default new Router({
     ...LawInformationManagement,
     ...PrisonAffairsDisclosure,
     ...AppPreview,
+    ...UserManagement,
     {
       path: '/',
       redirect: '/login'

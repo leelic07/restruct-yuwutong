@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import LawInformationManagement from '@/views/LawInformationManagement/Law-Information-Management'
 import LawNew from '@/views/LawInformationManagement/Law-New'
 import LawEditor from '@/views/LawInformationManagement/Law-Editor'

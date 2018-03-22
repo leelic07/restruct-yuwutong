@@ -1,18 +1,15 @@
-/**
- * Created by Administrator on 2018/1/7 0007.
- */
 import * as service from '../base/service'
 
 export default {
-  //获取家属注册信息列表
+  // 获取家属注册信息列表
   getRegistrations: pagination =>
     service.get('/registrations/page', pagination).then(res => res).catch(err => err),
 
-  //授权家属注册信息列表
+  // 授权家属注册信息列表
   authorizeRegistrations: (params, id) =>
     service.post('/registrations/authorize', params).then(res => res).catch(err => err),
 
-  //获取家属注册信息的照片url
+  // 获取家属注册信息的照片url
   getUuidImage: id =>
-    service.get(`/registrations/${id}/uuid_images`).then(res => res).catch(err => err)
+    service.get(`/registrations/${ id }/uuid_images`).then(res => res).catch(err => err)
 }

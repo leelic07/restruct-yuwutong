@@ -28,12 +28,12 @@
         type: String,
         required: true,
         default: ''
-      }//初始化富文本的内容
+      } // 初始化富文本的内容
     },
     data() {
       const _this = this;
       return {
-        fileListForEditor: [],//富文本上传图片列表
+        fileListForEditor: [],// 富文本上传图片列表
         editorOption: {
           modules: {
             toolbar: {
@@ -63,7 +63,7 @@
               }
             }
           }
-        }//富文本编辑器的配置
+        } // 富文本编辑器的配置
       }
     },
     watch: {
@@ -88,11 +88,12 @@
     methods: {
       ...mapActions({
 //        uploadFile: 'uploadFile'//富文本上传图片执行的方法
-      }),
+        }
+      ),
       ...mapMutations({
         uploadImg: 'uploadImg'//上传成功将结果进行处理
       }),
-      //当富文本的内容发生改变的时候传给父组件
+      // 当富文本的内容发生改变的时候传给父组件
       editorChange({editor, html, text}){
         this.$emit('editorChange', html);
       },

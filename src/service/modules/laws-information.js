@@ -1,19 +1,16 @@
-/**
- * Created by Administrator on 2018/1/10/010.
- */
 import * as service from '../base/service'
 
 export default {
-  //获取法律法规信息
+  // 获取法律法规信息
   getLawsInformation: params =>
     service.get(`/laws.json`, params).then(res => res).catch(err => err),
-  //添加法律法规信息
+  // 添加法律法规信息
   addLaw: law =>
     service.postFile(`/laws`, law).then(res => res).catch(err => err),
-  //编辑法律法规信息
+  // 编辑法律法规信息
   editLaw: law =>
     service.postFile(`/laws/update`, law).then(res => res).catch(err => err),
-  //根据id删除法律法规
+  // 根据id删除法律法规
   deleteLawById: id =>
-    service.remove(`/laws/${id}`).then(res => res).catch(err => err)
+    service.remove(`/laws/${ id }`).then(res => res).catch(err => err)
 }

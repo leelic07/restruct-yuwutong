@@ -1,4 +1,4 @@
-import {destroyVM, createTest, createVue} from './util'
+import {destroyVM, createTest} from './util'
 import Login from '@/views/Login/Login'
 
 describe('Login.vue', function () {
