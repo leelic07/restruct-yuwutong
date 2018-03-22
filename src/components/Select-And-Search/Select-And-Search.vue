@@ -44,40 +44,40 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      c: {
-        type: String
+export default {
+  props: {
+    c: {
+      type: String
+    },
+    searching: {
+      type: Object
+    } // 搜索的内容
+  },
+  data() {
+    return {
+      selectItem: [1, 10, 20, 30, 40, 50], // 每页可以提供的显示页数的数组
+      pageSize: 10 // 默认每页显示的条数
+    }
+  },
+  watch: {
+    'searching': {
+      handler: function(newValue) {
+        this.$emit('searchingChange', newValue)
       },
-      searching: {
-        type: Object
-      },//搜索的内容
+      deep: true
+    }
+  },
+  methods: {
+    // 点击搜索执行的方法
+    search() {
+      this.$emit('search', this.searching)
     },
-    data() {
-      return {
-        selectItem: [1, 10, 20, 30, 40, 50],//每页可以提供的显示页数的数组
-        pageSize: 10//默认每页显示的条数
-      }
-    },
-    watch: {
-      'searching': {
-        handler: function (newValue) {
-          this.$emit('searchingChange', newValue)
-        },
-        deep: true
-      }
-    },
-    methods: {
-      //点击搜索执行的方法
-      search(){
-        this.$emit('search', this.searching)
-      },
-      //选择不同的页数执行的方法
-      sizeChange(){
-        this.$emit('sizeChange', this.pageSize)
-      }
+    // 选择不同的页数执行的方法
+    sizeChange() {
+      this.$emit('sizeChange', this.pageSize)
     }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

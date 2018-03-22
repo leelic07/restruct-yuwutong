@@ -18,28 +18,27 @@
 </template>
 
 <script>
-  export default {
-    props:{
-      total:[Number],
-      pageSize:[Number],
-      currentPage:[Number]
+export default {
+  props: {
+    total: [Number],
+    pageSize: [Number],
+    currentPage: [Number]
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
+    // 每页条数发生变化时执行的方法
+    sizeChange(pageSize) {
+      this.$emit('sizeChange', pageSize)
     },
-    data() {
-      return {
-
-      }
-    },
-    methods:{
-      // 每页条数发生变化时执行的方法
-      sizeChange(pageSize){
-        this.$emit('sizeChange',pageSize);
-      },
-      // 当前页发生变化时执行的方法
-      currentChange(currentPage){
-        this.$emit('currentChange',currentPage);
-      }
+    // 当前页发生变化时执行的方法
+    currentChange(currentPage) {
+      this.$emit('currentChange', currentPage)
     }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

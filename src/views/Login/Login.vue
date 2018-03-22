@@ -31,59 +31,61 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  export default {
-    data() {
-      return {
-        ruleForm2: {
-          password: '123456',
-          username: '4501_sh',
-          prison: '4501',
-//          checked: false//是否选总记住密码
-        },
-        rules2: {
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
-          ],
-          username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'}
-          ],
-          prison: [
-            {required: true, message: '请输入监狱代码', trigger: 'blur'}
-          ]
-        }
-      };
-    },
-    watch: {
-      users(newValue){
-        if (newValue.hasOwnProperty('id'))
-          this.$router.push({
-            path: '/dashboard'
-          })
-      }
-    },
-    computed: {
-      ...mapGetters({
-        users: 'users'//获取用户登录时的信息
-      })
-    },
-    methods: {
-      ...mapActions({
-        login: 'login'
-      }),
-      //点击提交按钮执行的方法
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.login(this.ruleForm2);
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+import { mapActions, mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      ruleForm2: {
+        password: '123456',
+        username: '4501_sh',
+        prison: '4501'
+        // checked: false // 是否选总记住密码
+      },
+      rules2: {
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        prison: [
+          { required: true, message: '请输入监狱代码', trigger: 'blur' }
+        ]
       }
     }
+  },
+  watch: {
+    users(newValue) {
+      if (newValue.hasOwnProperty('id')) {
+        this.$router.push({
+          path: '/dashboard'
+        })
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      users: 'users' // 获取用户登录时的信息
+    })
+  },
+  methods: {
+    ...mapActions({
+      login: 'login'
+    }),
+    // 点击提交按钮执行的方法
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.login(this.ruleForm2)
+        }
+        else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

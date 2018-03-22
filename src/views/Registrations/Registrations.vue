@@ -126,126 +126,127 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-  export default {
-    components: {
-      SelectAndSearch
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
+export default {
+  components: {
+    SelectAndSearch
+  },
+  data() {
+    return {
+      breadcrumb: ['主页', '家属注册管理'], // 面包屑数组
+      tabNum: 'first',
+      searching: {
+        name: '', // 家属姓名
+        prisonerNumber: '', // 囚号
+        uuid: '' // 身份证号
+      },
+      dialogVisible: false, // 弹出框的显示和隐藏
+      innerVisible: false, // 内层弹框的显示和隐藏
+      agreeText: '同意',
+      disagreeText: '不同意',
+      authorization: {
+        remarks: '', // 授权评语
+        status: '' // 授权状态
+      },
+      showRemarks: false, // 是否显示拒绝家属注册理由
+      imgSrc: '' // 放大查看家属注册的照片地址
+    }
+  },
+  computed: {
+    // 映射getters方法获取state状态
+    ...mapGetters({
+      registrations: 'registrations', // 获取家属注册的注册信息列表
+      uuidImages: 'uuidImages', // 获取家属注册时的照片数组
+      registrationsTotal: 'registrationsTotal', // 获取家属注册时的总记录数
+      authRegistrationsResult: 'authRegistrationsResult', // 获取给家属授权的授权结果
+      remarks: 'remarks' // 获取拒绝家属注册的理由
+    })
+  },
+  mounted() {
+    // 将面包屑数组传递给Content组件
+    this.breadCrumb(this.breadcrumb)
+    // 获取家属注册信息列表
+    this.getRegistrations(this.pagination)
+  },
+  methods: {
+    // 映射mutations方法
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置家属注册页面的面包屑信息
+      setAuthRegistrationsResult: 'setAuthRegistrationsResult' // 设置家属注册授权信息
+    }),
+    // 映射actions方法
+    ...mapActions({
+      getRegistrations: 'getRegistrations', // 获取家属注册列表
+      getUuidImage: 'getUuidImage', // 获取对应家属得照片地址
+      searchAction: 'searchAction', // 获取带搜索条件的家属注册列表
+      authorizeRegistrations: 'authorizeRegistrations' // 家属注册信息授权
+    }),
+    // 每页条数发生变化时执行的方法
+    sizeChange(rows) {
+      this.$refs.pagination.handleSizeChange(rows)
+      this.change()
     },
-    data() {
-      return {
-        breadcrumb: ['主页', '家属注册管理'],//面包屑数组
-        tabNum: 'first',
-        searching: {
-          name: '',//家属姓名
-          prisonerNumber: '',//囚号
-          uuid: ''//身份证号
-        },
-        dialogVisible: false,//弹出框的显示和隐藏
-        innerVisible: false,//内层弹框的显示和隐藏
-        agreeText: '同意',
-        disagreeText: '不同意',
-        authorization: {
-          remarks: '',//授权评语
-          status: ''//授权状态
-        },
-        showRemarks: false,//是否显示拒绝家属注册理由
-        imgSrc: ''//放大查看家属注册的照片地址
+    // 根据是否有搜索内容调用不同的接口
+    change() {
+      this.getRegistrations({ ...this.searching, ...this.pagination })
+    },
+    // 点击搜索时执行的方法
+    search(searching) {
+      this.$refs.pagination.handleCurrentChange(1)
+      this.searching = searching
+      this.getRegistrations({ ...this.searching, ...this.pagination })
+    },
+    // 监听搜索框的内容变化
+    searchingChange(searching) {
+      this.searching = searching
+    },
+    // 点击授权时执行的方法
+    handleAuthorization(id) {
+      this.showRemarks = false
+      this.dialogVisible = true
+      this.authorization.remarks = '您的身份信息错误'
+      this.authorizeId = id
+      this.agreeText = '同意'
+      this.disagreeText = '不同意'
+      // this.getUuidImage(id)
+      this.setAuthRegistrationsResult({}) // 重置家属注册授权结果
+    },
+    // 点击同意或者确定申请通过执行的方法
+    agreeAuthorization(agreeText) {
+      if (agreeText === '同意') {
+        this.agreeText = '确定申请通过？'
+        this.disagreeText = '返回'
+      }
+      else {
+        if (agreeText === '提交') this.authorization.status = 'DENIED'
+        else {
+          this.authorization.remarks = ''
+          this.authorization.status = 'PASSED'
+        }
+        this.authorizeRegistrations({ ...this.authorization, id: this.authorizeId })
       }
     },
-    computed: {
-      //映射getters方法获取state状态
-      ...mapGetters({
-        registrations: 'registrations',//获取家属注册的注册信息列表
-        uuidImages: 'uuidImages',//获取家属注册时的照片数组
-        registrationsTotal: 'registrationsTotal',//获取家属注册时的总记录数
-        authRegistrationsResult: 'authRegistrationsResult',//获取给家属授权的授权结果
-        remarks: 'remarks'//获取拒绝家属注册的理由
-      })
-    },
-    mounted(){
-      //将面包屑数组传递给Content组件
-      this.breadCrumb(this.breadcrumb);
-      //获取家属注册信息列表
-      this.getRegistrations(this.pagination);
-    },
-    methods: {
-      //映射mutations方法
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置家属注册页面的面包屑信息
-        setAuthRegistrationsResult: 'setAuthRegistrationsResult'//设置家属注册授权信息
-      }),
-      //映射actions方法
-      ...mapActions({
-        getRegistrations: 'getRegistrations',//获取家属注册列表
-        getUuidImage: 'getUuidImage',//获取对应家属得照片地址
-        searchAction: 'searchAction',//获取带搜索条件的家属注册列表
-        authorizeRegistrations: 'authorizeRegistrations'//家属注册信息授权
-      }),
-      //每页条数发生变化时执行的方法
-      sizeChange(rows){
-        this.$refs.pagination.handleSizeChange(rows)
-        this.change();
-      },
-      //根据是否有搜索内容调用不同的接口
-      change(){
-        this.getRegistrations({...this.searching, ...this.pagination});
-      },
-      //点击搜索时执行的方法
-      search(searching){
-        this.$refs.pagination.handleCurrentChange(1)
-        this.searching = searching;
-        this.getRegistrations({...this.searching, ...this.pagination});
-      },
-      //监听搜索框的内容变化
-      searchingChange(searching){
-        this.searching = searching;
-      },
-      //点击授权时执行的方法
-      handleAuthorization(id) {
-        this.showRemarks = false;
-        this.dialogVisible = true;
-        this.authorization.remarks = '您的身份信息错误';
-        this.authorizeId = id;
-        this.agreeText = '同意';
-        this.disagreeText = '不同意';
-//        this.getUuidImage(id);
-        this.setAuthRegistrationsResult({});//重置家属注册授权结果
-      },
-      //点击同意或者确定申请通过执行的方法
-      agreeAuthorization(agreeText){
-        if (agreeText === '同意') {
-          this.agreeText = '确定申请通过？';
-          this.disagreeText = '返回';
-        } else {
-          if (agreeText === '提交')
-            this.authorization.status = 'DENIED';
-          else {
-            this.authorization.remarks = '';
-            this.authorization.status = 'PASSED';
-          }
-          this.authorizeRegistrations({...this.authorization, id: this.authorizeId});
-        }
-      },
-      //点击不同意或者返回执行的方法
-      disagreeAuthorization(disagreeText){
-        if (disagreeText === '返回') {
-          this.showRemarks = false;
-          this.disagreeText = '不同意';
-          this.agreeText = '同意';
-        } else {
-          this.showRemarks = true;
-          this.agreeText = '提交';
-          this.disagreeText = '返回';
-        }
-      },
-      //图片放大执行的方法
-      amplifyImage(imgSrc){
-        this.innerVisible = true;
-        this.imgSrc = imgSrc;
+    // 点击不同意或者返回执行的方法
+    disagreeAuthorization(disagreeText) {
+      if (disagreeText === '返回') {
+        this.showRemarks = false
+        this.disagreeText = '不同意'
+        this.agreeText = '同意'
       }
+      else {
+        this.showRemarks = true
+        this.agreeText = '提交'
+        this.disagreeText = '返回'
+      }
+    },
+    // 图片放大执行的方法
+    amplifyImage(imgSrc) {
+      this.innerVisible = true
+      this.imgSrc = imgSrc
     }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

@@ -46,70 +46,70 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-  export default {
-    data() {
-      return {
-        news: {//需要添加的法律信息
-          typeId: 1,
-          title: '',
-          contents: '',
-          isFocus: false,
-          sysFlag: 1
-        },
-        breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
-        fileList: [],
-        editorOption: {},//富文本编辑器的配置
-        newsType: {//新闻类型
-          '狱务公开': 1,
-          '工作动态': 2,
-          '投诉公示': 3
-        }
-      }
-    },
-    watch: {
-      //返回添加狱务公开信息结果时跳转到狱务公开信息管理页
-      addNewsResult(newValue){
-        window.history.back();
-      }
-    },
-    computed: {
-      ...mapGetters({
-        addNewsResult: 'addNewsResult'//获取添加狱务公开信息的结果
-      }),
-    },
-    methods: {
-      ...mapActions({
-        addNews: 'addNews'//添加狱务公开信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'//设置商品编辑页面的面包屑信息
-      }),
-      //添加图片选中图片时执行的方法
-      handleChange(file){
-        this.news.image = file;
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+export default {
+  data() {
+    return {
+      news: { // 需要添加的法律信息
+        typeId: 1,
+        title: '',
+        contents: '',
+        isFocus: false,
+        sysFlag: 1
       },
-      //移除选中图片时执行的方法
-      handleRemove(){
-        this.news.image = '';
-      },
-      //当富文本内容发生改变时执行的方法
-      editorChange(contents){
-        this.news.contents = contents;
-      },
-      //点击更新时执行的方法
-      onSubmit(){
-        this.addNews(this.news);
+      breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
+      fileList: [],
+      editorOption: {}, // 富文本编辑器的配置
+      newsType: { // 新闻类型
+        '狱务公开': 1,
+        '工作动态': 2,
+        '投诉公示': 3
       }
-    },
-    components: {
-      VueQuillEditor
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
     }
+  },
+  watch: {
+    // 返回添加狱务公开信息结果时跳转到狱务公开信息管理页
+    addNewsResult(newValue) {
+      window.history.back()
+    }
+  },
+  computed: {
+    ...mapGetters({
+      addNewsResult: 'addNewsResult' // 获取添加狱务公开信息的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      addNews: 'addNews' // 添加狱务公开信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置商品编辑页面的面包屑信息
+    }),
+    // 添加图片选中图片时执行的方法
+    handleChange(file) {
+      this.news.image = file
+    },
+    // 移除选中图片时执行的方法
+    handleRemove() {
+      this.news.image = ''
+    },
+    // 当富文本内容发生改变时执行的方法
+    editorChange(contents) {
+      this.news.contents = contents
+    },
+    // 点击更新时执行的方法
+    onSubmit() {
+      this.addNews(this.news)
+    }
+  },
+  components: {
+    VueQuillEditor
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

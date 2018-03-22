@@ -28,75 +28,73 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 
-  export default {
-    data() {
-      //验证密码和确认密码是否一致
-      var validatePasswordReview = (rule, value, callback) => {
-        if (value === '')
-          callback(new Error('请输入确认密码'));
-        else if (value !== this.ruleForm2.new_password)
-          callback(new Error('输入密码不一致'));
-        else
-          callback();
-      };
-      return {
-        ruleForm2: {
-          password: '',
-          new_password: '',
-          passwordReview: '',
-        },
-        rules2: {
-          password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
-          ],
-          new_password: [
-            {required: true, message: '请输入用户名', trigger: 'blur'}
-          ],
-          passwordReview: [
-            {validator: validatePasswordReview, trigger: 'blur'}
-          ]
-        },
-        breadcrumb: ['主页', '修改用户密码']
-      };
-    },
-    watch: {
-      modifyPasswordResult(){
-        setTimeout(() => {
-          this.logout();//修改用户密码成功以后重新登录
-        }, 1000);
-      }
-    },
-    computed: {
-      ...mapGetters({
-        modifyPasswordResult: 'modifyPasswordResult'//修改用户名密码的结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        modifyPassword: 'modifyPassword'//修改用户密码的方法
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',
-        logout: 'logout'//修改用户密码成功以后重新登录
-      }),
-      //点击提交按钮执行的方法
-      submitForm(formName){
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.modifyPassword(this.ruleForm2);
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
+export default {
+  data() {
+    // 验证密码和确认密码是否一致
+    var validatePasswordReview = (rule, value, callback) => {
+      if (value === '') callback(new Error('请输入确认密码'))
+      else if (value !== this.ruleForm2.new_password) callback(new Error('输入密码不一致'))
+      else callback()
     }
+    return {
+      ruleForm2: {
+        password: '',
+        new_password: '',
+        passwordReview: ''
+      },
+      rules2: {
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        new_password: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        passwordReview: [
+          { validator: validatePasswordReview, trigger: 'blur' }
+        ]
+      },
+      breadcrumb: ['主页', '修改用户密码']
+    }
+  },
+  watch: {
+    modifyPasswordResult() {
+      setTimeout(() => {
+        this.logout() // 修改用户密码成功以后重新登录
+      }, 1000)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      modifyPasswordResult: 'modifyPasswordResult' // 修改用户名密码的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      modifyPassword: 'modifyPassword' // 修改用户密码的方法
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb',
+      logout: 'logout' // 修改用户密码成功以后重新登录
+    }),
+    // 点击提交按钮执行的方法
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.modifyPassword(this.ruleForm2)
+        }
+        else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

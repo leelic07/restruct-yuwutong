@@ -28,12 +28,15 @@ import 'babel-polyfill'
 
 Vue.use(Vuex)
 
-let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
+let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) => {
   args.map(arg => {
-    for (let key in arg) {
-      Object.assign(eval(key), arg[key])
-    }
+    Object.assign(actions, arg.actions)
+    Object.assign(mutations, arg.mutations)
+    Object.assign(getters, arg.getters)
+    Object.assign(state, arg.state)
   })
+}
+
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
   registrations,
@@ -61,7 +64,6 @@ merge(
   downloadFile,
   uploadFile
 )
-
 export default new Vuex.Store({
   actions,
   mutations,

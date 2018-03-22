@@ -36,66 +36,66 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '法律法规信息管理', '法律信息编辑'],
-        fileList: [],
-        editorOption: {}//富文本编辑器的配置
-      }
-    },
-    watch: {
-      editLawResult(newValue){
-        this.$router.push({
-          path: '/laws'
-        });
-      }
-    },
-    computed: {
-      ...mapGetters({
-        lawForEdit: 'lawForEdit',//获取编辑的监狱基本信息
-        editLawResult: 'editLawResult'//获取编辑法律法规结果
-      }),
-      editor() {
-        return this.$refs.myQuillEditor.quill
-      }
-    },
-    methods: {
-      ...mapActions({
-        editLaw: 'editLaw',//编辑法律法规执行的方法
-        getLawsInformation: 'getLawsInformation'//获取法律法规列表信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getLawById: 'getLawById'//根据id获取需要编辑的法律信息
-      }),
-      //点击更新执行的方法
-      onSubmit(){
-        this.editLaw(this.lawForEdit);
-      },
-      //移除图片时执行的方法
-      handleRemove(){
-        this.lawForEdit.image = '';
-      },
-      handleChange(file){
-        this.lawForEdit.image = file;
-      },
-      //富文本内容发生变化时执行的方法
-      editorChange(contents){
-        this.lawForEdit.contents = contents;
-      }
-    },
-    components: {
-      VueQuillEditor
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getLawById(this.$route.params.id);
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '法律法规信息管理', '法律信息编辑'],
+      fileList: [],
+      editorOption: {} // 富文本编辑器的配置
     }
+  },
+  watch: {
+    editLawResult(newValue) {
+      this.$router.push({
+        path: '/laws'
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      lawForEdit: 'lawForEdit', // 获取编辑的监狱基本信息
+      editLawResult: 'editLawResult' // 获取编辑法律法规结果
+    }),
+    editor() {
+      return this.$refs.myQuillEditor.quill
+    }
+  },
+  methods: {
+    ...mapActions({
+      editLaw: 'editLaw', // 编辑法律法规执行的方法
+      getLawsInformation: 'getLawsInformation' // 获取法律法规列表信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
+      getLawById: 'getLawById' // 根据id获取需要编辑的法律信息
+    }),
+    // 点击更新执行的方法
+    onSubmit() {
+      this.editLaw(this.lawForEdit)
+    },
+    // 移除图片时执行的方法
+    handleRemove() {
+      this.lawForEdit.image = ''
+    },
+    handleChange(file) {
+      this.lawForEdit.image = file
+    },
+    // 富文本内容发生变化时执行的方法
+    editorChange(contents) {
+      this.lawForEdit.contents = contents
+    }
+  },
+  components: {
+    VueQuillEditor
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getLawById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

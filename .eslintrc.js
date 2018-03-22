@@ -3,6 +3,7 @@
 module.exports = {
   root: true,
   parserOptions: {
+    sourceType: 'module',
     parser: 'babel-eslint'
   },
   env: {
@@ -16,7 +17,7 @@ module.exports = {
     'standard'
   ],
   // required to lint *.vue files
-  plugins: ['vue'],
+  plugins: ['html'],
   // add your custom rules here
   settings: {
       'import/resolver': {

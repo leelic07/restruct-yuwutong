@@ -55,59 +55,60 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  export default {
-    data() {
-      return {
-        comments: {
-          content: ''//回复的内容
-        },
-        breadcrumb: ['主页', '监狱长信箱', '邮件详情'],
-        rule: {
-          content: [{required: true, message: '请输入回复的内容', trigger: 'blur'}]
-        }
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      comments: {
+        content: '' // 回复的内容
+      },
+      breadcrumb: ['主页', '监狱长信箱', '邮件详情'],
+      rule: {
+        content: [{ required: true, message: '请输入回复的内容', trigger: 'blur' }]
       }
-    },
-    watch: {
-      commentResult(newValue){
-        this.comments.content = '';//回复成功将回复内容置为空
-      }
-    },
-    computed: {
-      ...mapGetters({
-        mailDetail: 'mailDetail',//邮件详情信息
-        commentResult: 'commentResult'//评论结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        getMailDetailById: 'getMailDetailById',//根据邮件id获取邮件详情信息
-        replyComment: 'replyComment'//根据回复的内容添加监狱回复信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'
-      }),
-      //点击回复按钮执行的方法
-      reply(){
-        this.$refs['replyForm'].validate(valid => {
-          if (valid) {
-            this.replyComment({
-              'id': this.$route.params.id,
-              'contents': this.comments.content,
-              'family_id': this.mailDetail.familyId,
-            });
-          } else {
-            console.log('submit err');
-            return false;
-          }
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getMailDetailById(this.$route.params.id);
     }
+  },
+  watch: {
+    commentResult(newValue) {
+      this.comments.content = '' // 回复成功将回复内容置为空
+    }
+  },
+  computed: {
+    ...mapGetters({
+      mailDetail: 'mailDetail', // 邮件详情信息
+      commentResult: 'commentResult' // 评论结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      getMailDetailById: 'getMailDetailById', // 根据邮件id获取邮件详情信息
+      replyComment: 'replyComment' // 根据回复的内容添加监狱回复信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb'
+    }),
+    // 点击回复按钮执行的方法
+    reply() {
+      this.$refs['replyForm'].validate(valid => {
+        if (valid) {
+          this.replyComment({
+            'id': this.$route.params.id,
+            'contents': this.comments.content,
+            'family_id': this.mailDetail.familyId
+          })
+        }
+        else {
+          console.log('submit err')
+          return false
+        }
+      })
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getMailDetailById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

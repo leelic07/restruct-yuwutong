@@ -47,29 +47,29 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations} from 'vuex'
+import { mapActions } from 'vuex'
 
-  export default {
-    data() {
-      return {}
-    },
-    methods: {
-      ...mapActions({
-        logout: 'logout'// 点击确定退出登录时执行的方法
-      }),
-      // 点击退出登录执行的方法
-      confirmExit(e) {
-        e.preventDefault()
-        this.$confirm('是否退出登录？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.logout()
-        })
-      }
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    ...mapActions({
+      logout: 'logout' // 点击确定退出登录时执行的方法
+    }),
+    // 点击退出登录执行的方法
+    confirmExit(e) {
+      e.preventDefault()
+      this.$confirm('是否退出登录？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.logout()
+      })
     }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

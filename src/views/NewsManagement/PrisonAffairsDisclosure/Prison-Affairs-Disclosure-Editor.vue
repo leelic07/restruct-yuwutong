@@ -40,61 +40,61 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
-        fileList: [],
-        fromPath: ''//来自哪个页面
-      }
-    },
-    watch: {
-      //监听编辑狱务公开信息的结果
-      editNewsResult(newValue){
-        window.history.back();
-      }
-    },
-    computed: {
-      ...mapGetters({
-        newsForEdit: 'newsForEdit',//获取编辑的狱务公开基本信息
-        editNewsResult: 'editNewsResult'//获取编辑狱务公开信息的结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        editNews: 'editNews'//编辑狱务公开信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getNewsById: 'getNewsById'//根据id获取需要编辑的新闻信息
-      }),
-      //添加图片选中图片时执行的方法
-      handleChange(file){
-        this.newsForEdit.image = file;
-      },
-      //移除选中的图片时执行的方法
-      handleRemove(){
-        this.newsForEdit.image = '';
-      },
-      //当富文本内容发生变化时执行的方法
-      editorChange(contents){
-        this.newsForEdit.contents = contents;
-      },
-      //点击更新时执行的方法
-      onSubmit(){
-        this.editNews(this.newsForEdit);
-      }
-    },
-    components: {
-      VueQuillEditor
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getNewsById(this.$route.params.id);
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
+      fileList: [],
+      fromPath: '' // 来自哪个页面
     }
+  },
+  watch: {
+    // 监听编辑狱务公开信息的结果
+    editNewsResult(newValue) {
+      window.history.back()
+    }
+  },
+  computed: {
+    ...mapGetters({
+      newsForEdit: 'newsForEdit', // 获取编辑的狱务公开基本信息
+      editNewsResult: 'editNewsResult' // 获取编辑狱务公开信息的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      editNews: 'editNews' // 编辑狱务公开信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
+      getNewsById: 'getNewsById' // 根据id获取需要编辑的新闻信息
+    }),
+    // 添加图片选中图片时执行的方法
+    handleChange(file) {
+      this.newsForEdit.image = file
+    },
+    // 移除选中的图片时执行的方法
+    handleRemove() {
+      this.newsForEdit.image = ''
+    },
+    // 当富文本内容发生变化时执行的方法
+    editorChange(contents) {
+      this.newsForEdit.contents = contents
+    },
+    // 点击更新时执行的方法
+    onSubmit() {
+      this.editNews(this.newsForEdit)
+    }
+  },
+  components: {
+    VueQuillEditor
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getNewsById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

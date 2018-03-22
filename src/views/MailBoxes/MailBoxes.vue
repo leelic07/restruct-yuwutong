@@ -45,68 +45,69 @@
 </template>
 
 <script>
-  import {mapMutations, mapActions, mapGetters} from 'vuex'
-  import Pagination from '@/components/Pagination/Pagination'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '监狱长信箱'],//面包屑数组
-        pagination: {
-          rows: 10,//每页显示记录条数
-          page: 1//当前显示第几页
-        },
-        isMailBoxesInspect: false,//是否是查看邮箱信息页面
-        type: 1
+import { mapMutations, mapActions, mapGetters } from 'vuex'
+import Pagination from '@/components/Pagination/Pagination'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '监狱长信箱'], // 面包屑数组
+      pagination: {
+        rows: 10, // 每页显示记录条数
+        page: 1 // 当前显示第几页
+      },
+      isMailBoxesInspect: false, // 是否是查看邮箱信息页面
+      type: 1
+    }
+  },
+  watch: {
+    // 从邮件详情页面跳转到邮箱列表路由使邮箱列表显示
+    $route(to, from) {
+      if (to.path === '/mailboxes') {
+        this.isMailBoxesInspect = false
+        this.breadCrumb(this.breadcrumb) // 路由发生改变重新发送面包屑信息
       }
-    },
-    watch: {
-      //从邮件详情页面跳转到邮箱列表路由使邮箱列表显示
-      $route(to, from) {
-        if (to.path === '/mailboxes') {
-          this.isMailBoxesInspect = false;
-          this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
-        } else {
-          this.isMailBoxesInspect = true;
-        }
+      else {
+        this.isMailBoxesInspect = true
       }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      mailBoxes: 'mailBoxes',
+      mailBoxesTotal: 'mailBoxesTotal'
+    })
+  },
+  methods: {
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置家属注册页面的面包屑信息
+    }),
+    ...mapActions({
+      getMailBoxes: 'getMailBoxes' // 获取监狱长邮箱列表信息
+    }),
+    // 当前页发生变化时执行的方法
+    currentChange(page) {
+      this.pagination.page = page
+      this.getMailBoxes(this.pagination)
     },
-    computed: {
-      ...mapGetters({
-        mailBoxes: 'mailBoxes',
-        mailBoxesTotal: 'mailBoxesTotal'
+    // 点击邮件标题时执行的方法
+    inspectMail(row) {
+      this.$router.push({
+        path: `/mailboxes/${ row.id }`
       })
     },
-    methods: {
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'//设置家属注册页面的面包屑信息
-      }),
-      ...mapActions({
-        getMailBoxes: 'getMailBoxes',//获取监狱长邮箱列表信息
-      }),
-      //当前页发生变化时执行的方法
-      currentChange(page){
-        this.pagination.page = page;
-        this.getMailBoxes(this.pagination);
-      },
-      //点击邮件标题时执行的方法
-      inspectMail(row){
-        this.$router.push({
-          path: `/mailboxes/${row.id}`
-        })
-      },
-      //刷新监狱长邮箱信息
-      refreshMailBoxes(){
-        this.getMailBoxes(this.pagination);
-      }
-    },
-    components: {
-      Pagination
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getMailBoxes(this.pagination);
+    // 刷新监狱长邮箱信息
+    refreshMailBoxes() {
+      this.getMailBoxes(this.pagination)
     }
+  },
+  components: {
+    Pagination
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getMailBoxes(this.pagination)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
