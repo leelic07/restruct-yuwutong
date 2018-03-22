@@ -20,7 +20,7 @@ import LawInformationManagement from './modules/laws-information'
 import PrisonAffairsDisclosure from './modules/news-management'
 import AppPreview from './modules/app-preview'
 import UserManagement from './modules/userManagement'
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [

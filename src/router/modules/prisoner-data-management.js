@@ -7,13 +7,13 @@ export default [{
   name: 'PrisonerImportIndex',
   component: PrisonerImportIndex
 },
-  {
-    path: '/prison_term/import_index',
-    name: 'PrisonTermImportIndex',
-    component: PrisonTermImportIndex
-  },
-  {
-    path: '/prison_reward_punishment/import_index',
-    name: 'PrisonerRewardPunishment',
-    component: PrisonerRewardPunishment
-  }]
+{
+  path: '/prison_term/import_index',
+  name: 'PrisonTermImportIndex',
+  component: PrisonTermImportIndex
+},
+{
+  path: '/prison_reward_punishment/import_index',
+  name: 'PrisonerRewardPunishment',
+  component: PrisonerRewardPunishment
+}]

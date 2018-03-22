@@ -32,16 +32,16 @@
       isNotLogin: {
         type: Boolean,
         required: true
-      }, //是否为登录界面
+      }, // 是否为登录界面
     },
     data() {
       return {}
     },
     computed: {
-      //获取vuex数据
+      // 获取vuex数据
       ...mapGetters({
-        breadcrumb: 'breadcrumb',//获取面包屑信息
-        loading: 'loading'//获取是否显示遮罩层
+        breadcrumb: 'breadcrumb',// 获取面包屑信息
+        loading: 'loading'// 获取是否显示遮罩层
       })
     }
   }

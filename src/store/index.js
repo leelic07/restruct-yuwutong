@@ -31,11 +31,9 @@ Vue.use(Vuex)
 let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
   args.map(arg => {
     for (let key in arg) {
-      console.log(key)
       Object.assign(eval(key), arg[key])
     }
   })
-
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
   registrations,

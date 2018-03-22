@@ -1,3 +1,3 @@
 export default {
-  breadcrumb: []//面包屑数组
+  breadcrumb: []// 面包屑数组
 }

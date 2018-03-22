@@ -18,10 +18,27 @@ module.exports = {
   // required to lint *.vue files
   plugins: ['vue'],
   // add your custom rules here
+  settings: {
+      'import/resolver': {
+          'webpack': {
+              'config': 'build/webpack.base.conf.js'
+          }
+      }
+  },
   rules: {
     // 禁止生产环境带有调试语句
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // 禁止在条件中使用常量表达式
+    "no-constant-condition": 2,
+    // 禁止不必要的括号 //(a * b) + c;//报错
+    "no-extra-parens": 0,
+    // 禁止不必要的分号
+    // "no-extra-semi": 2,
+    // 禁止在return、throw、continue 和 break语句之后出现不可达代码
+    "no-unreachable": 2,
+    // 控制逗号前后的空格
+    "comma-spacing": [2, {"before": false, "after": true}],
     // 连续声明
     'one-var': [2, { var: 'always', let: 'always', const: 'never' }],
     // switch 必须带有default
