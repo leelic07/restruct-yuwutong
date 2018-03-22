@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/3/5/005.
- */
 export default {
   //日期过滤器
   Date(time){

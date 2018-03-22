@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/11/011.
- */
 export default {
   news: [],//狱务公开管理模块全部原始数据
   newsTotal: 0,//狱务公开管理模块全部数据

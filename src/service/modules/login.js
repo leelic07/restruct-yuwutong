@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/24/024.
- */
 import * as service from '../base/service'
 import qs from 'qs'
 

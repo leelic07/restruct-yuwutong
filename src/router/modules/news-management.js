@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import PrisonAffairsDisclosure from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure'
 import PrisonAffairsDisclosureNew from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-New'
 import PrisonAffairsDisclosureEditor from '@/views/NewsManagement/PrisonAffairsDisclosure/Prison-Affairs-Disclosure-Editor'

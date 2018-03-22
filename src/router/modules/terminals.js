@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import Terminals from '@/views/Terminals/Terminals'
 import TerminalsNew from '@/views/Terminals/Terminals-New'
 import TerminalsEdit from '@/views/Terminals/Terminals-Edit'

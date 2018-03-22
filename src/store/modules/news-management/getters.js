@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/11/011.
- */
 export default {
   //获取狱务公开原数据信息
   news: state => state.news,

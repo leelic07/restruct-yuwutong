@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/9/009.
- */
 export default {
   //获取家属订单信息列表
   familyOrders: state => state.familyOrders,

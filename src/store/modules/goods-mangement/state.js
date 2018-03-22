@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/2/002.
- */
 export default {
   goods: [],//商品信息列表
   // goodsOrigin: [],//商品信息列表原有数据数组

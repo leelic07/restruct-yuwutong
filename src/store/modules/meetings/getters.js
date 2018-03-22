@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 export default {
   //获取家属会见列表信息
   meetings: state => state.meetings,

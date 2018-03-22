@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/2/002.
- */
 // import filters from '@/filters'
 export default {
   //获取商品列表信息

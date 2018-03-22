@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/12/25/025.
- */
 export default {
   //家属注册状态过滤器
   gender(val){

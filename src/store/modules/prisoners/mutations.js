@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 export default {
   //获取囚犯列表信息
   getPrisoners(state, prisonersList) {

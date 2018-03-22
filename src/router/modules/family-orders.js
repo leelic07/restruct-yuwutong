@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import FamilyOrders from '@/views/FamilyOrders/Family-Orders'
 import OrderDetail from '@/views/FamilyOrders/Order-Detail'
 

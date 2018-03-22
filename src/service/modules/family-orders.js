@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/9/009.
- */
 import * as service from '../base/service'
 
 export default {

@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/7 0007.
- */
 import base from '../config/base';
 import axios from 'axios';
 import store from '@/store';

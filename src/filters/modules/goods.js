@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/8/008.
- */
 export default {
   //商品部类过滤器
   goodsCategory(category){

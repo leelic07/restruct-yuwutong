@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/19/019.
- */
 export default {
   //罪犯数据模板上传成功后将罪犯数据模板导入到服务端
   importPrisoner: (state, prisonerResult) => state.prisonerResult = prisonerResult.data,

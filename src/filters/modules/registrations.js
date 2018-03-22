@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/12/19/019.
- */
 export default {
   //家属注册状态过滤器
   registrationsStatus(val){

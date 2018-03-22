@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import GoodsManagement from '@/views/GoodsManagement/Goods-Management'
 import GoodsEditor from '@/views/GoodsManagement/Goods-Editor'
 import GoodsNew from '@/views/GoodsManagement/Goods-New'

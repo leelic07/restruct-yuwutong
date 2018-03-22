@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/4/004.
- */
 export default {
   getMailBoxes(state, mailBoxesList){
     // let mailBoxes = [];

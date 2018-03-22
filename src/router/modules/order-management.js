@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import PrisonerOrders from '@/views/OrdersManagement/Prisoner-Orders'
 
 export default [{

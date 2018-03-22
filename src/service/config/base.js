@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/7 0007.
- */
 export default {
   //请求地址
   // url: '/',

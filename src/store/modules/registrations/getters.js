@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 export default {
   //获取家属注册数组信息
   registrations: state => state.registrations,
@@ -16,4 +13,3 @@ export default {
   //获取拒绝家属申请理由数组
   remarks: state => state.remarks
 }
-

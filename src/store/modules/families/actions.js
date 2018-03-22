@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 import http from '@/service'
 
 export default {

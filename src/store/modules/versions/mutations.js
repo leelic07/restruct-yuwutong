@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 export default {
   //获取狱务通版本信息
   getVersions(state, versionList){

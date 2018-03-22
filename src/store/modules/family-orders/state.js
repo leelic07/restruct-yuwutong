@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/9/009.
- */
 export default {
   familyOrders: [],//家属订单列表信息
   orderDetailList: [],//订单详情信息

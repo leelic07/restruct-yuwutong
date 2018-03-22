@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/2/28/028.
- */
 import PrisonerImportIndex from '@/views/PrisonerDataManagement/Prisoner'
 import PrisonTermImportIndex from '@/views/PrisonerDataManagement/Prison-Term'
 import PrisonerRewardPunishment from '@/views/PrisonerDataManagement/Prisoner-Reward-Punishment'

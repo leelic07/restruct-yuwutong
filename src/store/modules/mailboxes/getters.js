@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/4/004.
- */
 export default {
   //获取监狱长信箱列表
   mailBoxes: state => state.mailBoxes,

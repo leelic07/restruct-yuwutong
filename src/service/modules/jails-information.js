@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/10/010.
- */
 import * as service from '../base/service'
 import qs from 'qs'
 
@@ -15,4 +12,3 @@ export default {
   editJails: jails =>
     service.postFile('/jails/update', jails).then(res => res).catch(err => err)
 }
-

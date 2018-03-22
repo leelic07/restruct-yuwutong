@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2018/1/1 0001.
- */
 export default {
   registrations: [],//家属注册列表数组
   authorizationResult: {},//家属注册授权结果信息
