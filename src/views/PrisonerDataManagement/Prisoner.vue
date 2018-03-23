@@ -35,62 +35,61 @@
 </template>
 
 <script>
-  import {mapMutations, mapActions, mapGetters} from 'vuex'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '囚犯信息管理'],
-        fileList: [],
-//        prisonerHref: this._$agency + '/download/downloadfile?filepath=prison_template.xls',
-        prisonerHref: this._$agency + '/download/prison_template.xls'//下载罪犯信息模板的地址
-      }
-    },
-    watch: {
-      uploadResult(newValue){
-        this.importPrisoner({filepath: newValue.path});
-      },
-      prisonerResult(newValue){
-        this.alertInformation(newValue);
-      }
-    },
-    computed: {
-      ...mapGetters({
-        prisonerResult: 'prisonerResult',//获取罪犯模板导入结果
-        uploadResult: 'uploadResult',//获取上传罪犯模板文件的结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        importPrisoner: 'importPrisoner',//罪犯数据模板上传成功后将罪犯数据模板导入到服务端
-        uploadFile: 'uploadFile'//上传罪犯数据模板文件到服务端
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'
-      }),
-      submitUpload(){
-        this.$refs.upload.submit();
-      },
-      beforeUpload(file){
-        this.uploadFile(file);
-        return false;
-      },
-      //解析文件成功后执行的方法
-      alertInformation(information){
-        this.$notify({
-          title: '解析结果提示',
-          dangerouslyUseHTMLString: true,
-          message: `<p>新增：${information.add_total}</p>
-                    <p>成功：${information.success_total}</p>
-                    <p>修改：${information.update_total}</p>`,
-          duration: 5000,
-          offset: 100
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb)
+import { mapMutations, mapActions, mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '囚犯信息管理'],
+      fileList: [],
+      prisonerHref: `${ this._$agency }/download/prison_template.xls`
     }
+  },
+  watch: {
+    uploadResult(newValue) {
+      this.importPrisoner({ filepath: newValue.path })
+    },
+    prisonerResult(newValue) {
+      this.alertInformation(newValue)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      prisonerResult: 'prisonerResult', // 获取罪犯模板导入结果
+      uploadResult: 'uploadResult' // 获取上传罪犯模板文件的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      importPrisoner: 'importPrisoner', // 罪犯数据模板上传成功后将罪犯数据模板导入到服务端
+      uploadFile: 'uploadFile' // 上传罪犯数据模板文件到服务端
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb'
+    }),
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    beforeUpload(file) {
+      this.uploadFile(file)
+      return false
+    },
+    // 解析文件成功后执行的方法
+    alertInformation(information) {
+      this.$notify({
+        title: '解析结果提示',
+        dangerouslyUseHTMLString: true,
+        message: `<p>新增：${ information.add_total }</p>
+                  <p>成功：${ information.success_total }</p>
+                  <p>修改：${ information.update_total }</p>`,
+        duration: 5000,
+        offset: 100
+      })
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

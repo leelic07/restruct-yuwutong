@@ -33,66 +33,66 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 
-  export default {
-    data() {
-      return {
-        law: {//需要添加的法律信息
-          title: '',
-          contents: '',
-          image: '',
-          sys_flag: 1
-        },
-        breadcrumb: ['主页', '法律法规信息管理', '添加法律信息'],
-        fileList: [],
-      }
-    },
-    watch: {
-      addLawResult(newValue){
-        this.$router.push({
-          path: '/laws'
-        });
-      }
-    },
-    computed: {
-      ...mapGetters({
-        addLawResult: 'addLawResult'//获取添加法律法规结果
-      }),
-    },
-    methods: {
-      ...mapActions({
-        getLawsInformation: 'getLawsInformation',//获取法律法规信息
-        addLaw: 'addLaw'//添加法律法规信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-      }),
-      //移除图片执行的方法
-      handleRemove(){
-        this.law.image = '';
+export default {
+  data() {
+    return {
+      law: { // 需要添加的法律信息
+        title: '',
+        contents: '',
+        image: '',
+        sys_flag: 1
       },
-      //选择图片时执行的方法
-      handleChange(file){
-        this.law.image = file;
-      },
-      //点击提交时执行的方法
-      onSubmit(){
-        this.addLaw(this.law);
-      },
-      //富文本内容发生改变时执行的方法
-      editorChange(contents){
-        this.law.contents = contents;
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-    },
-    components: {
-      VueQuillEditor
+      breadcrumb: ['主页', '法律法规信息管理', '添加法律信息'],
+      fileList: []
     }
+  },
+  watch: {
+    addLawResult(newValue) {
+      this.$router.push({
+        path: '/laws'
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      addLawResult: 'addLawResult' // 获取添加法律法规结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      getLawsInformation: 'getLawsInformation', // 获取法律法规信息
+      addLaw: 'addLaw' // 添加法律法规信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置商品编辑页面的面包屑信息
+    }),
+    // 移除图片执行的方法
+    handleRemove() {
+      this.law.image = ''
+    },
+    // 选择图片时执行的方法
+    handleChange(file) {
+      this.law.image = file
+    },
+    // 点击提交时执行的方法
+    onSubmit() {
+      this.addLaw(this.law)
+    },
+    // 富文本内容发生改变时执行的方法
+    editorChange(contents) {
+      this.law.contents = contents
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+  },
+  components: {
+    VueQuillEditor
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

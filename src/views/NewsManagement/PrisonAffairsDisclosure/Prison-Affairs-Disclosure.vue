@@ -61,113 +61,114 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-  import Pagination from '@/components/Pagination/Pagination'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '狱务公开信息管理', '狱务公开'],//面包屑数组
-        pagination: {
-          rows: 10,//每页显示记录条数
-          page: 1//当前显示第几页
-        },
-        c: 'prisonAffairsDisclosure',
-        searching: {
-          title: '',//新闻标题
-          type: 1//狱务公开新闻类型
-        },
-        isPrisonAffairsDisclosure: false,//是否是商品信息列表页面
-        goodsDescription: ''//商品简介信息
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
+import Pagination from '@/components/Pagination/Pagination'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '狱务公开信息管理', '狱务公开'], // 面包屑数组
+      pagination: {
+        rows: 10, // 每页显示记录条数
+        page: 1 // 当前显示第几页
+      },
+      c: 'prisonAffairsDisclosure',
+      searching: {
+        title: '', // 新闻标题
+        type: 1 // 狱务公开新闻类型
+      },
+      isPrisonAffairsDisclosure: false, // 是否是商品信息列表页面
+      goodsDescription: '' // 商品简介信息
+    }
+  },
+  watch: {
+    // 从商品管理页面跳转到商品编辑页面使商品列表显示
+    $route(to) {
+      if (to.path === '/news/prison_affairs_disclosure') {
+        this.isPrisonAffairsDisclosure = false
+        this.breadCrumb(this.breadcrumb) // 路由发生改变重新发送面包屑信息
       }
-    },
-    watch: {
-      //从商品管理页面跳转到商品编辑页面使商品列表显示
-      $route(to) {
-        if (to.path === '/news/prison_affairs_disclosure') {
-          this.isPrisonAffairsDisclosure = false;
-          this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
-        } else {
-          this.isPrisonAffairsDisclosure = true;
-        }
+      else {
+        this.isPrisonAffairsDisclosure = true
       }
+    }
+  },
+  computed: {
+    // 映射getters方法获取state状态
+    ...mapGetters({
+      news: 'news', // 狱务公开信息列表
+      newsTotal: 'newsTotal', // 狱务公开信息记录数
+      deleteNewsResult: 'deleteNewsResult' // 获取删除狱务公开信息的结果
+    })
+  },
+  methods: {
+    // 映射mutations方法
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置商品管理页面的面包屑信息
+    }),
+    // 映射actions方法
+    ...mapActions({
+      getNews: 'getNews', // 获取狱务公开信息
+      deleteNewsById: 'deleteNewsById' // 根据id删除狱务公开信息
+    }),
+    // 每页条数发生变化时执行的方法
+    sizeChange(rows) {
+      this.pagination.page = 1
+      this.pagination.rows = rows
+      this.change()
     },
-    computed: {
-      //映射getters方法获取state状态
-      ...mapGetters({
-        news: 'news',//狱务公开信息列表
-        newsTotal: 'newsTotal',//狱务公开信息记录数
-        deleteNewsResult: 'deleteNewsResult'//获取删除狱务公开信息的结果
+    // 当前页码发生变化时执行的方法
+    currentChange(page) {
+      this.pagination.page = page
+      this.change()
+    },
+    // 根据是否有搜索内容调用不同的接口
+    change() {
+      this.getNews({ ...this.searching, ...this.pagination })
+    },
+    // 点击搜索时执行的方法
+    search(searching) {
+      this.pagination.page = 1
+      this.searching = searching
+      this.getNews({ ...this.searching, ...this.pagination })
+    },
+    // 监听搜索框的内容变化
+    searchingChange(searching) {
+      this.searching = searching
+    },
+    // 点击删除时执行的方法
+    handleDelete(id) {
+      this.$confirm('确定删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteNewsById(id)
+      }).catch(err => console.log(err))
+    },
+    // 点击编辑时执行的方法
+    handleEdit(id) {
+      this.$router.push({
+        path: `/news/prison_affairs_disclosure/${ id }/edit`
       })
     },
-    methods: {
-      //映射mutations方法
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-      }),
-      //映射actions方法
-      ...mapActions({
-        getNews: 'getNews',//获取狱务公开信息
-        deleteNewsById: 'deleteNewsById'//根据id删除狱务公开信息
-      }),
-      //每页条数发生变化时执行的方法
-      sizeChange(rows){
-        this.pagination.page = 1;
-        this.pagination.rows = rows;
-        this.change();
-      },
-      //当前页码发生变化时执行的方法
-      currentChange(page){
-        this.pagination.page = page;
-        this.change();
-      },
-      //根据是否有搜索内容调用不同的接口
-      change(){
-        this.getNews({...this.searching, ...this.pagination});
-      },
-      //点击搜索时执行的方法
-      search(searching){
-        this.pagination.page = 1;
-        this.searching = searching;
-        this.getNews({...this.searching, ...this.pagination});
-      },
-      //监听搜索框的内容变化
-      searchingChange(searching){
-        this.searching = searching;
-      },
-      //点击删除时执行的方法
-      handleDelete(id){
-        this.$confirm('确定删除？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.deleteNewsById(id);
-        }).catch(err => console.log(err));
-      },
-      //点击编辑时执行的方法
-      handleEdit(id){
-        this.$router.push({
-          path: `/news/prison_affairs_disclosure/${id}/edit`
-        });
-      },
-      //添加狱务公开信息
-      newPrisonAffairsDisclosure(){
-        this.$router.push({
-          path: '/news/prison_affairs_disclosure/new'
-        });
-      }
-    },
-    mounted(){
-      //将面包屑数组传递给Content组件
-      this.breadCrumb(this.breadcrumb);
-      this.getNews({...this.searching, ...this.pagination});
-    },
-    components: {
-      SelectAndSearch,
-      Pagination
+    // 添加狱务公开信息
+    newPrisonAffairsDisclosure() {
+      this.$router.push({
+        path: '/news/prison_affairs_disclosure/new'
+      })
     }
+  },
+  mounted() {
+    // 将面包屑数组传递给Content组件
+    this.breadCrumb(this.breadcrumb)
+    this.getNews({ ...this.searching, ...this.pagination })
+  },
+  components: {
+    SelectAndSearch,
+    Pagination
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

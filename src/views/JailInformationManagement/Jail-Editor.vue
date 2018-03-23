@@ -57,12 +57,12 @@
     data() {
       return {
         breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
-        fileList: [],//上传图片列表
+        fileList: [] // 上传图片列表
       }
     },
     watch: {
-      //编辑监狱信息成功跳转到监狱信息页面
-      editJailsResult(newValue){
+      // 编辑监狱信息成功跳转到监狱信息页面
+      editJailsResult(newValue) {
         this.getJailsInformation()
         this.$router.push({
           path: '/jails'
@@ -71,55 +71,88 @@
     },
     computed: {
       ...mapGetters({
-        jails: 'jails',//获取编辑的监狱基本信息
-        editJailsResult: 'editJailsResult',//获取监狱编辑的结果
-        authorization: 'authorization',//上传图片的头部设置
+        jails: 'jails', // 获取编辑的监狱基本信息
+        editJailsResult: 'editJailsResult', // 获取监狱编辑的结果
+        authorization: 'authorization' // 上传图片的头部设置
       })
     },
     methods: {
       ...mapActions({
-        getJailsInformation: 'getJailsInformation',//获取法律法规信息
-        editJails: 'editJails',//点击更新执行的方法
+        getJailsInformation: 'getJailsInformation', // 获取法律法规信息
+        editJails: 'editJails' // 点击更新执行的方法
       }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        uploadImg: 'uploadImg'//上传成功将结果进行处理
+        breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
+        uploadImg: 'uploadImg' // 上传成功将结果进行处理
       }),
-      //移除图片执行的方法
-      handleRemove(){
-        this.jails.anotherImageUrl = ''
+      // 移除图片执行的方法
+      handleRemove() {
+        this.jails.image = ''
       },
-      //图片上传成功调用的方法
-      handleSuccess(res, file){
-        this.jails.anotherImageUrl = res.url
+      // 图片上传成功调用的方法
+      handleSuccess(res, file) {
         this.uploadImage(res)
       },
-      //上传图片个数超过限制执行的方法
-      handleExceed(){
+      // 上传图片个数超过限制执行的方法
+      handleExceed() {
         this.$message({
           type: 'warning',
           message: '每次只能上传一张图片'
         })
       },
-      //上传图片执行的方法
-      uploadImage(file){
-        this.uploadImg(file);
-        return false;
+      methods: {
+        ...mapActions({
+          getJailsInformation: 'getJailsInformation',//获取法律法规信息
+          editJails: 'editJails',//点击更新执行的方法
+        }),
+        ...mapMutations({
+          breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
+          uploadImg: 'uploadImg'//上传成功将结果进行处理
+        }),
+        //移除图片执行的方法
+        handleRemove(){
+          this.jails.anotherImageUrl = ''
+        },
+        //图片上传成功调用的方法
+        handleSuccess(res, file){
+          this.jails.anotherImageUrl = res.url
+          this.uploadImage(res)
+        },
+        //上传图片个数超过限制执行的方法
+        handleExceed(){
+          this.$message({
+            type: 'warning',
+            message: '每次只能上传一张图片'
+          })
+        },
+        //上传图片执行的方法
+        uploadImage(file){
+          this.uploadImg(file);
+          return false;
+        },
+        //点击更新执行的方法
+        onSubmit(){
+          this.editJails(this.jails);
+        },
+        //富文本内容发生改变时执行的方法
+        editorChange(contents){
+          this.jails.description = contents;
+        }
       },
-      //点击更新执行的方法
-      onSubmit(){
-        this.editJails(this.jails);
+      // 点击更新执行的方法
+      onSubmit() {
+        this.editJails(this.jails)
       },
-      //富文本内容发生改变时执行的方法
-      editorChange(contents){
-        this.jails.description = contents;
+      // 富文本内容发生改变时执行的方法
+      editorChange(contents) {
+        this.jails.description = contents
       }
     },
     components: {
       VueQuillEditor
     },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
+    mounted() {
+      this.breadCrumb(this.breadcrumb)
     }
   }
 </script>

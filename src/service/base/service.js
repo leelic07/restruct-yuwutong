@@ -2,7 +2,7 @@ import base from '../config/base'
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 import qs from 'qs'
 const instance = axios.create(base)
 // 代理服务器
@@ -108,7 +108,7 @@ instance.interceptors.response.use(
  * @returns {Promise}
  */
 export const get = (url, params = {}) =>
-  instance.get(getUrl(url), {params: params}).then(res => res.data).catch(err => err)
+  instance.get(getUrl(url), { params: params }).then(res => res.data).catch(err => err)
 /**
  * 封装post请求
  * @param url

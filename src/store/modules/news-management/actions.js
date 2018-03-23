@@ -2,10 +2,10 @@ import http from '@/service'
 
 export default {
   // 获取狱务公开信息
-  getNews: ({commit}, regs) =>
+  getNews: ({ commit }, regs) =>
     http.getNews(regs).then(res => commit('getNews', res)).catch(err => console.log(err)),
   // 编辑狱务公开信息
-  editNews({commit}, regs) {
+  editNews({ commit }, regs) {
     let formData = new FormData()
     regs.anotherImageUrl && formData.append('anotherImageUrl', regs.anotherImageUrl)
     formData.append('id', regs.id)
@@ -15,13 +15,13 @@ export default {
     formData.append('isFocus', regs.isFocus)
     formData.append('sysFlag', regs.sysFlag)
     http.editNews(formData).then(res => res.code === 200 &&
-    http.getNews({type: regs.typeId}).then(response => {
+    http.getNews({ type: regs.typeId }).then(response => {
       commit('getNews', response)
       commit('editNews', res)
     }).catch(err => console.log(err))).catch(err => console.log(err))
   },
   // 添加狱务公开信息
-  addNews({commit}, regs) {
+  addNews({ commit }, regs) {
     let formData = new FormData()
     regs.anotherImageUrl && formData.append('anotherImageUrl', regs.anotherImageUrl)
     formData.append('title', regs.title)
@@ -30,14 +30,14 @@ export default {
     formData.append('isFocus', regs.isFocus)
     formData.append('sysFlag', regs.sysFlag)
     http.addNews(formData).then(res => res.code === 200 &&
-    http.getNews({type: regs.typeId}).then(response => {
+    http.getNews({ type: regs.typeId }).then(response => {
       commit('getNews', response)
       commit('addNews', res)
     }).catch(err => console.log(err))).catch(err => console.log(err))
   },
   // 根据id删除狱务公开信息
-  deleteNewsById({commit}, regs) {
-    http.deleteNewsById({id: regs}).then(res => commit('deleteNewsById', {
+  deleteNewsById({ commit }, regs) {
+    http.deleteNewsById({ id: regs }).then(res => commit('deleteNewsById', {
       ...res,
       'id': regs
     })).catch(err => console.log(err))

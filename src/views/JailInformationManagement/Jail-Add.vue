@@ -50,83 +50,83 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息新增'],
-        fileList: [],//上传图片列表
-        jails: {
-          title: '',//监狱名
-          description: '',//监狱描述
-          state: '',//省
-          city: '',//市
-          district: '',//地区
-          street: '',//街道
-          zipcode: ''//监狱邮编
-        }
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息新增'],
+      fileList: [], // 上传图片列表
+      jails: {
+        title: '', // 监狱名
+        description: '', // 监狱描述
+        state: '', // 省
+        city: '', // 市
+        district: '', // 地区
+        street: '', // 街道
+        zipcode: '' // 监狱邮编
       }
+    }
+  },
+  watch: {
+    // 编辑监狱信息成功跳转到监狱信息页面
+    addJailsResult(newValue) {
+      this.$router.push({
+        path: '/jails'
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      addJailsResult: 'addJailsResult', // 获取监狱编辑的结果
+      authorization: 'authorization' // 上传图片的头部设置
+    })
+  },
+  methods: {
+    ...mapActions({
+      getJailsInformation: 'getJailsInformation', // 获取法律法规信息
+      addJails: 'addJails' // 点击更新添加监狱信息执行的方法
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
+      uploadImg: 'uploadImg' // 上传成功将结果进行处理
+    }),
+    // 移除图片执行的方法
+    handleRemove() {
+      this.jails.image = ''
     },
-    watch: {
-      //编辑监狱信息成功跳转到监狱信息页面
-      addJailsResult(newValue){
-        this.$router.push({
-          path: '/jails'
-        })
-      }
+    // 图片上传成功调用的方法
+    handleSuccess(res, file) {
+      this.uploadImage(res)
     },
-    computed: {
-      ...mapGetters({
-        addJailsResult: 'addJailsResult',//获取监狱编辑的结果
-        authorization: 'authorization',//上传图片的头部设置
+    // 上传图片个数超过限制执行的方法
+    handleExceed() {
+      this.$message({
+        type: 'warning',
+        message: '每次只能上传一张图片'
       })
     },
-    methods: {
-      ...mapActions({
-        getJailsInformation: 'getJailsInformation',//获取法律法规信息
-        addJails: 'addJails',//点击更新添加监狱信息执行的方法
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        uploadImg: 'uploadImg'//上传成功将结果进行处理
-      }),
-      //移除图片执行的方法
-      handleRemove(){
-        this.jails.image = ''
-      },
-      //图片上传成功调用的方法
-      handleSuccess(res, file){
-        this.uploadImage(res)
-      },
-      //上传图片个数超过限制执行的方法
-      handleExceed(){
-        this.$message({
-          type: 'warning',
-          message: '每次只能上传一张图片'
-        })
-      },
-      //上传图片执行的方法
-      uploadImage(file){
-        this.uploadImg(file);
-        return false;
-      },
-      //点击更新执行的方法
-      onSubmit(){
-        this.addJails(this.jails);
-      },
-      //富文本内容发生改变时执行的方法
-      editorChange(contents){
-        this.jails.description = contents;
-      }
+    // 上传图片执行的方法
+    uploadImage(file) {
+      this.uploadImg(file)
+      return false
     },
-    components: {
-      VueQuillEditor
+    // 点击更新执行的方法
+    onSubmit() {
+      this.addJails(this.jails)
     },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
+    // 富文本内容发生改变时执行的方法
+    editorChange(contents) {
+      this.jails.description = contents
     }
+  },
+  components: {
+    VueQuillEditor
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

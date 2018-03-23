@@ -35,65 +35,64 @@
 </template>
 
 <script>
-  import {mapMutations, mapActions, mapGetters} from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '订单信息管理'],
-        fileList: [],
-//        prisonerHref: this._$agency + '/download/downloadfile?filepath=order_template.xls',//下载家属订单模板的地址
-        prisonerHref: this._$agency + '/download/order_template.xls'//下载家属订单模板的地址
-      }
-    },
-    watch: {
-      uploadResult(newValue){
-        this.importPrisonerOrders({'filepath': newValue.path});//家属订单模板文件上传成功以后将数据解析到服务端
-      },
-      prisonerOrdersResult(newValue){
-        this.alertInformation(newValue);
-      }
-    },
-    computed: {
-      ...mapGetters({
-        prisonerOrdersResult: 'prisonerOrdersResult',//获取家属订单导入结果
-        uploadResult: 'uploadResult'//获取家属订单上传的结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        importPrisonerOrders: 'importPrisonerOrders',//家属订单模板上传成功后将家属订单模板导入到服务端
-        uploadFile: 'uploadFile'//上传罪犯订单模板文件
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'
-      }),
-      //点击上传到服务器执行的方法
-      submitUpload(){
-        this.$refs.upload.submit();
-      },
-      //上传订单模板文件
-      beforeUpload(file){
-        this.uploadFile(file);
-        return false;
-      },
-      //解析文件成功后执行的方法
-      alertInformation(information){
-        this.$notify({
-          title: '解析结果提示',
-          dangerouslyUseHTMLString: true,
-          message: `<p>新增：${information.add_total}</p>
-                    <p>成功：${information.success_total}</p>
-                    <p>修改：${information.update_total}</p>`,
-          duration: 5000,
-          offset: 100
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '订单信息管理'],
+      fileList: [],
+      prisonerHref: `${ this._$agency }/download/order_template.xls` // 下载家属订单模板的地址
     }
+  },
+  watch: {
+    uploadResult(newValue) {
+      this.importPrisonerOrders({ 'filepath': newValue.path }) // 家属订单模板文件上传成功以后将数据解析到服务端
+    },
+    prisonerOrdersResult(newValue) {
+      this.alertInformation(newValue)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      prisonerOrdersResult: 'prisonerOrdersResult', // 获取家属订单导入结果
+      uploadResult: 'uploadResult' // 获取家属订单上传的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      importPrisonerOrders: 'importPrisonerOrders', // 家属订单模板上传成功后将家属订单模板导入到服务端
+      uploadFile: 'uploadFile' // 上传罪犯订单模板文件
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb'
+    }),
+    // 点击上传到服务器执行的方法
+    submitUpload() {
+      this.$refs.upload.submit()
+    },
+    // 上传订单模板文件
+    beforeUpload(file) {
+      this.uploadFile(file)
+      return false
+    },
+    // 解析文件成功后执行的方法
+    alertInformation(information) {
+      this.$notify({
+        title: '解析结果提示',
+        dangerouslyUseHTMLString: true,
+        message: `<p>新增：${ information.add_total }</p>
+                  <p>成功：${ information.success_total }</p>
+                  <p>修改：${ information.update_total }</p>`,
+        duration: 5000,
+        offset: 100
+      })
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

@@ -28,57 +28,57 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions, mapMutations} from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '终端管理', '添加终端信息'],
-        terminal: {
-          terminalNumber: '',
-          roomNumber: '',
-          hostPassword: '',
-          mettingPassword: ''
-        },
-        rule: {
-          terminalNumber: [{required: true, message: '请填写终端号', trigger: 'blur'}],
-          hostPassword: [{required: true, message: '请填写主持人密码', trigger: 'blur'}],
-          mettingPassword: [{required: true, message: '请填写参与密码', trigger: 'blur'}]
-        }
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '终端管理', '添加终端信息'],
+      terminal: {
+        terminalNumber: '',
+        roomNumber: '',
+        hostPassword: '',
+        mettingPassword: ''
+      },
+      rule: {
+        terminalNumber: [{ required: true, message: '请填写终端号', trigger: 'blur' }],
+        hostPassword: [{ required: true, message: '请填写主持人密码', trigger: 'blur' }],
+        mettingPassword: [{ required: true, message: '请填写参与密码', trigger: 'blur' }]
       }
-    },
-    watch: {
-      //添加终端信息成功返回到终端管理页面
-      addTerminalResult(newValue){
-        this.$router.push({
-          path: '/terminals'
-        })
-      }
-    },
-    computed: {
-      ...mapGetters({
-        addTerminalResult: 'addTerminalResult'//获取添加终端信息的结果
-      })
-    },
-    methods: {
-      ...mapActions({
-        addTerminal: 'addTerminal'//添加终端信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb'//设置添加终端页面面包屑的信息
-      }),
-      //点击更新时执行的方法
-      onSubmit(){
-        this.$refs.terminal.validate(valid => {
-          if (valid) this.addTerminal(this.terminal);
-          else return false;
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
     }
+  },
+  watch: {
+    // 添加终端信息成功返回到终端管理页面
+    addTerminalResult(newValue) {
+      this.$router.push({
+        path: '/terminals'
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      addTerminalResult: 'addTerminalResult' // 获取添加终端信息的结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      addTerminal: 'addTerminal' // 添加终端信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置添加终端页面面包屑的信息
+    }),
+    // 点击更新时执行的方法
+    onSubmit() {
+      this.$refs.terminal.validate(valid => {
+        if (valid) this.addTerminal(this.terminal)
+        else return false
+      })
+    }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

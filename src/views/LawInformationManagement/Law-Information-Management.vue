@@ -68,77 +68,73 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '法律法规信息管理'],//法律法规信息管理面包屑信息
-        isLawNew: false//是否是添加法律法规信息页面
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '法律法规信息管理'], // 法律法规信息管理面包屑信息
+      isLawNew: false // 是否是添加法律法规信息页面
+    }
+  },
+  watch: {
+    // 监听路由变化
+    $route(to) {
+      if (to.path === '/laws') {
+        this.breadCrumb(this.breadcrumb) // 重新设置路由信息
+        this.isLawNew = false
       }
+      else {
+        this.isLawNew = true
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      laws: 'laws', // 获取法律法规信息
+      deleteLawResult: 'deleteLawResult', // 根据id删除法律法规的结果
+      lawManagementPage: 'lawManagementPage', // 法律法规页码
+      lawDetail: 'lawDetail' // 右侧内容区域显示的法律法规信息
+    })
+  },
+  methods: {
+    ...mapActions({
+      getLawsInformation: 'getLawsInformation', // 获取法律法规信息
+      deleteLawById: 'deleteLawById' // 根据id删除法律法规
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置法律法规信息管理页面的面包屑信息
+      nextPage: 'nextPage', // 点击下一页执行的方法
+      prePage: 'prePage', // 点击上一页执行的方法
+      setLawDetail: 'setLawDetail' // 设置法律法规的详情页面
+    }),
+    // 点击法律法规详情标题来显示法律法规详情
+    showLawDetail(law, e) {
+      e.preventDefault()
+      this.setLawDetail(law)
     },
-    watch: {
-      //监听路由变化
-      $route(to){
-        if (to.path === '/laws') {
-          this.breadCrumb(this.breadcrumb);//重新设置路由信息
-          this.isLawNew = false;
-        } else {
-          this.isLawNew = true;
-        }
-      },
-//      //监听laws的变化
-//      laws(newValue){
-//        //将第一页第一条法律信息赋值给法律详情
-//        this.lawDetail = newValue[0][0];
-//      }
-    },
-    computed: {
-      ...mapGetters({
-        laws: 'laws',//获取法律法规信息
-        deleteLawResult: 'deleteLawResult',//根据id删除法律法规的结果
-        lawManagementPage: 'lawManagementPage',//法律法规页码
-        lawDetail: 'lawDetail'//右侧内容区域显示的法律法规信息
+    // 编辑法律法规
+    editLaw(id) {
+      this.$router.push({
+        path: `/laws/${ id }/edit`
       })
     },
-    methods: {
-      ...mapActions({
-        getLawsInformation: 'getLawsInformation',//获取法律法规信息
-        deleteLawById: 'deleteLawById'//根据id删除法律法规
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置法律法规信息管理页面的面包屑信息
-        nextPage: 'nextPage',//点击下一页执行的方法
-        prePage: 'prePage',//点击上一页执行的方法
-        setLawDetail: 'setLawDetail'//设置法律法规的详情页面
-      }),
-      //点击法律法规详情标题来显示法律法规详情
-      showLawDetail(law, e){
-        e.preventDefault();
-        this.setLawDetail(law);
-      },
-      //编辑法律法规
-      editLaw(id){
-        this.$router.push({
-          path: `/laws/${id}/edit`
-        });
-      },
-      //点击删除法律法规
-      deleteLaw(id){
-        this.$confirm('此操作将删除法律法规，是否继续？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.deleteLawById(id);
-        });
-      }
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getLawsInformation();
+    // 点击删除法律法规
+    deleteLaw(id) {
+      this.$confirm('此操作将删除法律法规，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteLawById(id)
+      })
     }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getLawsInformation()
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

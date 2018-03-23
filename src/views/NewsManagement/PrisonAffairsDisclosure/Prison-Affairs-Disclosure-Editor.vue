@@ -43,71 +43,71 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
-        fileList: [],
-        fromPath: ''//来自哪个页面
-      }
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
+      fileList: [],
+      fromPath: '' // 来自哪个页面
+    }
+  },
+  watch: {
+    // 监听编辑狱务公开信息的结果
+    editNewsResult(newValue) {
+      window.history.back()
+    }
+  },
+  computed: {
+    ...mapGetters({
+      newsForEdit: 'newsForEdit', // 获取编辑的狱务公开基本信息
+      editNewsResult: 'editNewsResult', // 获取编辑狱务公开信息的结果
+      authorization: 'authorization' // 设置上传图片的请求头
+    })
+  },
+  methods: {
+    ...mapActions({
+      editNews: 'editNews' // 编辑狱务公开信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
+      getNewsById: 'getNewsById', // 根据id获取需要编辑的新闻信息
+      uploadImg: 'uploadImg' // 处理设置上传图片的结果
+    }),
+    // 移除选中的图片时执行的方法
+    handleRemove() {
+      this.newsForEdit.anotherImageUrl = ''
     },
-    watch: {
-      //监听编辑狱务公开信息的结果
-      editNewsResult(newValue){
-        window.history.back();
-      }
+    // 上传图片成功时执行的方法
+    handleSuccess(res) {
+      this.newsForEdit.anotherImageUrl = res.url
+      this.uploadImg(res)
     },
-    computed: {
-      ...mapGetters({
-        newsForEdit: 'newsForEdit',//获取编辑的狱务公开基本信息
-        editNewsResult: 'editNewsResult',//获取编辑狱务公开信息的结果
-        authorization: 'authorization',//设置上传图片的请求头
+    // 超过上传图片数量限制执行的方法
+    handleExceed() {
+      this.$message({
+        type: 'warning',
+        message: '每次只能上传一张图片'
       })
     },
-    methods: {
-      ...mapActions({
-        editNews: 'editNews'//编辑狱务公开信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-        getNewsById: 'getNewsById',//根据id获取需要编辑的新闻信息
-        uploadImg: 'uploadImg'//处理设置上传图片的结果
-      }),
-      //移除选中的图片时执行的方法
-      handleRemove(){
-        this.newsForEdit.anotherImageUrl = ''
-      },
-      //当富文本内容发生变化时执行的方法
-      editorChange(contents){
-        this.newsForEdit.contents = contents;
-      },
-      //上传图片成功时执行的方法
-      handleSuccess(res){
-        this.newsForEdit.anotherImageUrl = res.url;
-        this.uploadImg(res);
-      },
-      //超过上传图片数量限制执行的方法
-      handleExceed(){
-        this.$message({
-          type: 'warning',
-          message: '每次只能上传一张图片'
-        });
-      },
-      //点击更新时执行的方法
-      onSubmit(){
-        this.editNews(this.newsForEdit);
-      }
+    // 当富文本内容发生变化时执行的方法
+    editorChange(contents) {
+      this.newsForEdit.contents = contents
     },
-    components: {
-      VueQuillEditor
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getNewsById(this.$route.params.id);
+    // 点击更新时执行的方法
+    onSubmit() {
+      this.editNews(this.newsForEdit)
     }
+  },
+  components: {
+    VueQuillEditor
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getNewsById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

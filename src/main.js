@@ -31,11 +31,9 @@ Vue.config.productionTip = false
 
 Vue.prototype._$agency = 'http://localhost:1339'
 
-//声明过滤器
-Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
-
 // 声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]))
+
 // 声明公共功能组件
 Object.keys(components).forEach((key) => {
   let name = key.replace(/(\w)/, (v) => v.toUpperCase())
@@ -47,5 +45,5 @@ new Vue({
   router,
   store,
   template: '<Layout/>',
-  components: {Layout}
+  components: { Layout }
 })

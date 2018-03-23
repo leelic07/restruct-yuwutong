@@ -44,33 +44,33 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '家属订单管理', '订单详情'],
-      }
-    },
-    computed: {
-      ...mapGetters({
-        orderDetailList: 'orderDetailList',//获取订单的详情信息
-        orderDetailTotal: 'orderDetailTotal',//获取商品订单详情总计
-        orderDetailInfo: 'orderDetailInfo'//获取商品详情信息
-      })
-    },
-    methods: {
-      ...mapActions({
-        getOrderById: 'getOrderById'//根据id过去家属订单详情信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',
-      })
-    },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getOrderById(this.$route.params.id);
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '家属订单管理', '订单详情']
     }
+  },
+  computed: {
+    ...mapGetters({
+      orderDetailList: 'orderDetailList', // 获取订单的详情信息
+      orderDetailTotal: 'orderDetailTotal', // 获取商品订单详情总计
+      orderDetailInfo: 'orderDetailInfo' // 获取商品详情信息
+    })
+  },
+  methods: {
+    ...mapActions({
+      getOrderById: 'getOrderById' // 根据id过去家属订单详情信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb'
+    })
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getOrderById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

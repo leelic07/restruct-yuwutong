@@ -96,112 +96,113 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-  import Pagination from '@/components/Pagination/Pagination'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '商品信息管理'],//面包屑数组
-        tabNum: 'first',
-        pagination: {
-          rows: 10,//每页显示记录条数
-          page: 1//当前显示第几页
-        },
-        c: 'goods',
-        searching: {
-          title: ''//商品名称
-        },
-        isGoodsEditor: false,//是否是商品信息列表页面
-        goodsDescription: ''//商品简介信息
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
+import Pagination from '@/components/Pagination/Pagination'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '商品信息管理'], // 面包屑数组
+      tabNum: 'first',
+      pagination: {
+        rows: 10, // 每页显示记录条数
+        page: 1 // 当前显示第几页
+      },
+      c: 'goods',
+      searching: {
+        title: '' // 商品名称
+      },
+      isGoodsEditor: false, // 是否是商品信息列表页面
+      goodsDescription: '' // 商品简介信息
+    }
+  },
+  watch: {
+    // 从商品管理页面跳转到商品编辑页面使商品列表显示
+    $route(to) {
+      if (to.path === '/goods_management') {
+        this.isGoodsEditor = false
+        this.breadCrumb(this.breadcrumb) // 路由发生改变重新发送面包屑信息
       }
+      else this.isGoodsEditor = true
+    }
+  },
+  computed: {
+    // 映射getters方法获取state状态
+    ...mapGetters({
+      goods: 'goods', // 获取商品列表信息
+      goodsTotal: 'goodsTotal' // 获取商品列表的记录数
+    })
+  },
+  methods: {
+    // 映射actions方法
+    ...mapActions({
+      getGoods: 'getGoods', // 获取商品列表
+      deleteGoods: 'deleteGoods' // 删除指定商品
+    }),
+    // 映射mutations方法
+    ...mapMutations({
+      breadCrumb: 'breadCrumb', // 设置商品管理页面的面包屑信息
+      searchGoods: 'searchGoods' // 获取带搜索条件的商品列表
+    }),
+    // 每页条数发生变化时执行的方法
+    sizeChange(rows) {
+      this.pagination.page = 1
+      this.pagination.rows = rows
+      this.change()
     },
-    watch: {
-      //从商品管理页面跳转到商品编辑页面使商品列表显示
-      $route(to) {
-        if (to.path === '/goods_management') {
-          this.isGoodsEditor = false;
-          this.breadCrumb(this.breadcrumb);//路由发生改变重新发送面包屑信息
-        } else this.isGoodsEditor = true;
-      }
+    // 当前页发生变化时执行的方法
+    currentChange(page) {
+      this.pagination.page = page
+      this.change()
     },
-    computed: {
-      //映射getters方法获取state状态
-      ...mapGetters({
-        goods: 'goods',//获取商品列表信息
-        goodsTotal: 'goodsTotal',//获取商品列表的记录数
+    // 根据是否有搜索内容调用不同的接口
+    change() {
+      this.getGoods({ ...this.searching, ...this.pagination })
+    },
+    // 点击搜索时执行的方法
+    search(searching) {
+      this.pagination.page = 1
+      this.searching = searching
+      this.getGoods({ ...this.searching, ...this.pagination })
+    },
+    // 监听搜索框的内容变化
+    searchingChange(searching) {
+      this.searching = searching
+    },
+    // 点击删除时执行的方法
+    handleDelete(id) {
+      this.$confirm('确定删除？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteGoods(id)
+      }).catch(err => console.log(err))
+    },
+    // 点击编辑时执行的方法
+    handleEdit(id) {
+      this.$router.push({
+        path: `/goods_management/edit/${ id }`
       })
     },
-    methods: {
-      //映射actions方法
-      ...mapActions({
-        getGoods: 'getGoods',//获取商品列表
-        deleteGoods: 'deleteGoods'//删除指定商品
-      }),
-      //映射mutations方法
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品管理页面的面包屑信息
-        searchGoods: 'searchGoods',//获取带搜索条件的商品列表
-      }),
-      //每页条数发生变化时执行的方法
-      sizeChange(rows){
-        this.pagination.page = 1;
-        this.pagination.rows = rows;
-        this.change();
-      },
-      //当前页发生变化时执行的方法
-      currentChange(page){
-        this.pagination.page = page;
-        this.change();
-      },
-      //根据是否有搜索内容调用不同的接口
-      change(){
-        this.getGoods({...this.searching, ...this.pagination});
-      },
-      //点击搜索时执行的方法
-      search(searching){
-        this.pagination.page = 1;
-        this.searching = searching;
-        this.getGoods({...this.searching, ...this.pagination});
-      },
-      //监听搜索框的内容变化
-      searchingChange(searching){
-        this.searching = searching;
-      },
-      //点击删除时执行的方法
-      handleDelete(id){
-        this.$confirm('确定删除？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.deleteGoods(id);
-        }).catch(err => console.log(err));
-      },
-      //点击编辑时执行的方法
-      handleEdit(id){
-        this.$router.push({
-          path: `/goods_management/edit/${id}`
-        });
-      },
-      //点击添加商品信息按钮执行的方法
-      newGoods(){
-        this.$router.push({
-          path: '/goods_management/new'
-        });
-      }
-    },
-    mounted(){
-      //将面包屑数组传递给Content组件
-      this.breadCrumb(this.breadcrumb);
-      //获取家属注册信息列表
-      this.getGoods(this.pagination);
-    },
-    components: {
-      SelectAndSearch,
-      Pagination
+    // 点击添加商品信息按钮执行的方法
+    newGoods() {
+      this.$router.push({
+        path: '/goods_management/new'
+      })
     }
+  },
+  mounted() {
+    // 将面包屑数组传递给Content组件
+    this.breadCrumb(this.breadcrumb)
+    // 获取家属注册信息列表
+    this.getGoods(this.pagination)
+  },
+  components: {
+    SelectAndSearch,
+    Pagination
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>

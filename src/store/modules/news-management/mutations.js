@@ -33,11 +33,11 @@ export default {
     // 将新闻内容的null转换成空字符串
     news.forEach(nw => {
       nw.contents = nw.contents || ''
-      nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : ''//截取图片路径地址
+      nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : '' // 截取图片路径地址
       nw.anotherImageUrl = nw.anotherImageUrl || ''
-    });
-    state.news = news;
-    state.newsTotal = newsList.data.newsSize;
+    })
+    state.news = news
+    state.newsTotal = newsList.data.newsSize
   },
   // 根据id获取新闻信息
   getNewsById: (state, id) => state.news.forEach(nw => nw.id === Number(id) && (state.newsForEdit = nw)),

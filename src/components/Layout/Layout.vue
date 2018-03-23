@@ -12,46 +12,42 @@
 </template>
 
 <script>
-  import SideBar from '@/components/SideBar/SideBar'
-  import Header from '@/components/Header/Header'
-  import Footer from '@/components/Footer/Footer'
-  import Content from '@/components/Content/Content'
-  import axios from 'axios'
-  const loginUrl = "/login";// 登录路由地址
-  const familyDownload = '/app_preview/family_download';// 家属app路由
-  const prisonDownload = '/app_preview/prison_download';// 监狱app路由
-  export default {
-    name: 'layout',
-    data() {
-      return {
-        isNotLogin: true
-      }
-    },
-    watch: {
-      $route(to){// 监听路由变化
-        window.scrollTo(0, 0);// 每次路由变化页面回到最顶部
-        if (to.path === loginUrl || to.path === familyDownload || to.path === prisonDownload) // 进入登陆页面
-          this.isNotLogin = false;// 将侧边栏和顶栏隐藏
-        else
-          this.isNotLogin = true;
-      }
-    },
-    methods: {
-      hideBar() {
-        if (this.$route.path === loginUrl || this.$route.path === familyDownload || this.$route.path === prisonDownload) // 进入登陆页面
-          this.isNotLogin = false;// 将侧边栏和顶栏隐藏
-      }
-    },
-    components: {
-      'side-bar': SideBar,
-      'nav-header': Header,
-      'nav-footer': Footer,
-      'content-page': Content
-    },
-    mounted() {
-      this.hideBar();
+import SideBar from '@/components/SideBar/SideBar'
+import Header from '@/components/Header/Header'
+import Footer from '@/components/Footer/Footer'
+import Content from '@/components/Content/Content'
+const loginUrl = '/login' // 登录路由地址
+const familyDownload = '/app_preview/family_download' // 家属app路由
+const prisonDownload = '/app_preview/prison_download' // 监狱app路由
+export default {
+  name: 'layout',
+  data() {
+    return {
+      isNotLogin: true
     }
+  },
+  watch: {
+    $route(to) { // 监听路由变化
+      window.scrollTo(0, 0) // 每次路由变化页面回到最顶部
+      if (to.path === loginUrl || to.path === familyDownload || to.path === prisonDownload) this.isNotLogin = false // 将侧边栏和顶栏隐藏
+      else this.isNotLogin = true
+    }
+  },
+  methods: {
+    hideBar() {
+      if (this.$route.path === loginUrl || this.$route.path === familyDownload || this.$route.path === prisonDownload) this.isNotLogin = false // 将侧边栏和顶栏隐藏
+    }
+  },
+  components: {
+    'side-bar': SideBar,
+    'nav-header': Header,
+    'nav-footer': Footer,
+    'content-page': Content
+  },
+  mounted() {
+    this.hideBar()
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

@@ -56,69 +56,69 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
-  export default {
-    data() {
-      return {
-        breadcrumb: ['主页', '商品信息管理', '商品编辑管理'],
-        fileList: [],
-        image: {},//上传的图片
-        options: {
-          '洗化日用': 1,
-          '食品饮料': 2,
-          '服饰鞋帽': 3,
-          '医药保健': 4,
-          '电话卡': 5
-        },
-        rule: {
-          price: [
-            {pattern: /^(?:[1-9][0-9]*\.[0-9]+|0\.(?!0+$)[0-9]+|[1-9]+\d*)$/, message: '单价必须为数字', trigger: 'blur'}
-          ]
-        }
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+export default {
+  data() {
+    return {
+      breadcrumb: ['主页', '商品信息管理', '商品编辑管理'],
+      fileList: [],
+      image: {}, // 上传的图片
+      options: {
+        '洗化日用': 1,
+        '食品饮料': 2,
+        '服饰鞋帽': 3,
+        '医药保健': 4,
+        '电话卡': 5
+      },
+      rule: {
+        price: [
+          { pattern: /^(?:[1-9][0-9]*\.[0-9]+|0\.(?!0+$)[0-9]+|[1-9]+\d*)$/, message: '单价必须为数字', trigger: 'blur' }
+        ]
       }
-    },
-    watch: {
-      //监听编辑商品列表的结果
-      editGoodsResult(){
-        this.$router.push({
-          path: '/goods_management'
-        });
-      }
-    },
-    computed: {
-      ...mapGetters({
-        goodsForEdit: 'goodsForEdit',//获取编辑的商品对象
-        editGoodsResult: 'editGoodsResult'//获取编辑商品结果
+    }
+  },
+  watch: {
+    // 监听编辑商品列表的结果
+    editGoodsResult() {
+      this.$router.push({
+        path: '/goods_management'
+      })
+    }
+  },
+  computed: {
+    ...mapGetters({
+      goodsForEdit: 'goodsForEdit', // 获取编辑的商品对象
+      editGoodsResult: 'editGoodsResult' // 获取编辑商品结果
+    })
+  },
+  methods: {
+    ...mapActions({
+      editGoods: 'editGoods', // 编辑商品信息
+      getGoodsById: 'getGoodsById' // 根据id获取要编辑的商品信息
+    }),
+    ...mapMutations({
+      breadCrumb: 'breadCrumb' // 设置商品编辑页面的面包屑信息
+    }),
+    // 点击更新按钮执行的方法
+    onSubmit() {
+      this.$refs.form.validate(valid => {
+        if (valid) this.editGoods({ ...this.goodsForEdit, id: this.$route.params.id })
+        else return false
       })
     },
-    methods: {
-      ...mapActions({
-        editGoods: 'editGoods',//编辑商品信息
-        getGoodsById: 'getGoodsById'//根据id获取要编辑的商品信息
-      }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb',//设置商品编辑页面的面包屑信息
-      }),
-      //点击更新按钮执行的方法
-      onSubmit(){
-        this.$refs.form.validate(valid => {
-          if (valid) this.editGoods({...this.goodsForEdit, id: this.$route.params.id});
-          else return false;
-        });
-      },
-      //选择上传文件时的方法
-      handleChange(file){
-        this.goodsForEdit.image = file;
-      },
-      handleRemove(){
-        this.goodsForEdit.image = '';
-      }
+    // 选择上传文件时的方法
+    handleChange(file) {
+      this.goodsForEdit.image = file
     },
-    mounted(){
-      this.breadCrumb(this.breadcrumb);
-      this.getGoodsById(this.$route.params.id);
+    handleRemove() {
+      this.goodsForEdit.image = ''
     }
+  },
+  mounted() {
+    this.breadCrumb(this.breadcrumb)
+    this.getGoodsById(this.$route.params.id)
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">
