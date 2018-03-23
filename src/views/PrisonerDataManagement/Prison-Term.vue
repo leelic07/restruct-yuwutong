@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       breadcrumb: ['主页', '刑期变动信息管理'],
-      prisonTermHref: `${ this._$agency }/download/downloadfile?filepath=prison_term_template.xls`, // 下载罪犯刑期模板文件的地址
+      prisonTermHref: `${ this._$agency }/download/prison_term_template.xls`, // 下载罪犯刑期模板文件的地址
       fileList: []
     }
   },

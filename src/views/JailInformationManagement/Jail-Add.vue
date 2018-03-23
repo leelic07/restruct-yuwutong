@@ -20,9 +20,8 @@
         <el-form-item label="省">
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
-        <el-form-item>
-          <img :src="_$agency + jails.imageUrl" alt="">
-          <!--<img src="../../assets/images/default.jpg" alt="">-->
+        <el-form-item label="监狱邮编">
+          <el-input v-model="jails.zipcode" placeholder="请填写监狱邮编"></el-input>
         </el-form-item>
         <el-form-item>
           <el-upload
@@ -56,14 +55,22 @@ import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息编辑'],
-      fileList: [] // 上传图片列表
+      breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息新增'],
+      fileList: [], // 上传图片列表
+      jails: {
+        title: '', // 监狱名
+        description: '', // 监狱描述
+        state: '', // 省
+        city: '', // 市
+        district: '', // 地区
+        street: '', // 街道
+        zipcode: '' // 监狱邮编
+      }
     }
   },
   watch: {
     // 编辑监狱信息成功跳转到监狱信息页面
-    editJailsResult(newValue) {
-      this.getJailsInformation()
+    addJailsResult(newValue) {
       this.$router.push({
         path: '/jails'
       })
@@ -71,15 +78,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      jails: 'jails', // 获取编辑的监狱基本信息
-      editJailsResult: 'editJailsResult', // 获取监狱编辑的结果
+      addJailsResult: 'addJailsResult', // 获取监狱编辑的结果
       authorization: 'authorization' // 上传图片的头部设置
     })
   },
   methods: {
     ...mapActions({
       getJailsInformation: 'getJailsInformation', // 获取法律法规信息
-      editJails: 'editJails' // 点击更新执行的方法
+      addJails: 'addJails' // 点击更新添加监狱信息执行的方法
     }),
     ...mapMutations({
       breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
@@ -107,7 +113,7 @@ export default {
     },
     // 点击更新执行的方法
     onSubmit() {
-      this.editJails(this.jails)
+      this.addJails(this.jails)
     },
     // 富文本内容发生改变时执行的方法
     editorChange(contents) {

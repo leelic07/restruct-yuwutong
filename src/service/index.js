@@ -19,6 +19,7 @@ import passwordModification from './modules/password-modification'
 import logout from './modules/logout'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
+import uploadImg from './modules/upload-img'
 
 export default Object.assign(
   registrations,
@@ -41,5 +42,6 @@ export default Object.assign(
   passwordModification,
   logout,
   downloadFile,
-  uploadFile
+  uploadFile,
+  uploadImg
 )

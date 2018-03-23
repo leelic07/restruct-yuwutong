@@ -21,13 +21,15 @@
         <el-form-item>
           <el-upload
             class="upload-demo"
-            :action="_$agency"
-            :on-change="handleChange"
+            :action="_$agency + '/avatars'"
+            :headers="authorization"
+            name="avatar"
+            :on-success="handleSuccess"
             :on-remove="handleRemove"
+            :on-exceed="handleExceed"
             :file-list="fileList"
-            :auto-upload="false"
             :limit="1"
-            accept="image/*"
+            accept="image/jpeg,image/jpg"
             list-type="picture">
             <el-button size="normal" type="primary" plain>添加图片</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>

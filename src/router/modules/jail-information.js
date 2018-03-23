@@ -1,5 +1,6 @@
 import JailInformationManagement from '@/views/JailInformationManagement/Jail-Information-Management'
 import JailEditor from '@/views/JailInformationManagement/Jail-Editor'
+import JailAdd from '@/views/JailInformationManagement/Jail-Add'
 
 export default [{
   path: '/jails',
@@ -9,5 +10,9 @@ export default [{
     path: '/jails/:id/edit',
     name: 'JailEditor',
     component: JailEditor
+  }, {
+    path: '/jails/add',
+    name: 'JailAdd',
+    component: JailAdd
   }]
 }]

@@ -9,19 +9,19 @@
     <el-upload
       v-show="false"
       class="upload-demo"
-      :action="_$agency + '/prisoners/upload_img'"
-      :before-upload="uploadImage"
+      :action="_$agency + '/avatars'"
+      name="avatar"
+      :headers="authorization"
+      :on-success="handleSuccess"
       :file-list="fileListForEditor"
-      :auto-upload="true"
-      :limit="1"
-      accept="image/*">
+      accept="image/jpeg,image/jpg">
       <el-button class="custom-input" size="normal" type="primary" plain>添加富文本图片</el-button>
     </el-upload>
   </el-row>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   props: {
     contents: {
@@ -60,19 +60,20 @@ export default {
               }
             }
           }
-        }
-      } // 富文本编辑器的配置
+        } // 富文本编辑器的配置
+      }
     }
   },
   watch: {
-    // 图片上传成功后获取上传图片的地址放入到编辑器当中
-    uploadResult(newValue) {
-      newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${ this._$agency }${ newValue.path.substring(6) }`)
+    // 富文本上传图片的结果
+    uploadImgResult(newValue) {
+      newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', newValue.url)
     }
   },
   computed: {
     ...mapGetters({
-      uploadResult: 'uploadResult'
+      // uploadImgResult: 'uploadImgResult', // 获取富文本上传如片的结果
+      authorization: 'authorization' // 上传图片的头部设置
     }),
     editor() {
       return this.$refs.myQuillEditor.quill
@@ -80,16 +81,20 @@ export default {
   },
   methods: {
     ...mapActions({
-      uploadFile: 'uploadFile'// 富文本上传图片执行的方法
+      uploadFile: 'uploadFile' // 富文本上传图片执行的方法
+    }),
+    ...mapMutations({
+      uploadImg: 'uploadImg' // 上传成功将结果进行处理
     }),
     // 当富文本的内容发生改变的时候传给父组件
     editorChange({ editor, html, text }) {
       this.$emit('editorChange', html)
     },
-    // 富文本上传图片执行的方法
-    uploadImage(file) {
-      this.uploadFile(file)
-      return false
+    // 上传图片成功执行的方法
+    handleSuccess(res) {
+      // 将图片的地址插入到富文本编辑框当中
+      res.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', res.url)
+      this.uploadImg(res)
     }
   }
 }

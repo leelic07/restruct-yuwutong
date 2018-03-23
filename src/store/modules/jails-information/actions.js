@@ -27,5 +27,21 @@ export default {
     //   id: sessionStorage['jail_id']
     // }
     http.editJails(formData).then(res => res.code === 200 && commit('editJails', res)).catch(err => err)
+  },
+  // 新增监狱基本信息
+  addJails({ commit }, regs) {
+    let formData = new FormData()
+    regs.image && formData.append('file', regs.image.raw)
+    formData.append('title', regs.title)
+    formData.append('description', regs.description)
+    formData.append('street', regs.street)
+    formData.append('district', regs.district)
+    formData.append('city', regs.city)
+    formData.append('state', regs.state)
+    formData.append('zipcode', regs.zipcode)
+    http.addJails(formData).then(res => res.code === 200 && http.getJailsInformation().then(response => {
+      commit('addJails', res)
+      commit('getJailsInformation', response)
+    }).catch(err => console.log(err))).catch(err => console.log(err))
   }
 }

@@ -22,7 +22,7 @@
           <el-table-column
             label="新闻图片">
             <template slot-scope="scope">
-              <img :src="_$agency + scope.row.image_url" alt="">
+              <img :src="scope.row.anotherImageUrl" alt="">
               <!--<img src="../../../assets/images/default.jpg" alt="">-->
             </template>
           </el-table-column>

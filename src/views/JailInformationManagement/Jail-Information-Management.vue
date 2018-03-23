@@ -50,7 +50,8 @@
           <p v-html="jails.description"></p>
         </el-col>
         <el-col :span="24">
-          <el-button type="text" @click="editJails(jails.id)">编辑</el-button>
+          <el-button type="primary" size="mini" @click="addJails">新增</el-button>
+          <el-button type="primary" size="mini" @click="editJails(jails.id)">编辑</el-button>
         </el-col>
       </el-col>
     </el-row>
@@ -91,6 +92,30 @@ export default {
       this.$router.push({
         path: `/jails/${ id }/edit`
       })
+    },
+    methods: {
+      ...mapActions({
+        getJailsInformation: 'getJailsInformation' // 获取监狱基本信息
+      }),
+      ...mapMutations({
+        breadCrumb: 'breadCrumb' // 获取监狱基本信息管理的面包屑
+      }),
+      // 编辑监狱基本信息
+      editJails(id) {
+        this.$router.push({
+          path: `/jails/${ id }/edit`
+        })
+      },
+      // 新增监狱基本信息
+      addJails() {
+        this.$router.push({
+          path: '/jails/add'
+        })
+      }
+    },
+    mounted() {
+      this.breadCrumb(this.breadcrumb)
+      this.getJailsInformation()
     }
   },
   mounted() {
@@ -120,6 +145,8 @@ export default {
             &:last-child
               .el-button
                 float: right
+                margin-right: 3%
+                margin-bottom: 20px
       .el-col.line
         border-bottom: 1px solid #F3F3F3
         margin-bottom: 10px

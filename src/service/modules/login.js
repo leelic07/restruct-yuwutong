@@ -1,5 +1,4 @@
 import * as service from '../base/service'
-// import qs from 'qs'
 
 export default {
   // 获取用户登录时的token

@@ -41,7 +41,7 @@ export default {
     return {
       breadcrumb: ['主页', '囚犯信息管理'],
       fileList: [],
-      prisonerHref: `${ this._$agency }/download/downloadfile?filepath=prison_template.xls`
+      prisonerHref: `${ this._$agency }/download/prison_template.xls`
     }
   },
   watch: {

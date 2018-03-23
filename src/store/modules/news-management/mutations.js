@@ -30,10 +30,11 @@ export default {
     // state.complaintsProposals = state.complaintsProposalsOrigin = complaintsProposals// 保存原始的投诉建议公示信息
     // state.complaintsProposalsTotal = complaintsProposals.length// 投诉建议记录数
     let news = newsList.data.news
-    // 将新闻内容的null转换成空值
+    // 将新闻内容的null转换成空字符串
     news.forEach(nw => {
       nw.contents = nw.contents || ''
-      nw.imageUrl = nw.imageUrl.substring(6) || ''// 截取图片路径地址
+      nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : '' // 截取图片路径地址
+      nw.anotherImageUrl = nw.anotherImageUrl || ''
     })
     state.news = news
     state.newsTotal = newsList.data.newsSize
@@ -62,9 +63,13 @@ export default {
   //   state[pagination.c] = prisonAffairsDisclosure
   // },
   // 编辑狱务公开信息
-  editNews: (state, editNewsResult) => { state.editNewsResult = editNewsResult },
+  editNews: (state, editNewsResult) => {
+    state.editNewsResult = editNewsResult
+  },
   // 添加狱务公开信息
-  addNews: (state, addNewsResult) => { state.addNewsResult = addNewsResult },
+  addNews: (state, addNewsResult) => {
+    state.addNewsResult = addNewsResult
+  },
   // 根据id删除狱务公开信息
   deleteNewsById(state, deleteNewsResult) {
     let id = deleteNewsResult.id
