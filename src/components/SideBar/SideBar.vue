@@ -16,7 +16,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">导航</li>
-        <li v-for="(first, index) in menus[role - 1]" :key="index">
+        <li v-for="(first, index) in menus[role]" :key="index">
           <template v-if="!first.children">
             <router-link :to="first.path">
               <i :class="first.icon"></i>
@@ -49,11 +49,16 @@ import { mapGetters } from 'vuex'
 
 export default {
   data() {
-    let checkMenu = [{
-        path: '/user-add',
-        title: '平台监狱用户管理',
+    let adminMenu = [{
+        path: '/prison-user',
+        title: '监狱用户管理',
         icon: 'iconfont icon-folder'
       }, {
+        path: '/feedback',
+        title: '意见反馈',
+        icon: 'iconfont icon-folder'
+      }],
+      checkMenu = [{
         path: '/registrations',
         title: '家属注册管理',
         icon: 'iconfont icon-folder'
@@ -153,7 +158,7 @@ export default {
         ]
       }]
     return {
-      menus: [checkMenu, shopMenu, infoMenu]
+      menus: [adminMenu, checkMenu, shopMenu, infoMenu]
     }
   },
   computed: {

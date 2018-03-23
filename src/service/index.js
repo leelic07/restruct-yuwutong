@@ -20,6 +20,7 @@ import logout from './modules/logout'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
+import feedback from './modules/feedback'
 
 export default Object.assign(
   registrations,
@@ -43,5 +44,6 @@ export default Object.assign(
   logout,
   downloadFile,
   uploadFile,
-  uploadImg
+  uploadImg,
+  feedback
 )
