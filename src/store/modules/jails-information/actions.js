@@ -2,10 +2,10 @@ import http from '@/service'
 
 export default {
   // 获取监狱基本信息
-  getJailsInformation: ({commit}) =>
+  getJailsInformation: ({ commit }) =>
     http.getJailsInformation().then(res => commit('getJailsInformation', res)).catch(err => console.log(err)),
   // 编辑监狱信息
-  editJails({commit}, regs) {
+  editJails({ commit }, regs) {
     let formData = new FormData()
     regs.anotherImageUrl && formData.append('anotherImageUrl', regs.anotherImageUrl)
     formData.append('title', regs.title)
@@ -29,7 +29,7 @@ export default {
     http.editJails(formData).then(res => res.code === 200 && commit('editJails', res)).catch(err => err)
   },
   // 新增监狱基本信息
-  addJails({commit}, regs) {
+  addJails({ commit }, regs) {
     let formData = new FormData()
     regs.anotherImageUrl = '' && formData.append('anotherImageUrl', regs.anotherImageUrl)
     formData.append('title', regs.title)

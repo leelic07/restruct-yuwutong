@@ -50,7 +50,7 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations, mapGetters} from 'vuex'
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
   import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
   export default {
     data() {
