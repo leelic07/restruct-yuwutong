@@ -21,7 +21,7 @@
           <el-input v-model="jails.state" placeholder="请填写所在省名称"></el-input>
         </el-form-item>
         <el-form-item>
-          <img :src="_$agency + jails.imageUrl" alt="">
+          <img :src="jails.anotherImageUrl" alt="">
           <!--<img src="../../assets/images/default.jpg" alt="">-->
         </el-form-item>
         <el-form-item>
@@ -87,10 +87,11 @@
       }),
       //移除图片执行的方法
       handleRemove(){
-        this.jails.image = ''
+        this.jails.anotherImageUrl = ''
       },
       //图片上传成功调用的方法
       handleSuccess(res, file){
+        this.jails.anotherImageUrl = res.url
         this.uploadImage(res)
       },
       //上传图片个数超过限制执行的方法

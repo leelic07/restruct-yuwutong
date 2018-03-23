@@ -6,6 +6,6 @@ export default {
   },
   // 编辑监狱信息
   editJails: (state, editJailsResult) => state.editJailsResult = editJailsResult,
-  //添加监狱信息
+  // 添加监狱信息
   addJails: (state, addJailsResult) => state.addJailsResult = addJailsResult
 }
