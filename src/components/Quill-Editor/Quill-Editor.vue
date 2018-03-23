@@ -67,10 +67,6 @@
       }
     },
     watch: {
-      //图片上传成功后获取上传图片的地址放入到编辑器当中
-//      uploadResult(newValue){
-//        newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${this._$agency}${newValue.path.substring(6)}`);
-//      },
       //富文本上传图片的结果
       uploadImgResult(newValue){
         newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', newValue.url)
@@ -88,8 +84,7 @@
     methods: {
       ...mapActions({
 //        uploadFile: 'uploadFile'//富文本上传图片执行的方法
-        }
-      ),
+      }),
       ...mapMutations({
         uploadImg: 'uploadImg'//上传成功将结果进行处理
       }),
