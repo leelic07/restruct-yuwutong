@@ -2,3 +2,17 @@
   margin: 20px 0;
   float: right;
 }
+.row-container{
+  padding: 20px 1% 0 1%;
+}
+.row-container .el-tabs__item{
+  background: #fff;
+}
+.row-container .el-table__body-wrapper{
+  overflow: visible;
+}
+.row-container .cell .el-button--default{
+    float: left;
+    color: #3C8DBC;
+    font-weight: bold;
+}
