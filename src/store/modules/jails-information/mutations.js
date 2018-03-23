@@ -5,7 +5,7 @@ export default {
     state.jails = jails.data.jails
   },
   // 编辑监狱信息
-  editJails: (state, editJailsResult) => state.editJailsResult = editJailsResult,
+  editJails: (state, editJailsResult) => { state.editJailsResult = editJailsResult },
   // 添加监狱信息
-  addJails: (state, addJailsResult) => state.addJailsResult = addJailsResult
+  addJails: (state, addJailsResult) => { state.addJailsResult = addJailsResult }
 }

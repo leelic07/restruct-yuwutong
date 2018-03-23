@@ -45,11 +45,11 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
-  export default {
-    data() {
-      let checkMenu = [{
+export default {
+  data() {
+    let checkMenu = [{
         path: '/user-add',
         title: '平台监狱用户管理',
         icon: 'iconfont icon-folder'
@@ -105,8 +105,8 @@
             icon: 'iconfont icon-circle-o'
           }
         ]
-      }]
-      let shopMenu = [{
+      }],
+      shopMenu = [{
         path: '/goods_management',
         title: '商品管理',
         icon: 'iconfont icon-folder'
@@ -126,8 +126,8 @@
             icon: 'iconfont icon-circle-o'
           }
         ]
-      }]
-      let infoMenu = [{
+      }],
+      infoMenu = [{
         path: '/jails',
         title: '监狱基本信息管理',
         icon: 'iconfont icon-folder'
@@ -152,23 +152,23 @@
           }
         ]
       }]
-      return {
-        menus: [checkMenu, shopMenu, infoMenu]
-      }
+    return {
+      menus: [checkMenu, shopMenu, infoMenu]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      users: 'users' // 获取用户登录时的信息
+    }),
+    role() {
+      return sessionStorage.getItem('role')
     },
-    computed: {
-      ...mapGetters({
-        users: 'users'//获取用户登录时的信息
-      }),
-      role(){
-        return sessionStorage.getItem('role')
-      },
-      jailName(){
-        return sessionStorage.getItem('jail_name');
-      }
-    },
-    methods: {}
-  }
+    jailName() {
+      return sessionStorage.getItem('jail_name')
+    }
+  },
+  methods: {}
+}
 </script>
 
 <style type="text/stylus" lang="stylus">

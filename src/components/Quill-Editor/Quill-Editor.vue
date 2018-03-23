@@ -21,48 +21,74 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters, mapMutations} from 'vuex'
-  export default {
-    props: {
-      contents: {
-        type: String,
-        required: true,
-        default: ''
-      } // 初始化富文本的内容
-    },
-    data() {
-      const _this = this
-      return {
-        fileListForEditor: [], // 富文本上传图片列表
-        editorOption: {
-          modules: {
-            toolbar: {
-              container: [
-                ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-                ['blockquote', 'code-block'],
-                [{'header': 1}, {'header': 2}], // custom button values
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                [{'script': 'sub'}, {'script': 'super'}], // superscript/subscript
-                [{'indent': '-1'}, {'indent': '+1'}], // outdent/indent
-                [{'direction': 'rtl'}], // text direction
-                [{'size': ['small', false, 'large', 'huge']}], // custom dropdown
-                [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                [{'color': []}, {'background': []}], // dropdown with defaults from theme
-                [{'font': []}],
-                [{'align': []}],
-                ['image', 'link'],
-                ['clean'] // remove formatting button
-              ],
-              handlers: {
-                'image': function (value) {
-                  if (value) this.quill.format('image', _this.$el.querySelector('.custom-input').click())
-                  else this.quill.format('image', false)
-                }
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+export default {
+  props: {
+    contents: {
+      type: String,
+      required: true,
+      default: ''
+    } // 初始化富文本的内容
+  },
+  data() {
+    const _this = this
+    return {
+      fileListForEditor: [], // 富文本上传图片列表
+      editorOption: {
+        modules: {
+          toolbar: {
+            container: [
+              ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+              ['blockquote', 'code-block'],
+              [{ 'header': 1 }, { 'header': 2 }], // custom button values
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
+              [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
+              [{ 'direction': 'rtl' }], // text direction
+              [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+              [{ 'font': [] }],
+              [{ 'align': [] }],
+              ['image', 'link'],
+              ['clean'] // remove formatting button
+            ],
+            handlers: {
+              'image': function(value) {
+                if (value) this.quill.format('image', _this.$el.querySelector('.custom-input').click())
+                else this.quill.format('image', false)
               }
             }
-          } // 富文本编辑器的配置
-        }
+          }
+        } // 富文本编辑器的配置
       }
+    }
+  },
+  watch: {
+    // 富文本上传图片的结果
+    uploadImgResult(newValue) {
+      newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', newValue.url)
+    }
+  },
+  computed: {
+    ...mapGetters({
+      // uploadImgResult: 'uploadImgResult', // 获取富文本上传如片的结果
+      authorization: 'authorization' // 上传图片的头部设置
+    }),
+    editor() {
+      return this.$refs.myQuillEditor.quill
+    }
+  },
+  methods: {
+    ...mapActions({
+      uploadFile: 'uploadFile' // 富文本上传图片执行的方法
+    }),
+    ...mapMutations({
+      uploadImg: 'uploadImg' // 上传成功将结果进行处理
+    }),
+    // 当富文本的内容发生改变的时候传给父组件
+    editorChange({ editor, html, text }) {
+      this.$emit('editorChange', html)
     },
     watch: {
       // 富文本上传图片的结果
@@ -81,50 +107,24 @@
     },
     methods: {
       ...mapActions({
-        uploadFile: 'uploadFile' // 富文本上传图片执行的方法
+        // uploadFile: 'uploadFile' // 富文本上传图片执行的方法
       }),
       ...mapMutations({
         uploadImg: 'uploadImg' // 上传成功将结果进行处理
       }),
       // 当富文本的内容发生改变的时候传给父组件
-      editorChange({editor, html, text}) {
+      editorChange({ editor, html, text }) {
         this.$emit('editorChange', html)
       },
-      watch: {
-        //富文本上传图片的结果
-        uploadImgResult(newValue){
-          newValue.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', newValue.url)
-        }
-      },
-      computed: {
-        ...mapGetters({
-//        uploadImgResult: 'uploadImgResult',//获取富文本上传如片的结果
-          authorization: 'authorization'//上传图片的头部设置
-        }),
-        editor() {
-          return this.$refs.myQuillEditor.quill
-        }
-      },
-      methods: {
-        ...mapActions({
-//        uploadFile: 'uploadFile'//富文本上传图片执行的方法
-        }),
-        ...mapMutations({
-          uploadImg: 'uploadImg'//上传成功将结果进行处理
-        }),
-        // 当富文本的内容发生改变的时候传给父组件
-        editorChange({editor, html, text}){
-          this.$emit('editorChange', html);
-        },
-        //上传图片成功执行的方法
-        handleSuccess(res){
-          //将图片的地址插入到富文本编辑框当中
-          res.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', res.url);
-          this.uploadImg(res);
-        }
+      // 上传图片成功执行的方法
+      handleSuccess(res) {
+        // 将图片的地址插入到富文本编辑框当中
+        res.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', res.url)
+        this.uploadImg(res)
       }
     }
   }
+}
 </script>
 
 <style type="text/stylus" lang="stylus">
