@@ -6,68 +6,68 @@ import { Message } from 'element-ui'
 import qs from 'qs'
 const instance = axios.create(base)
 // 代理服务器
-// export let agency = ''
-export const agency = '/ywgk'
+export let agency = ''
+// export const agency = '/ywgk'
 // 获取异步请求的url
-let getUrl = (url) => `${ agency }${ url }`,
-  // 处理服务端错误的方法
-  handleError = (error) => {
-    console.dir(error)
-    if (error.response !== undefined) {
-      switch (error.response.status) {
-        case 401:
-          Message.error('当前用户无权限，请重新登录！')
-          router.push({
-            path: '/login'
-          })
-          break
-        case 403:
-          Message.error('当前用户无权限，请重新登录！')
-          router.push({
-            path: '/login'
-          })
-          break
-        case 404:
-          Message.error('找不到对应的资源！')
-          break
-        case 500:
-          Message.error('服务器内部错误！')
-          break
-        case 504:
-          Message.error('请检查服务是否启动！')
-          break
-        default:
-          Message.error('出错了！')
-          break
-      }
-      return true
+const getUrl = (url) => `${ agency }${ url }`
+// 处理服务端错误的方法
+const handleError = (error) => {
+  console.dir(error)
+  if (error.response !== undefined) {
+    switch (error.response.status) {
+      case 401:
+        Message.error('当前用户无权限，请重新登录！')
+        router.push({
+          path: '/login'
+        })
+        break
+      case 403:
+        Message.error('当前用户无权限，请重新登录！')
+        router.push({
+          path: '/login'
+        })
+        break
+      case 404:
+        Message.error('找不到对应的资源！')
+        break
+      case 500:
+        Message.error('服务器内部错误！')
+        break
+      case 504:
+        Message.error('请检查服务是否启动！')
+        break
+      default:
+        Message.error('出错了！')
+        break
     }
-    else return false
-  },
-  // 服务端成功的处理
-  handleSuccess = (res) => {
-    if (res.data.code) {
-      switch (res.data.code) {
-        case 200:
-          Message({
-            type: 'success',
-            message: res.data.msg ? res.data.msg : '查询数据成功'
-          })
-          break
-        case 20002:// 用户登录超时，返回登录页面
-          Message.error(res.data.msg)
-          router.push({
-            path: '/login'
-          })
-          break
-        default:
-          Message.error(res.data.msg ? res.data.msg : '无法找到对应的信息')
-          break
-      }
-      return true
-    }
-    return false
+    return true
   }
+  else return false
+}
+// 服务端成功的处理
+const handleSuccess = (res) => {
+  if (res.data.code) {
+    switch (res.data.code) {
+      case 200:
+        Message({
+          type: 'success',
+          message: res.data.msg ? res.data.msg : '查询数据成功'
+        })
+        break
+      case 20002:// 用户登录超时，返回登录页面
+        Message.error(res.data.msg)
+        router.push({
+          path: '/login'
+        })
+        break
+      default:
+        Message.error(res.data.msg ? res.data.msg : '无法找到对应的信息')
+        break
+    }
+    return true
+  }
+  return false
+}
 // http request 拦截器
 instance.interceptors.request.use(
   config => {
