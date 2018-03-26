@@ -23,13 +23,13 @@ Vue.config.productionTip = false
 
 // Vue.prototype._$agency = 'http://10.10.10.2:8081/ywgk'
 
-// Vue.prototype._$agency = 'http://10.10.10.2:8081/ywgk';
+Vue.prototype._$agency = 'http://10.10.10.2:1339'
 
 // Vue.prototype._$agency = 'http://10.10.10.127:8081';
 
 // Vue.prototype._$agency = 'http://localhost:3000';
 
-Vue.prototype._$agency = 'http://localhost:1339'
+// Vue.prototype._$agency = 'http://localhost:1339'
 
 // 声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]))

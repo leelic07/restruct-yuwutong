@@ -5,9 +5,8 @@ import axios from 'axios'
 
 export default {
   // 上传图片的方法
-  uploadImg(avatar) {
-    return axios.post('/avatars', avatar, {
-      baseURL: 'http://localhost:1339',
+  uploadImg: avatar =>
+    axios.post('http://10.10.10.2:1339/avatars', avatar, {
       withCredentials: true,
       headers: {
         common: {
@@ -16,5 +15,4 @@ export default {
         'Content-Type': 'multipart/form-data'
       }
     }).then(res => res.data).catch(err => err)
-  }
 }

@@ -87,10 +87,11 @@
       }),
       // 移除图片执行的方法
       handleRemove() {
-        this.jails.image = ''
+        this.jails.anotherImageUrl = ''
       },
       // 图片上传成功调用的方法
       handleSuccess(res, file) {
+        this.jails.anotherImageUrl = res.url
         this.uploadImage(res)
       },
       // 上传图片个数超过限制执行的方法
@@ -100,44 +101,10 @@
           message: '每次只能上传一张图片'
         })
       },
-      methods: {
-        ...mapActions({
-          getJailsInformation: 'getJailsInformation', // 获取法律法规信息
-          editJails: 'editJails' // 点击更新执行的方法
-        }),
-        ...mapMutations({
-          breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
-          uploadImg: 'uploadImg' // 上传成功将结果进行处理
-        }),
-        // 移除图片执行的方法
-        handleRemove() {
-          this.jails.anotherImageUrl = ''
-        },
-        // 图片上传成功调用的方法
-        handleSuccess(res, file) {
-          this.jails.anotherImageUrl = res.url
-          this.uploadImage(res)
-        },
-        // 上传图片个数超过限制执行的方法
-        handleExceed() {
-          this.$message({
-            type: 'warning',
-            message: '每次只能上传一张图片'
-          })
-        },
-        // 上传图片执行的方法
-        uploadImage(file) {
-          this.uploadImg(file)
-          return false
-        },
-        // 点击更新执行的方法
-        onSubmit() {
-          this.editJails(this.jails)
-        },
-        // 富文本内容发生改变时执行的方法
-        editorChange(contents) {
-          this.jails.description = contents
-        }
+      // 上传图片执行的方法
+      uploadImage(file) {
+        this.uploadImg(file)
+        return false
       },
       // 点击更新执行的方法
       onSubmit() {
