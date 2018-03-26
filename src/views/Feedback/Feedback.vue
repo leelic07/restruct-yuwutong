@@ -82,7 +82,6 @@ export default {
       this.getFeedbacks({ ...this.$refs.search.searching, ...this.pagination })
     },
     onSearch() {
-      console.log(123)
       this.$refs.pagination.handleCurrentChange(1)
     }
   }

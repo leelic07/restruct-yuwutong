@@ -12,7 +12,6 @@ export const agency = '/ywgk'
 let getUrl = (url) => `${ agency }${ url }`,
   // 处理服务端错误的方法
   handleError = (error) => {
-    console.dir(error)
     if (error.response !== undefined) {
       switch (error.response.status) {
         case 401:
@@ -26,6 +25,29 @@ let getUrl = (url) => `${ agency }${ url }`,
           router.push({
             path: '/login'
           })
+          break
+        case 404:
+          Message.error('找不到对应的资源！')
+          break
+        case 500:
+          Message.error('服务器内部错误！')
+          break
+        case 504:
+          Message.error('请检查服务是否启动！')
+          break
+        default:
+          Message.error('出错了！')
+          break
+      }
+      return true
+    }
+    else if (!error.response && error.message) {
+      switch (error.message) {
+        case 'timeout of 10000ms exceeded':
+          Message.error('请求超时，请稍后再试')
+          break
+        case 'Network Error':
+          Message.error('服务器内部错误！')
           break
         case 404:
           Message.error('找不到对应的资源！')
@@ -93,7 +115,7 @@ instance.interceptors.response.use(
     store.commit('hideLoading')
     return response
   },
-  error => {
+  (error, res, a) => {
     if (handleError(error)) {
       // 隐藏loading遮罩层
       store.commit('hideLoading')
