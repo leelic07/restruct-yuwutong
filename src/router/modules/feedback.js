@@ -1,7 +1,6 @@
-import Feedback from '@/views/Feedback/Feedback'
 
 export default [{
-  path: '/feedback',
+  path: '/feedback/list',
   name: '意见反馈列表',
-  component: Feedback
+  component: resolve => require(['@/views/Feedback/Feedback'], resolve)
 }]

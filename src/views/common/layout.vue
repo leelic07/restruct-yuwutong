@@ -1,26 +1,32 @@
 <template>
   <div id="layout">
     <!--页面头部-->
-    <nav-header v-if="isNotLogin"></nav-header>
+    <the-header v-if="isNotLogin"></the-header>
     <!--页面侧边栏-->
-    <side-bar v-if="isNotLogin"></side-bar>
+    <the-aside v-if="isNotLogin"></the-aside>
     <!--页面内容-->
     <content-page :isNotLogin="isNotLogin"></content-page>
     <!--页面页脚-->
-    <nav-footer v-if="isNotLogin"></nav-footer>
+    <the-footer v-if="isNotLogin"></the-footer>
   </div>
 </template>
 
 <script>
-import SideBar from '@/components/SideBar/SideBar'
-import Header from '@/components/Header/Header'
-import Footer from '@/components/Footer/Footer'
-import Content from '@/components/Content/Content'
+import TheAside from './the-aside'
+import TheHeader from './the-header'
+import TheFooter from './the-footer'
+import Content from './content'
 const loginUrl = '/login' // 登录路由地址
 const familyDownload = '/app_preview/family_download' // 家属app路由
 const prisonDownload = '/app_preview/prison_download' // 监狱app路由
 export default {
   name: 'layout',
+  components: {
+    'the-aside': TheAside,
+    'the-header': TheHeader,
+    'the-footer': TheFooter,
+    'content-page': Content
+  },
   data() {
     return {
       isNotLogin: true
@@ -37,12 +43,6 @@ export default {
     hideBar() {
       if (this.$route.path === loginUrl || this.$route.path === familyDownload || this.$route.path === prisonDownload) this.isNotLogin = false // 将侧边栏和顶栏隐藏
     }
-  },
-  components: {
-    'side-bar': SideBar,
-    'nav-header': Header,
-    'nav-footer': Footer,
-    'content-page': Content
   },
   mounted() {
     this.hideBar()

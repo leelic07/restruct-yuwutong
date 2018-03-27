@@ -7,7 +7,7 @@ import Meeting from './modules/meetings'
 import MailBoxes from './modules/mailboxes'
 import Prisoners from './modules/prisoners'
 import Families from './modules/families'
-import Accounts from './modules/accounts'
+import prisonAccounts from './modules/prison-accounts'
 import PrisonerDataManagement from './modules/prisoner-data-management'
 import Terminals from './modules/terminals'
 import Versions from './modules/versions'
@@ -21,6 +21,8 @@ import PrisonAffairsDisclosure from './modules/news-management'
 import AppPreview from './modules/app-preview'
 import PrisonUser from './modules/prison-user'
 import Feedback from './modules/feedback'
+// import admin from './modules/admin'
+import PlaceManagement from './modules/place-management'
 Vue.use(Router)
 
 export default new Router({
@@ -32,7 +34,7 @@ export default new Router({
     ...MailBoxes,
     ...Prisoners,
     ...Families,
-    ...Accounts,
+    ...prisonAccounts,
     ...PrisonerDataManagement,
     ...Terminals,
     ...Versions,
@@ -46,6 +48,8 @@ export default new Router({
     ...AppPreview,
     ...PrisonUser,
     ...Feedback,
+    // ...admin
+    ...PlaceManagement,
     {
       path: '/',
       redirect: '/login'
