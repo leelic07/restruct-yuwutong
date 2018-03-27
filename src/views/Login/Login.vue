@@ -5,20 +5,16 @@
         <el-col :span="24">
           <p class="projectName">狱务公开管理平台</p>
         </el-col>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
-                 class="demo-ruleForm">
+        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
           <el-form-item label-width="0" prop="prison">
             <el-input type="text" v-model="ruleForm2.prison" auto-complete="off" placeholder="监狱代码"></el-input>
           </el-form-item>
-
           <el-form-item label-width="0" prop="username">
             <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="用户名"></el-input>
           </el-form-item>
-
           <el-form-item label-width="0" prop="password">
             <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
-
           <el-form-item label-width="0" class="btn-box">
             <!-- `checked` 为 true 或 false -->
             <!--<el-checkbox v-model="ruleForm2.checked">记住密码</el-checkbox>-->
@@ -36,21 +32,17 @@ export default {
   data() {
     return {
       ruleForm2: {
-        password: '123456',
-        username: 'admin',
-        prison: '9999'
+        password: '',
+        username: '',
+        prison: ''
         // checked: false // 是否选总记住密码
       },
       rules2: {
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
-        ],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        prison: [
-          { required: true, message: '请输入监狱代码', trigger: 'blur' }
-        ]
+        prison: [{ required: true, message: '请输入监狱代码', trigger: 'blur' }]
       }
     }
   },
@@ -74,7 +66,7 @@ export default {
     }),
     // 点击提交按钮执行的方法
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           this.login(this.ruleForm2)
         }
