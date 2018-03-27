@@ -6,12 +6,13 @@ import { Message } from 'element-ui'
 import qs from 'qs'
 const instance = axios.create(base)
 // 代理服务器
-export let agency = ''
-// export const agency = '/ywgk'
+// export let agency = ''
+export const agency = '/ywgk'
 // 获取异步请求的url
 const getUrl = (url) => `${ agency }${ url }`
 // 处理服务端错误的方法
 const handleError = (error) => {
+  console.dir(error)
   if (error.response !== undefined) {
     switch (error.response.status) {
       case 401:
@@ -38,6 +39,19 @@ const handleError = (error) => {
       default:
         Message.error('出错了！')
         break
+    }
+    return true
+  }
+  else if (!error.response && error.message) {
+    switch (error.message) {
+      case 'Network Error':
+        Message.error('服务器内部错误！')
+        break
+      case 'timeout of 10000ms exceeded':
+        Message.error('请求超时,请稍后再试')
+        break
+      default:
+        Message.error('出错了')
     }
     return true
   }

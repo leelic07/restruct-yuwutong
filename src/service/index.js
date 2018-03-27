@@ -21,6 +21,7 @@ import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import feedback from './modules/feedback'
+import province from './modules/province'
 
 export default Object.assign(
   registrations,
@@ -45,5 +46,6 @@ export default Object.assign(
   downloadFile,
   uploadFile,
   uploadImg,
-  feedback
+  feedback,
+  province
 )

@@ -50,12 +50,20 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     let adminMenu = [{
+        path: '/feedback/list',
+        title: '意见反馈',
+        icon: 'iconfont icon-folder'
+      }, {
         path: '/prison-user',
         title: '监狱用户管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/feedback',
-        title: '意见反馈',
+        path: '/province/list',
+        title: '省份列表',
+        icon: 'iconfont icon-folder'
+      }, {
+        path: '/city/list',
+        title: '城市列表',
         icon: 'iconfont icon-folder'
       }],
       checkMenu = [{
@@ -79,7 +87,7 @@ export default {
         title: '家属信息管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/accounts',
+        path: '/prison-accounts',
         title: '囚犯账户管理',
         icon: 'iconfont icon-folder'
       }, {

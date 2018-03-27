@@ -26,6 +26,7 @@ import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import feedback from './modules/feedback'
+import breadCrumbs from './modules/breadcrumb'
 import 'babel-polyfill'
 
 Vue.use(Vuex)
@@ -66,7 +67,8 @@ merge(
   downloadFile,
   uploadFile,
   uploadImg,
-  feedback
+  feedback,
+  breadCrumbs
 )
 export default new Vuex.Store({
   actions,
