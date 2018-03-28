@@ -11,7 +11,7 @@ let common = [{
   children: [{
     path: '/dashboard',
     name: '欢迎',
-    component: resolve => require(['@/views/dashBoard/dashBoard'], resolve)
+    component: resolve => require(['@/views/dashboard/dashboard'], resolve)
   }, {
     path: '/password/edit',
     name: '修改密码',

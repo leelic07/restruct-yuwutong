@@ -3,8 +3,8 @@
     <the-header v-if="isNotLogin"></the-header>
     <!--页面侧边栏-->
     <the-aside v-if="isNotLogin"></the-aside>
+    <div class="content-wrapper" :class="{'content-wrapper-login':!isNotLogin}" :style="'min-height:' + wrapperHeight">
     <!--页面内容-->
-    <div class="content-wrapper" :class="{'content-wrapper-login':!isNotLogin}">
       <section
         class="content"
         :class="{'content-not-login':isNotLogin}"
@@ -46,7 +46,8 @@ export default {
   },
   data() {
     return {
-      isNotLogin: true
+      isNotLogin: true,
+      wrapperHeight: ''
     }
   },
   watch: {
@@ -57,6 +58,7 @@ export default {
     }
   },
   mounted() {
+    this.wrapperHeight = `${ parseInt(window.innerHeight) - 100 }px`
     this.hideBar()
   },
   methods: {
@@ -80,7 +82,7 @@ white = #fff
     padding: 15px;
     padding-top: 0
 .layout
-  background: #222D32
+  background: #222D32;
   .jqstooltip
     position: absolute
     left: 0px

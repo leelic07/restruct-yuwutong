@@ -11,6 +11,7 @@ import infomation from './modules/infomation'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     // ...GoodsManagement,
     // ...FamilyOrders,

@@ -58,7 +58,7 @@ let check = [{
   children: [{
     path: '/terminals/list',
     name: '终端列表',
-    component: resolve => require(['@/views/terminals/terminals'], resolve)
+    component: resolve => require(['@/views/terminals/terminals-list'], resolve)
   }, {
     path: '/terminals/add',
     name: '新增终端',
