@@ -27,6 +27,7 @@ import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import feedback from './modules/admin-feedback'
 import breadCrumbs from './modules/breadcrumb'
+import adminPrisonUser from './modules/admin-prison-user'
 import 'babel-polyfill'
 
 Vue.use(Vuex)
@@ -68,7 +69,8 @@ merge(
   uploadFile,
   uploadImg,
   feedback,
-  breadCrumbs
+  breadCrumbs,
+  adminPrisonUser
 )
 export default new Vuex.Store({
   actions,

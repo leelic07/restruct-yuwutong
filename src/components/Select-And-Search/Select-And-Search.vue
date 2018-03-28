@@ -38,6 +38,10 @@
           v-if="c==='prisonAffairsDisclosure'"
           placeholder="请输入新闻标题"
           v-model="searching.title"></el-input>
+        <el-input
+          v-if="c==='prisonUser'"
+          placeholder="请输入监狱名称"
+          v-model="searching.jail"></el-input>
       </el-col>
       <el-col>
         <!--搜索框-->
@@ -61,12 +65,20 @@
           v-if="c==='feedback'"
           placeholder="请输入手机号"
           v-model="searching.phone"></el-input>
+        <el-input
+          v-if="c==='prisonUser'"
+          placeholder="请输入用户名"
+          v-model="searching.username"></el-input>
       </el-col>
       <el-col>
         <el-input
           v-if="['registrations', 'meetings', 'feedback'].indexOf(c) > -1"
           placeholder="请输入家属姓名"
           v-model="searching.name"></el-input>
+        <el-input
+          v-if="c==='prisonUser'"
+          placeholder="请输入角色"
+          v-model="searching.role"></el-input>
       </el-col>
     </el-col>
   </el-col>

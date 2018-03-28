@@ -50,16 +50,12 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     let adminMenu = [{
-        path: '/监狱',
+        path: '/prison-user/list',
         title: '监狱用户管理',
         icon: 'iconfont icon-folder'
       }, {
         path: '/feedback/list',
         title: '意见反馈',
-        icon: 'iconfont icon-folder'
-      }, {
-        path: '/prison-user',
-        title: '监狱用户管理',
         icon: 'iconfont icon-folder'
       }, {
         path: '/province/list',
