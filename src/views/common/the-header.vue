@@ -26,7 +26,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="text-center">
-                  <router-link to="/super_user/modify_index" class="pull-left">
+                  <router-link to="/password/edit" class="pull-left">
                     <i class="iconfont icon-edit"></i>
                     修改用户密码
                   </router-link>

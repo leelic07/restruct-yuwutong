@@ -1,21 +1,22 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Layout from '@/views/common/layout'
-// import App from '@/app'
+// import Layout from '@/views/common/Layout'
+import App from '@/app'
 import router from './router'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import filters from './filters'
+import VueQuillEditor from 'vue-quill-editor'
+import components from '@/components'
+
 import '@/assets/fonts/iconfont.css'
 import '@/assets/icons/iconfont.css'
-import VueQuillEditor from 'vue-quill-editor'
+import 'element-ui/lib/theme-chalk/index.css'
 import 'quill/dist/quill.snow.css'
-import components from '@/components'
 import '@/assets/css/main.css'
-Vue.use(ElementUI)
 
+Vue.use(ElementUI)
 Vue.use(VueQuillEditor)
 
 Vue.config.productionTip = false
@@ -45,6 +46,6 @@ new Vue({
   el: '#layout',
   router,
   store,
-  template: '<Layout/>',
-  components: { Layout }
+  template: '<App/>',
+  components: { App }
 })

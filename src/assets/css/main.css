@@ -1,3 +1,6 @@
+html{
+  background: #ecf0f5;
+}
 .m-pagination .el-pagination{
   margin: 20px 0;
   float: right;
