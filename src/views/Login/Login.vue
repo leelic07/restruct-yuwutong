@@ -37,8 +37,8 @@ export default {
     return {
       ruleForm2: {
         password: '123456',
-        username: 'admin',
-        prison: '9999'
+        username: '4501_sh',
+        prison: '4501'
         // checked: false // 是否选总记住密码
       },
       rules2: {

@@ -20,7 +20,7 @@ import logout from './modules/logout'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
-import feedback from './modules/feedback'
+import admin from './modules/admin'
 import province from './modules/province'
 
 export default Object.assign(
@@ -46,6 +46,6 @@ export default Object.assign(
   downloadFile,
   uploadFile,
   uploadImg,
-  feedback,
+  admin,
   province
 )

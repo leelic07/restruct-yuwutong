@@ -50,6 +50,10 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     let adminMenu = [{
+        path: '/监狱',
+        title: '监狱用户管理',
+        icon: 'iconfont icon-folder'
+      }, {
         path: '/feedback/list',
         title: '意见反馈',
         icon: 'iconfont icon-folder'
@@ -59,61 +63,61 @@ export default {
         icon: 'iconfont icon-folder'
       }, {
         path: '/province/list',
-        title: '省份列表',
+        title: '省份管理',
         icon: 'iconfont icon-folder'
       }, {
         path: '/city/list',
-        title: '城市列表',
+        title: '城市管理',
         icon: 'iconfont icon-folder'
       }],
       checkMenu = [{
-        path: '/registrations',
+        path: '/registration/list',
         title: '家属注册管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/meetings',
+        path: '/meeting/list',
         title: '会见申请管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/mailboxes',
+        path: '/mailbox/list',
         title: '监狱长信箱',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/prisoners',
+        path: '/prisoners/list',
         title: '服刑人员信息管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/families',
+        path: '/families/list',
         title: '家属信息管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/prison-accounts',
+        path: '/prison-accounts/list',
         title: '囚犯账户管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/terminals',
+        path: '/terminals/list',
         title: '终端管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/versions',
+        path: '/versions/list',
         title: '版本管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/prisoner',
+        path: '/prisoner-data',
         title: '数据管理',
         icon: 'iconfont icon-folder',
         active: false,
         children: [
           {
-            path: '/prisoner/import_index',
+            path: '/prisoner-data/data-import',
             title: '罪犯数据导入',
             icon: 'iconfont icon-circle-o'
           }, {
-            path: '/prison_term/import_index',
+            path: '/prisoner-data/term-change',
             title: '刑期变动数据导入',
             icon: 'iconfont icon-circle-o'
           }, {
-            path: '/prison_reward_punishment/import_index',
+            path: '/prisoner-data/reward-punishment',
             title: '罪犯奖惩数据导入',
             icon: 'iconfont icon-circle-o'
           }
@@ -141,25 +145,25 @@ export default {
         ]
       }],
       infoMenu = [{
-        path: '/jails',
+        path: '/jails/detail',
         title: '监狱基本信息管理',
         icon: 'iconfont icon-folder'
       }, {
-        path: '/news',
+        path: '/prison-affairs-public',
         title: '狱务公开信息管理',
         icon: 'iconfont icon-folder',
         active: false,
         children: [
           {
-            path: '/news/prison_affairs_disclosure',
+            path: '/prison-affairs-public/prison-affairs-public',
             title: '狱务公开',
             icon: 'iconfont icon-circle-o'
           }, {
-            path: '/news/working_dynamics',
+            path: '/prison-affairs-public/working-dynamics',
             title: '工作动态',
             icon: 'iconfont icon-circle-o'
           }, {
-            path: '/news/complaints_proposals',
+            path: '/prison-affairs-public/complaints-suggestions/list',
             title: '投诉建议公示',
             icon: 'iconfont icon-circle-o'
           }

@@ -25,7 +25,7 @@ import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
-import feedback from './modules/feedback'
+import feedback from './modules/admin-feedback'
 import breadCrumbs from './modules/breadcrumb'
 import 'babel-polyfill'
 

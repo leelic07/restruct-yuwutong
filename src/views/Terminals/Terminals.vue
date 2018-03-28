@@ -60,8 +60,6 @@
       <pagination :total="terminalsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
                   @currentChange="currentChange"></pagination>
     </el-row>
-    <!--终端管理页面子路由-->
-    <router-view></router-view>
   </el-row>
 </template>
 
@@ -88,15 +86,6 @@ export default {
       },
       dialogTableVisible: false,
       isTerminals: false
-    }
-  },
-  watch: {
-    $route(to) {
-      if (to.path === '/terminals') {
-        this.isTerminals = false
-        this.breadCrumb(this.breadcrumb)
-      }
-      else this.isTerminals = true
     }
   },
   computed: {
@@ -144,13 +133,13 @@ export default {
     // 添加终端信息
     newTerminal() {
       this.$router.push({
-        path: '/terminals/new'
+        path: '/terminals/add'
       })
     },
     // 编辑终端信息
     editTerminal(id) {
       this.$router.push({
-        path: `/terminals/${ id }/edit`
+        path: `/terminals/edit/${ id }`
       })
     },
     // 删除终端信息
