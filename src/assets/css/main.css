@@ -19,3 +19,7 @@ html{
     color: #3C8DBC;
     font-weight: bold;
 }
+/* element-ui */
+.search-box .el-select, .el-form-item__content .el-select{
+  width: 100%;
+}

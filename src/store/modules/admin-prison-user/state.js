@@ -1,4 +1,5 @@
 export default {
   prisonUsers: [],
-  prisonUsersTotal: 0
+  prisonUsersTotal: 0,
+  prisonUser: {}
 }

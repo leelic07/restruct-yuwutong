@@ -75,16 +75,21 @@
           v-if="['registrations', 'meetings', 'feedback'].indexOf(c) > -1"
           placeholder="请输入家属姓名"
           v-model="searching.name"></el-input>
-        <el-input
-          v-if="c==='prisonUser'"
-          placeholder="请输入角色"
-          v-model="searching.role"></el-input>
+        <el-select v-if="c==='prisonUser'" v-model="searching.role" placeholder="请选择角色" clearable>
+          <el-option
+            v-for="item in $store.state.role"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-col>
     </el-col>
   </el-col>
 </template>
 
 <script>
+// import roleList from '@/filters/modules/role'
 export default {
   props: {
     c: {
@@ -107,7 +112,6 @@ export default {
     }
   },
   methods: {
-    // 点击搜索执行的方法
     search() {
       this.$emit('search', this.searching)
     },

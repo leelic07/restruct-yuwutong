@@ -5,5 +5,8 @@ export default {
       total = prisonUserList.itemSize
     state.prisonUsers = prisonUsers
     state.prisonUsersTotal = total
+  },
+  updatePrisonUser(state, prisonUser) {
+    state.prisonUser = prisonUser
   }
 }

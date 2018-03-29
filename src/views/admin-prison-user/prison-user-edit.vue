@@ -1,26 +1,53 @@
 <template>
-  <el-row id="terminals-edit">
-    <el-col :span="9" :offset="7">
-      <el-row :gutter="0"><h3>编辑终端信息</h3></el-row>
+  <el-row class="prison-user">
+    <el-col
+      :span="9"
+      :offset="7">
+      <el-row :gutter="0"><h3>编辑信息</h3></el-row>
       <el-row :gutter="0">
-        <el-form :model="terminalForEdit" :rules="rule" ref="terminal" label-position="left" label-width="100px">
-          <el-form-item label="终端号" prop="terminalNumber">
-            <el-input v-model="terminalForEdit.terminalNumber" placeholder="请填写终端号"></el-input>
+        <el-form
+          :model="prisonUser"
+          :rules="rule"
+          ref="prisonUser"
+          label-position="left"
+          label-width="100px">
+          <el-form-item
+            label="监狱名称"
+            prop="jailId">
+            <el-input
+              v-model="prisonUser.jailId"
+              placeholder="请填写监狱名称"></el-input>
           </el-form-item>
-          <el-form-item label="会议室号">
-            <el-input v-model="terminalForEdit.roomNumber" placeholder="请填写会议室号"></el-input>
+          <el-form-item
+            label="用户名"
+            prop="username">
+            <el-input
+              v-model="prisonUser.username"
+              placeholder="请填写用户名"></el-input>
           </el-form-item>
-          <el-form-item label="主持人密码" prop="hostPassword">
-            <el-input v-model="terminalForEdit.hostPassword" placeholder="请填写主持人密码"></el-input>
-          </el-form-item>
-          <el-form-item label="参与密码" prop="mettingPassword">
-            <el-input v-model="terminalForEdit.mettingPassword" placeholder="请填写参与密码"></el-input>
+          <el-form-item
+            label="角色"
+            prop="role">
+            <el-select
+              v-model="prisonUser.role"
+              placeholder="请选择角色"
+              clearable>
+              <el-option
+                v-for="item in $store.state.role"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </el-row>
       <el-row :gutter="0">
         <el-col :span="24">
-          <el-button type="primary" size="small" @click="onSubmit">更新</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="onSubmit">更新</el-button>
         </el-col>
       </el-row>
     </el-col>
@@ -28,56 +55,42 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '终端管理', '编辑终端信息'],
       rule: {
-        terminalNumber: [{ required: true, message: '请填写终端号', trigger: 'blur' }],
-        hostPassword: [{ required: true, message: '请填写主持人密码', trigger: 'blur' }],
-        mettingPassword: [{ required: true, message: '请填写参与密码', trigger: 'blur' }]
+        jailId: [{ required: true, message: '请填写监狱名称' }],
+        username: [{ required: true, message: '请填写用户名' }],
+        role: [{ required: true, message: '请选择角色' }]
       }
     }
   },
-  watch: {
-    // 监听编辑终端信息成功的结果然后返回终端管理页面
-    editTerminalResult(newValue) {
-      this.$router.push({
-        path: '/terminals/list'
-      })
-    }
-  },
+  watch: {},
   computed: {
-    ...mapGetters({
-      terminalForEdit: 'terminalForEdit', // 获取需要编辑的终端信息
-      editTerminalResult: 'editTerminalResult' // 获取编辑终端信息的结果
+    ...mapState({
+      prisonUser: state => state.prisonUser
     })
   },
   methods: {
-    ...mapActions({
-      editTerminal: 'editTerminal' // 编辑终端信息
-    }),
-    ...mapMutations({
-      getTerminalById: 'getTerminalById' // 根据id获取终端信息
-    }),
-    // 点击更新时执行的方法
+    ...mapActions(['getPrisonUser', 'editPrisonUser']),
     onSubmit() {
-      this.$refs.terminal.validate(valid => {
-        if (valid) this.editTerminal(this.terminalForEdit)
-        else return false
+      this.$refs.prisonUser.validate(valid => {
+        console.log(this.prisonUser)
+        // if (valid) this.editPrisonUser(this.prisonUser)
+        // else return false
       })
     }
   },
   mounted() {
-    this.getTerminalById(this.$route.params.id)
+    this.getPrisonUser(this.$route.params.id)
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  #terminals-edit
+  .prison-user
     > .el-col
       margin-bottom: 25px
       > .el-row
