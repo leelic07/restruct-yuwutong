@@ -1,20 +1,6 @@
-export default {
-  // 家属注册状态过滤器
-  registrationsStatus(val) {
-    let status = ''
-    switch (val) {
-      case 'PENDING' :
-        status = '未授权'
-        break
-      case 'DENIED' :
-        status = '已拒绝'
-        break
-      case 'PASSED' :
-        status = '已通过'
-        break
-      default :
-        status = ''
-    }
-    return status
-  }
-}
+let registrationsStatus = [
+  { value: 'PENDING', label: '未授权' },
+  { value: 'DENIED', label: '已拒绝' },
+  { value: 'PASSED', label: '已通过' }
+]
+export default { registrationsStatus }

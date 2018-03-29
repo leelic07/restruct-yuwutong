@@ -29,7 +29,7 @@ module.exports = {
   rules: {
     // 禁止生产环境带有调试语句
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // 'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
     // 禁止在条件中使用常量表达式
     "no-constant-condition": 2,
     // 禁止不必要的括号 //(a * b) + c;//报错
