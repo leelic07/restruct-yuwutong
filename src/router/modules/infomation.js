@@ -3,6 +3,7 @@ import frame from '@/views/common/the-frame'
 let infomation = [{
   path: '/jails',
   name: '监狱基本信息管理',
+  meta: { hidden: true },
   children: [{
     path: '/jails/detail',
     name: '监狱基本信息',
@@ -19,6 +20,7 @@ let infomation = [{
 }, {
   path: '/prison-affairs-public',
   name: '狱务公开信息管理',
+  meta: { hidden: true },
   children: [{
     path: '/prison-affairs-public/prison-affairs-public',
     name: '狱务公开',

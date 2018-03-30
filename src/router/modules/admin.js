@@ -3,6 +3,7 @@ import frame from '@/views/common/the-frame'
 let admin = [{
   path: '/prison-user',
   name: '监狱用户管理',
+  meta: { hidden: true },
   children: [{
     path: '/prison-user/list',
     name: '监狱用户列表',
@@ -15,6 +16,7 @@ let admin = [{
 }, {
   path: '/feedback',
   name: '意见反馈',
+  meta: { hidden: true },
   children: [{
     path: '/feedback/list',
     name: '意见列表',
@@ -23,6 +25,7 @@ let admin = [{
 }, {
   path: '/province',
   name: '省份管理',
+  meta: { hidden: true },
   children: [{
     path: '/province/list',
     name: '省份列表',
@@ -31,6 +34,7 @@ let admin = [{
 }, {
   path: '/city',
   name: '城市管理',
+  meta: { hidden: true },
   children: [{
     path: '/city/list',
     name: '城市列表',

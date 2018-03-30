@@ -6,25 +6,6 @@
   </el-row>
 </template>
 
-<script>
-import { mapMutations } from 'vuex'
-export default {
-  data() {
-    return {
-      breadcrumb: ['主页']
-    }
-  },
-  methods: {
-    ...mapMutations({
-      breadCrumb: 'breadCrumb'
-    })
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
-  }
-}
-</script>
-
 <style type="text/stylus" lang="stylus">
   #dash-board
     min-height: 500px

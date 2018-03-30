@@ -3,6 +3,7 @@ import frame from '@/views/common/the-frame'
 let check = [{
   path: '/registration',
   name: '家属注册管理',
+  meta: { hidden: true },
   children: [{
     path: '/registration/list',
     name: '家属注册列表',
@@ -11,6 +12,7 @@ let check = [{
 }, {
   path: '/meeting',
   name: '会见申请管理',
+  meta: { hidden: true },
   children: [{
     path: '/meeting/list',
     name: '会见申请列表',
@@ -19,6 +21,7 @@ let check = [{
 }, {
   path: '/mailbox',
   name: '监狱长信箱',
+  meta: { hidden: true },
   children: [{
     path: '/mailbox/list',
     name: '信件列表',
@@ -31,6 +34,7 @@ let check = [{
 }, {
   path: '/prisoners',
   name: '服刑人员信息管理',
+  meta: { hidden: true },
   children: [{
     path: '/prisoners/list',
     name: '服刑人员列表',
@@ -39,6 +43,7 @@ let check = [{
 }, {
   path: '/families',
   name: '家属信息管理',
+  meta: { hidden: true },
   children: [{
     path: '/families/list',
     name: '家属列表',
@@ -47,6 +52,7 @@ let check = [{
 }, {
   path: '/prison-accounts',
   name: '囚犯账户管理',
+  meta: { hidden: true },
   children: [{
     path: '/prison-accounts/list',
     name: '囚犯账户列表',
@@ -55,6 +61,7 @@ let check = [{
 }, {
   path: '/terminals',
   name: '终端管理',
+  meta: { hidden: true },
   children: [{
     path: '/terminals/list',
     name: '终端列表',
@@ -71,6 +78,7 @@ let check = [{
 }, {
   path: '/versions',
   name: '版本管理',
+  meta: { hidden: true },
   children: [{
     path: '/versions/list',
     name: '版本列表',
@@ -79,6 +87,7 @@ let check = [{
 }, {
   path: '/prisoner-data',
   name: '数据管理',
+  meta: { hidden: true },
   children: [{
     path: '/prisoner-data/data-import',
     name: '罪犯数据导入',

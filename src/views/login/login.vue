@@ -58,7 +58,7 @@ export default {
   watch: {
     users(newValue) {
       if (newValue.hasOwnProperty('id')) {
-        this.$router.push({
+        this.$router.replace({
           path: '/dashboard'
         })
       }
@@ -68,6 +68,11 @@ export default {
     ...mapGetters({
       users: 'users' // 获取用户登录时的信息
     })
+  },
+  mounted() {
+    if (sessionStorage.getItem('user_id')) {
+      this.$router.push('/dashboard')
+    }
   },
   methods: {
     ...mapActions({

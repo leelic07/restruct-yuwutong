@@ -5,9 +5,10 @@ let common = [{
   name: '登录',
   component: resolve => require(['@/views/login/login'], resolve)
 }, {
-  path: '/index',
+  path: '/dashboard1',
   name: 'dashboard',
   component: frame,
+  meta: { hidden: true },
   children: [{
     path: '/dashboard',
     name: '欢迎',
@@ -21,6 +22,7 @@ let common = [{
   path: '/download',
   name: 'app下载',
   component: frame,
+  meta: { hidden: true },
   children: [{
     path: '/download/app-family',
     name: '家属版app',
