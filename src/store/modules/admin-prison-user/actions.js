@@ -7,10 +7,13 @@ export default {
   },
   // 某一监狱用户
   getPrisonUser: ({ commit }, regs) => {
-    http.getPrisonUser(regs).then(res => res.code === 200 && commit('updatePrisonUser', res.data)).catch(err => console.log(err))
+    return http.getPrisonUser(regs).then(res => res.code === 200 && commit('updatePrisonUser', res.data)).catch(err => console.log(err))
   },
   // 编辑监狱用户
   editPrisonUser: ({ commit }, regs) => {
-    http.editPrisonUser(regs).then(res => res.code === 200 && commit('updatePrisonUser', res.data)).catch(err => console.log(err))
+    return http.editPrisonUser(regs).then().catch(err => console.log(err))
+  },
+  getJails: ({ commit }) => {
+    return http.getJails().then(res => res.code === 200 && commit('updateJails', res.data)).catch(err => console.log(err))
   }
 }

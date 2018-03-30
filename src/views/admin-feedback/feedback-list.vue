@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
 export default {
   components: {
@@ -49,7 +49,6 @@ export default {
   },
   data() {
     return {
-      breadcrumb: ['主页', '意见反馈列表'], // 面包屑数组
       tabNum: 'first'
     }
   },
@@ -60,16 +59,10 @@ export default {
     })
   },
   mounted() {
-    // 将面包屑数组传递给Content组件
-    this.breadCrumb(this.breadcrumb)
     // 获取家属注册信息列表
     this.getFeedbacks(this.pagination)
   },
   methods: {
-    // 映射mutations方法
-    ...mapMutations({
-      breadCrumb: 'breadCrumb' // 设置家属注册页面的面包屑信息
-    }),
     // 映射actions方法
     ...mapActions(['getFeedbacks']),
     // 每页条数发生变化时执行的方法

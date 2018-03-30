@@ -12,5 +12,8 @@ export default {
     service.get(`/users/to_edit?id=${ id }`).then(res => res).catch(err => err),
   // 编辑监狱用户
   editPrisonUser: params =>
-    service.post('/users/edit', params).then(res => res).catch(err => err)
+    service.post('/users/edit', params).then(res => res).catch(err => err),
+  // 所有监狱
+  getJails: () =>
+    service.get('/jails/all').then(res => res).catch(err => err)
 }

@@ -5,6 +5,10 @@ html{
   margin: 20px 0;
   float: right;
 }
+.button-add{
+  float: right;
+  margin-bottom: 10px;
+}
 .row-container{
   padding: 20px 1% 0 1%;
 }

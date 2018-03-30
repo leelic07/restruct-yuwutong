@@ -5,16 +5,19 @@
 export default {
   watch: {
     $route(to) { // 监听路由变化
-      if (!sessionStorage.getItem('user_id')) {
+      if (!sessionStorage.getItem('user_id') || sessionStorage.getItem('user_id') === 'undefined') {
         this.$router.push('/login')
       }
-      if (to.meta.hidden) {
+      else if (to.meta.hidden) {
         this.$router.push('/dashboard')
       }
     }
   },
   mounted() {
-    if (this.$route.meta.hidden) this.$router.push('/dashboard')
+    if (!sessionStorage.getItem('user_id') || sessionStorage.getItem('user_id') === 'undefined') {
+      this.$router.push('/login')
+    }
+    else if (this.$route.meta.hidden) this.$router.push('/dashboard')
   }
 }
 </script>

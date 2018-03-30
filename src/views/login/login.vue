@@ -31,16 +31,16 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      ruleForm2: {
-        password: '',
-        username: '',
-        prison: ''
-      },
       // ruleForm2: {
-      //   password: '123456',
-      //   username: 'admin',
-      //   prison: '9999'
+      //   password: '',
+      //   username: '',
+      //   prison: ''
       // },
+      ruleForm2: {
+        password: '123456',
+        username: 'admin',
+        prison: '9999'
+      },
       // ruleForm2: {
       //   password: '123456',
       //   username: '4501_sh',
@@ -70,7 +70,7 @@ export default {
     })
   },
   mounted() {
-    if (sessionStorage.getItem('user_id')) {
+    if (sessionStorage.getItem('user_id') && sessionStorage.getItem('user_id') !== 'undefined') {
       this.$router.push('/dashboard')
     }
   },

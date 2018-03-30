@@ -13,10 +13,23 @@
           label-width="100px">
           <el-form-item
             label="监狱名称"
-            prop="jailId">
-            <el-input
+            prop="jailObj">
+            <el-select
+              v-model="prisonUser.jailObj"
+              placeholder="请填写监狱名称"
+              value-key="id"
+              :loading="gettingJails"
+              clearable>
+              <el-option
+                v-for="item in jails"
+                :key="item.id"
+                :label="item.title"
+                :value="item">
+              </el-option>
+            </el-select>
+            <!-- <el-input
               v-model="prisonUser.jailId"
-              placeholder="请填写监狱名称"></el-input>
+              placeholder="请填写监狱名称"></el-input> -->
           </el-form-item>
           <el-form-item
             label="用户名"
@@ -61,30 +74,41 @@ export default {
   data() {
     return {
       rule: {
-        jailId: [{ required: true, message: '请填写监狱名称' }],
+        jailObj: [{ required: true, message: '请填写监狱名称' }],
         username: [{ required: true, message: '请填写用户名' }],
         role: [{ required: true, message: '请选择角色' }]
-      }
+      },
+      gettingJails: true
     }
   },
   watch: {},
   computed: {
     ...mapState({
+      jails: state => state.jails,
       prisonUser: state => state.prisonUser
     })
   },
   methods: {
-    ...mapActions(['getPrisonUser', 'editPrisonUser']),
+    ...mapActions(['getPrisonUser', 'editPrisonUser', 'getJails']),
     onSubmit() {
       this.$refs.prisonUser.validate(valid => {
-        console.log(this.prisonUser)
-        // if (valid) this.editPrisonUser(this.prisonUser)
-        // else return false
+        let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
+        delete prisonUser.jailObj
+        this.editPrisonUser(prisonUser).then(res => {
+          this.$router.push('/prison-user/list')
+        })
       })
     }
   },
   mounted() {
-    this.getPrisonUser(this.$route.params.id)
+    this.getJails().then(res => {
+      this.getPrisonUser(this.$route.params.id).then(res => {
+        this.prisonUser.jailObj = this.jails.find(item => {
+          return parseInt(item.id) === this.prisonUser.jailId
+        })
+        this.gettingJails = false
+      })
+    })
   }
 }
 </script>

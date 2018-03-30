@@ -1,5 +1,8 @@
 <template>
   <el-row class="row-container" :gutter="0">
+    <el-col :span="24">
+      <el-button size="small" type="primary" plain class="button-add" @click="onAdd">添加监狱用户</el-button>
+    </el-col>
     <select-and-search ref="search" c="prisonUser" @sizeChange="sizeChange" @search="onSearch"></select-and-search>
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -57,16 +60,10 @@ export default {
     })
   },
   mounted() {
-    // 获取家属注册信息列表
     this.getPrisonUsers(this.pagination)
   },
   methods: {
-    // 映射actions方法
     ...mapActions(['getPrisonUsers']),
-    onEdit(e) {
-      this.$router.push(`/prison-user/edit/${ e }`)
-    },
-    // 每页条数发生变化时执行的方法
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.onChange()
@@ -76,6 +73,12 @@ export default {
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
+    },
+    onEdit(e) {
+      this.$router.push(`/prison-user/edit/${ e }`)
+    },
+    onAdd() {
+      this.$router.push('/prison-user/add')
     }
   }
 }
