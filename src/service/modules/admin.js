@@ -15,5 +15,11 @@ export default {
     service.post('/users/edit', params).then(res => res).catch(err => err),
   // 所有监狱
   getJails: () =>
-    service.get('/jails/all').then(res => res).catch(err => err)
+    service.get('/jails/all').then(res => res).catch(err => err),
+  addPrisonUser: (prisonUser) => {
+    service.post('/users/add', prisonUser).then(res => res).catch(err => err)
+  },
+  deletePrisonUser: (params) => {
+    service.post('/users/delete', params).then(res => res).catch(err => err)
+  }
 }

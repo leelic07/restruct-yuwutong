@@ -97,12 +97,12 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['editPrisonUser', 'getJails']),
+    ...mapActions(['addPrisonUser', 'getJails']),
     onSubmit() {
       this.$refs.prisonUser.validate(valid => {
         let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
         delete prisonUser.jailObj
-        this.editPrisonUser(prisonUser).then(res => {
+        this.addPrisonUser(prisonUser).then(res => {
           this.$router.push('/prison-user/list')
         })
       })
@@ -118,6 +118,7 @@ export default {
 
 <style type="text/stylus" lang="stylus" scoped>
   .prison-user
+    padding-top: 20px;
     > .el-col
       margin-bottom: 25px
       > .el-row

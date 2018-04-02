@@ -13,7 +13,15 @@ export default {
   editPrisonUser: ({ commit }, regs) => {
     return http.editPrisonUser(regs).then().catch(err => console.log(err))
   },
+  // 获取所有监狱
   getJails: ({ commit }) => {
     return http.getJails().then(res => res.code === 200 && commit('updateJails', res.data)).catch(err => console.log(err))
+  },
+  // 新增监狱账户
+  addPrisonUser: ({ commit }, regs) => {
+    return http.addPrisonUser(regs)
+  },
+  deletePrisonUser: ({ commit }, regs) => {
+    return http.deletePrisonUser(regs)
   }
 }

@@ -115,6 +115,7 @@ export default {
 
 <style type="text/stylus" lang="stylus" scoped>
   .prison-user
+    padding-top: 20px;
     > .el-col
       margin-bottom: 25px
       > .el-row

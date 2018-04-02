@@ -134,7 +134,6 @@ export default {
   },
   data() {
     return {
-      breadcrumb: ['主页', '家属注册管理'], // 面包屑数组
       tabNum: 'first',
       searching: {
         name: '', // 家属姓名
@@ -165,14 +164,12 @@ export default {
   },
   mounted() {
     // 将面包屑数组传递给Content组件
-    this.breadCrumb(this.breadcrumb)
     // 获取家属注册信息列表
     this.getRegistrations(this.pagination)
   },
   methods: {
     // 映射mutations方法
     ...mapMutations({
-      breadCrumb: 'breadCrumb', // 设置家属注册页面的面包屑信息
       setAuthRegistrationsResult: 'setAuthRegistrationsResult' // 设置家属注册授权信息
     }),
     // 映射actions方法
@@ -242,8 +239,8 @@ export default {
     },
     // 图片放大执行的方法
     amplifyImage(imgSrc) {
-      this.innerVisible = true
       this.imgSrc = imgSrc
+      this.innerVisible = true
     }
   }
 }
