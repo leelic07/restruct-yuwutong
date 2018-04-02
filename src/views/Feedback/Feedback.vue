@@ -41,51 +41,51 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
-import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-export default {
-  components: {
-    SelectAndSearch
-  },
-  data() {
-    return {
-      breadcrumb: ['主页', '意见反馈列表'], // 面包屑数组
-      tabNum: 'first'
-    }
-  },
-  computed: {
-    // 映射getters方法获取state状态
-    ...mapGetters({
-      feedbacks: 'feedbacks', // 获取家属注册的注册信息列表
-      feedbacksTotal: 'feedbacksTotal' // 获取家属注册时的总记录数
-    })
-  },
-  mounted() {
-    // 将面包屑数组传递给Content组件
-    this.breadCrumb(this.breadcrumb)
-    // 获取家属注册信息列表
-    this.getFeedbacks(this.pagination)
-  },
-  methods: {
-    // 映射mutations方法
-    ...mapMutations({
-      breadCrumb: 'breadCrumb' // 设置家属注册页面的面包屑信息
-    }),
-    // 映射actions方法
-    ...mapActions(['getFeedbacks']),
-    // 每页条数发生变化时执行的方法
-    sizeChange(rows) {
-      this.$refs.pagination.handleSizeChange(rows)
-      this.onChange()
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
+  import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
+  export default {
+    components: {
+      SelectAndSearch
     },
-    onChange() {
-      this.getFeedbacks({ ...this.$refs.search.searching, ...this.pagination })
+    data() {
+      return {
+        breadcrumb: ['主页', '意见反馈列表'], // 面包屑数组
+        tabNum: 'first'
+      }
     },
-    onSearch() {
-      this.$refs.pagination.handleCurrentChange(1)
+    computed: {
+      // 映射getters方法获取state状态
+      ...mapGetters({
+        feedbacks: 'feedbacks', // 获取家属注册的注册信息列表
+        feedbacksTotal: 'feedbacksTotal' // 获取家属注册时的总记录数
+      })
+    },
+    mounted() {
+      // 将面包屑数组传递给Content组件
+      this.breadCrumb(this.breadcrumb)
+      // 获取家属注册信息列表
+      this.getFeedbacks(this.pagination)
+    },
+    methods: {
+      // 映射mutations方法
+      ...mapMutations({
+        breadCrumb: 'breadCrumb' // 设置家属注册页面的面包屑信息
+      }),
+      // 映射actions方法
+      ...mapActions(['getFeedbacks']),
+      // 每页条数发生变化时执行的方法
+      sizeChange(rows) {
+        this.$refs.pagination.handleSizeChange(rows)
+        this.onChange()
+      },
+      onChange() {
+        this.getFeedbacks({...this.$refs.search.searching, ...this.pagination})
+      },
+      onSearch() {
+        this.$refs.pagination.handleCurrentChange(1)
+      }
     }
   }
-}
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
