@@ -38,6 +38,10 @@
           v-if="c==='prisonAffairsDisclosure'"
           placeholder="请输入新闻标题"
           v-model="searching.title"></el-input>
+        <el-input
+          v-if="c==='prisonUser'"
+          placeholder="请输入监狱名称"
+          v-model="searching.jail"></el-input>
       </el-col>
       <el-col>
         <!--搜索框-->
@@ -61,18 +65,31 @@
           v-if="c==='feedback'"
           placeholder="请输入手机号"
           v-model="searching.phone"></el-input>
+        <el-input
+          v-if="c==='prisonUser'"
+          placeholder="请输入用户名"
+          v-model="searching.username"></el-input>
       </el-col>
       <el-col>
         <el-input
           v-if="['registrations', 'meetings', 'feedback'].indexOf(c) > -1"
           placeholder="请输入家属姓名"
           v-model="searching.name"></el-input>
+        <el-select v-if="c==='prisonUser'" v-model="searching.role" placeholder="请选择角色" clearable>
+          <el-option
+            v-for="item in $store.state.role"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </el-col>
     </el-col>
   </el-col>
 </template>
 
 <script>
+// import roleList from '@/filters/modules/role'
 export default {
   props: {
     c: {
@@ -95,7 +112,6 @@ export default {
     }
   },
   methods: {
-    // 点击搜索执行的方法
     search() {
       this.$emit('search', this.searching)
     },

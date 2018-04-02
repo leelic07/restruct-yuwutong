@@ -25,7 +25,10 @@ import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
-import feedback from './modules/feedback'
+import feedback from './modules/admin-feedback'
+import breadCrumbs from './modules/breadcrumb'
+import adminPrisonUser from './modules/admin-prison-user'
+import filter from './modules/filter'
 import 'babel-polyfill'
 
 Vue.use(Vuex)
@@ -66,7 +69,10 @@ merge(
   downloadFile,
   uploadFile,
   uploadImg,
-  feedback
+  feedback,
+  breadCrumbs,
+  adminPrisonUser,
+  filter
 )
 export default new Vuex.Store({
   actions,

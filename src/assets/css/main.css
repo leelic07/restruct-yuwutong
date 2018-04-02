@@ -1,6 +1,13 @@
+html{
+  background: #ecf0f5;
+}
 .m-pagination .el-pagination{
   margin: 20px 0;
   float: right;
+}
+.button-add{
+  float: right;
+  margin-bottom: 10px;
 }
 .row-container{
   padding: 20px 1% 0 1%;
@@ -15,4 +22,8 @@
     float: left;
     color: #3C8DBC;
     font-weight: bold;
+}
+/* element-ui */
+.search-box .el-select, .el-form-item__content .el-select{
+  width: 100%;
 }

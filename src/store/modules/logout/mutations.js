@@ -6,6 +6,7 @@ export default {
     for (let key in sessionStorage) {
       sessionStorage.setItem(key, 'undefined')
     }
+    state.users = {}
     // 退出登录后将页面跳转到登录页面
     router.push({
       path: '/login'
