@@ -57,14 +57,14 @@ export default {
         path: '/feedback/list',
         title: '意见反馈',
         icon: 'iconfont icon-folder'
-      }, {
-        path: '/province/list',
-        title: '省份管理',
-        icon: 'iconfont icon-folder'
-      }, {
-        path: '/city/list',
-        title: '城市管理',
-        icon: 'iconfont icon-folder'
+      // }, {
+      //   path: '/province/list',
+      //   title: '省份管理',
+      //   icon: 'iconfont icon-folder'
+      // }, {
+      //   path: '/city/list',
+      //   title: '城市管理',
+      //   icon: 'iconfont icon-folder'
       }],
       checkMenu = [{
         path: '/registration/list',
