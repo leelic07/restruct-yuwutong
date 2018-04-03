@@ -27,3 +27,33 @@ html{
 .search-box .el-select, .el-form-item__content .el-select{
   width: 100%;
 }
+.authorize-dialog .el-dialog__body{
+  padding: 10px 20px;
+}
+.authorize-dialog .el-dialog__header{
+  border-bottom: 1px solid #f4f4f4;
+}
+.authorize-dialog .img-box{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+.authorize-dialog .img-box img{
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 0 5px #ddd;
+  cursor: pointer;
+  vertical-align: top;
+}
+.authorize-dialog .button-box button, .authorize-dialog .button-box .el-select{
+  width: 100%;
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+.img-dialog img{
+  width: 400px;
+  height: 400px;
+  box-shadow: 0 0 5px #ddd;
+}

@@ -3,18 +3,11 @@ import http from '@/service'
 export default {
   // 获取家属注册信息列表
   getRegistrations({ commit }, regs) {
-    http.getRegistrations(regs).then(res => commit('getRegistrations', res)).catch(err => console.log(err))
+    http.getRegistrations(regs).then(res => res.code === 200 && commit('getRegistrations', res))
   },
   // 授权家属注册信息列表
   authorizeRegistrations({ commit }, regs) {
-    let id = regs.id, // 获取要授权的家属注册id
-      status = regs.status// 授权或者是拒绝授权家属注册
-    http.authorizeRegistrations(regs).then(res => res.code === 200 &&
-    commit('authorizeRegistrations', {
-      ...res,
-      id: id,
-      status: status
-    })).catch(err => console.log(err))
+    return http.authorizeRegistrations(regs).then(res => res.code === 200)
   },
   // 获取家属注册信息的照片url
   getUuidImage: ({ commit }, id) =>
