@@ -1,8 +1,6 @@
 <template>
   <el-row id="registration" :gutter="0">
-    <!--选择显示页数和搜索框内容组件-->
-    <select-and-search c="registrations" :searching="searching" @sizeChange="sizeChange" @search="search"
-                       @searchingChange="searchingChange"></select-and-search>
+    <m-search :items="searchItems" @sizeChange="sizeChange" @search="onSearch"></m-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
@@ -127,18 +125,14 @@
 
 <script>
 import { mapActions, mapMutations, mapGetters } from 'vuex'
-import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
 export default {
-  components: {
-    SelectAndSearch
-  },
   data() {
     return {
       tabNum: 'first',
-      searching: {
-        name: '', // 家属姓名
-        prisonerNumber: '', // 囚号
-        uuid: '' // 身份证号
+      searchItems: {
+        uuid: { type: 'input', label: '身份证号' },
+        prisonerNumber: { type: 'input', label: '囚犯号' },
+        name: { type: 'input', label: '家属姓名' }
       },
       dialogVisible: false, // 弹出框的显示和隐藏
       innerVisible: false, // 内层弹框的显示和隐藏
@@ -163,7 +157,6 @@ export default {
     })
   },
   mounted() {
-    // 将面包屑数组传递给Content组件
     // 获取家属注册信息列表
     this.getRegistrations(this.pagination)
   },
@@ -184,19 +177,12 @@ export default {
       this.$refs.pagination.handleSizeChange(rows)
       this.change()
     },
-    // 根据是否有搜索内容调用不同的接口
     change() {
-      this.getRegistrations({ ...this.searching, ...this.pagination })
+      this.getRegistrations({ ...this.filter, ...this.pagination })
     },
     // 点击搜索时执行的方法
-    search(searching) {
+    onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
-      this.searching = searching
-      this.getRegistrations({ ...this.searching, ...this.pagination })
-    },
-    // 监听搜索框的内容变化
-    searchingChange(searching) {
-      this.searching = searching
     },
     // 点击授权时执行的方法
     handleAuthorization(id) {
