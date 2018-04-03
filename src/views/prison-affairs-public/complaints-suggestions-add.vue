@@ -60,7 +60,6 @@ export default {
         isFocus: false,
         sysFlag: 1
       },
-      authorization: {},
       breadcrumb: ['主页', '狱务公开信息管理', '新闻信息管理'],
       fileList: [],
       editorOption: {}, // 富文本编辑器的配置
@@ -79,7 +78,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      addNewsResult: 'addNewsResult' // 获取添加狱务公开信息的结果
+      addNewsResult: 'addNewsResult', // 获取添加狱务公开信息的结果
+      authorization: 'authorization' // 获取上传图片得授权token
     })
   },
   methods: {
@@ -90,12 +90,12 @@ export default {
       breadCrumb: 'breadCrumb' // 设置商品编辑页面的面包屑信息
     }),
     // 添加图片选中图片时执行的方法
-    handleChange(file) {
-      this.news.image = file
-    },
+    // handleChange(file) {
+    //   this.news.anotherImageUrl = file
+    // },
     // 移除选中图片时执行的方法
     handleRemove() {
-      this.news.image = ''
+      this.news.anotherImageUrl = ''
     },
     // 当富文本内容发生改变时执行的方法
     editorChange(contents) {
@@ -105,8 +105,9 @@ export default {
     onSubmit() {
       this.addNews(this.news)
     },
-    handleSuccess() {
-      console.log('上传成功')
+    handleSuccess(res) {
+      // console.log('上传成功')
+      this.news.anotherImageUrl = res.url
     },
     handleExceed() {
       console.log('超出限制')
