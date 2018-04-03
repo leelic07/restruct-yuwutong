@@ -9,8 +9,5 @@ export default {
     service.postFile('/news/add', news).then(res => res).catch(err => err),
   // 添加狱务公开信息
   addNews: news =>
-    service.postFile('/news/add', news).then(res => res).catch(err => err),
-  // 根据id删除狱务公开信息
-  deleteNewsById: id =>
-    service.post('/news/delete', id).then(res => res).catch(err => err)
+    service.postFile('/news/add', news).then(res => res).catch(err => err)
 }

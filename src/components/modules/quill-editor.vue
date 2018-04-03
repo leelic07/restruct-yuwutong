@@ -28,7 +28,7 @@
     props: {
       contents: {
         type: String,
-        required: true,
+        // required: true,
         default: ''
       } // 初始化富文本的内容
     },
@@ -37,6 +37,7 @@
       return {
         fileListForEditor: [], // 富文本上传图片列表
         editorOption: {
+          placeholder: '请输入内容',
           modules: {
             toolbar: {
               container: [

@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 // import $ from 'jquery'
 import store from './store'
 import filters from './filters'
-import VueQuillEditor from 'vue-quill-editor'
+// import VueQuillEditor from 'vue-quill-editor'
 import components from '@/components'
 import '../static/bootstrap/js/bootstrap.min.js'
 import '../static/dist/js/app.min.js'
@@ -23,7 +23,7 @@ import 'quill/dist/quill.snow.css'
 import '@/assets/css/main.css'
 
 Vue.use(ElementUI)
-Vue.use(VueQuillEditor)
+// Vue.use(VueQuillEditor)
 
 Vue.config.productionTip = false
 

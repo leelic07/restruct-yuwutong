@@ -15,7 +15,6 @@ import mailboxes from './modules/mailboxes'
 import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
-import news from './modules/news-management'
 import loading from './modules/loading'
 import prisonDataManagement from './modules/prisoner-data-management'
 import ordersManagement from './modules/orders-management'
@@ -25,9 +24,11 @@ import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
-import feedback from './modules/admin-feedback'
 import breadCrumbs from './modules/breadcrumb'
+
+import adminFeedback from './modules/admin-feedback'
 import adminPrisonUser from './modules/admin-prison-user'
+import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 import 'babel-polyfill'
 
@@ -59,7 +60,6 @@ merge(
   familyOrders,
   jailsInformation,
   lawsInformation,
-  news,
   loading,
   prisonDataManagement,
   ordersManagement,
@@ -69,9 +69,10 @@ merge(
   downloadFile,
   uploadFile,
   uploadImg,
-  feedback,
+  adminFeedback,
   breadCrumbs,
   adminPrisonUser,
+  infoPrisonAffairsPublic,
   filter
 )
 export default new Vuex.Store({

@@ -1,5 +1,5 @@
 <template>
-  <el-row id="registration" :gutter="0">
+  <el-row class="row-container" :gutter="0">
     <m-search :items="searchItems" @sizeChange="sizeChange" @search="onSearch"></m-search>
     <!--标签页表格-->
     <el-col :span="24">
@@ -38,7 +38,8 @@
             </el-table-column>
             <el-table-column
               prop="status"
-              label="申请状态">
+              label="申请状态"
+              class-name="orange">
               <template slot-scope="scope">
                 {{scope.row.status | registrationsStatus}}
               </template>
@@ -56,7 +57,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-col>
-    <m-pagination ref="pagination" :total="registrationsTotal" @onPageChange="change"></m-pagination>
+    <m-pagination ref="pagination" :total="registrationsTotal" @onPageChange="currentChange"></m-pagination>
     <el-dialog class="authorize-dialog" title="授权" :visible.sync="show.authorize" width="530px">
       <div style="margin-bottom: 10px;">请核对申请人照片:</div>
       <div class="img-box">
@@ -129,9 +130,9 @@ export default {
     ...mapActions(['getRegistrations', 'getUuidImage', 'authorizeRegistrations']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.change()
+      this.currentChange()
     },
-    change() {
+    currentChange() {
       this.getRegistrations({ ...this.filter, ...this.pagination })
     },
     onSearch() {
@@ -152,7 +153,7 @@ export default {
         if (res) {
           this.show.authorize = false
           this.authorizeId = ''
-          this.change()
+          this.currentChange()
         }
       })
     },
@@ -166,19 +167,4 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  white = #fff
-  #registration
-    padding: 20px 1% 0 1%
-    & /deep/ .el-tabs__item
-      background: white
-    & /deep/ .el-table__body-wrapper
-      overflow: visible
-    & /deep/ .el-table__row
-      > td:nth-child(7)
-        color: orange
-        font-weight: bold
-    & /deep/ .cell .el-button--default
-      float: left
-      color: #3C8DBC
-      font-weight: bold
 </style>

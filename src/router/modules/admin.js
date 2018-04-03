@@ -26,24 +26,6 @@ let admin = [{
     name: '意见列表',
     component: resolve => require(['@/views/admin-feedback/feedback-list'], resolve)
   }]
-// }, {
-//   path: '/province',
-//   name: '省份管理',
-//   meta: { hidden: true },
-//   children: [{
-//     path: '/province/list',
-//     name: '省份列表',
-//     component: resolve => require(['@/views/admin/province-list'], resolve)
-//   }]
-// }, {
-//   path: '/city',
-//   name: '城市管理',
-//   meta: { hidden: true },
-//   children: [{
-//     path: '/city/list',
-//     name: '城市列表',
-//     component: resolve => require(['@/views/admin/city-list'], resolve)
-//   }]
 }]
 
 admin.forEach(item => {

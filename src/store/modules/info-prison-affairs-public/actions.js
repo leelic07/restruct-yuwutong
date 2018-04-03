@@ -3,7 +3,7 @@ import http from '@/service'
 export default {
   // 获取狱务公开信息
   getNews: ({ commit }, regs) =>
-    http.getNews(regs).then(res => commit('getNews', res)).catch(err => console.log(err)),
+    http.getNews(regs).then(res => res.code === 200 && commit('getNews', res)),
   // 编辑狱务公开信息
   editNews({ commit }, regs) {
     let formData = new FormData()
@@ -36,10 +36,7 @@ export default {
     }).catch(err => console.log(err))).catch(err => console.log(err))
   },
   // 根据id删除狱务公开信息
-  deleteNewsById({ commit }, regs) {
-    http.deleteNewsById({ id: regs }).then(res => commit('deleteNewsById', {
-      ...res,
-      'id': regs
-    })).catch(err => console.log(err))
+  deleteNews({ commit }, regs) {
+    return http.deleteNews(regs).then(res => res.code === 200)
   }
 }

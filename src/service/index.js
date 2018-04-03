@@ -20,8 +20,10 @@ import logout from './modules/logout'
 import downloadFile from './modules/download-file'
 import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
-import admin from './modules/admin'
 import province from './modules/province'
+
+import admin from './modules/admin'
+import information from './modules/information'
 
 export default Object.assign(
   registrations,
@@ -46,6 +48,7 @@ export default Object.assign(
   downloadFile,
   uploadFile,
   uploadImg,
+  province,
   admin,
-  province
+  information
 )

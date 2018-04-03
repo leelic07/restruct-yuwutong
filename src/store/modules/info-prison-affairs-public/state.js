@@ -12,6 +12,5 @@ export default {
   // complaintsProposalsTotal: 0, // 投诉建议的记录条数
   newsForEdit: {}, // 待编辑的新闻信息对象
   editNewsResult: {}, // 编辑狱务公开信息的结果
-  addNewsResult: {}, // 添加狱务公开信息的结果
-  deleteNewsResult: {} // 删除狱务公开信息的结果
+  addNewsResult: {} // 添加狱务公开信息的结果
 }

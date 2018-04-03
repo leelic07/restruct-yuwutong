@@ -1,6 +1,9 @@
 html{
   background: #ecf0f5;
 }
+img{
+  vertical-align: top;
+}
 .m-pagination .el-pagination{
   margin: 20px 0;
   float: right;
@@ -8,6 +11,9 @@ html{
 .button-add{
   float: right;
   margin-bottom: 10px;
+}
+.breadcrumb + .el-row{
+  padding: 20px 20px 0;
 }
 .row-container{
   padding: 20px 1% 0 1%;
@@ -22,6 +28,14 @@ html{
     float: left;
     color: #3C8DBC;
     font-weight: bold;
+}
+.row-container .cell img{
+  height: 80px;
+  width: 80px;
+}
+.orange:not(.is-leaf){
+  color: orange;
+  font-weight: bold;
 }
 /* element-ui */
 .search-box .el-select, .el-form-item__content .el-select{
@@ -45,7 +59,6 @@ html{
   height: 150px;
   box-shadow: 0 0 5px #ddd;
   cursor: pointer;
-  vertical-align: top;
 }
 .authorize-dialog .button-box button, .authorize-dialog .button-box .el-select{
   width: 100%;
@@ -56,4 +69,7 @@ html{
   width: 400px;
   height: 400px;
   box-shadow: 0 0 5px #ddd;
+}
+.el-form--label-top .el-form-item__label{
+  padding: 0;
 }

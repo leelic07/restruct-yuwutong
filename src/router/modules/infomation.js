@@ -23,24 +23,32 @@ let infomation = [{
   meta: { hidden: true },
   children: [{
     path: '/prison-affairs-public/prison-affairs-public',
-    name: '狱务公开',
-    component: resolve => require(['@/views/prison-affairs-public/prison-affairs-public'], resolve)
+    name: '狱务公开信息列表',
+    component: resolve => require(['@/views/info-prison-affairs-public/prison-affairs-public-list'], resolve)
+  }, {
+    path: '/prison-affairs-public/prison-affairs-public/add',
+    name: '新增狱务公开信息',
+    component: resolve => require(['@/views/info-prison-affairs-public/prison-affairs-public-add'], resolve)
+  }, {
+    path: '/prison-affairs-public/prison-affairs-public/edit/:id',
+    name: '编辑狱务公开信息',
+    component: resolve => require(['@/views/info-prison-affairs-public/prison-affairs-public-edit'], resolve)
   }, {
     path: '/prison-affairs-public/working-dynamics',
     name: '工作动态',
-    component: resolve => require(['@/views/prison-affairs-public/working-dynamics'], resolve)
+    component: resolve => require(['@/views/info-prison-affairs-public/working-dynamics'], resolve)
   }, {
     path: '/prison-affairs-public/complaints-suggestions/list',
     name: '投诉建议公示',
-    component: resolve => require(['@/views/prison-affairs-public/complaints-suggestions-list'], resolve)
+    component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-list'], resolve)
   }, {
     path: '/prison-affairs-public/complaints-suggestions/add',
     name: '新增投诉/建议',
-    component: resolve => require(['@/views/prison-affairs-public/complaints-suggestions-add'], resolve)
+    component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-add'], resolve)
   }, {
     path: '/prison-affairs-public/complaints-suggestions/edit/:id',
     name: '编辑投诉/建议',
-    component: resolve => require(['@/views/prison-affairs-public/complaints-suggestions-edit'], resolve)
+    component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-edit'], resolve)
   }]
 }]
 
