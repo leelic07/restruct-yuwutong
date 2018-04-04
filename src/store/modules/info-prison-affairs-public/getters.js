@@ -1,6 +1,6 @@
 export default {
   // 获取狱务公开原数据信息
-  news: state => state.news,
+  newsAll: state => state.newsAll,
   // 获取狱务公开新闻信息的记录数
   newsTotal: state => state.newsTotal,
   // 获取狱务公开

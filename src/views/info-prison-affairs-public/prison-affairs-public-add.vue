@@ -1,5 +1,5 @@
 <template>
-  <el-row class="prison-affairs-disclosure-new" :gutter="0">
+  <el-row class="row-container" :gutter="0">
     <el-col :span="13" :offset="5">
       <el-form ref="form" :model="news" label-position="top" :rules="rules">
         <el-form-item label="新闻标题" prop="title">
@@ -8,29 +8,14 @@
         <el-form-item class="is-required" label="新闻内容" prop="contents">
           <m-quill-editor @editorChange="editorChange"></m-quill-editor>
         </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            :action="_$agency + '/avatars'"
-            :headers="authorization"
-            name="avatar"
-            :on-success="handleSuccess"
-            :on-remove="handleRemove"
-            :on-exceed="handleExceed"
-            :file-list="fileList"
-            :limit="1"
-            accept="image/jpeg,image/jpg"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
+        <el-form-item label="新闻图片">
+          <m-upload-img @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
-          <!-- `checked` 为 true 或 false -->
           <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
+          <el-button type="primary" @click="onSubmit" size="small" style="float: right;">新增</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -38,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -47,40 +32,17 @@ export default {
         title: '',
         contents: '',
         isFocus: false,
-        sysFlag: 1
+        anotherImageUrl: ''
       },
       rules: {
         title: [{ required: true, message: '请填写新闻标题' }]
-      },
-      fileList: [],
-      editorOption: {} // 富文本编辑器的配置
+      }
     }
-  },
-  watch: {
-    // 返回添加狱务公开信息结果时跳转到狱务公开信息管理页
-    addNewsResult(newValue) {
-      window.history.back()
-    }
-  },
-  computed: {
-    ...mapGetters({
-      addNewsResult: 'addNewsResult', // 获取添加狱务公开信息的结果
-      authorization: 'authorization' // 获取上传图片得授权token
-    })
-  },
-  mounted() {
   },
   methods: {
-    ...mapActions({
-      addNews: 'addNews' // 添加狱务公开信息
-    }),
-    // 添加图片选中图片时执行的方法
-    // handleChange(file) {
-    //   this.news.anotherImageUrl = file
-    // },
-    // 移除选中图片时执行的方法
-    handleRemove() {
-      this.news.anotherImageUrl = ''
+    ...mapActions(['addNews']),
+    onSuccess(e) {
+      this.news.anotherImageUrl = e
     },
     // 当富文本内容发生改变时执行的方法
     editorChange(contents) {
@@ -88,28 +50,21 @@ export default {
     },
     // 点击更新时执行的方法
     onSubmit() {
-      this.addNews(this.news)
-    },
-    handleSuccess(res) {
-      // console.log('上传成功')
-      this.news.anotherImageUrl = res.url
-    },
-    handleExceed() {
-      console.log('超出限制')
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (!this.news.contents) {
+            this.$message.warning('请填写新闻内容')
+            return false
+          }
+          this.addNews(this.news).then(res => {
+            if (res) this.$router.push('/prison-affairs-public/prison-affairs-public')
+          })
+        }
+      })
     }
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  .prison-affairs-disclosure-new
-    padding-top: 35px
-    & /deep/ .el-form-item
-      .upload-demo
-        .el-upload
-          .el-upload__input
-            display: none !important
-      &:last-child
-        .el-button
-          float: right
 </style>

@@ -1,43 +1,18 @@
 export default {
   // 获取狱务公开信息
-  getNews(state, newsList) {
-    // let prisonAffairsDisclosure = []
-    // let workingDynamics = []
-    // let complaintsProposals = []
-    // // 将狱务公开，工作动态，投诉建议得信息分别压入对应得数组
-    // for (let nw of newsList.news) {
-    //   nw.image_url = nw.image_url ? nw.image_url.substring(6) : ''//截取图片路径地址
-    //   switch (nw.type_id) {
-    //     case 1:
-    //       prisonAffairsDisclosure.push(nw)
-    //       break
-    //     case 2:
-    //       workingDynamics.push(nw)
-    //       break
-    //     case 3:
-    //       complaintsProposals.push(nw)
-    //       break
-    //     default:
-    //       break
-    //   }
-    // }
-    // state.news = newsList.news
-    // state.newsTotal = newsList.total
-    // state.prisonAffairsDisclosure = state.prisonAffairsDisclosureOrigin = prisonAffairsDisclosure// 保存原始的狱务公开信息
-    // state.prisonAffairsDisclosureTotal = prisonAffairsDisclosure.length// 狱务公开记录数
-    // state.workingDynamics = state.workingDynamicsOrigin = workingDynamics// 保存原始的工作动态信息
-    // state.workingDynamicsTotal = workingDynamics.length// 工作动态记录数
-    // state.complaintsProposals = state.complaintsProposalsOrigin = complaintsProposals// 保存原始的投诉建议公示信息
-    // state.complaintsProposalsTotal = complaintsProposals.length// 投诉建议记录数
-    let news = newsList.data.news
+  getNewsAll(state, newsList) {
+    let newsAll = newsList.data.news
     // 将新闻内容的null转换成空字符串
-    news.forEach(nw => {
+    newsAll.forEach(nw => {
       nw.contents = nw.contents || ''
       nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : '' // 截取图片路径地址
       nw.anotherImageUrl = nw.anotherImageUrl || ''
     })
-    state.news = news
+    state.newsAll = newsAll
     state.newsTotal = newsList.data.newsSize
+  },
+  getNews(state, res) {
+    state.news = res.data
   },
   // 根据id获取新闻信息
   getNewsById: (state, id) => state.news.forEach(nw => nw.id === Number(id) && (state.newsForEdit = nw)),

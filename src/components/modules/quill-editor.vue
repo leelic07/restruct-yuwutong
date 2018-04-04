@@ -90,7 +90,7 @@
       // 上传图片成功执行的方法
       handleSuccess(res) {
         // 将图片的地址插入到富文本编辑框当中
-        res.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', res.url)
+        res.code === 200 && this.editor.insertEmbed(this.editor.getSelection().index, 'image', `${ res.url }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`)
         this.uploadImg(res)
       }
     }

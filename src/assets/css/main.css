@@ -73,3 +73,6 @@ img{
 .el-form--label-top .el-form-item__label{
   padding: 0;
 }
+.el-upload__input{
+  display: none !important;
+}

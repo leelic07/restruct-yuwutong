@@ -4,6 +4,7 @@ let fillPre = (val) => {
 export default {
   // 日期过滤器
   Date(time) {
+    if (!time) return
     let date = new Date(time),
       year = date.getFullYear(),
       month = fillPre(date.getMonth() + 1),

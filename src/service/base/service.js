@@ -12,7 +12,6 @@ export const agency = '/ywgk'
 const getUrl = (url) => `${ agency }${ url }`
 // 处理服务端错误的方法
 const handleError = (error) => {
-  console.dir(error)
   if (error.response !== undefined) {
     switch (error.response.status) {
       case 401:
@@ -29,6 +28,9 @@ const handleError = (error) => {
         break
       case 404:
         Message.error('找不到对应的资源！')
+        break
+      case 415:
+        Message.error('数据格式错误！')
         break
       case 500:
         Message.error('服务器内部错误！')
@@ -110,6 +112,7 @@ instance.interceptors.response.use(
     return response
   },
   error => {
+    console.dir(error)
     if (handleError(error)) {
       // 隐藏loading遮罩层
       store.commit('hideLoading')

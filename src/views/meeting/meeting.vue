@@ -25,16 +25,12 @@
               label="身份证">
             </el-table-column>
             <el-table-column
-              label="申请时间">
-              <template slot-scope="scope">
-                {{scope.row.applicationDate | Date}}
-              </template>
+              label="申请时间"
+              prop="applicationDate">
             </el-table-column>
             <el-table-column
-              label="预约时间">
-              <template slot-scope="scope">
-                {{scope.row.meetingTime | Date}}
-              </template>
+              label="预约时间"
+              prop="meetingTime">
             </el-table-column>
             <el-table-column
               prop="prisonerNumber"

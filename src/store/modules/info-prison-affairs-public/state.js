@@ -1,5 +1,6 @@
 export default {
-  news: [], // 狱务公开管理模块全部原始数据
+  newsAll: [], // 狱务公开管理模块全部原始数据
+  news: {},
   newsTotal: 0, // 狱务公开管理模块全部数据
   // prisonAffairsDisclosure: [], // 狱务公开信息
   // prisonAffairsDisclosureOrigin: [], // 狱务公开最初的信息
