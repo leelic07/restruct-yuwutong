@@ -6,16 +6,16 @@
           <el-input v-model="news.title" placeholder="请填写新闻标题"></el-input>
         </el-form-item>
         <el-form-item class="is-required" label="新闻内容" prop="contents">
-          <m-quill-editor @editorChange="editorChange"></m-quill-editor>
+          <m-quill-editor :contents="news.contents" @editorChange="editorChange"></m-quill-editor>
         </el-form-item>
         <el-form-item label="新闻图片">
-          <m-upload-img @success="onSuccess"></m-upload-img>
+          <m-upload-img :url="news.imageUrl" @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small" style="float: right;">新增</el-button>
+          <el-button type="primary" @click="onSubmit" size="small" style="float: right;">更新</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -23,25 +23,23 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      news: { // 需要添加的法律信息
-        typeId: 1,
-        title: '',
-        contents: '',
-        summary: '',
-        isFocus: false,
-        imageUrl: ''
-      },
       rules: {
         title: [{ required: true, message: '请填写新闻标题' }]
       }
     }
   },
+  computed: {
+    ...mapState(['news'])
+  },
+  mounted() {
+    this.getNews(this.$route.params.id)
+  },
   methods: {
-    ...mapActions(['addNews']),
+    ...mapActions(['getNews', 'editNews']),
     onSuccess(e) {
       this.news.imageUrl = e
     },
@@ -58,8 +56,8 @@ export default {
             this.$message.warning('请填写新闻内容')
             return false
           }
-          this.addNews(this.news).then(res => {
-            if (res) this.$router.push('/prison-affairs-public/complaints-suggestions')
+          this.editNews(this.news).then(res => {
+            if (res) this.$router.push('/prison-affairs-public/working-dynamics')
           })
         }
       })

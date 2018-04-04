@@ -9,7 +9,7 @@
           <m-quill-editor :contents="news.contents" @editorChange="editorChange"></m-quill-editor>
         </el-form-item>
         <el-form-item label="新闻图片">
-          <m-upload-img :url="news.anotherImageUrl" @success="onSuccess"></m-upload-img>
+          <m-upload-img :url="news.imageUrl" @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
@@ -41,11 +41,12 @@ export default {
   methods: {
     ...mapActions(['getNews', 'editNews']),
     onSuccess(e) {
-      this.news.anotherImageUrl = e
+      this.news.imageUrl = e
     },
     // 当富文本内容发生改变时执行的方法
-    editorChange(contents) {
+    editorChange(contents, text) {
       this.news.contents = contents
+      this.news.summary = text
     },
     // 点击更新时执行的方法
     onSubmit() {

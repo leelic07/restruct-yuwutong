@@ -85,7 +85,7 @@
       }),
       // 当富文本的内容发生改变的时候传给父组件
       editorChange({ editor, html, text }) {
-        this.$emit('editorChange', html)
+        this.$emit('editorChange', html, text.substr(0, 100))
       },
       // 上传图片成功执行的方法
       handleSuccess(res) {

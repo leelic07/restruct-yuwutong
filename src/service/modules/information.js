@@ -15,5 +15,5 @@ export default {
     service.post('/news/add', news).then(res => res).catch(err => err),
   // 编辑狱务公开信息
   editNews: news =>
-    service.postFile('/news/add', news).then(res => res).catch(err => err)
+    service.post('/news/add', news).then(res => res).catch(err => err)
 }

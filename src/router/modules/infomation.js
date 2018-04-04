@@ -36,9 +36,17 @@ let infomation = [{
   }, {
     path: '/prison-affairs-public/working-dynamics',
     name: '工作动态',
-    component: resolve => require(['@/views/info-prison-affairs-public/working-dynamics'], resolve)
+    component: resolve => require(['@/views/info-prison-affairs-public/working-dynamics-list'], resolve)
   }, {
-    path: '/prison-affairs-public/complaints-suggestions/list',
+    path: '/prison-affairs-public/working-dynamics/add',
+    name: '新增工作动态',
+    component: resolve => require(['@/views/info-prison-affairs-public/working-dynamics-add'], resolve)
+  }, {
+    path: '/prison-affairs-public/working-dynamics/edit/:id',
+    name: '编辑工作动态',
+    component: resolve => require(['@/views/info-prison-affairs-public/working-dynamics-edit'], resolve)
+  }, {
+    path: '/prison-affairs-public/complaints-suggestions',
     name: '投诉建议公示',
     component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-list'], resolve)
   }, {

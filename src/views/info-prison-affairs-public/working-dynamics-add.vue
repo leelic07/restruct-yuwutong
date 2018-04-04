@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       news: { // 需要添加的法律信息
-        typeId: 1,
+        typeId: 2,
         title: '',
         contents: '',
         summary: '',
@@ -59,7 +59,7 @@ export default {
             return false
           }
           this.addNews(this.news).then(res => {
-            if (res) this.$router.push('/prison-affairs-public/complaints-suggestions')
+            if (res) this.$router.push('/prison-affairs-public/working-dynamics')
           })
         }
       })

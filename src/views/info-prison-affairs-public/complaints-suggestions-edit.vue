@@ -1,41 +1,21 @@
 <template>
-  <el-row id="prison-affairs-disclosure-editor" :gutter="0">
+  <el-row class="row-container" :gutter="0">
     <el-col :span="13" :offset="5">
-      <el-form ref="form" :model="newsForEdit">
-        <el-form-item label="新闻名称">
-          <el-input v-model="newsForEdit.title" placeholder="请填写新闻名称"></el-input>
+      <el-form ref="form" :model="news" label-position="top" :rules="rules">
+        <el-form-item label="新闻标题" prop="title">
+          <el-input v-model="news.title" placeholder="请填写新闻标题"></el-input>
         </el-form-item>
-        <el-form-item label="新闻详情">
-          <vue-quill-editor :contents="newsForEdit.contents" @editorChange="editorChange"></vue-quill-editor>
+        <el-form-item class="is-required" label="新闻内容" prop="contents">
+          <m-quill-editor :contents="news.contents" @editorChange="editorChange"></m-quill-editor>
         </el-form-item>
-        <el-form-item>
-          <img :src="newsForEdit.anotherImageUrl" alt="">
-          <!--<img src="../../../assets/images/default.jpg" alt="">-->
-        </el-form-item>
-        <el-form-item>
-          <el-upload
-            class="upload-demo"
-            :action="_$agency + '/avatars'"
-            name="avatar"
-            :headers="authorization"
-            :on-remove="handleRemove"
-            :on-success="handleSuccess"
-            :on-exceed="handleExceed"
-            :file-list="fileList"
-            :limit="1"
-            :with-credentials="true"
-            accept="image/jpeg,image/jpg"
-            list-type="picture">
-            <el-button size="normal" type="primary" plain>添加图片</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
+        <el-form-item label="新闻图片">
+          <m-upload-img :url="news.imageUrl" @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
-          <!-- `checked` 为 true 或 false -->
-          <el-checkbox v-model="newsForEdit.isFocus">是否设为焦点新闻</el-checkbox>
+          <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
+          <el-button type="primary" @click="onSubmit" size="small" style="float: right;">更新</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -43,87 +23,48 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
-import VueQuillEditor from '@/components/Quill-Editor/Quill-Editor'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '狱务公开信息管理', '新闻信息编辑'],
-      fileList: [],
-      fromPath: '' // 来自哪个页面
-    }
-  },
-  watch: {
-    // 监听编辑狱务公开信息的结果
-    editNewsResult(newValue) {
-      window.history.back()
+      rules: {
+        title: [{ required: true, message: '请填写新闻标题' }]
+      }
     }
   },
   computed: {
-    ...mapGetters({
-      newsForEdit: 'newsForEdit', // 获取编辑的狱务公开基本信息
-      editNewsResult: 'editNewsResult', // 获取编辑狱务公开信息的结果
-      authorization: 'authorization' // 设置上传图片的请求头
-    })
+    ...mapState(['news'])
+  },
+  mounted() {
+    this.getNews(this.$route.params.id)
   },
   methods: {
-    ...mapActions({
-      editNews: 'editNews' // 编辑狱务公开信息
-    }),
-    ...mapMutations({
-      breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
-      getNewsById: 'getNewsById', // 根据id获取需要编辑的新闻信息
-      uploadImg: 'uploadImg' // 处理设置上传图片的结果
-    }),
-    // 移除选中的图片时执行的方法
-    handleRemove() {
-      this.newsForEdit.anotherImageUrl = ''
+    ...mapActions(['getNews', 'editNews']),
+    onSuccess(e) {
+      this.news.imageUrl = e
     },
-    // 上传图片成功时执行的方法
-    handleSuccess(res) {
-      this.newsForEdit.anotherImageUrl = res.url
-      this.uploadImg(res)
-    },
-    // 超过上传图片数量限制执行的方法
-    handleExceed() {
-      this.$message({
-        type: 'warning',
-        message: '每次只能上传一张图片'
-      })
-    },
-    // 当富文本内容发生变化时执行的方法
-    editorChange(contents) {
-      this.newsForEdit.contents = contents
+    // 当富文本内容发生改变时执行的方法
+    editorChange(contents, text) {
+      this.news.contents = contents
+      this.news.summary = text
     },
     // 点击更新时执行的方法
     onSubmit() {
-      this.editNews(this.newsForEdit)
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (!this.news.contents) {
+            this.$message.warning('请填写新闻内容')
+            return false
+          }
+          this.editNews(this.news).then(res => {
+            if (res) this.$router.push('/prison-affairs-public/complaints-suggestions')
+          })
+        }
+      })
     }
-  },
-  components: {
-    VueQuillEditor
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
-    this.getNewsById(this.$route.params.id)
   }
 }
 </script>
 
-<style type="text/stylus" lang="stylus">
-  #prison-affairs-disclosure-editor
-    padding-top: 35px
-    .el-form-item
-      .el-form-item__label
-        float: none
-      .upload-demo
-        .el-upload
-          input
-            display: none
-      img
-        float: left
-        width: 200px
-      &:last-child
-        .el-button
-          float: right
+<style type="text/stylus" lang="stylus" scoped>
 </style>

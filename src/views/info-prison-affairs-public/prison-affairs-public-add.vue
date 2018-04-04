@@ -31,8 +31,9 @@ export default {
         typeId: 3,
         title: '',
         contents: '',
+        summary: '',
         isFocus: false,
-        anotherImageUrl: ''
+        imageUrl: ''
       },
       rules: {
         title: [{ required: true, message: '请填写新闻标题' }]
@@ -42,11 +43,12 @@ export default {
   methods: {
     ...mapActions(['addNews']),
     onSuccess(e) {
-      this.news.anotherImageUrl = e
+      this.news.imageUrl = e
     },
     // 当富文本内容发生改变时执行的方法
-    editorChange(contents) {
+    editorChange(contents, text) {
       this.news.contents = contents
+      this.news.summary = text
     },
     // 点击更新时执行的方法
     onSubmit() {

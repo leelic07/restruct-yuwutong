@@ -1,14 +1,7 @@
 export default {
   // 获取狱务公开信息
   getNewsAll(state, newsList) {
-    let newsAll = newsList.data.news
-    // 将新闻内容的null转换成空字符串
-    newsAll.forEach(nw => {
-      nw.contents = nw.contents || ''
-      nw.imageUrl = nw.imageUrl ? nw.imageUrl.substring(6) : '' // 截取图片路径地址
-      nw.anotherImageUrl = nw.anotherImageUrl || ''
-    })
-    state.newsAll = newsAll
+    state.newsAll = newsList.data.news
     state.newsTotal = newsList.data.newsSize
   },
   getNews(state, res) {

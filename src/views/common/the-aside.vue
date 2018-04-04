@@ -159,7 +159,7 @@ export default {
             title: '工作动态',
             icon: 'iconfont icon-circle-o'
           }, {
-            path: '/prison-affairs-public/complaints-suggestions/list',
+            path: '/prison-affairs-public/complaints-suggestions',
             title: '投诉建议公示',
             icon: 'iconfont icon-circle-o'
           }

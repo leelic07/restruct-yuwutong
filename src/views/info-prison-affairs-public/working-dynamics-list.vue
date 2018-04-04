@@ -63,7 +63,7 @@ export default {
     ...mapGetters(['newsAll', 'newsTotal'])
   },
   mounted() {
-    this.getNewsAll({ ...this.pagination, type: 3 })
+    this.getNewsAll({ ...this.pagination, type: 2 })
   },
   methods: {
     ...mapActions(['getNewsAll', 'deleteNews']),
@@ -75,7 +75,7 @@ export default {
       this.currentChange()
     },
     currentChange() {
-      this.getNewsAll({ ...this.filter, ...this.pagination, type: 3 })
+      this.getNewsAll({ ...this.filter, ...this.pagination, type: 2 })
     },
     onDelete(id) {
       this.$confirm('确定删除？', '提示', {
@@ -90,12 +90,12 @@ export default {
     },
     onEdit(id) {
       this.$router.push({
-        path: `/prison-affairs-public/prison-affairs-public/edit/${ id }`
+        path: `/prison-affairs-public/working-dynamics/edit/${ id }`
       })
     },
     onAdd() {
       this.$router.push({
-        path: '/prison-affairs-public/prison-affairs-public/add'
+        path: '/prison-affairs-public/working-dynamics/add'
       })
     }
   }
