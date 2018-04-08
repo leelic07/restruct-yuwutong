@@ -31,21 +31,21 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      // ruleForm2: {
-      //   password: '',
-      //   username: '',
-      //   prison: ''
-      // },
+      ruleForm2: {
+        password: '',
+        username: '',
+        prison: ''
+      },
       // ruleForm2: {
       //   password: '123456',
       //   username: 'admin',
       //   prison: '9999'
       // },
-      ruleForm2: {
-        password: '123456',
-        username: '4501_sh',
-        prison: '4501'
-      },
+      // ruleForm2: {
+      //   password: '123456',
+      //   username: '4501_xx',
+      //   prison: '4501'
+      // },
       rules2: {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         username: [

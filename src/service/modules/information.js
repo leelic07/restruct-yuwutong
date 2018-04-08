@@ -3,7 +3,7 @@ import * as service from '../base/service'
 export default {
   // 获取狱务公开信息
   getNewsAll: pagination =>
-    service.get('/news/page', pagination).then(res => res).catch(err => err),
+    service.get('/news/page', pagination).then(res => res),
   // 获取新闻详情
   getNews: params =>
     service.get(`/news/description?id=${ params }`).then(res => res).catch(err => err),

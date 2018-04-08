@@ -1,6 +1,6 @@
 <template>
   <el-row class="row-container" :gutter="0">
-      <el-button class="button-add" size="small" type="primary" plain @click="onAdd">添加狱务公开信息</el-button>
+      <el-button class="button-add" size="small" type="primary" plain @click="onAdd">添加工作动态</el-button>
       <m-search :items="searchItems" @sizeChange="sizeChange" @search="onSearch"></m-search>
       <el-col :span="24">
         <el-table
