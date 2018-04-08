@@ -6,7 +6,7 @@ let common = [{
   component: resolve => require(['@/views/login/login'], resolve)
 }, {
   path: '/dashboard1',
-  name: 'dashboard',
+  name: 'dashboard1',
   component: frame,
   meta: { hidden: true },
   children: [{

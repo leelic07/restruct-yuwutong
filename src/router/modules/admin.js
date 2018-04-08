@@ -26,6 +26,19 @@ let admin = [{
     name: '意见列表',
     component: resolve => require(['@/views/admin-feedback/feedback-list'], resolve)
   }]
+}, {
+  path: '/log',
+  name: '日志',
+  meta: { hidden: true },
+  children: [{
+    path: '/log/user-operation',
+    name: '用户操作日志',
+    component: resolve => require(['@/views/admin-log/user-operation-list'], resolve)
+  }, {
+    path: '/log/app-error',
+    name: 'APP崩溃日志',
+    component: resolve => require(['@/views/admin-log/app-error-list'], resolve)
+  }]
 }]
 
 admin.forEach(item => {

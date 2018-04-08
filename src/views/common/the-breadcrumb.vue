@@ -31,7 +31,7 @@ export default {
     $route(to) { // 监听路由变化
       let breadcrumbs = ['主页']
       to.matched.map(item => {
-        if (item.name.match(/[a-zA-Z]/g)) return
+        if (item.name.match(/[1-9]/g)) return
         breadcrumbs.push(item.name)
       })
       this.updateBreadcrumbs(breadcrumbs)

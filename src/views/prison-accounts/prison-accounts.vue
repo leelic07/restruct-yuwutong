@@ -77,13 +77,12 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
 import Pagination from '@/components/Pagination/Pagination'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '囚犯账户管理'], // 面包屑数组
       tabNum: 'first',
       pagination: {
         rows: 10, // 每页显示记录条数
@@ -114,10 +113,6 @@ export default {
     })
   },
   methods: {
-    // 映射mutations方法
-    ...mapMutations({
-      breadCrumb: 'breadCrumb' // 设置囚犯账户页面的面包屑信息
-    }),
     // 映射actions方法
     ...mapActions({
       getAccounts: 'getAccounts', // 获取囚犯账户列表
@@ -156,8 +151,6 @@ export default {
     }
   },
   mounted() {
-    // 将面包屑数组传递给Content组件
-    this.breadCrumb(this.breadcrumb)
     // 获取囚犯账户信息列表
     this.getAccounts(this.pagination)
   },

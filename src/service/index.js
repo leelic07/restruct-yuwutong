@@ -23,6 +23,7 @@ import province from './modules/province'
 
 import admin from './modules/admin'
 import information from './modules/information'
+import select from './modules/select'
 
 export default Object.assign(
   registrations,
@@ -48,5 +49,6 @@ export default Object.assign(
   uploadImg,
   province,
   admin,
-  information
+  information,
+  select
 )

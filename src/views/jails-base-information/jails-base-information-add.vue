@@ -55,7 +55,6 @@
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '监狱基本信息管理', '监狱基本信息新增'],
         fileList: [], // 上传图片列表
         jails: {
           title: '', // 监狱名
@@ -88,7 +87,6 @@
         addJails: 'addJails' // 点击更新添加监狱信息执行的方法
       }),
       ...mapMutations({
-        breadCrumb: 'breadCrumb', // 设置商品编辑页面的面包屑信息
         uploadImg: 'uploadImg' // 上传成功将结果进行处理
       }),
       // 移除图片执行的方法
@@ -122,9 +120,6 @@
     },
     components: {
       VueQuillEditor
-    },
-    mounted() {
-      this.breadCrumb(this.breadcrumb)
     }
   }
 </script>

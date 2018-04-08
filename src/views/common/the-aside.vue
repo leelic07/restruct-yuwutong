@@ -57,14 +57,22 @@ export default {
         path: '/feedback/list',
         title: '意见反馈',
         icon: 'iconfont icon-folder'
-      // }, {
-      //   path: '/province/list',
-      //   title: '省份管理',
-      //   icon: 'iconfont icon-folder'
-      // }, {
-      //   path: '/city/list',
-      //   title: '城市管理',
-      //   icon: 'iconfont icon-folder'
+      }, {
+        path: '/log',
+        title: '日志',
+        icon: 'iconfont icon-folder',
+        active: false,
+        children: [
+          {
+            path: '/log/user-operation',
+            title: '用户操作日志',
+            icon: 'iconfont icon-circle-o'
+          }, {
+            path: '/log/app-error',
+            title: 'APP崩溃日志',
+            icon: 'iconfont icon-circle-o'
+          }
+        ]
       }],
       checkMenu = [{
         path: '/registration/list',

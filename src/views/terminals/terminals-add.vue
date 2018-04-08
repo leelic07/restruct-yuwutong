@@ -28,12 +28,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '终端管理', '添加终端信息'],
       terminal: {
         terminalNumber: '',
         roomNumber: '',
@@ -64,9 +63,6 @@ export default {
     ...mapActions({
       addTerminal: 'addTerminal' // 添加终端信息
     }),
-    ...mapMutations({
-      breadCrumb: 'breadCrumb' // 设置添加终端页面面包屑的信息
-    }),
     // 点击更新时执行的方法
     onSubmit() {
       this.$refs.terminal.validate(valid => {
@@ -74,9 +70,6 @@ export default {
         else return false
       })
     }
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
   }
 }
 </script>

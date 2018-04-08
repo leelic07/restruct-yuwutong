@@ -33,7 +33,6 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '终端管理', '编辑终端信息'],
       rule: {
         terminalNumber: [{ required: true, message: '请填写终端号', trigger: 'blur' }],
         hostPassword: [{ required: true, message: '请填写主持人密码', trigger: 'blur' }],

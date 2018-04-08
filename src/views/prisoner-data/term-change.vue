@@ -35,12 +35,11 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '刑期变动信息管理'],
       prisonTermHref: `${ this._$agency }/download/prison_term_template.xls`, // 下载罪犯刑期模板文件的地址
       fileList: []
     }
@@ -64,9 +63,6 @@ export default {
       importPrisonTerm: 'importPrisonTerm', // 刑期变动模板上传成功后将刑期变动模板导入到服务端
       uploadFile: 'uploadFile' // 上传罪犯刑期模板文件到服务端
     }),
-    ...mapMutations({
-      breadCrumb: 'breadCrumb'
-    }),
     // 上传罪犯刑期模板文件到服务端
     beforeUpload(file) {
       this.uploadFile(file)
@@ -88,9 +84,6 @@ export default {
         offset: 100
       })
     }
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
   }
 }
 </script>

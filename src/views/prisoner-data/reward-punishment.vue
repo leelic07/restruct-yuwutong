@@ -35,12 +35,11 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '罪犯奖惩信息管理'],
       prisonerRewardHref: `${ this._$agency }/download/prisoner_reward_punishment_template.xls`,
       fileList: []
     }
@@ -64,9 +63,6 @@ export default {
       importPrisonerRewardPunishment: 'importPrisonerRewardPunishment', // 罪犯奖惩模板上传成功后将罪犯奖惩模板导入到服务端
       uploadFile: 'uploadFile' // 上传罪犯奖惩信息到服务端
     }),
-    ...mapMutations({
-      breadCrumb: 'breadCrumb'
-    }),
     // 上传罪犯奖惩模板文件到服务端
     beforeUpload(file) {
       this.uploadFile(file)
@@ -88,9 +84,6 @@ export default {
         offset: 100
       })
     }
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
   }
 }
 </script>

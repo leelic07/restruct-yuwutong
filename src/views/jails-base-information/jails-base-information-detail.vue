@@ -59,11 +59,10 @@
 </template>
 
 <script>
-  import { mapActions, mapMutations, mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   export default {
     data() {
       return {
-        breadcrumb: ['主页', '监狱基本信息管理'], // 监狱基本信息管理的面包屑信息
         isJailEdit: false // 是否是监狱基本信息编辑页面
       }
     },
@@ -82,9 +81,6 @@
       ...mapActions({
         getJailsInformation: 'getJailsInformation' // 获取监狱基本信息
       }),
-      ...mapMutations({
-        breadCrumb: 'breadCrumb' // 获取监狱基本信息管理的面包屑
-      }),
       // 编辑监狱基本信息
       editJails(id) {
         this.$router.push({
@@ -99,7 +95,6 @@
       }
     },
     mounted() {
-      this.breadCrumb(this.breadcrumb)
       this.getJailsInformation()
     }
   }

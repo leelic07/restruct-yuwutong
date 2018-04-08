@@ -3,11 +3,11 @@ import http from '@/service'
 export default {
   // 获取监狱基本信息
   getJailsInformation: ({ commit }) =>
-    http.getJailsInformation().then(res => commit('getJailsInformation', res)).catch(err => console.log(err)),
+    http.getJailsInformation().then(res => commit('getJailsInformation', res)),
   // 编辑监狱信息
   editJails({ commit }, regs) {
     let formData = new FormData()
-    regs.anotherImageUrl && formData.append('anotherImageUrl', regs.anotherImageUrl)
+    regs.anotherImageUrl && formData.append('imageUrl', regs.imageUrl)
     formData.append('title', regs.title)
     formData.append('description', regs.description)
     formData.append('street', regs.street)

@@ -139,7 +139,6 @@ import Pagination from '@/components/Pagination/Pagination'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '会见申请管理'], // 面包屑数组
       tabNum: 'first',
       pagination: {
         rows: 10, // 每页显示记录条数
@@ -186,7 +185,6 @@ export default {
   methods: {
     // 映射mutations方法
     ...mapMutations({
-      breadCrumb: 'breadCrumb',
       setAuthMeetingsResult: 'setAuthMeetingsResult' // 设置家属注册授权信息
     }),
     // 映射actions方法
@@ -284,8 +282,6 @@ export default {
     }
   },
   mounted() {
-    // 将面包屑数组传递给Content组件
-    this.breadCrumb(this.breadcrumb)
     // 获取家属注册信息列表
     this.getMeetings(this.pagination)
   },

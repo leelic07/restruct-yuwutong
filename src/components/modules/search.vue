@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import SearchItem from './search-item'
+import SearchItem from './form-item'
 export default {
   components: { SearchItem },
   props: {

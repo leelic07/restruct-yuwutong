@@ -35,11 +35,10 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      breadcrumb: ['主页', '囚犯信息管理'],
       fileList: [],
       prisonerHref: `${ this._$agency }/download/prison_template.xls`
     }
@@ -63,9 +62,6 @@ export default {
       importPrisoner: 'importPrisoner', // 罪犯数据模板上传成功后将罪犯数据模板导入到服务端
       uploadFile: 'uploadFile' // 上传罪犯数据模板文件到服务端
     }),
-    ...mapMutations({
-      breadCrumb: 'breadCrumb'
-    }),
     submitUpload() {
       this.$refs.upload.submit()
     },
@@ -85,9 +81,6 @@ export default {
         offset: 100
       })
     }
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
   }
 }
 </script>

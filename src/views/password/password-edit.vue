@@ -54,8 +54,7 @@ export default {
         passwordReview: [
           { validator: validatePasswordReview, trigger: 'blur' }
         ]
-      },
-      breadcrumb: ['主页', '修改用户密码']
+      }
     }
   },
   watch: {
@@ -75,7 +74,6 @@ export default {
       modifyPassword: 'modifyPassword' // 修改用户密码的方法
     }),
     ...mapMutations({
-      breadCrumb: 'breadCrumb',
       logout: 'logout' // 修改用户密码成功以后重新登录
     }),
     // 点击提交按钮执行的方法
@@ -90,9 +88,6 @@ export default {
         }
       })
     }
-  },
-  mounted() {
-    this.breadCrumb(this.breadcrumb)
   }
 }
 </script>

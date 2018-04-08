@@ -30,6 +30,7 @@ import adminFeedback from './modules/admin-feedback'
 import adminPrisonUser from './modules/admin-prison-user'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
+import select from './modules/select'
 import 'babel-polyfill'
 
 Vue.use(Vuex)
@@ -73,7 +74,8 @@ merge(
   breadCrumbs,
   adminPrisonUser,
   infoPrisonAffairsPublic,
-  filter
+  filter,
+  select
 )
 export default new Vuex.Store({
   actions,
