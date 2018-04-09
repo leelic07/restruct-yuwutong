@@ -1,6 +1,19 @@
 import frame from '@/views/common/the-frame'
 
 let admin = [{
+  path: '/prison',
+  name: '监狱管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/prison/list',
+    name: '监狱列表',
+    component: resolve => require(['@/views/admin-prison-management/prison-list'], resolve)
+  }, {
+    path: '/prison/add',
+    name: '新增监狱',
+    component: resolve => require(['@/views/admin-prison-management/prison-add'], resolve)
+  }]
+}, {
   path: '/prison-user',
   name: '监狱用户管理',
   meta: { hidden: true },
@@ -25,6 +38,32 @@ let admin = [{
     path: '/feedback/list',
     name: '意见列表',
     component: resolve => require(['@/views/admin-feedback/feedback-list'], resolve)
+  }]
+}, {
+  path: '/terminals',
+  name: '终端管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/terminals/list',
+    name: '终端列表',
+    component: resolve => require(['@/views/terminals/terminals-list'], resolve)
+  }, {
+    path: '/terminals/add',
+    name: '新增终端',
+    component: resolve => require(['@/views/terminals/terminals-add'], resolve)
+  }, {
+    path: '/terminals/edit/:id',
+    name: '编辑终端',
+    component: resolve => require(['@/views/terminals/terminals-edit'], resolve)
+  }]
+}, {
+  path: '/versions',
+  name: '版本管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/versions/list',
+    name: '版本列表',
+    component: resolve => require(['@/views/versions/versions'], resolve)
   }]
 }, {
   path: '/log',

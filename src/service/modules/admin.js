@@ -21,5 +21,8 @@ export default {
   },
   deletePrisonUser: (params) => {
     service.post('/users/delete', params).then(res => res).catch(err => err)
+  },
+  getPrisonList: params => {
+    return service.get('/jails/page', params).then(res => res)
   }
 }

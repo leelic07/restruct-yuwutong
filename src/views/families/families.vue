@@ -1,14 +1,12 @@
 <template>
   <el-row id="families" :gutter="0">
-    <!--选择显示页数和搜索框内容组件-->
-    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
-                       @searchingChange="searchingChange"></select-and-search>
+    <m-search :items="searchItems" @sizeChange="sizeChange" @search="onSearch"></m-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
         <el-tab-pane label="家属信息" name="first">
           <el-table
-            :data="families"
+            :data="familyList"
             border
             stripe
             style="width: 100%">
@@ -31,10 +29,10 @@
             <el-table-column
               label="对应罪犯">
               <template slot-scope="scope">
-                <el-button type="text" size="small"
+                <!-- <el-button type="text" size="small"
                            @click="showPrisonerDetail(scope.row.prisoners)">
                   {{scope.row.prisoners.name}}
-                </el-button>
+                </el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -42,8 +40,7 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <pagination :total="familiesTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
-                @currentChange="currentChange"></pagination>
+    <m-pagination ref="pagination" :total="familiesTotal" @onPageChange="currentChange"></m-pagination>
     <!--家属信息弹出框-->
     <el-dialog title="囚犯信息" :visible.sync="dialogTableVisible">
       <el-row :gutter="0">
@@ -77,83 +74,41 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
-import Pagination from '@/components/Pagination/Pagination'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
       tabNum: 'first',
-      pagination: {
-        rows: 10, // 每页显示记录条数
-        page: 1 // 当前显示第几页
-      },
-      c: 'families', // 页面模块类型
-      searching: {
-        name: '', // 搜索的模块类型
-        uuid: '' // 搜索的条件
-      },
-      dialogVisible: false, // 弹出框的显示和隐藏
-      agreeText: '同意',
-      disagreeText: '不同意',
-      authorization: {
-        remarks: '', // 授权评语
-        status: '' // 授权状态
+      searchItems: {
+        uuid: { type: 'input', label: '身份证号' },
+        name: { type: 'input', label: '家属姓名' }
       },
       dialogTableVisible: false,
       prisoner: {} // 对应罪犯详情信息
     }
   },
   computed: {
-    // 映射getters方法获取state状态
-    ...mapGetters({
-      families: 'families',
-      familiesTotal: 'familiesTotal' // 总共记录条数
-    })
+    ...mapState(['familyList', 'familiesTotal']) // 总共记录条数
+  },
+  mounted() {
+    this.getFamilies({ ...this.pagination })
   },
   methods: {
-    ...mapActions({
-      getFamilies: 'getFamilies', // 获取家属注册列表
-      searchAction: 'searchAction' // 获取带搜索条件的家属注册列表
-    }),
-    // 每页条数发生变化时执行的方法
+    ...mapActions(['getFamilies', 'searchAction']),
+    onSearch() {
+      this.$refs.pagination.handleCurrentChange(1)
+    },
     sizeChange(rows) {
-      this.pagination.page = 1
-      this.pagination.rows = rows
-      this.change()
+      this.$refs.pagination.handleSizeChange(rows)
+      this.currentChange()
     },
-    // 当前页发生变化时执行的方法
-    currentChange(page) {
-      this.pagination.page = page
-      this.change()
+    currentChange() {
+      this.getFamilies({ ...this.filter, ...this.pagination })
     },
-    // 根据是否有搜索内容调用不同的接口
-    change() {
-      this.getFamilies({ ...this.searching, ...this.pagination })
-    },
-    // 点击搜索时执行的方法
-    search(searching) {
-      this.pagination.page = 1
-      this.searching = searching
-      this.getFamilies({ ...this.searching, ...this.pagination })
-    },
-    // 监听搜索框的内容变化{
-    searchingChange(searching) {
-      this.searching = searching
-    },
-    // 显示家属详细信息
     showPrisonerDetail(prisoner) {
       this.dialogTableVisible = true
       this.prisoner = prisoner
     }
-  },
-  mounted() {
-    // 获取家属注册信息列表
-    this.getFamilies({ ...this.searching, ...this.pagination })
-  },
-  components: {
-    SelectAndSearch,
-    Pagination
   }
 }
 </script>

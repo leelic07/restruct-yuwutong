@@ -59,32 +59,6 @@ let check = [{
     component: resolve => require(['@/views/prison-accounts/prison-accounts'], resolve)
   }]
 }, {
-  path: '/terminals',
-  name: '终端管理',
-  meta: { hidden: true },
-  children: [{
-    path: '/terminals/list',
-    name: '终端列表',
-    component: resolve => require(['@/views/terminals/terminals-list'], resolve)
-  }, {
-    path: '/terminals/add',
-    name: '新增终端',
-    component: resolve => require(['@/views/terminals/terminals-add'], resolve)
-  }, {
-    path: '/terminals/edit/:id',
-    name: '编辑终端',
-    component: resolve => require(['@/views/terminals/terminals-edit'], resolve)
-  }]
-}, {
-  path: '/versions',
-  name: '版本管理',
-  meta: { hidden: true },
-  children: [{
-    path: '/versions/list',
-    name: '版本列表',
-    component: resolve => require(['@/views/versions/versions'], resolve)
-  }]
-}, {
   path: '/prisoner-data',
   name: '数据管理',
   meta: { hidden: true },

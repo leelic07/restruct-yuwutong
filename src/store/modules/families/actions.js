@@ -5,6 +5,6 @@ export default {
   getFamilies: ({ commit }, regs) => {
     // let start = (regs.draw - 1) * regs.length// 计算从第几条数据开始取
     // Object.assign(regs, {'start': start})
-    http.getFamilies(regs).then(res => res.code === 200 && commit('getFamilies', res)).catch(err => console.log(err))
+    http.getFamilies(regs).then(res => res.code === 200 && commit('getFamilies', res.data))
   }
 }

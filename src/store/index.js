@@ -28,6 +28,7 @@ import breadCrumbs from './modules/breadcrumb'
 
 import adminFeedback from './modules/admin-feedback'
 import adminPrisonUser from './modules/admin-prison-user'
+import adminPrisonManagement from './modules/admin-prison-management'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 import select from './modules/select'
@@ -73,6 +74,7 @@ merge(
   adminFeedback,
   breadCrumbs,
   adminPrisonUser,
+  adminPrisonManagement,
   infoPrisonAffairsPublic,
   filter,
   select

@@ -50,7 +50,6 @@
           <p v-html="jails.description"></p>
         </el-col>
         <el-col :span="24">
-          <el-button type="primary" size="mini" @click="addJails">新增</el-button>
           <el-button type="primary" size="mini" @click="editJails(jails.id)">编辑</el-button>
         </el-col>
       </el-col>

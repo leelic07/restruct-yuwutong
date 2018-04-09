@@ -1,12 +1,22 @@
 <template>
   <el-row class="row-container" :gutter="0">
+    <el-button
+      size="small"
+      type="primary"
+      plain
+      class="button-add"
+      @click="onAdd">添加监狱用户</el-button>
+    <m-search
+      :items="searchItems"
+      @sizeChange="sizeChange"
+      @search="onSearch" />
     <el-col :span="24">
-      <el-button size="small" type="primary" plain class="button-add" @click="onAdd">添加监狱用户</el-button>
-    </el-col>
-    <select-and-search ref="search" c="prisonUser" @sizeChange="sizeChange" @search="onSearch"></select-and-search>
-    <el-col :span="24">
-      <el-tabs v-model="tabNum" type="card">
-        <el-tab-pane label="监狱用户" name="first"></el-tab-pane>
+      <el-tabs
+        v-model="tabNum"
+        type="card">
+        <el-tab-pane
+          label="监狱用户"
+          name="first" />
       </el-tabs>
       <el-table
         v-if="tabNum === 'first'"
@@ -16,8 +26,7 @@
         style="width: 100%">
         <el-table-column
           prop="username"
-          label="用户名">
-        </el-table-column>
+          label="用户名" />
         <el-table-column
           prop="role"
           label="角色">
@@ -27,8 +36,7 @@
         </el-table-column>
         <el-table-column
           prop="jail"
-          label="监狱名称">
-        </el-table-column>
+          label="监狱名称" />
         <el-table-column
           label="操作">
           <template slot-scope="scope">
@@ -38,20 +46,25 @@
         </el-table-column>
       </el-table>
     </el-col>
-    <m-pagination ref="pagination" :total="prisonUsersTotal" @onPageChange="onChange"></m-pagination>
+    <m-pagination
+      ref="pagination"
+      :total="prisonUsersTotal"
+      @onPageChange="currentChange" />
   </el-row>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
+
 export default {
-  components: {
-    SelectAndSearch
-  },
   data() {
     return {
-      tabNum: 'first'
+      tabNum: 'first',
+      searchItems: {
+        jail: { type: 'input', label: '监狱名称' },
+        username: { type: 'input', label: '用户名' },
+        role: { type: 'select', label: '角色' }
+      }
     }
   },
   computed: {
@@ -65,12 +78,12 @@ export default {
   },
   methods: {
     ...mapActions(['getPrisonUsers', 'deletePrisonUser']),
+    currentChange() {
+      this.getPrisonUsers({ ...this.filter, ...this.pagination })
+    },
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.onChange()
-    },
-    onChange() {
-      this.getPrisonUsers({ ...this.$refs.search.searching, ...this.pagination })
+      this.currentChange()
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
@@ -85,7 +98,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deletePrisonUser({ id: e }).then(() => {
-          this.onChange()
+          this.currentChange()
         })
       })
     },

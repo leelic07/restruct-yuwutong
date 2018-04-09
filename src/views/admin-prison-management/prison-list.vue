@@ -1,5 +1,11 @@
 <template>
   <el-row class="row-container" :gutter="0">
+    <el-button
+      size="small"
+      type="primary"
+      plain
+      class="button-add"
+      @click="onAdd">添加监狱</el-button>
     <m-search
       :items="searchItems"
       @sizeChange="sizeChange"
@@ -9,77 +15,76 @@
         v-model="tabNum"
         type="card">
         <el-tab-pane
-          label="意见反馈"
+          label="监狱"
           name="first" />
       </el-tabs>
       <el-table
         v-if="tabNum === 'first'"
-        :data="feedbacks"
+        :data="prisonList"
         border
         stripe
         style="width: 100%">
         <el-table-column
-          prop="name"
-          label="姓名" />
+          prop="title"
+          label="监狱名称" />
         <el-table-column
-          prop="phone"
-          label="电话" />
-        <el-table-column
-          prop="uuid"
-          label="身份证" />
-        <el-table-column
-          prop="content"
-          show-overflow-tooltip
-          label="内容" />
-        <el-table-column
-          label="反馈时间">
+          prop="zipcode"
+          label="监狱编号" />
+        <el-table-column label="所在地区">
           <template slot-scope="scope">
-            {{scope.row.createdAt | Date}}
+            <span class="place" v-if="scope.row.provinceName">{{scope.row.provinceName}}</span>
+            <span class="place" v-if="scope.row.cityName">{{scope.row.cityName}}</span>
+            <span class="place" v-if="scope.row.district">{{scope.row.district}}</span>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="feedbacksTotal"
+      :total="prisonTotal"
       @onPageChange="currentChange" />
   </el-row>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+
 export default {
   data() {
     return {
       tabNum: 'first',
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
-        phone: { type: 'input', label: '手机号' },
-        name: { type: 'input', label: '家属姓名' }
+        title: { type: 'input', label: '监狱名称' }
       }
     }
   },
   computed: {
-    ...mapState(['feedbacks', 'feedbacksTotal'])
+    ...mapState(['prisonList', 'prisonTotal'])
   },
   mounted() {
-    this.getFeedbacks(this.pagination)
+    this.getPrisonList(this.pagination)
   },
   methods: {
-    ...mapActions(['getFeedbacks']),
+    ...mapActions(['getPrisonList']),
+    currentChange() {
+      this.getPrisonList({ ...this.filter, ...this.pagination })
+    },
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.currentChange()
     },
-    currentChange() {
-      this.getFeedbacks({ ...this.filter, ...this.pagination })
-    },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
+    },
+    onAdd() {
+      this.$router.push('/prison/add')
     }
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
+.place + .place:before
+  content: '/ ';
+  color: #ddd;
 </style>
