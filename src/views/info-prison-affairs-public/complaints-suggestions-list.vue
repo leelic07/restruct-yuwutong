@@ -63,7 +63,7 @@ export default {
     ...mapGetters(['newsAll', 'newsTotal'])
   },
   mounted() {
-    this.getNewsAll({ ...this.pagination, type: 1 })
+    this.getNewsAll({ ...this.pagination, type: 3 })
   },
   methods: {
     ...mapActions(['getNewsAll', 'deleteNews']),
@@ -75,7 +75,7 @@ export default {
       this.currentChange()
     },
     currentChange() {
-      this.getNewsAll({ ...this.filter, ...this.pagination, type: 1 })
+      this.getNewsAll({ ...this.filter, ...this.pagination, type: 3 })
     },
     onDelete(id) {
       this.$confirm('确定删除？', '提示', {

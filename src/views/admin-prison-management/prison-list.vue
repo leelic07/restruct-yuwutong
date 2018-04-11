@@ -32,9 +32,9 @@
           label="监狱编号" />
         <el-table-column label="所在地区">
           <template slot-scope="scope">
-            <span class="place" v-if="scope.row.provinceName">{{scope.row.provinceName}}</span>
-            <span class="place" v-if="scope.row.cityName">{{scope.row.cityName}}</span>
-            <span class="place" v-if="scope.row.district">{{scope.row.district}}</span>
+            <span class="place" v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>
+            <span class="place" v-if="scope.row.citysName">{{scope.row.citysName}}</span>
+            <span class="place" v-if="scope.row.street">{{scope.row.street}}</span>
           </template>
         </el-table-column>
       </el-table>

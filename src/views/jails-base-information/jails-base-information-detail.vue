@@ -1,20 +1,20 @@
 <template>
   <el-row id="jail-information-management" :gutter="0">
-    <el-row :gutter="0" v-if="!isJailEdit">
+    <el-row :gutter="0">
       <el-col :span="12">
-        <img :src="jails.anotherImageUrl" alt="">
+        <img :src="jailsInformation.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
         <!--<img src="../../assets/images/default.jpg" alt="">-->
       </el-col>
       <el-col :span="12">
         <el-col :span="24">
-          <h3>{{jails.title}}</h3>
+          <h3>{{jailsInformation.title}}</h3>
         </el-col>
         <el-col :span="24">
           <el-col :span="12">
             <p>监狱所在省</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jails.state}}</p>
+            <p>{{jailsInformation.provincesName}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -23,7 +23,7 @@
             <p>监狱所在市</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jails.city}}</p>
+            <p>{{jailsInformation.citysName}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -32,7 +32,7 @@
             <p>监狱所在行政区</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jails.district}}</p>
+            <p>{{jailsInformation.district}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -41,16 +41,16 @@
             <p>监狱所在街道</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jails.street}}</p>
+            <p>{{jailsInformation.street}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
         <el-col :span="24" class="description">
           <p>监狱简介</p>
-          <p v-html="jails.description"></p>
+          <p v-html="jailsInformation.description"></p>
         </el-col>
         <el-col :span="24">
-          <el-button type="primary" size="mini" @click="editJails(jails.id)">编辑</el-button>
+          <el-button type="primary" size="mini" @click="editJails(jailsInformation.id)">编辑</el-button>
         </el-col>
       </el-col>
     </el-row>
@@ -58,23 +58,15 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   export default {
     data() {
       return {
-        isJailEdit: false // 是否是监狱基本信息编辑页面
-      }
-    },
-    watch: {
-      $route(to) {
-        if (to.path === '/jails') this.isJailEdit = false
-        else this.isJailEdit = true
+        // isJailEdit: false // 是否是监狱基本信息编辑页面
       }
     },
     computed: {
-      ...mapGetters({
-        jails: 'jails' // 获取监狱基本信息
-      })
+      ...mapState(['jailsInformation'])
     },
     methods: {
       ...mapActions({

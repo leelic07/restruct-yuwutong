@@ -11,7 +11,7 @@ export default {
   },
   // 编辑监狱用户
   editPrisonUser: ({ commit }, regs) => {
-    return http.editPrisonUser(regs).then().catch(err => console.log(err))
+    return http.editPrisonUser(regs).then(res => res.code === 200)
   },
   // 获取所有监狱
   getJails: ({ commit }) => {

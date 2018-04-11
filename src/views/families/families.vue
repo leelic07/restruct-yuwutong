@@ -22,17 +22,17 @@
               prop="phone"
               label="电话">
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="relationship"
               label="关系">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
               label="对应罪犯">
               <template slot-scope="scope">
-                <!-- <el-button type="text" size="small"
-                           @click="showPrisonerDetail(scope.row.prisoners)">
-                  {{scope.row.prisoners.name}}
-                </el-button> -->
+                <el-button v-for="prisoner in scope.row.prisonerList" :key="prisoner.prisonerId" type="text" size="small"
+                           @click="showPrisonerDetail(prisoner)">
+                  {{prisoner.name}}
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -67,6 +67,10 @@
         <el-col :span="12">
           <label for="">性别：</label>
           <span>{{prisoner.gender | gender}}</span>
+        </el-col>
+        <el-col :span="12">
+          <label for="">关系：</label>
+          <span>{{prisoner.relationship}}</span>
         </el-col>
       </el-row>
     </el-dialog>

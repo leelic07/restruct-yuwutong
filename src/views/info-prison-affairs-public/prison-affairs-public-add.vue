@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       news: { // 需要添加的法律信息
-        typeId: 3,
+        typeId: 1,
         title: '',
         contents: '',
         summary: '',

@@ -95,6 +95,7 @@ export default {
         let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
         delete prisonUser.jailObj
         this.editPrisonUser(prisonUser).then(res => {
+          if (!res) return
           this.$router.push('/prison-user/list')
         })
       })
