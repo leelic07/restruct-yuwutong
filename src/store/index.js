@@ -27,6 +27,7 @@ import uploadImg from './modules/upload-img'
 import breadCrumbs from './modules/breadcrumb'
 
 import adminFeedback from './modules/admin-feedback'
+import adminLog from './modules/admin-log'
 import adminPrisonUser from './modules/admin-prison-user'
 import adminPrisonManagement from './modules/admin-prison-management'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
@@ -72,6 +73,7 @@ merge(
   uploadFile,
   uploadImg,
   adminFeedback,
+  adminLog,
   breadCrumbs,
   adminPrisonUser,
   adminPrisonManagement,

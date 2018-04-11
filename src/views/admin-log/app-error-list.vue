@@ -1,13 +1,91 @@
 <template>
-  <div class="">
-    sssssssssss
-  </div>
+  <el-row class="row-container" :gutter="0">
+    <m-search
+      :items="searchItems"
+      @sizeChange="sizeChange"
+      @search="onSearch" />
+    <el-col :span="24">
+      <el-tabs
+        v-model="tabNum"
+        type="card">
+        <el-tab-pane
+          label="日志"
+          name="first" />
+      </el-tabs>
+      <el-table
+        v-if="tabNum === 'first'"
+        :data="logList"
+        border
+        stripe
+        style="width: 100%">
+
+        <el-table-column
+          prop="phone"
+          label="账号" />
+        <el-table-column
+          prop="appVersion"
+          label="app版本" />
+        <el-table-column
+          prop="deviceName"
+          label="设备名称" />
+        <el-table-column
+          prop="deviceType"
+          label="设备类型" />
+        <el-table-column
+          prop="sysVersion"
+          label="系统版本" />
+        <el-table-column
+          prop="contents"
+          show-overflow-tooltip
+          label="内容" />
+        <el-table-column
+          label="创建时间">
+          <template slot-scope="scope">
+            {{scope.row.createdAt | Date}}
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-col>
+    <m-pagination
+      ref="pagination"
+      :total="logTotal"
+      @onPageChange="currentChange" />
+  </el-row>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
+  data() {
+    return {
+      tabNum: 'first',
+      searchItems: {
+        endTime: { type: 'datetime', label: '结束时间' },
+        startTime: { type: 'datetime', label: '开始时间' }
+      }
+    }
+  },
+  computed: {
+    ...mapState(['logList', 'logTotal'])
+  },
+  mounted() {
+    this.getLogList(this.pagination)
+  },
+  methods: {
+    ...mapActions(['getLogList']),
+    sizeChange(rows) {
+      this.$refs.pagination.handleSizeChange(rows)
+      this.currentChange()
+    },
+    currentChange() {
+      this.getLogList({ ...this.filter, ...this.pagination })
+    },
+    onSearch() {
+      this.$refs.pagination.handleCurrentChange(1)
+    }
+  }
 }
 </script>
 
-<style lang="css">
+<style type="text/stylus" lang="stylus" scoped>
 </style>

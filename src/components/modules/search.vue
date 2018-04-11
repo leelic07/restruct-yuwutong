@@ -34,6 +34,13 @@
             :label="item.belong ? option[item.belong.label] : option.label"
             :value="item.belong ? option[item.belong.value] : option.value" />
         </el-select>
+        <el-date-picker
+          v-model="item.value"
+          type="datetime"
+          :placeholder="'请选择' + item.label"
+          align="right"
+          :picker-options="pickerOptions">
+        </el-date-picker>
       </el-col>
     </el-col>
   </el-col>
@@ -51,7 +58,29 @@ export default {
   data() {
     return {
       selectItem: [1, 10, 20, 30, 40, 50], // 每页可以提供的显示页数的数组
-      pageSize: 10
+      pageSize: 10,
+      pickerOptions: {
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
+      }
     }
   },
   mounted() {

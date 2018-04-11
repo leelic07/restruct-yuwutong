@@ -24,5 +24,8 @@ export default {
   },
   getPrisonList: params => {
     return service.get('/jails/page', params).then(res => res)
+  },
+  getLogList: params => {
+    return service.get('/app_logs/page', params).then(res => res)
   }
 }

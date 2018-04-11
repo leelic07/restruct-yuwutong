@@ -25,10 +25,10 @@ let adminMenu = [{
     active: false,
     children: [
       {
-        path: '/log/user-operation',
-        title: '用户操作日志',
-        icon: 'iconfont icon-circle-o'
-      }, {
+      //   path: '/log/user-operation',
+      //   title: '用户操作日志',
+      //   icon: 'iconfont icon-circle-o'
+      // }, {
         path: '/log/app-error',
         title: 'APP崩溃日志',
         icon: 'iconfont icon-circle-o'
