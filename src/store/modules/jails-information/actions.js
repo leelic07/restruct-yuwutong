@@ -30,16 +30,16 @@ export default {
   },
   // 新增监狱基本信息
   addJails({ commit }, regs) {
-    let formData = new FormData()
-    regs.anotherImageUrl = '' && formData.append('anotherImageUrl', regs.anotherImageUrl)
-    formData.append('title', regs.title)
-    formData.append('description', regs.description)
-    formData.append('street', regs.street)
-    formData.append('district', regs.district)
-    formData.append('city', regs.city)
-    formData.append('state', regs.state)
-    formData.append('zipcode', regs.zipcode)
-    http.addJails(formData).then(res => res.code === 200 && http.getJailsInformation().then(response => {
+    // let formData = new FormData()
+    // regs.anotherImageUrl = '' && formData.append('anotherImageUrl', regs.anotherImageUrl)
+    // formData.append('title', regs.title)
+    // formData.append('description', regs.description)
+    // formData.append('street', regs.street)
+    // formData.append('district', regs.district)
+    // formData.append('city', regs.city)
+    // formData.append('state', regs.state)
+    // formData.append('zipcode', regs.zipcode)
+    http.addJails(regs).then(res => res.code === 200 && http.getJailsInformation().then(response => {
       commit('addJails', res)
       commit('getJailsInformation', response)
     }).catch(err => console.log(err))).catch(err => console.log(err))

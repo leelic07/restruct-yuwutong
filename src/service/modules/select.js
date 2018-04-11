@@ -6,6 +6,6 @@ export default {
     return service.get('/provinces/list').then(res => res)
   },
   getCities: (params) => {
-    return service.get('/cities/list', params).then(res => res)
+    return service.get(`/cities/list?provicesId=${ params }`).then(res => res)
   }
 }
