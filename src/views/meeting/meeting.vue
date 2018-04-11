@@ -1,65 +1,38 @@
 <template>
   <el-row id="meeting" :gutter="0">
     <!--选择显示页数和搜索框内容组件-->
-    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search"
-                       @searchingChange="searchingChange"></select-and-search>
+    <select-and-search :c="c" :searching="searching" @sizeChange="sizeChange" @search="search" @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
       <el-tabs v-model="tabNum" type="card">
         <el-tab-pane label="会见申请" name="first">
-          <el-table
-            :data="meetings"
-            border
-            stripe
-            style="width: 100%">
-            <el-table-column
-              prop="name"
-              label="姓名">
+          <el-table :data="meetings" border stripe style="width: 100%">
+            <el-table-column prop="name" label="姓名">
             </el-table-column>
-            <el-table-column
-              prop="phone"
-              label="电话">
+            <el-table-column prop="phone" label="电话">
             </el-table-column>
-            <el-table-column
-              prop="uuid"
-              label="身份证">
+            <el-table-column prop="uuid" label="身份证">
             </el-table-column>
-            <el-table-column
-              label="申请时间"
-              prop="applicationDate">
+            <el-table-column label="申请时间" prop="applicationDate">
             </el-table-column>
-            <el-table-column
-              label="预约时间"
-              prop="meetingTime">
+            <el-table-column label="预约时间" prop="meetingTime">
             </el-table-column>
-            <el-table-column
-              prop="prisonerNumber"
-              label="囚号">
+            <el-table-column prop="prisonerNumber" label="囚号">
             </el-table-column>
-            <el-table-column
-              prop="relationship"
-              label="关系">
+            <el-table-column prop="relationship" label="关系">
             </el-table-column>
-            <el-table-column
-              prop="terminalNumber"
-              label="终端号">
+            <el-table-column prop="terminalNumber" label="终端号">
             </el-table-column>
-            <el-table-column :class="{'application-status':true}"
-                             label="申请状态">
+            <el-table-column :class="{'application-status':true}" label="申请状态">
               <template slot-scope="scope">
                 {{scope.row.status | registrationsStatus}}
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作">
+            <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.status == 'PENDING'"
-                           size="mini"
-                           @click="handleAuthorization(scope.row.id)">授权
+                <el-button v-if="scope.row.status == 'PENDING'" size="mini" @click="handleAuthorization(scope.row.id)">授权
                 </el-button>
-                <el-button v-else-if="scope.row.status == 'PASSED'"
-                           size="mini"
-                           @click="handleWithdraw(scope.row.id)">撤回
+                <el-button v-else-if="scope.row.status == 'PASSED'" size="mini" @click="handleWithdraw(scope.row.id)">撤回
                 </el-button>
               </template>
             </el-table-column>
@@ -68,20 +41,14 @@
       </el-tabs>
     </el-col>
     <!--分页组件-->
-    <pagination :total="meetingsTotal" :pageSize="pagination.rows" :currentPage="pagination.page"
-                @currentChange="currentChange"></pagination>
+    <pagination :total="meetingsTotal" :pageSize="pagination.rows" :currentPage="pagination.page" @currentChange="currentChange"></pagination>
     <!--家属信息授权弹出框-->
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible">
       <!--点击授权时显示的对话框内容-->
       <el-row :gutter="0" v-if="!isWithdraw">
         <el-row :gutter="0" v-show="authMeetingsResult.code">
           <el-col :span="24">
-            <el-alert v-if="authMeetingsResult.code == 200"
-                      title="授权成功"
-                      type="success"
-                      :description="authMeetingsResult.msg"
-                      show-icon
-                      :closable="false">
+            <el-alert v-if="authMeetingsResult.code == 200" title="授权成功" type="success" :description="authMeetingsResult.msg" show-icon :closable="false">
             </el-alert>
           </el-col>
         </el-row>
@@ -91,10 +58,7 @@
               <p>请选择驳回原因</p>
             </el-col>
             <el-select v-model="authorization.remarks">
-              <el-option v-for="remark,index in remarks"
-                         :value="remark"
-                         :label="remark"
-                         :key="index">
+              <el-option v-for="remark,index in remarks" :value="remark" :label="remark" :key="index">
               </el-option>
             </el-select>
           </el-col>
@@ -114,10 +78,7 @@
         <el-row :gutter="0">
           <el-form :model="authorization" :rules="rule" ref="withdrawForm">
             <el-form-item prop="remarks">
-              <el-input type="textarea"
-                        autosize
-                        placeholder="请输入撤回理由"
-                        v-model="authorization.remarks">
+              <el-input type="textarea" autosize placeholder="请输入撤回理由" v-model="authorization.remarks">
               </el-input>
             </el-form-item>
           </el-form>
@@ -293,36 +254,61 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  white = #fff
-  #meeting
-    padding: 20px 1% 0 1%
-    & /deep/ .el-tabs__item
-      background: white
-    & /deep/ .el-table__body-wrapper
-      overflow: visible
-    & /deep/ .el-table__row
-      > td:nth-child(9)
-        color: orange
-        font-weight: bold
-    & /deep/ .cell .el-button--default
-      float: left
-      color: #3C8DBC
-      font-weight: bold
-    .el-dialog__body
-      .el-row
-        &.btn-box
-          margin-top: 20px
-          .el-button
-            float: right
-            margin-left: 3%
-        img
-          float: left
-          width: 150px
-          height: 150px
-        .el-col-24
-          &.refuse-reason
-            margin-bottom: 10px
-          margin-top: 5px
-          .el-select, .el-button
-            width: 100%
+white = #fff;
+
+#meeting {
+  padding: 20px 1% 0 1%;
+
+  & /deep/ .el-tabs__item {
+    background: white;
+  }
+
+  & /deep/ .el-table__body-wrapper {
+    overflow: visible;
+  }
+
+  & /deep/ .el-table__row {
+    > td:nth-child(9) {
+      color: orange;
+      font-weight: bold;
+    }
+  }
+
+  & /deep/ .cell .el-button--default {
+    float: left;
+    color: #3C8DBC;
+    font-weight: bold;
+  }
+
+  .el-dialog__body {
+    .el-row {
+      &.btn-box {
+        margin-top: 20px;
+
+        .el-button {
+          float: right;
+          margin-left: 3%;
+        }
+      }
+
+      img {
+        float: left;
+        width: 150px;
+        height: 150px;
+      }
+
+      .el-col-24 {
+        &.refuse-reason {
+          margin-bottom: 10px;
+        }
+
+        margin-top: 5px;
+
+        .el-select, .el-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
 </style>
