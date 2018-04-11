@@ -18,7 +18,22 @@
         <el-button icon="el-icon-search" @click="onSearch"></el-button>
       </el-col>
       <el-col v-for="(item, index) in items" :key="index">
-        <search-item :item="item"></search-item>
+        <el-input
+          v-if="item.type === 'input'"
+          v-model="item.value"
+          :placeholder="'请输入' + item.label" />
+
+        <el-select
+          v-if="item.type === 'select'"
+          v-model="item.value"
+          :placeholder="'请选择' + item.label"
+          clearable>
+          <el-option
+            v-for="option in item.options"
+            :key="item.belong ? option[item.belong.value] : option.value"
+            :label="item.belong ? option[item.belong.label] : option.label"
+            :value="item.belong ? option[item.belong.value] : option.value" />
+        </el-select>
       </el-col>
     </el-col>
   </el-col>

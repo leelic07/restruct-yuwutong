@@ -49,7 +49,7 @@
               <template slot-scope="scope">
                 <el-button v-if="scope.row.status == 'PENDING'"
                            size="mini"
-                           @click="handleAuthorization(scope.row.id)">授权
+                           @click="handleAuthorization(scope.row)">授权
                 </el-button>
               </template>
             </el-table-column>
@@ -61,11 +61,23 @@
     <el-dialog class="authorize-dialog" title="授权" :visible.sync="show.authorize" width="530px">
       <div style="margin-bottom: 10px;">请核对申请人照片:</div>
       <div class="img-box">
-        <img
+        <!-- <img
           v-for="(img, index) in uuidImages"
           :key="index"
-          src="../../assets/images/default.jpg"
-          @click="amplifyImage(img)">
+          :src="../../assets/images/default.jpg"
+          @click="amplifyImage(img)"> -->
+          <img
+            :src="toAuthorize.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+            @click="amplifyImage(toAuthorize.idCardFront)"
+            alt="身份证正面照">
+          <img
+            :src="toAuthorize.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+            @click="amplifyImage(toAuthorize.idCardBack)"
+            alt="身份证背面照">
+          <img
+            :src="toAuthorize.avatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+            @click="amplifyImage(toAuthorize.avatarUrl)"
+            alt="头像">
       </div>
       <div class="button-box" v-if="!show.agree && !show.disagree">
         <el-button plain @click="show.agree = true">同意</el-button>
@@ -93,7 +105,7 @@
       </div>
     </el-dialog>
     <el-dialog class="img-dialog" width="440px" :visible.sync="show.imgplus">
-      <img src="../../assets/images/default.jpg" alt="">
+      <img :src="imgSrc" alt="">
     </el-dialog>
   </el-row>
 </template>
@@ -109,7 +121,7 @@ export default {
         prisonerNumber: { type: 'input', label: '囚犯号' },
         name: { type: 'input', label: '家属姓名' }
       },
-      authorizeId: '',
+      toAuthorize: {},
       show: {
         authorize: false,
         agree: false,
@@ -117,6 +129,7 @@ export default {
         imgplus: false
       },
       remarks: '您的身份信息错误',
+      images: [],
       imgSrc: '' // 放大查看家属注册的照片地址
     }
   },
@@ -138,8 +151,8 @@ export default {
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
     },
-    handleAuthorization(id) {
-      this.authorizeId = id
+    handleAuthorization(e) {
+      this.toAuthorize = e
       this.show.agree = false
       this.show.disagree = false
       this.remarks = '您的身份信息错误'
@@ -147,19 +160,19 @@ export default {
       // this.getUuidImage(id)
     },
     onAuthorization(e) {
-      let params = { id: this.authorizeId, status: e }
+      let params = { id: this.toAuthorize.id, status: e }
       if (e === 'DENIED') params.remarks = this.remarks
       this.authorizeRegistrations(params).then(res => {
         if (res) {
           this.show.authorize = false
-          this.authorizeId = ''
+          this.toAuthorize = {}
           this.currentChange()
         }
       })
     },
     // 图片放大执行的方法
     amplifyImage(imgSrc) {
-      this.imgSrc = imgSrc
+      this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
       this.show.imgplus = true
     }
   }
@@ -167,4 +180,6 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
+.avatarUrl img
+  /*  */
 </style>

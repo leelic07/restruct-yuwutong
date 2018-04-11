@@ -8,7 +8,7 @@
       <el-tabs v-model="tabNum" type="card">
         <el-tab-pane label="服刑人员信息" name="first">
           <el-table
-            :data="prisoners"
+            :data="prisonerList"
             border
             stripe
             style="width: 100%">
@@ -36,7 +36,7 @@
               <template slot-scope="scope">
                 <el-button type="text" size="small" v-for="family in scope.row.families" :key="family.id"
                            @click="showFamilyDetail(family)">
-                  {{family.name}}
+                  {{family.familyName}}
                 </el-button>
               </template>
             </el-table-column>
@@ -53,15 +53,15 @@
         <el-col :span="12">
           <el-col :span="24">
             <label for="">姓名：</label>
-            <span v-text="family.name"></span>
+            <span v-text="family.familyName"></span>
           </el-col>
           <el-col :span="24">
             <label for="">电话：</label>
-            <span v-text="family.phone"></span>
+            <span v-text="family.familyPhone"></span>
           </el-col>
           <el-col :span="24">
             <label for="">身份证：</label>
-            <span v-text="family.uuid"></span>
+            <span v-text="family.familyUuid"></span>
           </el-col>
           <el-col :span="24">
             <label for="">关系：</label>
@@ -73,7 +73,7 @@
             <span>照片：</span>
             <!--<img :src="_$agency + family.imageUrl" alt="">-->
             <!--<img :src="_$baseUrl + family.imageUrl" alt="">-->
-            <img src="../../assets/images/default.jpg" alt="">
+            <img :src="family.familyAvatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
           </el-col>
         </el-col>
       </el-row>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
 import Pagination from '@/components/Pagination/Pagination'
 export default {
@@ -110,11 +110,7 @@ export default {
     }
   },
   computed: {
-    // 映射getters方法获取state状态
-    ...mapGetters({
-      prisoners: 'prisoners',
-      prisonersTotal: 'prisonersTotal' // 总共记录条数
-    })
+    ...mapState(['prisonerList', 'prisonersTotal'])
   },
   methods: {
     // 映射actions方法

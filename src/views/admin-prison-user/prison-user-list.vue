@@ -58,12 +58,13 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
+    let optionObj = require('@/filters/modules/role')
     return {
       tabNum: 'first',
       searchItems: {
         jail: { type: 'input', label: '监狱名称' },
         username: { type: 'input', label: '用户名' },
-        role: { type: 'select', label: '角色' }
+        role: { type: 'select', label: '角色', options: optionObj.default.role }
       }
     }
   },

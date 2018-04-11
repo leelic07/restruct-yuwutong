@@ -11,6 +11,8 @@ export default {
   editJails: jails =>
     service.postFile('/jails/update', jails).then(res => res).catch(err => err),
   // 添加监狱信息
-  addJails: jails =>
-    service.postFile('/jails/add', jails).then(res => res).catch(err => err)
+  addJails: jails => {
+    console.log(jails)
+    return service.post('/jails/addJails', jails).then(res => res)
+  }
 }
