@@ -39,6 +39,8 @@ Vue.prototype._$agency = 'http://39.108.185.51:1339'
 
 // Vue.prototype._$agency = 'http://localhost:1339'
 
+Vue.prototype._$baseURL = 'http://39.108.185.51:8081/ywgk'
+
 // 声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]))
 
