@@ -104,7 +104,9 @@
     mounted() {
       this.getAdvertismentsDetail({ id: this.$route.params.id }).then(() => {
         if (!this.advertisement.startDate || !this.advertisement.endDate) return
-        this.advertisement.time = [helper.Date(this.advertisement.startDate), helper.Date(this.advertisement.endDate)]
+        this.advertisement.startDate = helper.Date(this.advertisement.startDate)
+        this.advertisement.endDate = helper.Date(this.advertisement.endDate)
+        this.advertisement.time = [this.advertisement.startDate, this.advertisement.endDate]
       })
       this.getAdvertisementTypes().then(() => {
         this.gettingType = false
