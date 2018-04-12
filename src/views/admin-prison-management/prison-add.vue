@@ -34,7 +34,7 @@
           <m-upload-img @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">更新</el-button>
+          <el-button type="primary" @click="onSubmit" size="small">新增</el-button>
         </el-form-item>
       </el-form>
     </el-col>

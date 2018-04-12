@@ -2,7 +2,8 @@ html{
   background: #ecf0f5;
 }
 img{
-  vertical-align: top;
+  vertical-align: middle;
+  border: 0;
 }
 .m-pagination .el-pagination{
   margin: 20px 0;

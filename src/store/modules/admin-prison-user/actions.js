@@ -19,7 +19,7 @@ export default {
   },
   // 新增监狱账户
   addPrisonUser: ({ commit }, regs) => {
-    return http.addPrisonUser(regs)
+    return http.addPrisonUser(regs).then(res => res.code === 200)
   },
   deletePrisonUser: ({ commit }, regs) => {
     return http.deletePrisonUser(regs)

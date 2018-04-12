@@ -7,7 +7,7 @@ let check = [{
   children: [{
     path: '/registration/list',
     name: '家属注册列表',
-    component: resolve => require(['@/views/registration/registration'], resolve)
+    component: resolve => require(['@/views/check-registration/registration-list'], resolve)
   }]
 }, {
   path: '/meeting',

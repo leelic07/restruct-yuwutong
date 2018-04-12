@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import registrations from './modules/registrations'
 import meetings from './modules/meetings'
 import prisoners from './modules/prisoners'
 import families from './modules/families'
@@ -33,8 +32,9 @@ import adminPrisonManagement from './modules/admin-prison-management'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 import select from './modules/select'
-import 'babel-polyfill'
+import checkRegistration from '@/views/check-registration/vuex'
 
+import 'babel-polyfill'
 Vue.use(Vuex)
 
 let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) => {
@@ -48,7 +48,6 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
-  registrations,
   meetings,
   prisoners,
   families,
@@ -77,6 +76,7 @@ merge(
   breadCrumbs,
   adminPrisonUser,
   adminPrisonManagement,
+  checkRegistration,
   infoPrisonAffairsPublic,
   filter,
   select

@@ -100,11 +100,14 @@ export default {
     ...mapActions(['addPrisonUser', 'getJails']),
     onSubmit() {
       this.$refs.prisonUser.validate(valid => {
-        let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
-        delete prisonUser.jailObj
-        this.addPrisonUser(prisonUser).then(res => {
-          this.$router.push('/prison-user/list')
-        })
+        if (valid) {
+          let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
+          delete prisonUser.jailObj
+          this.addPrisonUser(prisonUser).then(res => {
+            if (!res) return
+            this.$router.push('/prison-user/list')
+          })
+        }
       })
     }
   },

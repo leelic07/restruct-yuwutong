@@ -35,6 +35,7 @@
             :value="item.belong ? option[item.belong.value] : option.value" />
         </el-select>
         <el-date-picker
+          v-if="item.type === 'datetime'"
           v-model="item.value"
           type="datetime"
           :placeholder="'请选择' + item.label"

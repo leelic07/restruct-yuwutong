@@ -1,4 +1,3 @@
-import registrations from './modules/registrations'
 import versions from './modules/versions'
 import families from './modules/families'
 import meetings from './modules/meetings'
@@ -22,11 +21,11 @@ import uploadImg from './modules/upload-img'
 import province from './modules/province'
 
 import admin from './modules/admin'
+import check from './modules/check'
 import information from './modules/information'
 import select from './modules/select'
 
 export default Object.assign(
-  registrations,
   versions,
   families,
   meetings,
@@ -49,6 +48,7 @@ export default Object.assign(
   uploadImg,
   province,
   admin,
+  check,
   information,
   select
 )
