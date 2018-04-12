@@ -73,7 +73,7 @@
             @success="onSuccess" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">新增</el-button>
+          <el-button type="primary" @click="onSubmit" size="small">提交</el-button>
         </el-form-item>
       </el-form>
     </el-col>
