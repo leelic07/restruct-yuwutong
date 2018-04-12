@@ -1,4 +1,4 @@
-import role from '@/filters/modules/role'
+import switches from '@/filters/modules/switches'
 export default {
-  ...role
+  ...switches
 }

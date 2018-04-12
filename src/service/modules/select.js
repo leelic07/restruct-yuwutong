@@ -1,11 +1,12 @@
 import * as service from '../base/service'
 
 export default {
-  // 意见反馈列表
+  // 省份列表
   getProvincesAll: () => {
     return service.get('/provinces/list').then(res => res)
   },
-  getCities: (params) => {
+  // 城市列表
+  getCities: params => {
     return service.get(`/cities/list?provicesId=${ params }`).then(res => res)
   }
 }

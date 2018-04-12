@@ -1,5 +1,5 @@
 <template>
-  <el-row id="jail-editor" :gutter="0">
+  <el-row :gutter="0">
     <el-col :span="13" :offset="5">
       <el-form ref="form" :model="jails" label-position="top" :rules="rules">
         <el-form-item label="监狱名称" prop="title">

@@ -1,11 +1,7 @@
-import registrations from './modules/registrations'
-import families from './modules/families'
-import goodsCategory from './modules/goods'
-import role from './modules/role'
 import date from './modules/date'
-import gender from './modules/gender'
+import switches from './modules/switches'
 
-let filterObj = Object.assign({}, role, families, goodsCategory, registrations, gender), filters = {}
+let filterObj = Object.assign({}, switches), filters = {}
 
 Object.keys(filterObj).forEach(k => {
   filters[k] = (val) => {
@@ -17,7 +13,6 @@ Object.keys(filterObj).forEach(k => {
     return res.label
   }
 })
-
 export default {
   ...filters,
   ...date

@@ -11,6 +11,10 @@ let adminMenu = [{
     title: '意见反馈',
     icon: 'iconfont icon-folder'
   }, {
+    path: '/advertisement/list',
+    title: '广告管理',
+    icon: 'iconfont icon-folder'
+  }, {
     path: '/terminals/list',
     title: '终端管理',
     icon: 'iconfont icon-folder'
@@ -19,21 +23,25 @@ let adminMenu = [{
     title: '版本管理',
     icon: 'iconfont icon-folder'
   }, {
-    path: '/log',
-    title: '日志',
-    icon: 'iconfont icon-folder',
-    active: false,
-    children: [
-      {
-      //   path: '/log/user-operation',
-      //   title: '用户操作日志',
-      //   icon: 'iconfont icon-circle-o'
-      // }, {
-        path: '/log/app-error',
-        title: 'APP崩溃日志',
-        icon: 'iconfont icon-circle-o'
-      }
-    ]
+    path: '/log/app-error',
+    title: 'APP崩溃日志',
+    icon: 'iconfont icon-folder'
+  // }, {
+  //   path: '/log',
+  //   title: '日志',
+  //   icon: 'iconfont icon-folder',
+  //   active: false,
+  //   children: [
+  //     {
+  //     //   path: '/log/user-operation',
+  //     //   title: '用户操作日志',
+  //     //   icon: 'iconfont icon-circle-o'
+  //     // }, {
+  //       path: '/log/app-error',
+  //       title: 'APP崩溃日志',
+  //       icon: 'iconfont icon-circle-o'
+  //     }
+  //   ]
   }],
   checkMenu = [{
     path: '/registration/list',

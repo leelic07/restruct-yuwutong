@@ -58,7 +58,7 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
-    let optionObj = require('@/filters/modules/role')
+    let optionObj = require('@/filters/modules/switches')
     return {
       tabNum: 'first',
       searchItems: {

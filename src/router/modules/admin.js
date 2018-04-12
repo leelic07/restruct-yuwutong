@@ -7,11 +7,11 @@ let admin = [{
   children: [{
     path: '/prison/list',
     name: '监狱列表',
-    component: resolve => require(['@/views/admin-prison-management/prison-list'], resolve)
+    component: resolve => require(['@/views/admin-prison/prison-list'], resolve)
   }, {
     path: '/prison/add',
     name: '新增监狱',
-    component: resolve => require(['@/views/admin-prison-management/prison-add'], resolve)
+    component: resolve => require(['@/views/admin-prison/prison-add'], resolve)
   }]
 }, {
   path: '/prison-user',
@@ -38,6 +38,23 @@ let admin = [{
     path: '/feedback/list',
     name: '意见列表',
     component: resolve => require(['@/views/admin-feedback/feedback-list'], resolve)
+  }]
+}, {
+  path: '/advertisement',
+  name: '广告管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/advertisement/list',
+    name: '广告列表',
+    component: resolve => require(['@/views/admin-advertisement/advertisement-list'], resolve)
+  }, {
+    path: '/advertisement/add',
+    name: '新增广告',
+    component: resolve => require(['@/views/admin-advertisement/advertisement-add'], resolve)
+  }, {
+    path: '/advertisement/edit/:id',
+    name: '编辑广告',
+    component: resolve => require(['@/views/admin-advertisement/advertisement-edit'], resolve)
   }]
 }, {
   path: '/terminals',

@@ -27,6 +27,7 @@
           v-if="item.type === 'select'"
           v-model="item.value"
           :placeholder="'请选择' + item.label"
+          :loading="item.getting || false"
           clearable>
           <el-option
             v-for="option in item.options"
@@ -114,4 +115,6 @@ export default {
       float: right
       width: 22%
       margin-left: 3%
+      .el-date-editor.el-input
+        width: 100%;
 </style>

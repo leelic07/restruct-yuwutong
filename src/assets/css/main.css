@@ -39,8 +39,11 @@ img{
   font-weight: bold;
 }
 /* element-ui */
-.search-box .el-select, .el-form-item__content .el-select{
+.search-box .el-select, .el-form-item__content .el-select, .el-form-item__content .el-date-editor--datetimerange{
   width: 100%;
+}
+.el-form-item__content .el-date-editor--datetimerange .el-range-input{
+  width: 45%;
 }
 .authorize-dialog .el-dialog__body{
   padding: 10px 20px;

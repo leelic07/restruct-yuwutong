@@ -25,6 +25,9 @@ import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import breadCrumbs from './modules/breadcrumb'
 
+import adminAdvertisement from '@/views/admin-advertisement/vuex'
+import checkRegistration from '@/views/check-registration/vuex'
+
 import adminFeedback from './modules/admin-feedback'
 import adminLog from './modules/admin-log'
 import adminPrisonUser from './modules/admin-prison-user'
@@ -32,7 +35,6 @@ import adminPrisonManagement from './modules/admin-prison-management'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 import select from './modules/select'
-import checkRegistration from '@/views/check-registration/vuex'
 
 import 'babel-polyfill'
 Vue.use(Vuex)
@@ -71,15 +73,16 @@ merge(
   downloadFile,
   uploadFile,
   uploadImg,
-  adminFeedback,
   adminLog,
   breadCrumbs,
+  adminFeedback,
   adminPrisonUser,
   adminPrisonManagement,
-  checkRegistration,
   infoPrisonAffairsPublic,
   filter,
-  select
+  select,
+  adminAdvertisement,
+  checkRegistration
 )
 export default new Vuex.Store({
   actions,
