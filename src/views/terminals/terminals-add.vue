@@ -81,8 +81,8 @@ export default {
       > .el-row
         &:first-child
           h3
-            float: left
-            margin: 0 0 35px 30%
+            text-align: center;
+            margin-bottom: 35px;
         &:last-child
           .el-button
             float: right

@@ -112,7 +112,7 @@
         <div style="margin-bottom: 10px;">请选择驳回原因</div>
         <el-select v-model="remarks">
           <el-option
-            v-for="(remark,index) in $store.state.remarks"
+            v-for="(remark,index) in frontRemarks"
             :value="remark"
             :label="remark"
             :key="index">
@@ -161,7 +161,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['registrations'])
+    ...mapState(['registrations', 'frontRemarks'])
   },
   mounted() {
     this.getRegistrations(this.pagination)

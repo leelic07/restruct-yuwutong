@@ -3,7 +3,7 @@ import mutations from './mutations'
 
 let state = {
   advertisements: { contents: [], total: 0 },
-  advertisement: {},
+  advertisement: { time: [] },
   advertisementTypes: []
 }
 

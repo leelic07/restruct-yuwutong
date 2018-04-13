@@ -2,6 +2,7 @@
   <div class="">
     <el-upload
       class="avatar-uploader"
+      ref="uploadImg"
       :action="action"
       :headers="headers"
       :multiple="multiple"
@@ -76,15 +77,35 @@ export default {
   data() {
     return {
       imageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      uploadList: {}
+    }
+  },
+  watch: {
+    url(val) {
+      if (this.limit === 1 && val) {
+        this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
+      }
+      else if (this.limit === 1 && !val) {
+        this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'inline-block'
+      }
     }
   },
   mounted() {
+    if (this.limit === 1 && this.url) {
+      this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
+    }
   },
   methods: {
     handleSuccess(res, file) {
-      this.afterUpload(res)
-      this.$emit('success', res.url)
+      switch (res.code) {
+        case 200:
+          this.$message.success('图片上传成功')
+          this.$emit('success', res.url)
+          break
+        default:
+          this.$message.error(`上传图片失败:${ res.message }`)
+      }
     },
     beforUpload(file) {
       let fileType = this.accept.split(',')
@@ -110,17 +131,8 @@ export default {
     handleError(e) {
       console.log(e)
     },
-    handleRemove() {
+    handleRemove(file, fileList) {
       this.$emit('success', '')
-    },
-    afterUpload(res) {
-      switch (res.code) {
-        case 200:
-          this.$message.success('图片上传成功')
-          break
-        default:
-          this.$message.error(`上传图片失败:${ res.message }`)
-      }
     }
   }
 }

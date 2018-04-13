@@ -15,7 +15,7 @@ export default {
   },
   // 获取所有监狱
   getJails: ({ commit }) => {
-    return http.getJails().then(res => res.code === 200 && commit('updateJails', res.data)).catch(err => console.log(err))
+    return http.getJails().then(res => res.code === 200 && commit('updateJails', res.data))
   },
   // 新增监狱账户
   addPrisonUser: ({ commit }, regs) => {

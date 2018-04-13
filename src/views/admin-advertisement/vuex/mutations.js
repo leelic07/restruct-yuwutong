@@ -7,6 +7,6 @@ export default {
     state.advertisementTypes = params.adtypes
   },
   getAdvertismentsDetail: (state, params) => {
-    state.advertisement = params
+    state.advertisement = Object.assign({}, { time: [] }, params)
   }
 }

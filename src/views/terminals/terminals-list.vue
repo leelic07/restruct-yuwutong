@@ -3,7 +3,7 @@
     <el-row :gutter="0" v-if="!isTerminals">
       <!--添加终端信息-->
       <el-col :span="24">
-        <el-button size="small" type="primary" plain @click="newTerminal()">添加终端信息</el-button>
+        <el-button size="small" class="button-add" type="primary" plain @click="newTerminal()">添加终端信息</el-button>
       </el-col>
       <!--选择显示页数和搜索框内容组件-->
       <select-and-search :c="c" @sizeChange="sizeChange" @search="search"
@@ -160,31 +160,4 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  white = #fff
-  #terminals
-    padding: 20px 1% 0 1%
-    > .el-row
-      > .el-col
-        &:first-child
-          .el-button
-            float: right
-            margin-bottom: 10px
-    & /deep/ .el-tabs__item
-      background: white
-    & /deep/ .el-table__body-wrapper
-      overflow: visible
-      .el-table__row
-        td:nth-child(7)
-          .el-button
-            /*float: left*/
-            /*margin-left: 6%*/
-            display: block
-            margin: 0 auto
-    & /deep/ .el-dialog
-      width: 45%
-      .el-dialog__body
-        img
-          float: left
-          width: 150px
-          height: 150px
 </style>

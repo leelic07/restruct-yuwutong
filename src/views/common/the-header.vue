@@ -20,7 +20,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../../static/dist/img/user2-160x160.jpg" class="user-image">
-              <span class="hidden-xs">管理员</span>
+              <span class="hidden-xs">{{ users.username || users.jailName }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- Menu Footer-->
@@ -47,11 +47,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
     return {}
+  },
+  computed: {
+    ...mapState(['users'])
   },
   methods: {
     ...mapActions({
