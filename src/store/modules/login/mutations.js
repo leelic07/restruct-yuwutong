@@ -23,5 +23,6 @@ export default {
     token && sessionStorage.setItem('token', token)
     state.loginResult = loginResult
     state.users = users
+    sessionStorage.setItem('users', JSON.stringify(users))
   }
 }

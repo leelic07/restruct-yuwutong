@@ -4,7 +4,6 @@ import meetings from './modules/meetings'
 import accounts from './modules/accounts'
 import mailboxes from './modules/mailboxes'
 import prisoners from './modules/prisoners'
-import terminals from './modules/terminals'
 import search from './modules/search'
 import goods from './modules/goods-management'
 import familyOrders from './modules/family-orders'
@@ -24,6 +23,7 @@ import admin from './modules/admin'
 import check from './modules/check'
 import information from './modules/information'
 import select from './modules/select'
+import noPage from './modules/no-page'
 
 export default Object.assign(
   versions,
@@ -32,7 +32,6 @@ export default Object.assign(
   accounts,
   mailboxes,
   prisoners,
-  terminals,
   search,
   goods,
   familyOrders,
@@ -50,5 +49,6 @@ export default Object.assign(
   admin,
   check,
   information,
-  select
+  select,
+  noPage
 )

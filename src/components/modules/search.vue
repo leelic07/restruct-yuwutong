@@ -17,33 +17,47 @@
       <el-col>
         <el-button icon="el-icon-search" @click="onSearch"></el-button>
       </el-col>
-      <el-col v-for="(item, index) in items" :key="index">
-        <el-input
-          v-if="item.type === 'input'"
-          v-model="item.value"
-          :placeholder="'请输入' + item.label" />
+      <template v-for="(item, index) in items">
+        <el-col :key="index" v-if="item.type !== 'datetimerange'">
+          <el-input
+            v-if="item.type === 'input'"
+            v-model="item.value"
+            :placeholder="'请输入' + item.label" />
 
-        <el-select
-          v-if="item.type === 'select'"
-          v-model="item.value"
-          :placeholder="'请选择' + item.label"
-          :loading="item.getting || false"
-          clearable>
-          <el-option
-            v-for="option in item.options"
-            :key="item.belong ? option[item.belong.value] : option.value"
-            :label="item.belong ? option[item.belong.label] : option.label"
-            :value="item.belong ? option[item.belong.value] : option.value" />
-        </el-select>
-        <el-date-picker
-          v-if="item.type === 'datetime'"
-          v-model="item.value"
-          type="datetime"
-          :placeholder="'请选择' + item.label"
-          align="right"
-          :picker-options="pickerOptions">
-        </el-date-picker>
-      </el-col>
+          <el-select
+            v-if="item.type === 'select'"
+            v-model="item.value"
+            :placeholder="'请选择' + item.label"
+            :loading="item.getting || false"
+            clearable>
+            <el-option
+              v-for="option in item.options"
+              :key="item.belong ? option[item.belong.value] : option.value"
+              :label="item.belong ? option[item.belong.label] : option.label"
+              :value="item.belong ? option[item.belong.value] : option.value" />
+          </el-select>
+          <el-date-picker
+            v-if="item.type === 'datetime'"
+            v-model="item.value"
+            type="datetime"
+            :placeholder="item.label"
+            align="right"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </el-col>
+        <el-col :span="8" :key="index" v-if="item.type === 'datetimerange'">
+          <el-date-picker
+            v-if="item.type === 'datetimerange'"
+            v-model="item.value"
+            type="datetimerange"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            :default-time="['00:00:00', '23:59:59']">
+          </el-date-picker>
+        </el-col>
+      </template>
     </el-col>
   </el-col>
 </template>
@@ -96,7 +110,13 @@ export default {
       let params = {}
       Object.keys(this.items).forEach(key => {
         if (!this.items[key].value && parseInt(this.items[key].value) !== 0) return
-        params[key] = this.items[key].value
+        if (this.items[key].type === 'datetimerange') {
+          params[this.items[key].start] = this.items[key].value[0]
+          params[this.items[key].end] = this.items[key].value[1]
+        }
+        else {
+          params[key] = this.items[key].value
+        }
       })
       this.$parent.$parent.filter = params
       this.$emit('search')
@@ -109,7 +129,7 @@ export default {
 .filter-box
   margin-bottom: 25px;
   .search-box
-    .el-col
+    .el-col:not(.el-col-8)
       &:first-child
         width: 8%
       float: right
@@ -117,4 +137,10 @@ export default {
       margin-left: 3%
       .el-date-editor.el-input
         width: 100%;
+    .el-col-8
+      float: right;
+      min-width: 274px;
+    .el-date-editor--datetimerange.el-input, .el-date-editor--datetimerange.el-input__inner{
+      width: 100%;
+    }
 </style>

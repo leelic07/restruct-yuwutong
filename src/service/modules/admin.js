@@ -55,5 +55,21 @@ export default {
   // 广告管理-编辑
   updateAdvertisments: params => {
     return service.postObj('/advertisements/updateAdvertisements', params).then(res => res.code === 200)
+  },
+  // 终端管理-新增
+  addTerminal: params => {
+    return service.post('/terminals/add', params).then(res => res.code === 200)
+  },
+  // 终端管理-列表
+  getTerminals: params => {
+    return service.get('/terminals/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 终端管理-详情
+  getTerminalsDetail: params => {
+    return service.get('/terminals/getTerminalsDetail', params).then(res => res.code === 200 && res.data)
+  },
+  // 终端管理-编辑
+  updateTerminal: params => {
+    return service.post('/terminals/edit', params).then(res => res.code === 200)
   }
 }

@@ -57,21 +57,21 @@ let admin = [{
     component: resolve => require(['@/views/admin-advertisement/advertisement-edit'], resolve)
   }]
 }, {
-  path: '/terminals',
+  path: '/terminal',
   name: '终端管理',
   meta: { hidden: true },
   children: [{
-    path: '/terminals/list',
+    path: '/terminal/list',
     name: '终端列表',
-    component: resolve => require(['@/views/terminals/terminals-list'], resolve)
+    component: resolve => require(['@/views/admin-terminal/terminal-list'], resolve)
   }, {
-    path: '/terminals/add',
+    path: '/terminal/add',
     name: '新增终端',
-    component: resolve => require(['@/views/terminals/terminals-add'], resolve)
+    component: resolve => require(['@/views/admin-terminal/terminal-add'], resolve)
   }, {
-    path: '/terminals/edit/:id',
+    path: '/terminal/edit/:id',
     name: '编辑终端',
-    component: resolve => require(['@/views/terminals/terminals-edit'], resolve)
+    component: resolve => require(['@/views/admin-terminal/terminal-edit'], resolve)
   }]
 }, {
   path: '/versions',

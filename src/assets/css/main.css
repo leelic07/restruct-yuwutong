@@ -81,3 +81,11 @@ img{
 .el-upload__input{
   display: none !important;
 }
+.page-add .title{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.page-add .submit{
+  float: right;
+  margin-bottom: 20px;
+}
