@@ -29,6 +29,7 @@
             v-model="item.value"
             :placeholder="'请选择' + item.label"
             :loading="item.getting || false"
+            :filterable="item.filterable"
             clearable>
             <el-option
               v-for="option in item.options"

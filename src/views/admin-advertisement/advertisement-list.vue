@@ -72,7 +72,7 @@
     <m-pagination
       ref="pagination"
       :total="advertisements.total"
-      @onPageChange="currentChange" />
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       searchItems: {
-        provinceId: { type: 'select', label: '省份', getting: true, belong: { value: 'id', label: 'name' } },
+        provinceId: { type: 'select', label: '省份', getting: true, belong: { value: 'id', label: 'name' }, filterable: true },
         typeId: { type: 'select', label: '广告类型', getting: true, belong: { value: 'id', label: 'name' } },
         name: { type: 'input', label: '广告名称' }
       }
@@ -92,23 +92,23 @@ export default {
     ...mapState(['advertisements', 'provincesAll', 'advertisementTypes'])
   },
   mounted() {
-    this.getAdvertisements(this.pagination)
+    this.getDatas()
     this.getProvincesAll().then(() => {
-      this.searchItems.provinceId.getting = false
       this.searchItems.provinceId.options = this.provincesAll
+      this.searchItems.provinceId.getting = false
     })
     this.getAdvertisementTypes().then(() => {
-      this.searchItems.typeId.getting = false
       this.searchItems.typeId.options = this.advertisementTypes
+      this.searchItems.typeId.getting = false
     })
   },
   methods: {
     ...mapActions(['getAdvertisements', 'updateAdvertisementStatus', 'deleteAdvertisement', 'getProvincesAll', 'getAdvertisementTypes']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
     },
-    currentChange() {
+    getDatas() {
       this.getAdvertisements({ ...this.filter, ...this.pagination })
     },
     onSearch() {
@@ -134,7 +134,7 @@ export default {
       }).then(() => {
         this.deleteAdvertisement({ id: e }).then(res => {
           if (!res) return
-          this.currentChange()
+          this.getDatas()
         })
       })
     }

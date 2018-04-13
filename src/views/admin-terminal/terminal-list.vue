@@ -1,11 +1,13 @@
 <template>
-  <el-row :gutter="0">
+  <el-row
+    class="row-container"
+    :gutter="0">
     <el-button
       size="small"
       class="button-add"
       type="primary"
       plain
-      @click="newTerminal">添加终端信息</el-button>
+      @click="onAdd">添加终端信息</el-button>
     <m-search
       :items="searchItems"
       @sizeChange="sizeChange"
@@ -41,8 +43,10 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="editTerminal(scope.row.id)">编辑</el-button>
-            <!--<el-button type="danger" size="mini" @click="deleteTerminal(scope.row.id)">删除</el-button>-->
+            <el-button
+              type="primary"
+              size="mini"
+              @click="onEdit(scope.row.id)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,7 +54,7 @@
     <m-pagination
       ref="pagination"
       :total="terminals.total"
-      @onPageChange="currentChange" />
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -60,7 +64,13 @@ export default {
   data() {
     return {
       searchItems: {
-        jailId: { type: 'select', label: '监狱名称', getting: true, belong: { value: 'id', label: 'title' } }
+        jailId: {
+          type: 'select',
+          label: '监狱名称',
+          getting: true,
+          belong: { value: 'id', label: 'title' },
+          filterable: true
+        }
       }
     }
   },
@@ -68,42 +78,29 @@ export default {
     ...mapState(['terminals', 'prisonAll'])
   },
   mounted() {
+    this.getDatas()
     this.getPrisonAll().then(() => {
       this.searchItems.jailId.options = this.prisonAll
       this.searchItems.jailId.getting = false
     })
-    this.getTerminals(this.pagination)
   },
   methods: {
-    ...mapActions(['getTerminals', 'searchAction', 'deleteTerminalById', 'getPrisonAll']),
+    ...mapActions(['getTerminals', 'getPrisonAll']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
     },
-    currentChange() {
+    getDatas() {
       this.getTerminals({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
     },
-    newTerminal() {
-      this.$router.push({
-        path: '/terminal/add'
-      })
+    onAdd() {
+      this.$router.push('/terminal/add')
     },
-    editTerminal(id) {
-      this.$router.push({
-        path: `/terminal/edit/${ id }`
-      })
-    },
-    deleteTerminal(id) {
-      this.$confirm('确定删除？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.deleteTerminalById(id)
-      })
+    onEdit(id) {
+      this.$router.push(`/terminal/edit/${ id }`)
     }
   }
 }

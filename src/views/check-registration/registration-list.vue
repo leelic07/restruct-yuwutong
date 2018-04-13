@@ -57,7 +57,7 @@
     <m-pagination
       ref="pagination"
       :total="registrations.total"
-      @onPageChange="currentChange" />
+      @onPageChange="getDatas" />
     <el-dialog
       :visible.sync="show.authorize"
       class="authorize-dialog"
@@ -164,15 +164,15 @@ export default {
     ...mapState(['registrations', 'frontRemarks'])
   },
   mounted() {
-    this.getRegistrations(this.pagination)
+    this.getDatas()
   },
   methods: {
     ...mapActions(['getRegistrations', 'authorizeRegistrations']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
     },
-    currentChange() {
+    getDatas() {
       this.getRegistrations({ ...this.filter, ...this.pagination })
     },
     onSearch() {
@@ -192,7 +192,7 @@ export default {
         if (res) {
           this.show.authorize = false
           this.toAuthorize = {}
-          this.currentChange()
+          this.getDatas()
         }
       })
     },
