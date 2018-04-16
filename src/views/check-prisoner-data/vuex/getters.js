@@ -1,6 +1,6 @@
 export default {
   // 获取罪犯模板导入结果
-  prisonerResult: state => state.prisonerResult,
+  prisonerDataResult: state => state.prisonerDataResult,
 
   // 获取刑期变动导入结果
   prisonTermResult: state => state.prisonTermResult,
@@ -15,5 +15,5 @@ export default {
   prisonerRewardPunishments: state => state.prisonerRewardPunishments,
 
   // 获取罪犯模板上传的数据
-  prisoners: state => state.prisoners
+  prisonerData: state => state.prisonerData
 }

@@ -1,21 +1,21 @@
 <template>
-  <el-row :gutter="0" id="prisoner-import-index">
-    <el-row :gutter="0" class="download-box">
+  <el-row
+    class="row-container"
+    :gutter="0">
+    <el-row :gutter="0">
       <el-col :span="22" :offset="2">
         <span>点击下载模板：</span>
         <a :href="prisonerHref">罪犯信息导入模板</a>
       </el-col>
     </el-row>
-    <el-row :gutter="0" class="title-box">
+    <el-row :gutter="0">
       <el-col :span="22" :offset="2">
-        <p>上传模板文件：</p>
-        <p>限制文件后缀名为
-          <el-tag type="danger">.xls</el-tag>
-        </p>
+        <span>上传模板文件：</span>
+        <p>限制文件后缀名为<span class="red">.xls</span></p>
       </el-col>
     </el-row>
     <el-row :gutter="0">
-      <el-col :span="6" :offset="1">
+      <el-col :span="6" :offset="2">
         <el-upload class="upload-demo" ref="upload" :action="_$agency + '/prisoners/upload'" :before-upload="beforeUpload" :file-list="fileList" :auto-upload="false" :limit="1" accept=".xls">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
@@ -23,9 +23,9 @@
         </el-upload>
       </el-col>
     </el-row>
-    <el-row v-if="prisoners.length">
+    <el-row v-if="prisonerData.length">
       <!--上传模板文件的结果-->
-      <el-table :data="prisoners">
+      <el-table :data="prisonerData">
         <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
         <el-table-column label="罪犯名字" prop="name"></el-table-column>
         <el-table-column label="性别">
@@ -70,15 +70,15 @@ export default {
     uploadResult(newValue) {
       this.importPrisoner({ filepath: newValue.path })
     },
-    prisonerResult(newValue) {
+    prisonerDataResult(newValue) {
       this.alertInformation(newValue)
     }
   },
   computed: {
     ...mapGetters({
-      prisonerResult: 'prisonerResult', // 获取罪犯模板导入结果
+      prisonerDataResult: 'prisonerDataResult', // 获取罪犯模板导入结果
       uploadResult: 'uploadResult', // 获取上传罪犯模板文件的结果
-      prisoners: 'prisoners' // 获取上传罪犯模板成功的信息
+      prisonerData: 'prisonerData' // 获取上传罪犯模板成功的信息
     })
   },
   methods: {
@@ -87,14 +87,13 @@ export default {
       uploadFile: 'uploadFile' // 上传罪犯模板文件到服务端
     }),
     ...mapMutations({
-      resetPrisoners: 'resetPrisoners' // 重置罪犯模板信息
+      resetprisonerData: 'resetprisonerData' // 重置罪犯模板信息
     }),
     submitUpload() {
       this.$refs.upload.submit()
     },
     beforeUpload(file) {
       this.uploadFile(file)
-      return false
     },
     // 解析文件成功后执行的方法
     alertInformation(information) {
@@ -110,42 +109,16 @@ export default {
     }
   },
   mounted() {
-    this.resetPrisoners()
+    this.resetprisonerData()
   }
 }
 </script>
 
-<style type="text/stylus" lang="stylus">
-#prisoner-import-index {
+<style type="text/stylus" lang="stylus" scoped>
+.row-container
   min-height: 370px;
-
-  .download-box {
-    margin-top: 35px;
-  }
-
-  .title-box {
-    margin-top: 30px;
-  }
-
-  & /deep/ .upload-demo {
-    margin-bottom: 45px;
-
-    > .el-button {
-      margin-top: 20px;
-    }
-
-    .el-upload {
-      margin-right: 60%;
-      margin-top: 15px;
-
-      .el-button {
-        float: left;
-      }
-
-      input[type=file] {
-        display: none;
-      }
-    }
-  }
-}
+  line-height: 40px;
+  .red
+    color: #F56C6C;
+    font-weight: bold;
 </style>

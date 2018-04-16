@@ -10,7 +10,6 @@ import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
 import loading from './modules/loading'
-import prisonDataManagement from './modules/prisoner-data-management'
 import ordersManagement from './modules/orders-management'
 import logout from './modules/logout'
 import passwordModification from './modules/password-modification'
@@ -26,6 +25,7 @@ import checkFamily from '@/views/check-family/vuex'
 import checkMailbox from '@/views/check-mailbox/vuex'
 import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
+import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
 import noPage from './modules/no-page'
 
@@ -61,7 +61,6 @@ merge(
   jailsInformation,
   lawsInformation,
   loading,
-  prisonDataManagement,
   ordersManagement,
   logout,
   passwordModification,
@@ -82,6 +81,7 @@ merge(
   checkFamily,
   checkMailbox,
   checkMeeting,
+  checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
   noPage

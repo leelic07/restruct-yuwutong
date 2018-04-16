@@ -1,8 +1,8 @@
 export default {
   // 罪犯数据模板上传成功后将罪犯数据模板导入到服务端
-  importPrisoner: (state, prisonerResult) => {
-    state.prisonerResult = prisonerResult.data
-    state.prisoners = prisonerResult.data.prisoners
+  importPrisoner: (state, prisonerDataResult) => {
+    state.prisonerDataResult = prisonerDataResult.data
+    state.prisonerData = prisonerDataResult.data.prisonerData
   },
 
   // 刑期变动模板上传成功后将刑期变动模板导入到服务端
@@ -30,5 +30,5 @@ export default {
   resetPrisonTerms: state => { state.prisonTerms.splice(0) },
 
   // 重置罪犯信息
-  resetPrisoners: state => { state.prisoners.splice(0) }
+  resetprisonerData: state => { state.prisonerData.splice(0) }
 }

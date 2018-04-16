@@ -65,15 +65,15 @@ let check = [{
   children: [{
     path: '/prisoner-data/data-import',
     name: '罪犯数据导入',
-    component: resolve => require(['@/views/prisoner-data/data-import'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/data-import'], resolve)
   }, {
     path: '/prisoner-data/term-change',
     name: '刑期变动数据导入',
-    component: resolve => require(['@/views/prisoner-data/term-change'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/term-change'], resolve)
   }, {
     path: '/prisoner-data/reward-punishment',
     name: '罪犯奖惩数据导入',
-    component: resolve => require(['@/views/prisoner-data/reward-punishment'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/reward-punishment'], resolve)
   }]
 }]
 
