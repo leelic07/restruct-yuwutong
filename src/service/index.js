@@ -1,7 +1,6 @@
 import versions from './modules/versions'
 import families from './modules/families'
 import accounts from './modules/accounts'
-import mailboxes from './modules/mailboxes'
 import prisoners from './modules/prisoners'
 import search from './modules/search'
 import goods from './modules/goods-management'
@@ -28,7 +27,6 @@ export default Object.assign(
   versions,
   families,
   accounts,
-  mailboxes,
   prisoners,
   search,
   goods,

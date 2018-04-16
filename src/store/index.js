@@ -8,7 +8,6 @@ import breadCrumb from './modules/bread-crumb'
 import search from './modules/search'
 import goods from './modules/goods-mangement'
 import login from './modules/login'
-import mailboxes from './modules/mailboxes'
 import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
@@ -25,6 +24,7 @@ import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
+import checkMailbox from '@/views/check-mailbox/vuex'
 import checkMeeting from '@/views/check-meeting/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
 import noPage from './modules/no-page'
@@ -59,7 +59,6 @@ merge(
   accounts,
   goods,
   login,
-  mailboxes,
   familyOrders,
   jailsInformation,
   lawsInformation,
@@ -82,6 +81,7 @@ merge(
   select,
   adminAdvertisement,
   adminTerminal,
+  checkMailbox,
   checkMeeting,
   checkRegistration,
   noPage

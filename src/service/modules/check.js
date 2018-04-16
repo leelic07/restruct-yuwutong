@@ -20,5 +20,17 @@ export default {
   // 家属会见申请-撤回
   withdrawMeeting: params => {
     return service.post('/meetings/withdraw', params).then(res => res.code === 200)
+  },
+  // 监狱长信箱-列表
+  getMailboxes: params => {
+    return service.get('/mailboxes/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 监狱长信箱-详情
+  getMailbox: params => {
+    return service.get(`/mailboxes/jailReply?id=${ params }`).then(res => res.code === 200 && res.data)
+  },
+  // 监狱长信箱-回复
+  mailboxReply: params => {
+    return service.post('/mailboxes/reply', params).then(res => res.code === 200)
   }
 }

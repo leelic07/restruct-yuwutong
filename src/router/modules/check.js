@@ -25,11 +25,11 @@ let check = [{
   children: [{
     path: '/mailbox/list',
     name: '信件列表',
-    component: resolve => require(['@/views/mailbox/mailbox-list'], resolve)
+    component: resolve => require(['@/views/check-mailbox/mailbox-list'], resolve)
   }, {
     path: '/mailbox/detail/:id',
     name: '信件详情',
-    component: resolve => require(['@/views/mailbox/mailbox-detail'], resolve)
+    component: resolve => require(['@/views/check-mailbox/mailbox-detail'], resolve)
   }]
 }, {
   path: '/prisoners',

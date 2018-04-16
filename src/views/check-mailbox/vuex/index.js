@@ -1,11 +1,13 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  mailboxes: { contents: [], total: 0 },
+  mailbox: {}
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

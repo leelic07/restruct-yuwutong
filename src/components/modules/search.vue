@@ -15,7 +15,8 @@
     <!--搜索框-->
     <el-col :span="16" class="search-box">
       <el-col>
-        <el-button icon="el-icon-search" @click="onSearch"></el-button>
+        <el-button v-if="buttonText" @click="onSearch">{{ buttonText }}</el-button>
+        <el-button v-else icon="el-icon-search" @click="onSearch"></el-button>
       </el-col>
       <template v-for="(item, index) in items">
         <el-col :key="index" v-if="item.type !== 'datetimerange'">
@@ -70,6 +71,10 @@ export default {
   props: {
     items: {
       type: Object
+    },
+    buttonText: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -107,19 +112,21 @@ export default {
     sizeChange(e) {
       this.$emit('sizeChange', this.pageSize)
     },
-    onSearch(e) {
-      let params = {}
-      Object.keys(this.items).forEach(key => {
-        if (!this.items[key].value && parseInt(this.items[key].value) !== 0) return
-        if (this.items[key].type === 'datetimerange') {
-          params[this.items[key].start] = this.items[key].value[0]
-          params[this.items[key].end] = this.items[key].value[1]
-        }
-        else {
-          params[key] = this.items[key].value
-        }
-      })
-      this.$parent.$parent.filter = params
+    onSearch() {
+      if (this.items) {
+        let params = {}
+        Object.keys(this.items).forEach(key => {
+          if (!this.items[key].value && parseInt(this.items[key].value) !== 0) return
+          if (this.items[key].type === 'datetimerange') {
+            params[this.items[key].start] = this.items[key].value[0]
+            params[this.items[key].end] = this.items[key].value[1]
+          }
+          else {
+            params[key] = this.items[key].value
+          }
+        })
+        this.$parent.$parent.filter = params
+      }
       this.$emit('search')
     }
   }
