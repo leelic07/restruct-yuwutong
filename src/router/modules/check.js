@@ -32,13 +32,13 @@ let check = [{
     component: resolve => require(['@/views/check-mailbox/mailbox-detail'], resolve)
   }]
 }, {
-  path: '/prisoners',
+  path: '/prisoner',
   name: '服刑人员信息管理',
   meta: { hidden: true },
   children: [{
-    path: '/prisoners/list',
+    path: '/prisoner/list',
     name: '服刑人员列表',
-    component: resolve => require(['@/views/prisoners/prisoners'], resolve)
+    component: resolve => require(['@/views/check-prisoner/prisoner-list'], resolve)
   }]
 }, {
   path: '/families',

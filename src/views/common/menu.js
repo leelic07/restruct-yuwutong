@@ -56,7 +56,7 @@ let adminMenu = [{
     title: '监狱长信箱',
     icon: 'iconfont icon-folder'
   }, {
-    path: '/prisoners/list',
+    path: '/prisoner/list',
     title: '服刑人员信息管理',
     icon: 'iconfont icon-folder'
   }, {

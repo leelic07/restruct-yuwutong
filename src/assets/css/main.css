@@ -92,3 +92,7 @@ img{
   float: right;
   margin-bottom: 20px;
 }
+.separate + .separate::before{
+  content: '/ ';
+  color: #ddd;
+}

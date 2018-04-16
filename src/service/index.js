@@ -1,7 +1,6 @@
 import versions from './modules/versions'
 import families from './modules/families'
 import accounts from './modules/accounts'
-import prisoners from './modules/prisoners'
 import search from './modules/search'
 import goods from './modules/goods-management'
 import familyOrders from './modules/family-orders'
@@ -27,7 +26,6 @@ export default Object.assign(
   versions,
   families,
   accounts,
-  prisoners,
   search,
   goods,
   familyOrders,

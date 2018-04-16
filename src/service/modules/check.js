@@ -32,5 +32,9 @@ export default {
   // 监狱长信箱-回复
   mailboxReply: params => {
     return service.post('/mailboxes/reply', params).then(res => res.code === 200)
+  },
+  // 服刑人员信息管理-列表
+  getPrisoners: params => {
+    return service.get('/prisoners/page', params).then(res => res.code === 200 && res.data)
   }
 }
