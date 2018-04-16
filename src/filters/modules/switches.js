@@ -24,10 +24,12 @@ let switches = {
     { value: 4, label: '医药保健' },
     { value: 5, label: '电话卡' }
   ],
-  registrationsStatus: [
+  applyStatus: [
     { value: 'PENDING', label: '未授权' },
     { value: 'DENIED', label: '已拒绝' },
-    { value: 'PASSED', label: '已通过' }
+    { value: 'PASSED', label: '已通过' },
+    { value: 'FINISHED', label: '已完成' },
+    { value: 'CANCELED', label: '已取消' }
   ]
 }
 

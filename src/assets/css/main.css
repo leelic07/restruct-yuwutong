@@ -13,6 +13,9 @@ img{
   float: right;
   margin-bottom: 10px;
 }
+.button-add + .button-add{
+  margin-right: 20px;
+}
 .breadcrumb + .el-row{
   padding: 20px 20px 0;
 }
@@ -88,4 +91,8 @@ img{
 .page-edit .submit{
   float: right;
   margin-bottom: 20px;
+}
+.separate + .separate::before{
+  content: '/ ';
+  color: #ddd;
 }

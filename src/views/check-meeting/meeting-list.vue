@@ -11,11 +11,11 @@
         value="first"
         type="card">
         <el-tab-pane
-          label="家属注册"
+          label="会见申请"
           name="first" />
       </el-tabs>
       <el-table
-        :data="registrations.contents"
+        :data="meetings.contents"
         border
         stripe
         style="width: 100%">
@@ -28,9 +28,12 @@
         <el-table-column
           prop="uuid"
           label="身份证" />
-        <el-table-column label="申请时间">
-          <template slot-scope="scope"> {{scope.row.createdAt | Date}} </template>
-        </el-table-column>
+        <el-table-column
+          label="申请时间"
+          prop="applicationDate" />
+        <el-table-column
+          label="预约时间"
+          prop="meetingTime" />
         <el-table-column
           prop="prisonerNumber"
           label="囚号" />
@@ -38,46 +41,38 @@
           prop="relationship"
           label="关系" />
         <el-table-column
-          label="申请状态"
-          class-name="orange">
-          <template slot-scope="scope"> {{scope.row.status | applyStatus}} </template>
-        </el-table-column>
+          prop="terminalNumber"
+          label="终端号" />
         <el-table-column
-          label="操作">
+          class-name="orange"
+          label="申请状态">
+          <template slot-scope="scope">
+            {{scope.row.status | applyStatus}}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.status == 'PENDING'"
               size="mini"
-              @click="handleAuthorization(scope.row)">授权
-            </el-button>
+              @click="handleAuthorization(scope.row)">授权</el-button>
+            <el-button
+              v-else-if="scope.row.status == 'PASSED'"
+              size="mini"
+              @click="handleWithdraw(scope.row)">撤回</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="registrations.total"
+      :total="meetings.total"
       @onPageChange="getDatas" />
     <el-dialog
       :visible.sync="show.authorize"
       class="authorize-dialog"
       title="授权"
       width="530px">
-      <div style="margin-bottom: 10px;">请核对申请人照片:</div>
-      <div class="img-box">
-        <img
-          :src="toAuthorize.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
-          @click="amplifyImage(toAuthorize.idCardFront)"
-          alt="身份证正面照">
-        <img
-          :src="toAuthorize.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
-          @click="amplifyImage(toAuthorize.idCardBack)"
-          alt="身份证背面照">
-        <img
-          :src="toAuthorize.avatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
-          @click="amplifyImage(toAuthorize.avatarUrl)"
-          alt="头像">
-      </div>
       <div
         v-if="!show.agree && !show.disagree"
         class="button-box">
@@ -131,49 +126,76 @@
       </div>
     </el-dialog>
     <el-dialog
-      :visible.sync="show.imgplus"
-      class="img-dialog"
-      width="440px">
-      <img :src="imgSrc">
+      :visible.sync="show.withdraw"
+      class="authorize-dialog"
+      title="撤回"
+      width="530px">
+      <el-form
+        :model="withdraw"
+        :rules="rule"
+        ref="withdrawForm">
+        <el-form-item prop="remarks">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 6 }"
+            placeholder="请输入撤回理由"
+            v-model="withdraw.remarks" />
+        </el-form-item>
+      </el-form>
+      <el-row :gutter="0">
+        <el-button
+          class="button-add"
+          size="mini"
+          type="danger"
+          @click="show.withdraw = false">取消</el-button>
+        <el-button
+          class="button-add"
+          size="mini"
+          @click="onWithdraw">确定</el-button>
+      </el-row>
     </el-dialog>
   </el-row>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+
 export default {
   data() {
     return {
       searchItems: {
         uuid: { type: 'input', label: '身份证号' },
-        prisonerNumber: { type: 'input', label: '囚犯号' },
+        prisonerNumber: { type: 'input', label: '囚号' },
         name: { type: 'input', label: '家属姓名' }
       },
-      toAuthorize: {},
       show: {
         authorize: false,
         agree: false,
         disagree: false,
-        imgplus: false
+        withdraw: false
       },
+      toAuthorize: {},
       remarks: '您的身份信息错误',
-      imgSrc: ''
+      withdraw: {},
+      rule: {
+        remarks: [{ required: true, message: '请填写撤回理由', trigger: 'blur' }]
+      }
     }
   },
   computed: {
-    ...mapState(['registrations', 'frontRemarks'])
+    ...mapState(['meetings', 'frontRemarks'])
   },
   mounted() {
     this.getDatas()
   },
   methods: {
-    ...mapActions(['getRegistrations', 'authorizeRegistrations']),
+    ...mapActions(['getMeetings', 'authorizeMeeting', 'withdrawMeeting']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
     },
     getDatas() {
-      this.getRegistrations({ ...this.filter, ...this.pagination })
+      this.getMeetings({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
@@ -182,23 +204,33 @@ export default {
       this.toAuthorize = e
       this.show.agree = false
       this.show.disagree = false
-      this.remarks = '您的身份信息错误'
       this.show.authorize = true
+    },
+    handleWithdraw(e) {
+      this.toAuthorize = e
+      this.withdraw = {}
+      this.show.withdraw = true
     },
     onAuthorization(e) {
       let params = { id: this.toAuthorize.id, status: e }
       if (e === 'DENIED') params.remarks = this.remarks
-      this.authorizeRegistrations(params).then(res => {
-        if (res) {
-          this.show.authorize = false
-          this.toAuthorize = {}
-          this.getDatas()
-        }
+      this.authorizeMeeting(params).then(res => {
+        if (!res) return
+        this.show.authorize = false
+        this.toAuthorize.status = e
       })
     },
-    amplifyImage(imgSrc) {
-      this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
-      this.show.imgplus = true
+    onWithdraw() {
+      this.$refs['withdrawForm'].validate(valid => {
+        if (valid) {
+          let params = { id: this.toAuthorize.id, status: 'DENIED', remarks: this.withdraw.remarks }
+          this.withdrawMeeting(params).then(res => {
+            if (!res) return
+            this.toAuthorize.status = 'DENIED'
+            this.show.withdraw = false
+          })
+        }
+      })
     }
   }
 }

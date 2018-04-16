@@ -1,20 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import meetings from './modules/meetings'
-import prisoners from './modules/prisoners'
-import families from './modules/families'
 import versions from './modules/versions'
 import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
 import search from './modules/search'
 import goods from './modules/goods-mangement'
 import login from './modules/login'
-import mailboxes from './modules/mailboxes'
 import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
 import loading from './modules/loading'
-import prisonDataManagement from './modules/prisoner-data-management'
 import ordersManagement from './modules/orders-management'
 import logout from './modules/logout'
 import passwordModification from './modules/password-modification'
@@ -26,6 +21,11 @@ import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
+import checkFamily from '@/views/check-family/vuex'
+import checkMailbox from '@/views/check-mailbox/vuex'
+import checkMeeting from '@/views/check-meeting/vuex'
+import checkPrisoner from '@/views/check-prisoner/vuex'
+import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
 import noPage from './modules/no-page'
 
@@ -51,21 +51,16 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
-  meetings,
-  prisoners,
-  families,
   versions,
   breadCrumb,
   search,
   accounts,
   goods,
   login,
-  mailboxes,
   familyOrders,
   jailsInformation,
   lawsInformation,
   loading,
-  prisonDataManagement,
   ordersManagement,
   logout,
   passwordModification,
@@ -83,6 +78,11 @@ merge(
   select,
   adminAdvertisement,
   adminTerminal,
+  checkFamily,
+  checkMailbox,
+  checkMeeting,
+  checkPrisonDataManagement,
+  checkPrisoner,
   checkRegistration,
   noPage
 )

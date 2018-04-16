@@ -16,7 +16,7 @@ let check = [{
   children: [{
     path: '/meeting/list',
     name: '会见申请列表',
-    component: resolve => require(['@/views/meeting/meeting'], resolve)
+    component: resolve => require(['@/views/check-meeting/meeting-list'], resolve)
   }]
 }, {
   path: '/mailbox',
@@ -25,29 +25,29 @@ let check = [{
   children: [{
     path: '/mailbox/list',
     name: '信件列表',
-    component: resolve => require(['@/views/mailbox/mailbox-list'], resolve)
+    component: resolve => require(['@/views/check-mailbox/mailbox-list'], resolve)
   }, {
     path: '/mailbox/detail/:id',
     name: '信件详情',
-    component: resolve => require(['@/views/mailbox/mailbox-detail'], resolve)
+    component: resolve => require(['@/views/check-mailbox/mailbox-detail'], resolve)
   }]
 }, {
-  path: '/prisoners',
+  path: '/prisoner',
   name: '服刑人员信息管理',
   meta: { hidden: true },
   children: [{
-    path: '/prisoners/list',
+    path: '/prisoner/list',
     name: '服刑人员列表',
-    component: resolve => require(['@/views/prisoners/prisoners'], resolve)
+    component: resolve => require(['@/views/check-prisoner/prisoner-list'], resolve)
   }]
 }, {
-  path: '/families',
+  path: '/family',
   name: '家属信息管理',
   meta: { hidden: true },
   children: [{
-    path: '/families/list',
+    path: '/family/list',
     name: '家属列表',
-    component: resolve => require(['@/views/families/families'], resolve)
+    component: resolve => require(['@/views/check-family/family-list'], resolve)
   }]
 }, {
   path: '/prison-accounts',
@@ -65,15 +65,15 @@ let check = [{
   children: [{
     path: '/prisoner-data/data-import',
     name: '罪犯数据导入',
-    component: resolve => require(['@/views/prisoner-data/data-import'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/data-import'], resolve)
   }, {
     path: '/prisoner-data/term-change',
     name: '刑期变动数据导入',
-    component: resolve => require(['@/views/prisoner-data/term-change'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/term-change'], resolve)
   }, {
     path: '/prisoner-data/reward-punishment',
     name: '罪犯奖惩数据导入',
-    component: resolve => require(['@/views/prisoner-data/reward-punishment'], resolve)
+    component: resolve => require(['@/views/check-prisoner-data/reward-punishment'], resolve)
   }]
 }]
 

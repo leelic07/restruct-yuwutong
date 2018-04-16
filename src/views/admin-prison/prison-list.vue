@@ -32,9 +32,9 @@
           label="监狱邮编" />
         <el-table-column label="所在地区">
           <template slot-scope="scope">
-            <span class="place" v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>
-            <span class="place" v-if="scope.row.citysName">{{scope.row.citysName}}</span>
-            <span class="place" v-if="scope.row.street">{{scope.row.street}}</span>
+            <span class="separate" v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>
+            <span class="separate" v-if="scope.row.citysName">{{scope.row.citysName}}</span>
+            <span class="separate" v-if="scope.row.street">{{scope.row.street}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -84,7 +84,4 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-.place + .place:before
-  content: '/ ';
-  color: #ddd;
 </style>
