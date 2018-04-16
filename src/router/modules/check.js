@@ -16,7 +16,7 @@ let check = [{
   children: [{
     path: '/meeting/list',
     name: '会见申请列表',
-    component: resolve => require(['@/views/meeting/meeting'], resolve)
+    component: resolve => require(['@/views/check-meeting/meeting-list'], resolve)
   }]
 }, {
   path: '/mailbox',

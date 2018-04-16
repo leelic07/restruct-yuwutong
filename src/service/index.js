@@ -1,6 +1,5 @@
 import versions from './modules/versions'
 import families from './modules/families'
-import meetings from './modules/meetings'
 import accounts from './modules/accounts'
 import mailboxes from './modules/mailboxes'
 import prisoners from './modules/prisoners'
@@ -28,7 +27,6 @@ import noPage from './modules/no-page'
 export default Object.assign(
   versions,
   families,
-  meetings,
   accounts,
   mailboxes,
   prisoners,
