@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import meetings from './modules/meetings'
 import prisoners from './modules/prisoners'
 import families from './modules/families'
-import terminals from './modules/terminals'
 import versions from './modules/versions'
 import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
@@ -26,7 +25,9 @@ import uploadImg from './modules/upload-img'
 import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
+import adminTerminal from '@/views/admin-terminal/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
+import noPage from './modules/no-page'
 
 import adminFeedback from './modules/admin-feedback'
 import adminLog from './modules/admin-log'
@@ -53,7 +54,6 @@ merge(
   meetings,
   prisoners,
   families,
-  terminals,
   versions,
   breadCrumb,
   search,
@@ -82,7 +82,9 @@ merge(
   filter,
   select,
   adminAdvertisement,
-  checkRegistration
+  adminTerminal,
+  checkRegistration,
+  noPage
 )
 export default new Vuex.Store({
   actions,

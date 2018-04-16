@@ -1,5 +1,7 @@
 <template>
-  <el-row :gutter="0">
+  <el-row
+    class="page-edit"
+    :gutter="0">
     <el-col
       :span="13"
       :offset="5">
@@ -48,6 +50,7 @@
           prop="provinceId">
           <el-select
             v-model="advertisement.provinceId"
+            filterable
             :loading="gettingProvince"
             placeholder="请选择省份">
             <el-option
@@ -70,10 +73,12 @@
           prop="imageUrl">
           <m-upload-img @success="onSuccess" />
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">新增</el-button>
-        </el-form-item>
       </el-form>
+      <el-button
+        class="submit"
+        type="primary"
+        @click="onSubmit"
+        size="small">新增</el-button>
     </el-col>
   </el-row>
 </template>

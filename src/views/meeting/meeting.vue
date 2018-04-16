@@ -58,7 +58,7 @@
               <p>请选择驳回原因</p>
             </el-col>
             <el-select v-model="authorization.remarks">
-              <el-option v-for="remark,index in remarks" :value="remark" :label="remark" :key="index">
+              <el-option v-for="remark,index in frontRemarks" :value="remark" :label="remark" :key="index">
               </el-option>
             </el-select>
           </el-col>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
 import SelectAndSearch from '@/components/Select-And-Search/Select-And-Search'
 import Pagination from '@/components/Pagination/Pagination'
 
@@ -139,9 +139,9 @@ export default {
       meetings: 'meetings', // 获取家属会见的数据列表
       meetingsTotal: 'meetingsTotal', // 获取家属会见的总记录数
       authMeetingsResult: 'authMeetingsResult', // 获取家属会见的授权结果
-      remarks: 'remarks', // 获取家属会见拒绝理由
       withDrawMeetingsResult: 'withDrawMeetingsResult' // 撤回家属会见的结果
-    })
+    }),
+    ...mapState(['frontRemarks'])
   },
   methods: {
     // 映射mutations方法

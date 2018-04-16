@@ -1,11 +1,13 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  terminals: { contents: [], total: 0 },
+  terminal: {}
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

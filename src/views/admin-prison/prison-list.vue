@@ -29,7 +29,7 @@
           label="监狱名称" />
         <el-table-column
           prop="zipcode"
-          label="监狱编号" />
+          label="监狱邮编" />
         <el-table-column label="所在地区">
           <template slot-scope="scope">
             <span class="place" v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>

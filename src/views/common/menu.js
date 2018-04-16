@@ -15,7 +15,7 @@ let adminMenu = [{
     title: '广告管理',
     icon: 'iconfont icon-folder'
   }, {
-    path: '/terminals/list',
+    path: '/terminal/list',
     title: '终端管理',
     icon: 'iconfont icon-folder'
   }, {

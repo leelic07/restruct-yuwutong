@@ -60,8 +60,8 @@ export default {
     return {
       tabNum: 'first',
       searchItems: {
-        endTime: { type: 'datetime', label: '结束时间' },
-        startTime: { type: 'datetime', label: '开始时间' }
+        // endTime: { type: 'datetime', label: '结束时间' },
+        time: { type: 'datetimerange', start: 'startTime', end: 'endTime' }
       }
     }
   },

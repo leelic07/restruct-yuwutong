@@ -1,5 +1,7 @@
 <template>
-  <el-row :gutter="0">
+  <el-row
+    class="page-edit"
+    :gutter="0">
     <el-col
       :span="13"
       :offset="5">
@@ -49,6 +51,7 @@
           <el-select
             v-model="advertisement.provinceId"
             :loading="gettingProvince"
+            filterable
             placeholder="请选择省份">
             <el-option
               v-for="province in provincesAll"
@@ -72,10 +75,12 @@
             :url="advertisement.imageUrl"
             @success="onSuccess" />
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" size="small">提交</el-button>
-        </el-form-item>
       </el-form>
+      <el-button
+        class="submit"
+        type="primary"
+        size="small"
+        @click="onSubmit">更新</el-button>
     </el-col>
   </el-row>
 </template>
