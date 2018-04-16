@@ -60,7 +60,7 @@ let adminMenu = [{
     title: '服刑人员信息管理',
     icon: 'iconfont icon-folder'
   }, {
-    path: '/families/list',
+    path: '/family/list',
     title: '家属信息管理',
     icon: 'iconfont icon-folder'
   // }, {

@@ -36,5 +36,9 @@ export default {
   // 服刑人员信息管理-列表
   getPrisoners: params => {
     return service.get('/prisoners/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 家属信息管理-列表
+  getFamilies: params => {
+    return service.get('/families/page', params).then(res => res.code === 200 && res.data)
   }
 }

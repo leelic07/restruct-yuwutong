@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import families from './modules/families'
 import versions from './modules/versions'
 import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
@@ -23,6 +22,7 @@ import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
+import checkFamily from '@/views/check-family/vuex'
 import checkMailbox from '@/views/check-mailbox/vuex'
 import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
@@ -51,7 +51,6 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
-  families,
   versions,
   breadCrumb,
   search,
@@ -80,6 +79,7 @@ merge(
   select,
   adminAdvertisement,
   adminTerminal,
+  checkFamily,
   checkMailbox,
   checkMeeting,
   checkPrisoner,
