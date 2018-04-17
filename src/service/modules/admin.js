@@ -1,9 +1,6 @@
 import * as service from '../base/service'
 
 export default {
-  // 意见反馈列表
-  getFeedbacks: pagination =>
-    service.get('/feedbacks/page', pagination).then(res => res).catch(err => err),
   // 所有监狱
   getJails: () =>
     service.get('/jails/all').then(res => res).catch(err => err),
@@ -37,6 +34,10 @@ export default {
   // 监狱管理-新增
   addPrison: params => {
     return service.postObj('/jails/addJails', params).then(res => res.code === 200)
+  },
+  // 意见反馈-列表
+  getFeedbacks: params => {
+    return service.get('/feedbacks/page', params).then(res => res.code === 200 && res.data)
   },
   // 广告管理-列表
   getAdvertisements: params => {

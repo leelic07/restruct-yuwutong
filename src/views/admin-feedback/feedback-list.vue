@@ -13,7 +13,7 @@
           name="first" />
       </el-tabs>
       <el-table
-        :data="feedbacks"
+        :data="feedbacks.contents"
         border
         stripe
         style="width: 100%">
@@ -40,8 +40,8 @@
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="feedbacksTotal"
-      @onPageChange="currentChange" />
+      :total="feedbacks.total"
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -50,7 +50,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tabNum: 'first',
       searchItems: {
         uuid: { type: 'input', label: '身份证号' },
         phone: { type: 'input', label: '手机号' },
@@ -59,18 +58,18 @@ export default {
     }
   },
   computed: {
-    ...mapState(['feedbacks', 'feedbacksTotal'])
+    ...mapState(['feedbacks'])
   },
   mounted() {
-    this.getFeedbacks(this.pagination)
+    this.getDatas()
   },
   methods: {
     ...mapActions(['getFeedbacks']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
     },
-    currentChange() {
+    getDatas() {
       this.getFeedbacks({ ...this.filter, ...this.pagination })
     },
     onSearch() {
