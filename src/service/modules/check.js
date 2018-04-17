@@ -9,7 +9,7 @@ export default {
   authorizeRegistrations: params => {
     return service.post('/registrations/authorize', params).then(res => res.code === 200)
   },
-  // 获取家属会见信息列表
+  // 家属会见申请-列表
   getMeetings: params => {
     return service.get('/meetings/page', params).then(res => res.code === 200 && res.data)
   },

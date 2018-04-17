@@ -4,26 +4,31 @@ export default {
   // 意见反馈列表
   getFeedbacks: pagination =>
     service.get('/feedbacks/page', pagination).then(res => res).catch(err => err),
-  // 监狱用户列表
-  getPrisonUsers: pagination =>
-    service.get('/users/page', pagination).then(res => res).catch(err => err),
-  // 监狱用户详情
-  getPrisonUser: id =>
-    service.get(`/users/to_edit?id=${ id }`).then(res => res).catch(err => err),
-  // 编辑监狱用户
-  editPrisonUser: params =>
-    service.post('/users/edit', params).then(res => res).catch(err => err),
   // 所有监狱
   getJails: () =>
     service.get('/jails/all').then(res => res).catch(err => err),
-  addPrisonUser: (prisonUser) => {
-    return service.post('/users/add', prisonUser).then(res => res).catch(err => err)
-  },
-  deletePrisonUser: params => {
-    service.post('/users/delete', params).then(res => res).catch(err => err)
-  },
   getLogList: params => {
     return service.get('/app_logs/page', params).then(res => res)
+  },
+  // 监狱用户管理-列表
+  getPrisonUsers: params => {
+    return service.get('/users/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 监狱用户管理-删除
+  deletePrisonUser: params => {
+    return service.post('/users/delete', params).then(res => res.code === 200)
+  },
+  // 监狱用户管理-新增
+  addPrisonUser: params => {
+    return service.post('/users/add', params).then(res => res.code === 200)
+  },
+  // 监狱用户管理-详情
+  getPrisonUserDetail: params => {
+    return service.get(`/users/to_edit?id=${ params }`).then(res => res.code === 200 && res.data)
+  },
+  // 监狱用户管理-编辑
+  updatePrisonUser: params => {
+    return service.post('/users/edit', params).then(res => res.code === 200)
   },
   // 监狱管理-列表
   getPrisons: params => {
@@ -53,12 +58,12 @@ export default {
   deleteAdvertisement: params => {
     return service.post('/advertisements/deleteAdvertisement', params).then(res => res.code === 200)
   },
-  // 广告管理-广告详情
-  getAdvertismentsDetail: params => {
+  // 广告管理-详情
+  getAdvertisementsDetail: params => {
     return service.get('/advertisements/getAdvertisementsDetail', params).then(res => res.code === 200 && res.data)
   },
   // 广告管理-编辑
-  updateAdvertisments: params => {
+  updateAdvertisements: params => {
     return service.postObj('/advertisements/updateAdvertisements', params).then(res => res.code === 200)
   },
   // 终端管理-新增

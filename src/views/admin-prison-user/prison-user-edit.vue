@@ -1,68 +1,60 @@
 <template>
-  <el-row class="prison-user">
+  <el-row
+    class="page-edit"
+    :gutter="0">
     <el-col
       :span="9"
       :offset="7">
-      <el-row :gutter="0"><h3>编辑信息</h3></el-row>
-      <el-row :gutter="0">
-        <el-form
-          :model="prisonUser"
-          :rules="rule"
-          ref="prisonUser"
-          label-position="left"
-          label-width="100px">
-          <el-form-item
-            label="监狱名称"
-            prop="jailObj">
-            <el-select
-              v-model="prisonUser.jailObj"
-              placeholder="请填写监狱名称"
-              value-key="id"
-              :loading="gettingJails"
-              clearable>
-              <el-option
-                v-for="item in jails"
-                :key="item.id"
-                :label="item.title"
-                :value="item">
-              </el-option>
-            </el-select>
-            <!-- <el-input
-              v-model="prisonUser.jailId"
-              placeholder="请填写监狱名称"></el-input> -->
-          </el-form-item>
-          <el-form-item
-            label="用户名"
-            prop="username">
-            <el-input
-              v-model="prisonUser.username"
-              placeholder="请填写用户名"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="角色"
-            prop="role">
-            <el-select
-              v-model="prisonUser.role"
-              placeholder="请选择角色"
-              clearable>
-              <el-option
-                v-for="item in $store.state.role"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </el-row>
-      <el-row :gutter="0">
-        <el-col :span="24">
-          <el-button
-            type="primary"
-            size="small"
-            @click="onSubmit">更新</el-button>
-        </el-col>
-      </el-row>
+      <el-form
+        :model="prisonUser"
+        :rules="rules"
+        ref="prisonUser"
+        label-position="top">
+        <el-form-item
+          label="监狱名称"
+          prop="jailId">
+          <el-select
+            v-model="prisonUser.jailId"
+            placeholder="请选择监狱名称"
+            filterable
+            :loading="gettingJails"
+            clearable>
+            <el-option
+              v-for="item in prisonAll"
+              :key="item.id"
+              :label="item.title"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item
+          label="用户名"
+          prop="username">
+          <el-input
+            v-model="prisonUser.username"
+            placeholder="请填写用户名"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="角色"
+          prop="role">
+          <el-select
+            v-model="prisonUser.role"
+            placeholder="请选择角色"
+            clearable>
+            <el-option
+              v-for="item in $store.state.role"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <el-button
+        class="submit"
+        type="primary"
+        @click="onSubmit"
+        size="small">更新</el-button>
     </el-col>
   </el-row>
 </template>
@@ -73,58 +65,39 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      rule: {
-        jailObj: [{ required: true, message: '请填写监狱名称' }],
+      rules: {
+        jailId: [{ required: true, message: '请选择监狱名称' }],
         username: [{ required: true, message: '请填写用户名' }],
         role: [{ required: true, message: '请选择角色' }]
       },
       gettingJails: true
     }
   },
-  watch: {},
   computed: {
-    ...mapState({
-      jails: state => state.jails,
-      prisonUser: state => state.prisonUser
-    })
+    ...mapState(['prisonAll', 'prisonUser'])
   },
   methods: {
-    ...mapActions(['getPrisonUser', 'editPrisonUser', 'getJails']),
+    ...mapActions(['updatePrisonUser', 'getPrisonAll', 'getPrisonUserDetail']),
     onSubmit() {
       this.$refs.prisonUser.validate(valid => {
-        let prisonUser = Object.assign({}, this.prisonUser, { jail: this.prisonUser.jailObj.title, jailId: this.prisonUser.jailObj.id })
-        delete prisonUser.jailObj
-        this.editPrisonUser(prisonUser).then(res => {
-          if (!res) return
-          this.$router.push('/prison-user/list')
-        })
+        if (valid) {
+          this.updatePrisonUser(this.prisonUser).then(res => {
+            if (!res) return
+            this.$router.push('/prison-user/list')
+          })
+        }
       })
     }
   },
   mounted() {
-    this.getJails().then(res => {
-      this.getPrisonUser(this.$route.params.id).then(res => {
-        this.prisonUser.jailObj = this.jails.find(item => {
-          return parseInt(item.id) === this.prisonUser.jailId
-        })
-        this.gettingJails = false
-      })
+    this.getPrisonAll().then(res => {
+      this.gettingJails = false
     })
+    this.getPrisonUserDetail(this.$route.params.id)
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  .prison-user
-    padding-top: 20px;
-    > .el-col
-      margin-bottom: 25px
-      > .el-row
-        &:first-child
-          h3
-            float: left
-            margin: 0 0 35px 30%
-        &:last-child
-          .el-button
-            float: right
+
 </style>

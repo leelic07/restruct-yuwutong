@@ -6,14 +6,13 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        v-model="tabNum"
+        value="first"
         type="card">
         <el-tab-pane
           label="意见反馈"
           name="first" />
       </el-tabs>
       <el-table
-        v-if="tabNum === 'first'"
         :data="feedbacks"
         border
         stripe

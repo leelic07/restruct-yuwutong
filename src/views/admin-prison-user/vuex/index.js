@@ -1,6 +1,10 @@
 import actions from './actions'
 import mutations from './mutations'
-import state from './state'
+
+let state = {
+  prisonUsers: { contents: [], total: 0 },
+  prisonUser: {}
+}
 
 export default {
   actions,
