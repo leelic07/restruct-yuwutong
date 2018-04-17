@@ -69,35 +69,33 @@ export default {
       default: 1
     }
   },
-  computed: {
-    fileList() {
-      if (this.url) return [{ url: `${ this.url }?token=${ this.headers.Authorization }` }]
-    }
-  },
   data() {
     return {
       imageUrl: '',
       dialogVisible: false,
-      uploadList: {}
+      uploadList: 0,
+      fileList: []
     }
   },
   watch: {
     url(val) {
       if (this.limit === 1 && val) {
+        this.fileList = [{ url: `${ val }?token=${ this.headers.Authorization }` }]
+        this.uploadList = 1
+      }
+    },
+    uploadList(val) {
+      if (this.limit <= val) {
         this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
       }
-      else if (this.limit === 1 && !val) {
+      else if (this.limit > val) {
         this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'inline-block'
       }
     }
   },
-  mounted() {
-    if (this.limit === 1 && this.url) {
-      this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
-    }
-  },
   methods: {
-    handleSuccess(res, file) {
+    handleSuccess(res, file, fileList) {
+      this.uploadList++
       switch (res.code) {
         case 200:
           this.$message.success('图片上传成功')
@@ -132,6 +130,7 @@ export default {
       console.log(e)
     },
     handleRemove(file, fileList) {
+      this.uploadList--
       this.$emit('success', '')
     }
   }

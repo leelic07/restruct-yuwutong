@@ -22,11 +22,16 @@ export default {
   deletePrisonUser: params => {
     service.post('/users/delete', params).then(res => res).catch(err => err)
   },
-  getPrisonList: params => {
-    return service.get('/jails/page', params).then(res => res)
-  },
   getLogList: params => {
     return service.get('/app_logs/page', params).then(res => res)
+  },
+  // 监狱管理-列表
+  getPrisons: params => {
+    return service.get('/jails/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 监狱管理-新增
+  addPrison: params => {
+    return service.postObj('/jails/addJails', params).then(res => res.code === 200)
   },
   // 广告管理-列表
   getAdvertisements: params => {
