@@ -71,12 +71,12 @@
             placeholder="请填写街道名称" />
         </el-form-item>
         <el-form-item
-          label="监狱邮编"
+          label="监狱编号"
           prop="zipcode">
           <el-input
             v-model="prison.zipcode"
             auto-complete="postal-code"
-            placeholder="请填写监狱邮编" />
+            placeholder="请填写监狱编号" />
         </el-form-item>
         <el-form-item
           label="监狱图片"
@@ -114,7 +114,7 @@
           provincesId: [{ required: true, message: '请输入监狱所在省' }],
           citysId: [{ required: true, message: '请输入监狱所在市' }],
           settings: [{ required: true, message: '请输入监狱配置' }],
-          // title: [{ required: true, message: '请输入监狱名称' }],
+          zipcode: [{ required: true, message: '请输入监狱编号' }],
           imageUrl: [{ required: true, message: '请上传监狱图片' }]
         },
         prison: {

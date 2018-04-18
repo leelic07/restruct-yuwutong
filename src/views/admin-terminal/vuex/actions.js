@@ -7,8 +7,8 @@ export default {
   getTerminals: ({ commit }, params) => {
     http.getTerminals(params).then(res => res && commit('getTerminals', res))
   },
-  getTerminalsDetail: ({ commit }, params) => {
-    http.getTerminalsDetail(params).then(res => res && commit('getTerminalsDetail', res))
+  getTerminalDetail: ({ commit }, params) => {
+    http.getTerminalDetail(params).then(res => res && commit('getTerminalDetail', res))
   },
   updateTerminal: ({ commit }, params) => {
     return http.updateTerminal(params).then(res => res)

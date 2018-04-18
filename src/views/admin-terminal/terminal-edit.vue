@@ -78,13 +78,13 @@ export default {
     ...mapState(['prisonAll', 'terminal'])
   },
   mounted() {
-    this.getTerminalsDetail({ id: this.$route.params.id })
+    this.getTerminalDetail({ id: this.$route.params.id })
     this.getPrisonAll().then(() => {
       this.gettingPrison = false
     })
   },
   methods: {
-    ...mapActions(['getTerminalsDetail', 'updateTerminal', 'getPrisonAll']),
+    ...mapActions(['getTerminalDetail', 'updateTerminal', 'getPrisonAll']),
     onSubmit() {
       this.$refs.terminal.validate(valid => {
         if (valid) {

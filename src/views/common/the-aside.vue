@@ -73,5 +73,11 @@ export default {
   #main-sidebar
     &.main-sidebar
       a
-        font-size: 14px
+        font-size: 14px;
+        line-height: 22px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+    .treeview-menu>li>a
+      padding-left: 12px;
 </style>

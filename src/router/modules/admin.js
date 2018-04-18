@@ -74,13 +74,13 @@ let admin = [{
     component: resolve => require(['@/views/admin-terminal/terminal-edit'], resolve)
   }]
 }, {
-  path: '/versions',
+  path: '/version',
   name: '版本管理',
   meta: { hidden: true },
   children: [{
-    path: '/versions/list',
+    path: '/version/list',
     name: '版本列表',
-    component: resolve => require(['@/views/versions/versions'], resolve)
+    component: resolve => require(['@/views/admin-version/version-list'], resolve)
   }]
 }, {
   path: '/log',

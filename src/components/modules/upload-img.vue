@@ -93,6 +93,12 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.limit === 1 && this.url) {
+      this.fileList = [{ url: `${ this.url }?token=${ this.headers.Authorization }` }]
+      this.uploadList = 1
+    }
+  },
   methods: {
     handleSuccess(res, file, fileList) {
       this.uploadList++

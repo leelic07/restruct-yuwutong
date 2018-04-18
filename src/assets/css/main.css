@@ -5,6 +5,13 @@ img{
   vertical-align: middle;
   border: 0;
 }
+.el-submenu__icon-arrow{
+  margin-top: -5px;
+}
+.sidebar-menu .iconfont:not(.icon-circle-o){
+  font-size: 22px;
+  margin-right: 5px;
+}
 .m-pagination .el-pagination{
   margin: 20px 0;
   float: right;

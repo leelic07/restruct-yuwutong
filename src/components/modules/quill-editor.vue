@@ -53,7 +53,7 @@
                 [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
                 [{ 'font': [] }],
                 [{ 'align': [] }],
-                ['image', 'link'],
+                ['image'], ['link'],
                 ['clean'] // remove formatting button
               ],
               handlers: {
@@ -99,6 +99,8 @@
 
 <style type="text/stylus" lang="stylus">
   #quill-editor
-     .ql-editor
+    .ql-editor
       min-height: 145px
+    .ql-snow .ql-color-picker .ql-picker-label svg, .ql-snow .ql-icon-picker .ql-picker-label svg, .ql-snow .ql-picker-label::before
+      float: left;
 </style>

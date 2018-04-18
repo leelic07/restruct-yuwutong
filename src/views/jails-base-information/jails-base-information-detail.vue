@@ -2,19 +2,19 @@
   <el-row id="jail-information-management" :gutter="0">
     <el-row :gutter="0">
       <el-col :span="12">
-        <img :src="jailsInformation.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
+        <img :src="jailInformation.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
         <!--<img src="../../assets/images/default.jpg" alt="">-->
       </el-col>
       <el-col :span="12">
         <el-col :span="24">
-          <h3>{{jailsInformation.title}}</h3>
+          <h3>{{jailInformation.title}}</h3>
         </el-col>
         <el-col :span="24">
           <el-col :span="12">
             <p>监狱所在省</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jailsInformation.provincesName}}</p>
+            <p>{{jailInformation.provincesName}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -23,7 +23,7 @@
             <p>监狱所在市</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jailsInformation.citysName}}</p>
+            <p>{{jailInformation.citysName}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -32,7 +32,7 @@
             <p>监狱所在行政区</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jailsInformation.district}}</p>
+            <p>{{jailInformation.district}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
@@ -41,16 +41,16 @@
             <p>监狱所在街道</p>
           </el-col>
           <el-col :span="12">
-            <p>{{jailsInformation.street}}</p>
+            <p>{{jailInformation.street}}</p>
           </el-col>
         </el-col>
         <el-col :span="24" class="line"></el-col>
         <el-col :span="24" class="description">
           <p>监狱简介</p>
-          <p v-html="jailsInformation.description"></p>
+          <p v-html="jailInformation.description"></p>
         </el-col>
         <el-col :span="24">
-          <el-button type="primary" size="mini" @click="editJails(jailsInformation.id)">编辑</el-button>
+          <el-button type="primary" size="mini" @click="editJails(jailInformation.id)">编辑</el-button>
         </el-col>
       </el-col>
     </el-row>
@@ -66,12 +66,10 @@
       }
     },
     computed: {
-      ...mapState(['jailsInformation'])
+      ...mapState(['jailInformation'])
     },
     methods: {
-      ...mapActions({
-        getJailsInformation: 'getJailsInformation' // 获取监狱基本信息
-      }),
+      ...mapActions(['getJailInformation']),
       // 编辑监狱基本信息
       editJails(id) {
         this.$router.push({
@@ -86,12 +84,12 @@
       }
     },
     mounted() {
-      this.getJailsInformation()
+      this.getJailInformation()
     }
   }
 </script>
 
-<style type="text/stylus" lang="stylus" scoped>
+<style type="text/stylus" lang="stylus">
   #jail-information-management
     > .el-row
       > .el-col-12
@@ -116,7 +114,7 @@
       .el-col.line
         border-bottom: 1px solid #F3F3F3
         margin-bottom: 10px
-      & /deep/ .el-col-24
+      .el-col-24
         &.description
           img
             max-width: 100%

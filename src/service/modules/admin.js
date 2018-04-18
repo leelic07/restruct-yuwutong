@@ -60,11 +60,11 @@ export default {
     return service.post('/advertisements/deleteAdvertisement', params).then(res => res.code === 200)
   },
   // 广告管理-详情
-  getAdvertisementsDetail: params => {
+  getAdvertisementDetail: params => {
     return service.get('/advertisements/getAdvertisementsDetail', params).then(res => res.code === 200 && res.data)
   },
   // 广告管理-编辑
-  updateAdvertisements: params => {
+  updateAdvertisement: params => {
     return service.postObj('/advertisements/updateAdvertisements', params).then(res => res.code === 200)
   },
   // 终端管理-新增
@@ -76,11 +76,19 @@ export default {
     return service.get('/terminals/page', params).then(res => res.code === 200 && res.data)
   },
   // 终端管理-详情
-  getTerminalsDetail: params => {
+  getTerminalDetail: params => {
     return service.get('/terminals/getTerminalsDetail', params).then(res => res.code === 200 && res.data)
   },
   // 终端管理-编辑
   updateTerminal: params => {
     return service.post('/terminals/edit', params).then(res => res.code === 200)
+  },
+  // 版本管理-列表
+  getVersions: params => {
+    return service.get('/versions/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 版本管理-编辑
+  updateVersion: params => {
+    return service.post('/versions/update', params).then(res => res.code === 200)
   }
 }
