@@ -2,7 +2,7 @@ export default {
   // 罪犯数据模板上传成功后将罪犯数据模板导入到服务端
   importPrisoner: (state, prisonerDataResult) => {
     state.prisonerDataResult = prisonerDataResult.data
-    state.prisonerData = prisonerDataResult.data.prisonerData
+    state.prisonerData = prisonerDataResult.data.prisoners
   },
 
   // 刑期变动模板上传成功后将刑期变动模板导入到服务端

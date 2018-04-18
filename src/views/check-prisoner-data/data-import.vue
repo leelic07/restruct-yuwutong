@@ -16,7 +16,7 @@
     </el-row>
     <el-row :gutter="0">
       <el-col :span="6" :offset="2">
-        <el-upload class="upload-demo" ref="upload" :action="_$agency + '/prisoners/upload'" :before-upload="beforeUpload" :file-list="fileList" :auto-upload="false" :limit="1" accept=".xls">
+        <el-upload class="upload-demo" ref="upload" :action="_$baseURL + '/prisoners/upload'" :before-upload="beforeUpload" :file-list="fileList" :auto-upload="false" :limit="1" accept=".xls">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
           <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
           <div slot="tip" class="el-upload__tip">只能上传.xls文件</div>
@@ -94,6 +94,7 @@ export default {
     },
     beforeUpload(file) {
       this.uploadFile(file)
+      return false
     },
     // 解析文件成功后执行的方法
     alertInformation(information) {
