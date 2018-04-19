@@ -1,5 +1,4 @@
 import versions from './modules/versions'
-import families from './modules/families'
 import accounts from './modules/accounts'
 import search from './modules/search'
 import goods from './modules/goods-management'
@@ -23,7 +22,6 @@ import noPage from './modules/no-page'
 
 export default Object.assign(
   versions,
-  families,
   accounts,
   search,
   goods,

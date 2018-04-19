@@ -12,37 +12,47 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        v-model="tabNum"
+        value="first"
         type="card">
         <el-tab-pane
           label="监狱"
           name="first" />
       </el-tabs>
       <el-table
-        v-if="tabNum === 'first'"
-        :data="prisonList"
+        :data="prisons.contents"
         border
         stripe
         style="width: 100%">
         <el-table-column
           prop="title"
           label="监狱名称" />
+        <el-table-column label="监狱图片">
+          <template slot-scope="scope">
+            <img :src="scope.row.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
+          </template>
+        </el-table-column>
         <el-table-column
           prop="zipcode"
           label="监狱邮编" />
         <el-table-column label="所在地区">
           <template slot-scope="scope">
-            <span class="separate" v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>
-            <span class="separate" v-if="scope.row.citysName">{{scope.row.citysName}}</span>
-            <span class="separate" v-if="scope.row.street">{{scope.row.street}}</span>
+            <span
+              class="separate"
+              v-if="scope.row.provincesName">{{scope.row.provincesName}}</span>
+            <span
+              class="separate"
+              v-if="scope.row.citysName">{{scope.row.citysName}}</span>
+            <span
+              class="separate"
+              v-if="scope.row.street">{{scope.row.street}}</span>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="prisonTotal"
-      @onPageChange="currentChange" />
+      :total="prisons.total"
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -52,26 +62,25 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tabNum: 'first',
       searchItems: {
         title: { type: 'input', label: '监狱名称' }
       }
     }
   },
   computed: {
-    ...mapState(['prisonList', 'prisonTotal'])
+    ...mapState(['prisons'])
   },
   mounted() {
-    this.getPrisonList(this.pagination)
+    this.getDatas()
   },
   methods: {
-    ...mapActions(['getPrisonList']),
-    currentChange() {
-      this.getPrisonList({ ...this.filter, ...this.pagination })
-    },
+    ...mapActions(['getPrisons']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
+    },
+    getDatas() {
+      this.getPrisons({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)

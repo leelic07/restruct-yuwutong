@@ -9,7 +9,7 @@ export default {
   authorizeRegistrations: params => {
     return service.post('/registrations/authorize', params).then(res => res.code === 200)
   },
-  // 获取家属会见信息列表
+  // 家属会见申请-列表
   getMeetings: params => {
     return service.get('/meetings/page', params).then(res => res.code === 200 && res.data)
   },
@@ -43,14 +43,14 @@ export default {
   },
   // 数据管理-罪犯数据导入-上传到服务器
   importPrisoner: params => {
-    return service.get('/prisoners/processing', params).then(res => res)
+    return service.get('/prisoners/processing', params).then(res => res.code === 200 && res.data)
   },
   // 数据管理-刑期变动数据导入-上传到服务器
   importPrisonTerm: params => {
-    return service.get('/prison_terms/processing', params).then(res => res)
+    return service.get('/prison_terms/processing', params).then(res => res.code === 200 && res.data)
   },
   // 数据管理-罪犯奖惩数据导入-上传到服务器
   importPrisonerRewardPunishment: params => {
-    return service.get('/prisoner_reward_punishments/processing', params).then(res => res)
+    return service.get('/prisoner_reward_punishments/processing', params).then(res => res.code === 200 && res.data)
   }
 }

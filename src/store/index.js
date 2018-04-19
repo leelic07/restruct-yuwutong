@@ -20,6 +20,9 @@ import uploadImg from './modules/upload-img'
 import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
+import adminFeedback from '@/views/admin-feedback/vuex'
+import adminPrison from '@/views/admin-prison/vuex'
+import adminPrisonUser from '@/views/admin-prison-user/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
 import checkFamily from '@/views/check-family/vuex'
 import checkMailbox from '@/views/check-mailbox/vuex'
@@ -29,10 +32,7 @@ import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
 import noPage from './modules/no-page'
 
-import adminFeedback from './modules/admin-feedback'
 import adminLog from './modules/admin-log'
-import adminPrisonUser from './modules/admin-prison-user'
-import adminPrisonManagement from './modules/admin-prison-management'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 import select from './modules/select'
@@ -72,11 +72,11 @@ merge(
   breadCrumbs,
   adminFeedback,
   adminPrisonUser,
-  adminPrisonManagement,
   infoPrisonAffairsPublic,
   filter,
   select,
   adminAdvertisement,
+  adminPrison,
   adminTerminal,
   checkFamily,
   checkMailbox,

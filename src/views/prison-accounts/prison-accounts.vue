@@ -5,7 +5,7 @@
                        @searchingChange="searchingChange"></select-and-search>
     <!--标签页表格-->
     <el-col :span="24">
-      <el-tabs v-model="tabNum" type="card">
+      <el-tabs value="first" type="card">
         <el-tab-pane label="囚犯账户" name="first">
           <el-table
             :data="accounts"

@@ -8,9 +8,5 @@ export default {
   // 编辑监狱信息
   editJails: ({ commit }, regs) => {
     return http.editJails(regs).then(res => res.code === 200)
-  },
-  // 新增监狱基本信息
-  addJails: ({ commit }, regs) => {
-    return http.addJails(regs).then(res => res.code === 200)
   }
 }

@@ -1,5 +1,7 @@
 <template>
-  <el-row class="row-container" :gutter="0">
+  <el-row
+    class="row-container"
+    :gutter="0">
     <el-button
       size="small"
       type="primary"
@@ -12,15 +14,14 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        v-model="tabNum"
+        value="first"
         type="card">
         <el-tab-pane
           label="监狱用户"
           name="first" />
       </el-tabs>
       <el-table
-        v-if="tabNum === 'first'"
-        :data="prisonUsers"
+        :data="prisonUsers.contents"
         border
         stripe
         style="width: 100%">
@@ -48,8 +49,8 @@
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="prisonUsersTotal"
-      @onPageChange="currentChange" />
+      :total="prisonUsers.total"
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -60,7 +61,6 @@ export default {
   data() {
     let optionObj = require('@/filters/modules/switches')
     return {
-      tabNum: 'first',
       searchItems: {
         jail: { type: 'input', label: '监狱名称' },
         username: { type: 'input', label: '用户名' },
@@ -69,22 +69,19 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      prisonUsers: 'prisonUsers', // 获取家属注册的注册信息列表
-      prisonUsersTotal: 'prisonUsersTotal' // 获取家属注册时的总记录数
-    })
+    ...mapState(['prisonUsers'])
   },
   mounted() {
-    this.getPrisonUsers(this.pagination)
+    this.getDatas()
   },
   methods: {
     ...mapActions(['getPrisonUsers', 'deletePrisonUser']),
-    currentChange() {
-      this.getPrisonUsers({ ...this.filter, ...this.pagination })
-    },
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
+    },
+    getDatas() {
+      this.getPrisonUsers({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
@@ -99,7 +96,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.deletePrisonUser({ id: e }).then(() => {
-          this.currentChange()
+          this.getDatas()
         })
       })
     },
