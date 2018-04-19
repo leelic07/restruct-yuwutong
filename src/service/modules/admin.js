@@ -90,5 +90,13 @@ export default {
   // 版本管理-编辑
   updateVersion: params => {
     return service.post('/versions/update', params).then(res => res.code === 200)
+  },
+  // 白名单管理-列表
+  getWhitemembers: params => {
+    return service.get('/whitenumbers/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 白名单管理-检验手机号
+  checkPhoneWhitemember: params => {
+    return service.get(`/whitenumbers/checkPhone?phone=${ params }`).then(res => res.code === 200)
   }
 }

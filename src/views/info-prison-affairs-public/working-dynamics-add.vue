@@ -9,7 +9,7 @@
           <m-quill-editor @editorChange="editorChange"></m-quill-editor>
         </el-form-item>
         <el-form-item label="新闻图片">
-          <m-upload-img @success="onSuccess"></m-upload-img>
+          <m-upload-img v-model="news.imageUrl" @success="onSuccess"></m-upload-img>
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="news.isFocus">是否设为焦点新闻</el-checkbox>
