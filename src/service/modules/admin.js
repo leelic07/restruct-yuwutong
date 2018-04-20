@@ -98,5 +98,13 @@ export default {
   // 白名单管理-检验手机号
   checkPhoneWhitemember: params => {
     return service.get(`/whitenumbers/checkPhone?phone=${ params }`).then(res => res.code === 200)
+  },
+  // 白名单管理-新增
+  addWhitemember: params => {
+    return service.post('/whitenumbers/insert', params).then(res => res.code === 200)
+  },
+  // 白名单管理-删除
+  deleteWhitemember: params => {
+    return service.post('/whitenumbers/delete', params).then(res => res.code === 200)
   }
 }

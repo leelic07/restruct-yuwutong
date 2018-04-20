@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -37,12 +37,12 @@ export default {
         prison: ''
       },
       // ruleForm2: {
-      //   password: '123456',
+      //   password: '3m4c3n9J',
       //   username: 'admin',
       //   prison: '9999'
       // },
       // ruleForm2: {
-      //   password: '123456',
+      //   password: '3m4c3n9J',
       //   username: '4501_xx',
       //   prison: '4501'
       // },
@@ -55,34 +55,21 @@ export default {
       }
     }
   },
-  watch: {
-    users(newValue) {
-      if (newValue.hasOwnProperty('id')) {
-        this.$router.replace({
-          path: '/dashboard'
-        })
-      }
-    }
-  },
-  computed: {
-    ...mapGetters({
-      users: 'users' // 获取用户登录时的信息
-    })
-  },
   mounted() {
-    if (sessionStorage.getItem('user_id') && sessionStorage.getItem('user_id') !== 'undefined') {
-      this.$router.push('/dashboard')
+    if (sessionStorage.getItem('user')) {
+      this.$router.replace('/dashboard')
     }
   },
   methods: {
-    ...mapActions({
-      login: 'login'
-    }),
+    ...mapActions(['login']),
     // 点击提交按钮执行的方法
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.login(this.ruleForm2)
+          this.login(this.ruleForm2).then(res => {
+            if (!res) return
+            this.$router.replace('/dashboard')
+          })
         }
       })
     }

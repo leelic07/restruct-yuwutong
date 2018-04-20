@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import admin from './modules/admin'
 import check from './modules/check'
 import common from './modules/common'
-import infomation from './modules/infomation'
+import information from './modules/information'
 Vue.use(Router)
 
 export default new Router({
@@ -12,7 +12,7 @@ export default new Router({
   routes: [
     ...admin,
     ...check,
-    ...infomation,
+    ...information,
     ...common
   ]
 })

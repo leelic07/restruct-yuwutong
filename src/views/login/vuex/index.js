@@ -1,11 +1,12 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  user: sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : {}
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

@@ -57,7 +57,7 @@
               size="mini"
               @click="handleAuthorization(scope.row)">授权</el-button>
             <el-button
-              v-else-if="scope.row.status == 'PASSED'"
+              v-else-if="scope.row.status === 'PASSED' && scope.row.isWithdrawFlag === 1"
               size="mini"
               @click="handleWithdraw(scope.row)">撤回</el-button>
           </template>

@@ -13,9 +13,6 @@ export default {
   addWhitemember: ({ commit }, params) => {
     return http.addWhitemember(params).then(res => res)
   },
-  getWhitememberDetail: ({ commit }, params) => {
-    http.getWhitememberDetail(params).then(res => res && commit('getWhitememberDetail', res))
-  },
   updateWhitemember: ({ commit }, params) => {
     return http.updateWhitemember(params).then(res => res)
   }
