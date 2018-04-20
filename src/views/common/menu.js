@@ -1,31 +1,31 @@
 let adminMenu = [{
     path: '/prison/list',
     title: '监狱管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jianyuguanli'
   }, {
     path: '/prison-user/list',
     title: '监狱用户管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jianyuyonghu'
   }, {
     path: '/feedback/list',
     title: '意见反馈',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-yijian'
   }, {
     path: '/advertisement/list',
     title: '广告管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-guanggaoguanli'
   }, {
     path: '/terminal/list',
     title: '终端管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-zhongduanguanli'
   }, {
-    path: '/versions/list',
+    path: '/version/list',
     title: '版本管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-banbengengxin'
   }, {
     path: '/log/app-error',
     title: 'APP崩溃日志',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-bengkuirizhi'
   // }, {
   //   path: '/log',
   //   title: '日志',
@@ -46,23 +46,23 @@ let adminMenu = [{
   checkMenu = [{
     path: '/registration/list',
     title: '家属注册管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jiashuzhuce'
   }, {
     path: '/meeting/list',
     title: '会见申请管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-huijianshenqing'
   }, {
     path: '/mailbox/list',
     title: '监狱长信箱',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jianyuchangxinxiang'
   }, {
     path: '/prisoner/list',
     title: '服刑人员信息管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-fuxingrenyuan'
   }, {
     path: '/family/list',
     title: '家属信息管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jiashu'
   // }, {
   //   path: '/prison-accounts/list',
   //   title: '囚犯账户管理',
@@ -70,7 +70,7 @@ let adminMenu = [{
   }, {
     path: '/prisoner-data',
     title: '数据管理',
-    icon: 'iconfont icon-folder',
+    icon: 'iconfont icon-shujuguanli',
     active: false,
     children: [
       {
@@ -112,11 +112,11 @@ let adminMenu = [{
   infoMenu = [{
     path: '/jails/detail',
     title: '监狱基本信息管理',
-    icon: 'iconfont icon-folder'
+    icon: 'iconfont icon-jianyujibenxinxi'
   }, {
     path: '/prison-affairs-public',
     title: '狱务公开信息管理',
-    icon: 'iconfont icon-folder',
+    icon: 'iconfont icon-yuwugongkaixinxi',
     active: false,
     children: [
       {

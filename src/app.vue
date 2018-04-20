@@ -5,6 +5,7 @@
 export default {
   watch: {
     $route(to) { // 监听路由变化
+      if (to.path === '/download/app-family') return
       if (!sessionStorage.getItem('user_id') || sessionStorage.getItem('user_id') === 'undefined') {
         this.$router.push('/login')
       }
@@ -14,6 +15,7 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.path === '/download/app-family') return
     if (!sessionStorage.getItem('user_id') || sessionStorage.getItem('user_id') === 'undefined') {
       this.$router.push('/login')
     }

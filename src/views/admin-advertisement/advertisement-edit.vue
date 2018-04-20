@@ -107,7 +107,7 @@
       ...mapState(['advertisement', 'advertisementTypes', 'provincesAll'])
     },
     mounted() {
-      this.getAdvertisementsDetail({ id: this.$route.params.id }).then(() => {
+      this.getAdvertisementDetail({ id: this.$route.params.id }).then(() => {
         if (!this.advertisement.startDate || !this.advertisement.endDate) return
         this.advertisement.startDate = helper.Date(this.advertisement.startDate)
         this.advertisement.endDate = helper.Date(this.advertisement.endDate)
@@ -121,13 +121,13 @@
       })
     },
     methods: {
-      ...mapActions(['getAdvertisementsDetail', 'updateAdvertisements', 'getAdvertisementTypes', 'getProvincesAll']),
+      ...mapActions(['getAdvertisementDetail', 'updateAdvertisement', 'getAdvertisementTypes', 'getProvincesAll']),
       onSubmit(e) {
         this.$refs.form.validate(valid => {
           if (valid) {
             let params = Object.assign({}, this.advertisement)
             delete params.time
-            this.updateAdvertisements(params).then(res => {
+            this.updateAdvertisement(params).then(res => {
               if (!res) return
               this.$router.push('/advertisement/list')
             })

@@ -16,10 +16,10 @@ export default {
   deleteAdvertisement: ({ commit }, params) => {
     return http.deleteAdvertisement(params).then(res => res)
   },
-  getAdvertisementsDetail: ({ commit }, params) => {
-    return http.getAdvertisementsDetail(params).then(res => res && commit('getAdvertisementsDetail', res))
+  getAdvertisementDetail: ({ commit }, params) => {
+    return http.getAdvertisementDetail(params).then(res => res && commit('getAdvertisementDetail', res))
   },
-  updateAdvertisements: ({ commit }, params) => {
-    return http.updateAdvertisements(params).then(res => res)
+  updateAdvertisement: ({ commit }, params) => {
+    return http.updateAdvertisement(params).then(res => res)
   }
 }

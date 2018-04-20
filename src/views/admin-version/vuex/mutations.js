@@ -3,9 +3,9 @@ export default {
   getVersions(state, versionList) {
     let prisonVersions = [],
       familyVersions = []
-    for (let version of versionList.data.versions) {
+    for (let version of versionList.versions) {
       // version.version_number = version.version_number.toString()
-      Object.assign(version, { 'isCheck': true }, { 'buttonText': '修改' })
+      Object.assign(version, { 'isCheck': true })
       if (version.typeId === 2) {
         prisonVersions.push(version)
       }
@@ -16,11 +16,6 @@ export default {
     state.prisonVersions = prisonVersions
     state.familyVersions = familyVersions
     // state.versionsTotal = versionList.total[0]['COUNT(*)']
-    state.versionsTotal = versionList.data.versionsSize
-  },
-
-  // 更新狱务通版本信息
-  updateVersion(state, updateVersionResult) {
-    state.updateVersionResult = updateVersionResult
+    state.versionsTotal = versionList.versionsSize
   }
 }

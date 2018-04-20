@@ -1,4 +1,3 @@
-import versions from './modules/versions'
 import accounts from './modules/accounts'
 import search from './modules/search'
 import goods from './modules/goods-management'
@@ -21,7 +20,6 @@ import select from './modules/select'
 import noPage from './modules/no-page'
 
 export default Object.assign(
-  versions,
   accounts,
   search,
   goods,

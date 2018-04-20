@@ -1,11 +1,14 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  prisonVersions: [],
+  familyVersions: [],
+  versionsTotal: 0
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

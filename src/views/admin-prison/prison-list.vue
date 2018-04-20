@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column
           prop="zipcode"
-          label="监狱邮编" />
+          label="监狱编号" />
         <el-table-column label="所在地区">
           <template slot-scope="scope">
             <span
