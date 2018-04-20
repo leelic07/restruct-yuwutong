@@ -20,6 +20,7 @@
       <i class="el-icon-plus"></i>
       <div slot="tip" class="el-upload__tip">
         只能上传<span class="red">jpg/jpeg</span>文件,且文件大小不超过<span class="red">1MB</span>
+        <template v-if="ratio">,图片宽高比为<span class="red">{{ ratio }}</span></template>
       </div>
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
@@ -32,10 +33,7 @@
 <script>
 export default {
   props: {
-    url: {
-      type: String,
-      default: ''
-    },
+    value: {},
     action: {
       type: String,
       default: 'http://39.108.185.51:1339/avatars'
@@ -67,45 +65,48 @@ export default {
     limit: {
       type: Number,
       default: 1
+    },
+    ratio: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
       imageUrl: '',
-      dialogVisible: false,
-      uploadList: 0,
-      fileList: []
+      dialogVisible: false
+    }
+  },
+  computed: {
+    fileList() {
+      if (this.limit === 1) {
+        let res = (!this.value || !this.value.length) ? [] : [{ url: `${ this.value }?token=${ this.headers.Authorization }` }]
+        return res
+      }
+      let r = this.value
+      r.map(item => {
+        // if (item.url.indexOf('?token=') > -1) return
+        item.url = `${ item.url }?token=${ this.headers.Authorization }`
+      })
+      return r
     }
   },
   watch: {
-    url(val) {
-      if (this.limit === 1 && val) {
-        this.fileList = [{ url: `${ val }?token=${ this.headers.Authorization }` }]
-        this.uploadList = 1
-      }
-    },
-    uploadList(val) {
-      if (this.limit <= val) {
+    fileList(val) {
+      if (this.limit <= val.length) {
         this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
       }
-      else if (this.limit > val) {
+      else if (this.limit > val.length) {
         this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'inline-block'
       }
     }
   },
-  mounted() {
-    if (this.limit === 1 && this.url) {
-      this.fileList = [{ url: `${ this.url }?token=${ this.headers.Authorization }` }]
-      this.uploadList = 1
-    }
-  },
   methods: {
     handleSuccess(res, file, fileList) {
-      this.uploadList++
       switch (res.code) {
         case 200:
           this.$message.success('图片上传成功')
-          this.$emit('success', res.url)
+          this.$emit('success', this.limit === 1 ? res.url : fileList)
           break
         default:
           this.$message.error(`上传图片失败:${ res.message }`)
@@ -119,11 +120,31 @@ export default {
         let accept = []
         fileType.forEach(type => { accept.push(type.substr(type.lastIndexOf('/') + 1)) })
         this.$message.error(`请上传${ accept.join('或') }格式的文件`)
+        return false
       }
       if (!isSize) {
         this.$message.error('文件大小不能超过1MB!')
+        return false
       }
-      return isAccept && isSize
+      if (!this.ratio) return true
+      const ratio = this.ratio.split(':')
+      return new Promise((resolve, reject) => {
+        var reader = new FileReader()
+        reader.onload = (e) => {
+          let data = e.target.result, image = new Image()
+          image.onload = () => {
+            if (image.width / image.height !== ratio[0] / ratio[1]) {
+              this.$message.error(`请上传宽高比为${ this.ratio }的图片`)
+              reject(false)
+            }
+            else {
+              resolve(true)
+            }
+          }
+          image.src = data
+        }
+        reader.readAsDataURL(file)
+      })
     },
     handlePictureCardPreview(file) {
       this.imageUrl = file.url
@@ -136,8 +157,7 @@ export default {
       console.log(e)
     },
     handleRemove(file, fileList) {
-      this.uploadList--
-      this.$emit('success', '')
+      this.$emit('success', fileList)
     }
   }
 }

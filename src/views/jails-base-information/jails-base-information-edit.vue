@@ -83,7 +83,7 @@
           label="监狱图片"
           prop="imageUrl">
           <m-upload-img
-            :url="jailInformation.imageUrl"
+            v-model="jailInformation.imageUrl"
             @success="onSuccess" />
         </el-form-item>
         <el-form-item>

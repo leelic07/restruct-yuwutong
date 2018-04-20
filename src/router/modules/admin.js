@@ -57,6 +57,23 @@ let admin = [{
     component: resolve => require(['@/views/admin-advertisement/advertisement-edit'], resolve)
   }]
 }, {
+  path: '/whitemember',
+  name: '白名单管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/whitemember/list',
+    name: '白名单列表',
+    component: resolve => require(['@/views/admin-whitemember/whitemember-list'], resolve)
+  }, {
+    path: '/whitemember/add',
+    name: '新增白名单',
+    component: resolve => require(['@/views/admin-whitemember/whitemember-add'], resolve)
+  }, {
+    path: '/whitemember/edit/:id',
+    name: '编辑白名单',
+    component: resolve => require(['@/views/admin-whitemember/whitemember-edit'], resolve)
+  }]
+}, {
   path: '/terminal',
   name: '终端管理',
   meta: { hidden: true },

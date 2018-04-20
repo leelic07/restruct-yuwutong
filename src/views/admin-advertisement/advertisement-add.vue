@@ -23,7 +23,8 @@
           <el-select
             v-model="advertisement.typeId"
             :loading="gettingType"
-            placeholder="请选择广告类型">
+            placeholder="请选择广告类型"
+            @change="onTypeChange">
             <el-option
               v-for="advertisementType in advertisementTypes"
               :key="advertisementType.id"
@@ -71,7 +72,10 @@
         <el-form-item
           label="广告图片"
           prop="imageUrl">
-          <m-upload-img @success="onSuccess" />
+          <m-upload-img
+            v-model="advertisement.imageUrl"
+            :ratio="imageRatio"
+            @success="onSuccess" />
         </el-form-item>
       </el-form>
       <el-button
@@ -90,14 +94,15 @@
       return {
         gettingType: true,
         gettingProvince: true,
-        advertisement: {},
+        advertisement: { imageUrl: '' },
         rules: {
           name: [{ required: true, message: '请填写广告名称' }],
           typeId: [{ required: true, message: '请选择广告类型' }],
           time: [{ required: true, message: '请选择广告有效时间' }],
           imageUrl: [{ required: true, message: '请上传广告图片' }],
           status: [{ required: true, message: '请选择是否上架' }]
-        }
+        },
+        imageRatio: ''
       }
     },
     computed: {
@@ -124,6 +129,16 @@
             })
           }
         })
+      },
+      onTypeChange(e) {
+        switch (e) {
+          case 2:
+            this.imageRatio = '200:360'
+            this.advertisement.imageUrl = ''
+            break
+          default:
+            this.imageRatio = ''
+        }
       },
       onTimeRangeChange(e) {
         if (e) {
