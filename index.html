@@ -14,6 +14,7 @@
       text-align: center;
       color: #1F2D3D;
       width: 100%;
+      background: #fff;
   }
   </style>
 </head>
@@ -21,8 +22,9 @@
   <div id='ie' style='display: none;'> 您的浏览器太旧,请使用chrome等高级浏览器或者升级 </div>
   <div id="layout" class="wrapper">加载中...</div>
   <script type="text/javascript">
-    if(!Object.defineProperty){
-        document.getElementById('ie').style.display = 'block';
+    if(navigator.appVersion.indexOf('Trident') > -1 && navigator.userAgent.indexOf('MSIE') > -1){
+      document.getElementById('ie').style.display = 'block';
+      document.getElementById('layout').style.display = 'none';
     }
   </script>
 <!-- built files will be auto injected -->
