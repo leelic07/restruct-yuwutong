@@ -17,7 +17,7 @@ let adminMenu = [{
   }, {
     path: '/whitemember/list',
     title: '白名单管理',
-    icon: 'iconfont icon-guanggaoguanli'
+    icon: 'iconfont icon-baimingdan'
   }, {
     path: '/terminal/list',
     title: '终端管理',

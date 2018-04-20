@@ -20,10 +20,12 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../../../static/dist/img/user2-160x160.jpg" class="user-image">
-              <span class="hidden-xs">{{ users.username || users.jailName }}</span>
+              <span class="hidden-xs">{{ user.username || user.jailName }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- Menu Footer-->
+              <li>
+              </li>
               <li class="user-footer">
                 <div class="text-center">
                   <router-link to="/password/edit" class="pull-left">
@@ -54,13 +56,10 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['users'])
+    ...mapState(['user'])
   },
   methods: {
-    ...mapActions({
-      logout: 'logout' // 点击确定退出登录时执行的方法
-    }),
-    // 点击退出登录执行的方法
+    ...mapActions(['logout']),
     confirmExit(e) {
       e.preventDefault()
       this.$confirm('是否退出登录？', '提示', {
@@ -68,7 +67,11 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.logout()
+        this.logout().then(res => {
+          if (!res) return
+          sessionStorage.clear()
+          this.$router.replace('/login')
+        })
       })
     }
   }

@@ -3,6 +3,7 @@ import frame from '@/views/common/the-frame'
 let common = [{
   path: '/login',
   name: '登录',
+  meta: { notLogin: true },
   component: resolve => require(['@/views/login/login'], resolve)
 }, {
   path: '/dashboard1',
@@ -26,15 +27,14 @@ let common = [{
   children: [{
     path: '/download/app-family',
     name: '家属版app',
+    meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-family'], resolve)
   }, {
     path: '/download/app-prison',
     name: '监狱版app',
+    meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-prison'], resolve)
   }]
-}, {
-  path: '/',
-  redirect: '/login'
 }, {
   path: '*',
   redirect: '/dashboard'

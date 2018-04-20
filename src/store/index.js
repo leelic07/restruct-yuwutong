@@ -3,14 +3,8 @@ import Vuex from 'vuex'
 import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
 import search from './modules/search'
-import goods from './modules/goods-mangement'
-import login from './modules/login'
-import familyOrders from './modules/family-orders'
 import jailsInformation from './modules/jails-information'
-import lawsInformation from './modules/laws-information'
 import loading from './modules/loading'
-import ordersManagement from './modules/orders-management'
-import logout from './modules/logout'
 import passwordModification from './modules/password-modification'
 import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
@@ -32,6 +26,7 @@ import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
 import noPage from './modules/no-page'
+import login from '@/views/login/vuex'
 
 import adminLog from './modules/admin-log'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
@@ -55,14 +50,8 @@ merge(
   breadCrumb,
   search,
   accounts,
-  goods,
-  login,
-  familyOrders,
   jailsInformation,
-  lawsInformation,
   loading,
-  ordersManagement,
-  logout,
   passwordModification,
   quillEditor,
   downloadFile,
@@ -86,6 +75,7 @@ merge(
   checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
+  login,
   noPage
 )
 export default new Vuex.Store({

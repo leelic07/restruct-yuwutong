@@ -1,14 +1,9 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-// import Layout from '@/views/common/Layout'
 import App from '@/app'
 import router from './router'
 import ElementUI from 'element-ui'
-// import $ from 'jquery'
 import store from './store'
 import filters from './filters'
-// import VueQuillEditor from 'vue-quill-editor'
 import components from '@/components'
 import '../static/bootstrap/js/bootstrap.min.js'
 import '../static/dist/js/app.min.js'
@@ -23,7 +18,6 @@ import 'quill/dist/quill.snow.css'
 import '@/assets/css/main.css'
 
 Vue.use(ElementUI)
-// Vue.use(VueQuillEditor)
 
 Vue.config.productionTip = false
 
@@ -49,6 +43,21 @@ Object.keys(components).forEach((key) => {
   let name = key.replace(/(\w)/, (v) => v.toUpperCase())
   Vue.component(`m${ name }`, components[key])
 })
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.notLogin) {
+    let isLogin = sessionStorage.getItem('user')
+    if (!isLogin) {
+      next({ path: '/login', replace: true })
+    }
+  }
+  let routes = sessionStorage.getItem('routes') && JSON.parse(sessionStorage.getItem('routes'))
+  if (to.meta.hidden || (routes && routes.indexOf(to.matched[to.matched.length - 1].path) < 0)) {
+    next({ path: '/dashboard', replace: true })
+  }
+  next()
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#layout',

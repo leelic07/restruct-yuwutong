@@ -8,7 +8,7 @@
           <img src="../../../static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{jailName}}</p>
+          <p>{{user.jailName}}</p>
           <a href="#" @click="$event.preventDefault()"><i class="fa fa-circle text-success"></i> 在线</a>
         </div>
       </div>
@@ -16,7 +16,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">导航</li>
-        <li v-for="(first, index) in menus[role]" :key="index">
+        <li v-for="(first, index) in menus[user.role]" :key="index">
           <template v-if="!first.children">
             <router-link :to="first.path">
               <i :class="first.icon"></i>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import menu from './menu.js'
 
 export default {
@@ -55,15 +55,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      users: 'users' // 获取用户登录时的信息
-    }),
-    role() {
-      return sessionStorage.getItem('role')
-    },
-    jailName() {
-      return sessionStorage.getItem('jail_name')
-    }
+    ...mapState(['user'])
   },
   methods: {}
 }

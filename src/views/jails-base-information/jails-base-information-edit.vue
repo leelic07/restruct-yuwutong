@@ -41,6 +41,7 @@
             :loading="formItem.provincesId.getting"
             placeholder="请选择所在省名称"
             filterable
+            auto-complete='address-level1'
             @change="onProvinceChange">
             <el-option
               v-for="(province, index) in provincesAll"
@@ -57,6 +58,7 @@
             v-model="jailInformation.citysId"
             :loading="formItem.citysId.getting"
             filterable
+            auto-complete='address-level2'
             placeholder="请选择所在市名称">
             <el-option
               v-for="(city, index) in $store.state.cities"
