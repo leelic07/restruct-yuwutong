@@ -2,7 +2,8 @@ import actions from './actions'
 import mutations from './mutations'
 
 let state = {
-  prisonAll: []
+  prisonAll: [],
+  prisonAllWithBranchPrison: []
 }
 
 export default {

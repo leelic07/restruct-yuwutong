@@ -69,7 +69,7 @@ export default {
   },
   // 终端管理-新增
   addTerminal: params => {
-    return service.post('/terminals/add', params).then(res => res.code === 200)
+    return service.postObj('/terminals/add', params).then(res => res.code === 200)
   },
   // 终端管理-列表
   getTerminals: params => {
@@ -81,7 +81,7 @@ export default {
   },
   // 终端管理-编辑
   updateTerminal: params => {
-    return service.post('/terminals/edit', params).then(res => res.code === 200)
+    return service.postObj('/terminals/edit', params).then(res => res.code === 200)
   },
   // 版本管理-列表
   getVersions: params => {
