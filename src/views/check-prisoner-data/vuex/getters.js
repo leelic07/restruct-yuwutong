@@ -15,5 +15,8 @@ export default {
   prisonerRewardPunishments: state => state.prisonerRewardPunishments,
 
   // 获取罪犯模板上传的数据
-  prisonerData: state => state.prisonerData
+  prisonerData: state => state.prisonerData,
+
+  // 上传模板失败的信息
+  errors: state => state.errors
 }
