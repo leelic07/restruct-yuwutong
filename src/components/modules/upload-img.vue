@@ -157,7 +157,7 @@ export default {
       console.log(e)
     },
     handleRemove(file, fileList) {
-      this.$emit('success', fileList)
+      this.$emit('success', fileList.length ? fileList : '')
     }
   }
 }

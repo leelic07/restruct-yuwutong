@@ -118,9 +118,9 @@
           description: [{ required: true, message: '请输入监狱简介' }],
           provincesId: [{ required: true, message: '请输入监狱所在省' }],
           citysId: [{ required: true, message: '请输入监狱所在市' }],
+          // imageUrl: [{ required: true, message: '请上传监狱图片' }],
           settings: [{ required: true, message: '请填写监狱配置' }],
-          zipcode: [{ required: true, message: '请填写监狱编号' }],
-          imageUrl: [{ required: true, message: '请上传监狱图片' }]
+          zipcode: [{ required: true, message: '请填写监狱编号' }]
         }
       }
     },
