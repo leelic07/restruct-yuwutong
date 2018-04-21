@@ -112,7 +112,6 @@ instance.interceptors.response.use(
     return response
   },
   error => {
-    console.dir(error)
     if (handleError(error)) {
       // 隐藏loading遮罩层
       store.commit('hideLoading')

@@ -216,8 +216,8 @@ export default {
       if (e === 'DENIED') params.remarks = this.remarks
       this.authorizeMeeting(params).then(res => {
         if (!res) return
+        this.getDatas()
         this.show.authorize = false
-        this.toAuthorize.status = e
       })
     },
     onWithdraw() {
@@ -226,7 +226,7 @@ export default {
           let params = { id: this.toAuthorize.id, status: 'DENIED', remarks: this.withdraw.remarks }
           this.withdrawMeeting(params).then(res => {
             if (!res) return
-            this.toAuthorize.status = 'DENIED'
+            this.getDatas()
             this.show.withdraw = false
           })
         }
