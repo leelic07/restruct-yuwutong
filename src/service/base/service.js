@@ -70,9 +70,7 @@ const handleSuccess = (res) => {
         })
         break
       case 20002:// 用户登录超时，返回登录页面
-        Object.keys(sessionStorage).map(key => {
-          sessionStorage.setItem(key, 'undefined')
-        })
+        sessionStorage.clear()
         Message.error(res.data.msg)
         router.push({
           path: '/login'
