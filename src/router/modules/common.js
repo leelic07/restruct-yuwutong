@@ -20,17 +20,17 @@ let common = [{
     component: resolve => require(['@/views/password/password-edit'], resolve)
   }]
 }, {
-  path: '/download',
+  path: '/app_preview',
   name: 'app下载',
   component: frame,
   meta: { hidden: true },
   children: [{
-    path: '/download/app-family',
+    path: 'family_download',
     name: '家属版app',
     meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-family'], resolve)
   }, {
-    path: '/download/app-prison',
+    path: 'prison_download',
     name: '监狱版app',
     meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-prison'], resolve)

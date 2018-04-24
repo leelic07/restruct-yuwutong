@@ -8,7 +8,7 @@ import information from './modules/information'
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   routes: [
     ...admin,
     ...check,
