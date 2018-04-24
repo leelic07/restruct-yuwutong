@@ -11,7 +11,6 @@ import admin from './modules/admin'
 import check from './modules/check'
 import information from './modules/information'
 import common from './modules/common'
-import select from './modules/select'
 import noPage from './modules/no-page'
 
 export default Object.assign(
@@ -27,6 +26,5 @@ export default Object.assign(
   common,
   check,
   information,
-  select,
   noPage
 )

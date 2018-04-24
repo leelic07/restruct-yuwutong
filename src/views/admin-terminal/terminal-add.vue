@@ -39,15 +39,19 @@
         <el-form-item
           v-if="isPrisonArea"
           label="分监区"
-          prop="prisonCode">
-          <el-input
-            v-model.number="terminal.prisonCode"
-            :max="30"
-            :min="1"
-            :step="1"
-            placeholder="请填写1~30之间的数字">
-            <template slot="append">监区</template>
-          </el-input>
+          prop="prisonConfigId">
+          <el-select
+            v-model="terminal.prisonConfigId"
+            filterable
+            :disabled="!hasPrisonArea"
+            :loading="gettingPrisonArea"
+            placeholder="请选择分监区">
+            <el-option
+              v-for="prisonArea in prisonAreas"
+              :key="prisonArea.id"
+              :label="prisonArea.name"
+              :value="prisonArea.id"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item
           label="主持人密码"
@@ -78,34 +82,23 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   data() {
-    let checkPrison = (rule, value, callback) => {
-      if (!Number.isInteger(value)) {
-        callback(new Error('请输入数字值'))
-      }
-      else {
-        if (value < 1 || value > 30) {
-          callback(new Error('请输入1~30之间的数字'))
-        }
-        else {
-          callback()
-        }
-      }
-    }
     return {
       terminal: {},
       rule: {
         terminalNumber: [{ required: true, message: '请填写终端号', trigger: 'blur' }],
         jailId: [{ required: true, message: '请选择监狱' }],
-        prisonCode: [{ required: true, message: '请填写分监区' }, { validator: checkPrison }],
+        prisonConfigId: [{ required: true, message: '请填写分监区' }],
         hostPassword: [{ required: true, message: '请填写主持人密码', trigger: 'blur' }],
         mettingPassword: [{ required: true, message: '请填写参与密码', trigger: 'blur' }]
       },
+      hasPrisonArea: false,
       gettingPrison: true,
+      gettingPrisonArea: true,
       isPrisonArea: false
     }
   },
   computed: {
-    ...mapState(['prisonAllWithBranchPrison'])
+    ...mapState(['prisonAllWithBranchPrison', 'prisonAreas'])
   },
   mounted() {
     this.getPrisonAllWithBranchPrison().then(() => {
@@ -113,7 +106,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['addTerminal', 'getPrisonAllWithBranchPrison']),
+    ...mapActions(['addTerminal', 'getPrisonAreas', 'getPrisonAllWithBranchPrison']),
     onSubmit() {
       this.$refs.terminal.validate(valid => {
         if (valid) {
@@ -126,10 +119,25 @@ export default {
     },
     onPrisonChange(e) {
       let prison = this.prisonAllWithBranchPrison.find(item => item.id === e)
-      if (prison.branchPrison === 1) this.isPrisonArea = true
+      if (prison.branchPrison === 1) {
+        this.isPrisonArea = true
+        this.gettingPrisonArea = true
+        this.getPrisonAreas(e).then(res => {
+          if (!res) return
+          if (this.prisonAreas.length === 0) {
+            this.$message.warning('请先导入罪犯数据')
+            this.hasPrisonArea = false
+          }
+          else {
+            this.hasPrisonArea = true
+          }
+          this.gettingPrisonArea = false
+        })
+      }
       else {
         this.isPrisonArea = false
-        delete this.terminal.prisonCode
+        this.gettingPrisonArea = true
+        delete this.terminal.prisonConfigId
       }
     }
   }

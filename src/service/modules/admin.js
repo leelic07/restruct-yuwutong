@@ -35,6 +35,9 @@ export default {
   addPrison: params => {
     return service.postObj('/jails/addJails', params).then(res => res.code === 200)
   },
+  getPrisonDetail: params => {
+    return service.get(`/jails/getJailsDetail?id=${ params }`).then(res => res.code === 200 && res.data)
+  },
   // 意见反馈-列表
   getFeedbacks: params => {
     return service.get('/feedbacks/page', params).then(res => res.code === 200 && res.data)

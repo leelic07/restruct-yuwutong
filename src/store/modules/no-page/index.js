@@ -3,7 +3,10 @@ import mutations from './mutations'
 
 let state = {
   prisonAll: [],
-  prisonAllWithBranchPrison: []
+  prisonAllWithBranchPrison: [],
+  provincesAll: [],
+  cities: [],
+  prisonAreas: []
 }
 
 export default {
