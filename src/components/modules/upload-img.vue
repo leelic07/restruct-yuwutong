@@ -33,7 +33,9 @@
 <script>
 export default {
   props: {
-    value: {},
+    value: {
+      default: ''
+    },
     action: {
       type: String,
       default: 'http://39.108.185.51:1339/avatars'

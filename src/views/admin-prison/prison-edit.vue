@@ -206,7 +206,7 @@
           <el-button
             type="primary"
             @click="onSubmit"
-            size="small">新增</el-button>
+            size="small">更新</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -229,7 +229,7 @@
           }
         },
         canAddRange1: true,
-        rangeToAdd: ['17:00', '17:30'],
+        rangeToAdd: [],
         rules: {
           title: [{ required: true, message: '请输入监狱名称' }],
           description: [{ required: true, message: '请输入监狱简介' }],
@@ -298,9 +298,18 @@
     },
     mounted() {
       this.getProvincesAll().then(() => {
-        this.getPrisonDetail(this.$route.params.id).then(res => {
+        this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
           if (!res) return
-          console.log(this.prison)
+          this.getCities(this.prison.provincesId).then(res => {
+            this.formItem.citysId.getting = false
+            this.formItem.citysId.disabled = false
+          })
+          let meetingQueue1 = []
+          this.prison.meetingQueue.forEach(str => {
+            meetingQueue1.push(str.split('-'))
+          })
+          this.prison.meetingQueue1 = meetingQueue1
+          this.getNextRange(meetingQueue1[meetingQueue1.length - 1])
         })
         this.formItem.provincesId.getting = false
       })

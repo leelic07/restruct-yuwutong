@@ -13,5 +13,8 @@ export default {
       commit('getPrisonDetail', res)
       return true
     })
+  },
+  updatePrison: ({ commit }, params) => {
+    return http.updatePrison(params).then(res => res)
   }
 }
