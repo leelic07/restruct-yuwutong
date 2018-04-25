@@ -17,8 +17,8 @@ export default {
   getCities: params => {
     return service.get(`/cities/list?provicesId=${ params }`).then(res => res.code === 200 && res.data)
   },
-  // 监区
-  getPrisonAreas: params => {
+  // 监区-根据监狱id查询
+  getJailPrisonAreas: params => {
     return service.get(`/terminals/getPrisonConfigs?jailId=${ params }`).then(res => res.code === 200 && res.data)
   }
 }

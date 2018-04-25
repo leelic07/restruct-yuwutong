@@ -76,6 +76,13 @@ const handleSuccess = (res) => {
           path: '/login'
         })
         break
+      case 99998:// 无权限
+        sessionStorage.clear()
+        Message.error(res.data.msg)
+        router.push({
+          path: '/login'
+        })
+        break
       default:
         Message.error(res.data.msg ? res.data.msg : '无法找到对应的信息')
         break

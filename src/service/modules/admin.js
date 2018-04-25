@@ -112,5 +112,13 @@ export default {
   // 白名单管理-删除
   deleteWhitemember: params => {
     return service.post('/whitenumbers/delete', params).then(res => res.code === 200)
+  },
+  // 监区说明管理-列表
+  getPrisonAreas: params => {
+    return service.get('/prison_config/page', params).then(res => res.code === 200 && res.data)
+  },
+  // 监区说明管理-编辑
+  updatePrisonArea: params => {
+    return service.post('/prison_config/update', params).then(res => res.code === 200)
   }
 }

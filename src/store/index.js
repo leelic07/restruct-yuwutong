@@ -15,6 +15,7 @@ import breadCrumbs from './modules/breadcrumb'
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminFeedback from '@/views/admin-feedback/vuex'
 import adminPrison from '@/views/admin-prison/vuex'
+import adminPrisonArea from '@/views/admin-prison-area/vuex'
 import adminPrisonUser from '@/views/admin-prison-user/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
 import adminVersion from '@/views/admin-version/vuex'
@@ -65,6 +66,7 @@ merge(
   filter,
   adminAdvertisement,
   adminPrison,
+  adminPrisonArea,
   adminTerminal,
   adminVersion,
   adminWhitemember,
