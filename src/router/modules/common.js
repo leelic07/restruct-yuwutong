@@ -25,12 +25,12 @@ let common = [{
   component: frame,
   meta: { hidden: true },
   children: [{
-    path: 'family_download',
+    path: '/app_preview/family_download',
     name: '家属版app',
     meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-family'], resolve)
   }, {
-    path: 'prison_download',
+    path: '/app_preview/prison_download',
     name: '监狱版app',
     meta: { notLogin: true },
     component: resolve => require(['@/views/download/app-prison'], resolve)

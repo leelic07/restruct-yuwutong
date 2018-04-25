@@ -3,5 +3,8 @@ export default {
   getPrisons(state, params) {
     state.prisons.contents = params.jails
     state.prisons.total = params.jailsSize
+  },
+  getPrisonDetail(state, params) {
+    state.prison = Object.assign({}, params.jails, { meetingQueue1: [null] })
   }
 }

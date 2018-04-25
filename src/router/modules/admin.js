@@ -12,6 +12,10 @@ let admin = [{
     path: '/prison/add',
     name: '新增监狱',
     component: resolve => require(['@/views/admin-prison/prison-add'], resolve)
+  }, {
+    path: '/prison/edit/:id',
+    name: '编辑监狱',
+    component: resolve => require(['@/views/admin-prison/prison-edit'], resolve)
   }]
 }, {
   path: '/prison-user',

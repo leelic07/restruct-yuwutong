@@ -8,14 +8,11 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        v-model="tabs"
+        value="first"
         type="card">
         <el-tab-pane
           label="会见申请"
           name="first" />
-        <el-tab-pane
-          label="未授权"
-          name="PENDING" />
       </el-tabs>
       <el-table
         :data="meetings.contents"
@@ -50,10 +47,7 @@
           class-name="orange"
           label="申请状态">
           <template slot-scope="scope">
-            <span v-if="scope.row.status !== 'DENIED'">{{scope.row.status | applyStatus}}</span>
-            <el-tooltip v-else :content="scope.row.content" placement="top">
-              <span>{{scope.row.status | applyStatus}}</span>
-            </el-tooltip>
+            {{scope.row.status | applyStatus}}
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -169,7 +163,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tabs: 'first',
       searchItems: {
         uuid: { type: 'input', label: '身份证号' },
         prisonerNumber: { type: 'input', label: '囚号' },
@@ -191,18 +184,6 @@ export default {
   },
   computed: {
     ...mapState(['meetings', 'frontRemarks'])
-  },
-  watch: {
-    tabs(val) {
-      if (val !== 'first') {
-        this.filter.status = val
-        this.getDatas()
-      }
-      else {
-        delete this.filter.status
-        this.getDatas()
-      }
-    }
   },
   mounted() {
     this.getDatas()

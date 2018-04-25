@@ -206,7 +206,7 @@
           <el-button
             type="primary"
             @click="onSubmit"
-            size="small">新增</el-button>
+            size="small">更新</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -214,7 +214,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   import helper from '@/utils'
   export default {
     data() {
@@ -229,7 +229,7 @@
           }
         },
         canAddRange1: true,
-        rangeToAdd: ['17:00', '17:30'],
+        rangeToAdd: [],
         rules: {
           title: [{ required: true, message: '请输入监狱名称' }],
           description: [{ required: true, message: '请输入监狱简介' }],
@@ -247,20 +247,20 @@
           faceRecognition: [{ required: true, message: '请选择是否开放人脸识别模块' }],
           remittance: [{ required: true, message: '请填写汇款限制' }, { validator: helper.isFee }],
           consumption: [{ required: true, message: '请填写消费限制' }, { validator: helper.isFee }]
-        },
-        prison: {
-          citysId: '',
-          imageUrl: '',
-          cost: 0,
-          branchPrison: 1,
-          meeting: 1,
-          rewards: 1,
-          shopping: 1,
-          prisonTerm: 1,
-          faceRecognition: 1,
-          remittance: 800,
-          consumption: 800,
-          meetingQueue1: [['09:00', '09:30'], ['09:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
+        // },
+        // prison: {
+        //   citysId: '',
+        //   imageUrl: '',
+        //   cost: 0,
+        //   branchPrison: 1,
+        //   meeting: 1,
+        //   rewards: 1,
+        //   shopping: 1,
+        //   prisonTerm: 1,
+        //   faceRecognition: 1,
+        //   remittance: 800,
+        //   consumption: 800,
+        //   meetingQueue1: [['09:00', '09:30'], ['09:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
           if (rule.index > 0) {
@@ -282,6 +282,7 @@
       }
     },
     computed: {
+      ...mapState(['prison']),
       canAddRange() {
         let lastIndex = this.prison.meetingQueue1.length - 1
         if (!this.rangeToAdd.length || this.rangeToAdd[0].indexOf('23:59') > -1) {
@@ -297,11 +298,24 @@
     },
     mounted() {
       this.getProvincesAll().then(() => {
+        this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
+          if (!res) return
+          this.getCities(this.prison.provincesId).then(res => {
+            this.formItem.citysId.getting = false
+            this.formItem.citysId.disabled = false
+          })
+          let meetingQueue1 = []
+          this.prison.meetingQueue.forEach(str => {
+            meetingQueue1.push(str.split('-'))
+          })
+          this.prison.meetingQueue1 = meetingQueue1
+          this.getNextRange(meetingQueue1[meetingQueue1.length - 1])
+        })
         this.formItem.provincesId.getting = false
       })
     },
     methods: {
-      ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),
+      ...mapActions(['getPrisonDetail', 'updatePrison', 'getProvincesAll', 'getCities']),
       onSubmit(e) {
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -311,7 +325,7 @@
             })
             prison.meetingQueue = meetingQueue
             delete prison.meetingQueue1
-            this.addPrison(prison).then(res => {
+            this.updatePrison(prison).then(res => {
               if (!res) return
               this.$router.push('/prison/list')
             })

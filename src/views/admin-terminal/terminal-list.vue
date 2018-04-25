@@ -35,7 +35,7 @@
           prop="jailName"
           label="所属监狱" />
         <el-table-column
-          prop="prisonCode"
+          prop="prisonConfigName"
           label="分监区" />
         <el-table-column
           prop="hostPassword"

@@ -25,13 +25,13 @@ import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
+import infoPrisonArea from '@/views/info-prison-area/vuex'
 import noPage from './modules/no-page'
 import login from '@/views/login/vuex'
 
 import adminLog from './modules/admin-log'
 import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
-import select from './modules/select'
 
 import 'babel-polyfill'
 Vue.use(Vuex)
@@ -63,7 +63,6 @@ merge(
   adminPrisonUser,
   infoPrisonAffairsPublic,
   filter,
-  select,
   adminAdvertisement,
   adminPrison,
   adminTerminal,
@@ -75,6 +74,7 @@ merge(
   checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
+  infoPrisonArea,
   login,
   noPage
 )
