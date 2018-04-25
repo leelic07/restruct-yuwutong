@@ -18,26 +18,26 @@ let addPath = (arr, routes = []) => {
 export default {
   // 获取用户登录的结果
   login(state, params) {
-    // sessionStorage.setItem('user_id', users.id)
-    // sessionStorage.setItem('role', users.role)
-    // sessionStorage.setItem('jail_id', users.jailId)
-    // sessionStorage.setItem('jail_name', users.jailName)
-    // token && sessionStorage.setItem('token', token)
+    // localStorage.setItem('user_id', users.id)
+    // localStorage.setItem('role', users.role)
+    // localStorage.setItem('jail_id', users.jailId)
+    // localStorage.setItem('jail_name', users.jailName)
+    // token && localStorage.setItem('token', token)
     // state.loginResult = params
     state.user = params.users
-    sessionStorage.setItem('user', JSON.stringify(params.users))
+    localStorage.setItem('user', JSON.stringify(params.users))
     switch (params.users.role) {
       case '0':
-        sessionStorage.setItem('routes', JSON.stringify(addPath([...common, ...admin])))
+        localStorage.setItem('routes', JSON.stringify(addPath([...common, ...admin])))
         break
       case '1':
-        sessionStorage.setItem('routes', JSON.stringify(addPath([...common, ...check])))
+        localStorage.setItem('routes', JSON.stringify(addPath([...common, ...check])))
         break
       case '3':
-        sessionStorage.setItem('routes', JSON.stringify(addPath([...common, ...information])))
+        localStorage.setItem('routes', JSON.stringify(addPath([...common, ...information])))
         break
       default:
-        sessionStorage.setItem('routes', JSON.stringify(addPath(common)))
+        localStorage.setItem('routes', JSON.stringify(addPath(common)))
     }
   }
 }

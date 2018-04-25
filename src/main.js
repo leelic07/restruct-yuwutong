@@ -46,12 +46,12 @@ Object.keys(components).forEach((key) => {
 
 router.beforeEach((to, from, next) => {
   if (!to.meta.notLogin) {
-    let isLogin = sessionStorage.getItem('user')
+    let isLogin = localStorage.getItem('user')
     if (!isLogin) {
       next({ path: '/login', replace: true })
     }
   }
-  let routes = sessionStorage.getItem('routes') && JSON.parse(sessionStorage.getItem('routes'))
+  let routes = localStorage.getItem('routes') && JSON.parse(localStorage.getItem('routes'))
   if (to.meta.hidden || (routes && routes.indexOf(to.matched[to.matched.length - 1].path) < 0)) {
     next({ path: '/dashboard', replace: true })
   }

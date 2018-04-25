@@ -5,7 +5,7 @@ export default {
   // method: 'get',
   // 基础url前缀
   // baseURL: 'https://www.yuwugongkai.com/',
-  // baseURL: 'http://10.10.10.117:3000/',
+  // baseURL: 'http://10.10.10.29:8081/', // 杨波
   // baseURL: 'http://10.10.10.15:8081/',
   baseURL: 'http://39.108.185.51:8081/',
   // baseURL: 'http://10.10.10.2:8081/',

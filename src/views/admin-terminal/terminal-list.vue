@@ -81,10 +81,10 @@ export default {
     ...mapState(['terminals', 'prisonAll'])
   },
   mounted() {
-    this.getDatas()
     this.getPrisonAll().then(() => {
       this.searchItems.jailId.options = this.prisonAll
       this.searchItems.jailId.getting = false
+      this.getDatas()
     })
   },
   methods: {

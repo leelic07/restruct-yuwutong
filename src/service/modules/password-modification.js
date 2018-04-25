@@ -1,4 +1,4 @@
-import * as service from '../base/service'
+import * as service from '../config/service'
 
 export default {
   // 修改用户名密码执行的方法

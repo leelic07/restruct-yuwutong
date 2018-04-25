@@ -65,9 +65,7 @@
 </template>
 
 <script>
-import SearchItem from './form-item'
 export default {
-  components: { SearchItem },
   props: {
     items: {
       type: Object

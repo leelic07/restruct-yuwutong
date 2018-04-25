@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted() {
-    if (sessionStorage.getItem('user')) {
+    if (localStorage.getItem('user')) {
       this.$router.replace('/dashboard')
     }
   },

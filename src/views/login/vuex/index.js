@@ -2,7 +2,7 @@ import actions from './actions'
 import mutations from './mutations'
 
 let state = {
-  user: sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')) : {}
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {}
 }
 
 export default {
