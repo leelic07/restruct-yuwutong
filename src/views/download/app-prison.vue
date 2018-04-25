@@ -12,7 +12,7 @@
               <a href="https://www.yuwugongkai.com/app/yuwutong_p.apk?from=wechat">
                 <el-button><i class="iconfont icon-android"></i>Android下载</el-button>
               </a>
-              <img src="../../assets/images/yuwutong_f.png" alt="">
+              <img src="../../assets/images/yuwutong_p.png" alt="">
             </div>
           </div>
         </div>
