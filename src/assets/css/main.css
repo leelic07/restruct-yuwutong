@@ -33,7 +33,7 @@ img{
   background: #fff;
 }
 .row-container .el-table__body-wrapper{
-  overflow: visible;
+  /* overflow: visible; */
 }
 .row-container .cell .el-button--default{
     float: left;

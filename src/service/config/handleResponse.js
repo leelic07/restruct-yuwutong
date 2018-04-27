@@ -57,6 +57,11 @@ const codes = {
       tips('请检查服务是否启动！')
     }
   },
+  10006: {
+    next: params => {
+      tips(params.msg || '账号不存在，请确认用户名或密码错误')
+    }
+  },
   20002: {
     next: params => {
       localStorage.removeItem('user')
@@ -76,8 +81,8 @@ const codes = {
 export default params => {
   let result = codes[params.status === 200 ? params.data.code : params.status]
   if (!result) {
-    tips(`未处理:${ params.status === 200 ? params.data.code : params.status }`)
-    return params.data
+    tips(params.data ? params.data.msg : '')
+    return false
   }
   result.next && result.next(params.data)
   if (result.resData) return params.data
