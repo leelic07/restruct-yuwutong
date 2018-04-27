@@ -47,7 +47,7 @@
             :loading="gettingPrisonArea"
             placeholder="请选择分监区">
             <el-option
-              v-for="prisonArea in prisonAreas"
+              v-for="prisonArea in jailPrisonAreas"
               :key="prisonArea.id"
               :label="prisonArea.name"
               :value="prisonArea.id"></el-option>
@@ -97,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['prisonAllWithBranchPrison', 'terminal', 'prisonAreas'])
+    ...mapState(['prisonAllWithBranchPrison', 'terminal', 'jailPrisonAreas'])
   },
   mounted() {
     this.getPrisonAllWithBranchPrison().then(() => {
@@ -109,7 +109,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getTerminalDetail', 'getPrisonAreas', 'updateTerminal', 'getPrisonAllWithBranchPrison']),
+    ...mapActions(['getTerminalDetail', 'getJailPrisonAreas', 'updateTerminal', 'getPrisonAllWithBranchPrison']),
     onSubmit() {
       this.$refs.terminal.validate(valid => {
         if (valid) {
@@ -125,9 +125,9 @@ export default {
       if (prison.branchPrison === 1) {
         this.isPrisonArea = true
         this.gettingPrisonArea = true
-        this.getPrisonAreas(e).then(res => {
+        this.getJailPrisonAreas(e).then(res => {
           if (!res) return
-          if (this.prisonAreas.length === 0) {
+          if (this.jailPrisonAreas.length === 0) {
             this.$message.warning('请先导入罪犯数据')
             this.hasPrisonArea = false
           }

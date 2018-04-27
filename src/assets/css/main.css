@@ -103,3 +103,6 @@ img{
   content: '/ ';
   color: #ddd;
 }
+.el-dialog {
+  overflow: hidden;
+}

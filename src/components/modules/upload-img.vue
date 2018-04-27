@@ -154,6 +154,7 @@ export default {
     },
     handleExceed() {
       this.$message.error('图片数量超出限制')
+      this.$refs.uploadImg.$el.getElementsByClassName('el-upload el-upload--picture-card')[0].style.display = 'none'
     },
     handleError(e) {
       console.log(e)

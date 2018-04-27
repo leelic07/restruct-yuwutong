@@ -2,12 +2,6 @@
   <el-row
     class="row-container"
     :gutter="0">
-    <el-button
-      size="small"
-      class="button-add"
-      type="primary"
-      plain
-      @click="onAdd">添加终端信息</el-button>
     <m-search
       :items="searchItems"
       @sizeChange="sizeChange"
@@ -17,52 +11,57 @@
         value="first"
         type="card">
         <el-tab-pane
-          label="终端管理"
+          label="会见申请"
           name="first" />
       </el-tabs>
       <el-table
-        :data="terminals.contents"
+        :data="prisonAreas.contents"
         border
         stripe
         style="width: 100%">
         <el-table-column
-          prop="terminalNumber"
-          label="终端号" />
-        <el-table-column
-          prop="roomNumber"
-          label="会议室号" />
+          prop="name"
+          label="监区名称" />
         <el-table-column
           prop="jailName"
           label="所属监狱" />
-        <el-table-column
-          prop="prisonConfigName"
-          label="分监区" />
-        <el-table-column
-          prop="hostPassword"
-          label="主持人密码" />
-        <el-table-column
-          prop="mettingPassword"
-          label="参与密码" />
-        <el-table-column
-          label="操作">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
-              type="primary"
               size="mini"
-              @click="onEdit(scope.row.id)">编辑</el-button>
+              type="primary"
+              @click="handleEdit(scope.row, scope.$index)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="terminals.total"
+      :total="prisonAreas.total"
       @onPageChange="getDatas" />
+    <el-dialog
+      :visible.sync="dialogVisible"
+      class="authorize-dialog"
+      title="编辑监区"
+      width="530px">
+      <el-input
+        v-model="prisonArea.name"
+        placeholder="请输入监区名称" />
+      <template slot="footer">
+        <el-button
+          type="primary"
+          size="mini"
+          class="button-add"
+          :disabled="!prisonArea.name"
+          @click="onEdit">更新</el-button>
+      </template>
+    </el-dialog>
   </el-row>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -74,36 +73,45 @@ export default {
           belong: { value: 'id', label: 'title' },
           filterable: true
         }
-      }
+      },
+      dialogVisible: false,
+      prisonArea: {},
+      index: ''
     }
   },
   computed: {
-    ...mapState(['terminals', 'prisonAll'])
+    ...mapState(['prisonAreas', 'prisonAll'])
   },
   mounted() {
+    this.getDatas()
     this.getPrisonAll().then(() => {
       this.searchItems.jailId.options = this.prisonAll
       this.searchItems.jailId.getting = false
-      this.getDatas()
     })
   },
   methods: {
-    ...mapActions(['getTerminals', 'getPrisonAll']),
+    ...mapActions(['getPrisonAreas', 'getPrisonAll', 'updatePrisonArea']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
     },
     getDatas() {
-      this.getTerminals({ ...this.filter, ...this.pagination })
+      this.getPrisonAreas({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
     },
-    onAdd() {
-      this.$router.push('/terminal/add')
+    handleEdit(e, index) {
+      this.prisonArea = Object.assign({}, e)
+      this.dialogVisible = true
+      this.index = index
     },
-    onEdit(id) {
-      this.$router.push(`/terminal/edit/${ id }`)
+    onEdit() {
+      this.updatePrisonArea(this.prisonArea).then(res => {
+        if (!res) return
+        this.prisonAreas.contents[this.index].name = this.prisonArea.name
+        this.dialogVisible = false
+      })
     }
   }
 }

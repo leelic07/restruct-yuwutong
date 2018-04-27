@@ -2,7 +2,7 @@ import actions from './actions'
 import mutations from './mutations'
 
 let state = {
-  meetings: { contents: [], total: 0 }
+  prisonAreas: { contents: [], total: 0 }
 }
 
 export default {

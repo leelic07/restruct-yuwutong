@@ -15,6 +15,7 @@ import breadCrumbs from './modules/breadcrumb'
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminFeedback from '@/views/admin-feedback/vuex'
 import adminPrison from '@/views/admin-prison/vuex'
+import adminPrisonArea from '@/views/admin-prison-area/vuex'
 import adminPrisonUser from '@/views/admin-prison-user/vuex'
 import adminTerminal from '@/views/admin-terminal/vuex'
 import adminVersion from '@/views/admin-version/vuex'
@@ -25,7 +26,6 @@ import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
-import infoPrisonArea from '@/views/info-prison-area/vuex'
 import noPage from './modules/no-page'
 import login from '@/views/login/vuex'
 
@@ -65,6 +65,7 @@ merge(
   filter,
   adminAdvertisement,
   adminPrison,
+  adminPrisonArea,
   adminTerminal,
   adminVersion,
   adminWhitemember,
@@ -74,7 +75,6 @@ merge(
   checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
-  infoPrisonArea,
   login,
   noPage
 )

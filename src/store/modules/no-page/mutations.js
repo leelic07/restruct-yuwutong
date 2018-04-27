@@ -11,7 +11,7 @@ export default {
   getCities(state, params) {
     state.cities = params.citys
   },
-  getPrisonAreas(state, params) {
-    state.prisonAreas = params.prisonConfigs
+  getJailPrisonAreas(state, params) {
+    state.jailPrisonAreas = params.prisonConfigs
   }
 }
