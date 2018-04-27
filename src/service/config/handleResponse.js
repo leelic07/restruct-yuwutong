@@ -61,14 +61,14 @@ const codes = {
     next: params => {
       localStorage.removeItem('user')
       tips(params.msg || '登录超时')
-      router.push({ path: '/login' })
+      router.push({ path: '/new-login' })
     }
   },
   99998: {
     next: params => {
       localStorage.removeItem('user')
       tips(params.msg || '无相应权限，请重新登录')
-      router.push({ path: '/login' })
+      router.push({ path: '/new-login' })
     }
   }
 }
