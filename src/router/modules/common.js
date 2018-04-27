@@ -6,6 +6,11 @@ let common = [{
   meta: { notLogin: true },
   component: resolve => require(['@/views/login/login'], resolve)
 }, {
+  path: '/new-login',
+  name: '新登录',
+  meta: { notLogin: true },
+  component: resolve => require(['@/views/login/new-login'], resolve)
+}, {
   path: '/dashboard1',
   name: 'dashboard1',
   component: frame,

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -76,9 +76,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      modifyPassword: 'modifyPassword' // 修改用户密码的方法
-    }),
-    ...mapMutations({
+      modifyPassword: 'modifyPassword', // 修改用户密码的方法
       logout: 'logout' // 修改用户密码成功以后重新登录
     }),
     // 点击提交按钮执行的方法
