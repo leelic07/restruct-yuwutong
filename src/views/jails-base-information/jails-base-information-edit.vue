@@ -79,11 +79,11 @@
           <el-time-picker
             is-range
             :clearable="false"
-            :disabled="Boolean(prison.meetingQueue1[index])"
+            :disabled="Boolean(prison.meetingQueue1[index + 1])"
             v-model="prison.meetingQueue1[index]"
             :value="prison.meetingQueue1[index]"
-            value-format="HH:mm"
-            format="HH:mm"
+            value-format="H:mm"
+            format="H:mm"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
@@ -92,7 +92,7 @@
             @change="onTimeRangeChange">
           </el-time-picker>
         </el-form-item>
-        <!-- <el-form-item>
+        <el-form-item>
           <el-button
             v-if="canAddRange"
             size="mini"
@@ -101,7 +101,7 @@
           <el-button
             size="small"
             @click="onRestRange">重置会见列表</el-button>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item
           label="监狱图片"
           prop="imageUrl">
@@ -164,7 +164,7 @@
       }
     },
     computed: {
-      ...mapState(['prison']),
+      ...mapState(['prison', 'meetingQueue']),
       canAddRange() {
         let lastIndex = this.prison.meetingQueue1.length - 1
         if (!this.rangeToAdd.length || this.rangeToAdd[0].indexOf('23:59') > -1) {
@@ -206,6 +206,8 @@
               meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
             })
             prison.meetingQueue = meetingQueue
+            if (meetingQueue.toString() !== this.meetingQueue.toString()) prison.changed = 1
+            else prison.changed = 0
             delete prison.meetingQueue1
             this.updatePrison(prison).then(res => {
               if (!res) return
@@ -245,13 +247,13 @@
         this.rangeToAdd = []
       },
       getNextRange(e) {
-        let end = new Date(1970, 0, 1, e[1].substr(0, 2), parseInt(e[1].substr(-2)) + 30)
+        let end = new Date(1970, 0, 1, e[1].split(':')[0], parseInt(e[1].split(':')[1]) + 30)
         if (end.getDate() !== 1) {
           this.rangeToAdd = [e[1], '23:59:59']
         }
         else {
-          var hours = `00${ end.getHours() }`.slice(-2), minute = `00${ end.getMinutes() }`.slice(-2)
-          this.rangeToAdd = [e[1], `${ hours }:${ minute }`]
+          var minute = `00${ end.getMinutes() }`.slice(-2)
+          this.rangeToAdd = [e[1], `${ end.getHours() }:${ minute }`]
         }
       }
     }

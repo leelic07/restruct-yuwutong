@@ -34,6 +34,7 @@ const codes = {
   },
   404: {
     next: params => {
+      console.log(params)
       tips('找不到对应的资源！')
     }
   },

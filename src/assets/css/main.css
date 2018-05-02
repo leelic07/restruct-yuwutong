@@ -106,3 +106,7 @@ img{
 .el-dialog {
   overflow: hidden;
 }
+.img-idCard img{
+  width: 342.4px;
+  height: 216px;
+}

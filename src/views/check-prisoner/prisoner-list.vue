@@ -60,23 +60,25 @@
             <span>{{ family.familyName }}</span>
           </el-col>
           <el-col :span="24">
-            <label for="">电话：</label>
-            <span>{{ family.familyPhone }}</span>
-          </el-col>
-          <el-col :span="24">
-            <label for="">身份证：</label>
-            <span>{{ family.familyUuid }}</span>
-          </el-col>
-          <el-col :span="24">
             <label for="">关系：</label>
             <span>{{ family.relationship }}</span>
           </el-col>
         </el-col>
+      </el-row>
+      <el-row :gutter="0">
+        <el-col :span="12" class="img-idCard">
+          <label for="">身份证正面：</label>
+          <img :src="family.familyIdCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
+        </el-col>
+        <el-col :span="12" class="img-idCard">
+          <label for="">身份证背面：</label>
+          <img :src="family.familyIdCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
+        </el-col>
+      </el-row>
+      <el-row :gutter="0">
         <el-col :span="12">
-          <el-col :span="12">
-            <span>照片：</span>
-            <img :src="family.familyAvatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
-          </el-col>
+          <label for="">照片：</label>
+          <img class="avatar" :src="family.familyAvatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
         </el-col>
       </el-row>
     </el-dialog>
@@ -126,7 +128,8 @@ export default {
   .row-container
     .el-dialog__body
       img
-        float: left
+        display: block;
+      img.avatar
         width: 200px
         height: 200px
 </style>
