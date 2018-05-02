@@ -70,7 +70,8 @@ export default {
         this.logout().then(res => {
           if (!res) return
           localStorage.removeItem('user')
-          this.$router.replace('/login')
+          localStorage.removeItem('routes')
+          this.$router.replace('/new-login')
         })
       })
     }

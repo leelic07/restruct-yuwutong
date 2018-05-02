@@ -60,7 +60,12 @@ export default {
   watch: {
     modifyPasswordResult() {
       setTimeout(() => {
-        this.logout() // 修改用户密码成功以后重新登录
+        this.logout().then(res => {
+          if (!res) return
+          localStorage.removeItem('user')
+          localStorage.removeItem('routes')
+          this.$router.replace('/new-login')
+        }) // 修改用户密码成功以后重新登录
       }, 1000)
     }
   },
