@@ -65,6 +65,7 @@ const codes = {
   20002: {
     next: params => {
       localStorage.removeItem('user')
+      localStorage.removeItem('routes')
       tips(params.msg || '登录超时')
       router.push({ path: '/new-login' })
     }
@@ -72,6 +73,7 @@ const codes = {
   99998: {
     next: params => {
       localStorage.removeItem('user')
+      localStorage.removeItem('routes')
       tips(params.msg || '无相应权限，请重新登录')
       router.push({ path: '/new-login' })
     }
