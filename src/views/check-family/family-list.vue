@@ -105,7 +105,6 @@ export default {
   data() {
     return {
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
         name: { type: 'input', label: '家属姓名' }
       },
       dialogTableVisible: false,
@@ -145,7 +144,6 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-
 .cell img
   width: 126.8px;
   cursor: pointer;
