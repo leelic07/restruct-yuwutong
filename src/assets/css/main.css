@@ -106,3 +106,8 @@ img{
 .el-dialog {
   overflow: hidden;
 }
+.main-sidebar a.activeMenu{
+  color: #fff;
+  background: #1e282c;
+  border-left-color: #3c8dbc !important;
+}

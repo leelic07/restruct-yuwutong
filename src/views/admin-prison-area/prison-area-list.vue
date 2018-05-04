@@ -11,7 +11,7 @@
         value="first"
         type="card">
         <el-tab-pane
-          label="会见申请"
+          label="监区说明"
           name="first" />
       </el-tabs>
       <el-table

@@ -15,6 +15,7 @@ export default new Router({
     ...information,
     ...common
   ],
+  linkActiveClass: 'activeMenu',
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition

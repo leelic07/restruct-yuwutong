@@ -78,8 +78,8 @@ const codes = {
 export default params => {
   let result = codes[params.status === 200 ? params.data.code : params.status]
   if (!result) {
-    tips(`未处理:${ params.status === 200 ? params.data.code : params.status }`)
-    return params.data
+    tips(params.data ? params.data.msg : '')
+    return false
   }
   result.next && result.next(params.data)
   if (result.resData) return params.data
