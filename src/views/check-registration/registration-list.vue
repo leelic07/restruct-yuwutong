@@ -22,12 +22,22 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column
-          prop="phone"
-          label="电话" />
-        <el-table-column
-          prop="uuid"
-          label="身份证" />
+        <el-table-column label="身份证正面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardFront"
+              :src="scope.row.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardFront, 'id')">
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证背面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardBack"
+              :src="scope.row.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardBack, 'id')">
+          </template>
+        </el-table-column>
         <el-table-column label="申请时间">
           <template slot-scope="scope"> {{scope.row.createdAt | Date}} </template>
         </el-table-column>
@@ -67,11 +77,11 @@
       <div class="img-box">
         <img
           :src="toAuthorize.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
-          @click="amplifyImage(toAuthorize.idCardFront)"
+          @click="amplifyImage(toAuthorize.idCardFront, 'id')"
           alt="身份证正面照">
         <img
           :src="toAuthorize.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
-          @click="amplifyImage(toAuthorize.idCardBack)"
+          @click="amplifyImage(toAuthorize.idCardBack, 'id')"
           alt="身份证背面照">
         <img
           :src="toAuthorize.avatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
@@ -133,7 +143,8 @@
     <el-dialog
       :visible.sync="show.imgplus"
       class="img-dialog"
-      width="440px">
+      :class="{ 'img-idCard' : isIdcard }"
+      :width="isIdcard ? '382.4px' : '440px'">
       <img :src="imgSrc">
     </el-dialog>
   </el-row>
@@ -145,7 +156,6 @@ export default {
   data() {
     return {
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
         prisonerNumber: { type: 'input', label: '囚犯号' },
         name: { type: 'input', label: '家属姓名' }
       },
@@ -157,7 +167,8 @@ export default {
         imgplus: false
       },
       remarks: '您的身份信息错误',
-      imgSrc: ''
+      imgSrc: '',
+      isIdcard: false
     }
   },
   computed: {
@@ -196,7 +207,9 @@ export default {
         }
       })
     },
-    amplifyImage(imgSrc) {
+    amplifyImage(imgSrc, isIdcard) {
+      if (isIdcard) this.isIdcard = true
+      else this.isIdcard = false
       this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
       this.show.imgplus = true
     }
@@ -205,4 +218,7 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
+.cell img
+  width: 126.8px;
+  cursor: pointer;
 </style>

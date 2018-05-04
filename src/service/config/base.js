@@ -10,8 +10,8 @@ export default {
   baseURL: 'http://39.108.185.51:8081/',
   // baseURL: 'http://10.10.10.2:8081/',
   // baseURL: 'http://localhost:8081',
-  // baseURL: 'http://10.10.10.103:8081/',
-  // baseURL: 'http://10.10.10.21:8081/',
+  // baseURL: 'http://10.10.10.103:8081/', // 刘琴
+  // baseURL: 'http://10.10.10.18:8081/',
   // 请求发送之前对出参进行处理
   // transformRequest: [data => data],
   // 请求发送之后对入参进行处理

@@ -22,12 +22,22 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column
-          prop="uuid"
-          label="身份证号" />
-        <el-table-column
-          prop="phone"
-          label="电话" />
+        <el-table-column label="身份证正面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardFront"
+              :src="scope.row.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardFront, 'id')">
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证背面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardBack"
+              :src="scope.row.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardBack, 'id')">
+          </template>
+        </el-table-column>
         <el-table-column label="对应罪犯">
           <template slot-scope="scope">
             <el-button
@@ -80,6 +90,12 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      class="img-idCard"
+      width="382.4px">
+      <img :src="imgSrc">
+    </el-dialog>
   </el-row>
 </template>
 
@@ -89,11 +105,12 @@ export default {
   data() {
     return {
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
         name: { type: 'input', label: '家属姓名' }
       },
       dialogTableVisible: false,
-      prisoner: {}
+      prisoner: {},
+      dialogVisible: false,
+      imgSrc: ''
     }
   },
   computed: {
@@ -117,16 +134,17 @@ export default {
     showPrisonerDetail(prisoner) {
       this.prisoner = prisoner
       this.dialogTableVisible = true
+    },
+    amplifyImage(imgSrc) {
+      this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
+      this.dialogVisible = true
     }
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  .row-container
-    .el-dialog__body
-      img
-          float: left
-          width: 150px
-          height: 150px
+.cell img
+  width: 126.8px;
+  cursor: pointer;
 </style>

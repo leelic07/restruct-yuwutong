@@ -6,5 +6,6 @@ export default {
   },
   getPrisonDetail(state, params) {
     state.prison = Object.assign({}, params.jails, { meetingQueue1: [null] })
+    state.meetingQueue = params.jails.meetingQueue
   }
 }

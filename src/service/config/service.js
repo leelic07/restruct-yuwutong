@@ -8,7 +8,7 @@ const instance = axios.create(base)
 
 let state = ''
 // 代理服务器
-// export let agency = ''
+// export const agency = ''
 export const agency = '/ywgk'
 // 获取异步请求的url
 const getUrl = (url) => `${ agency }${ url }`
