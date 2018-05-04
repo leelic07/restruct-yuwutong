@@ -1,10 +1,10 @@
 export default {
   // 获取狱务公开信息
-  getNewsAll(state, newsList) {
-    state.newsAll = newsList.data.news
-    state.newsTotal = newsList.data.newsSize
+  getNewsList(state, params) {
+    state.newsList.contents = params.news
+    state.newsList.total = params.newsSize
   },
-  getNews(state, res) {
+  getNewsDetail(state, res) {
     state.news = res.data
   },
   // 根据id获取新闻信息

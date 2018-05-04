@@ -36,10 +36,10 @@ export default {
     ...mapState(['news'])
   },
   mounted() {
-    this.getNews(this.$route.params.id)
+    this.getNewsDetail(this.$route.params.id)
   },
   methods: {
-    ...mapActions(['getNews', 'editNews']),
+    ...mapActions(['getNewsDetail', 'editNews']),
     onSuccess(e) {
       this.news.imageUrl = e
     },

@@ -1,4 +1,8 @@
-export default {
+import actions from './actions'
+import mutations from './mutations'
+
+let state = {
+  newsList: { contents: [], total: 0 },
   newsAll: [], // 狱务公开管理模块全部原始数据
   news: {},
   newsTotal: 0, // 狱务公开管理模块全部数据
@@ -14,4 +18,10 @@ export default {
   newsForEdit: {}, // 待编辑的新闻信息对象
   editNewsResult: {}, // 编辑狱务公开信息的结果
   addNewsResult: {} // 添加狱务公开信息的结果
+}
+
+export default {
+  actions,
+  mutations,
+  state
 }

@@ -6,10 +6,11 @@ export default {
     return service.get('/jails/getJailsDetail').then(res => res && res.data)
   },
   // 获取狱务公开信息
-  getNewsAll: pagination =>
-    service.get('/news/page', pagination).then(res => res),
+  getNewsList: params => {
+    return service.get('/news/page', params).then(res => res && res.data)
+  },
   // 获取新闻详情
-  getNews: params =>
+  getNewsDetail: params =>
     service.get(`/news/description?id=${ params }`).then(res => res).catch(err => err),
   // 根据id删除狱务公开信息
   deleteNews: params =>

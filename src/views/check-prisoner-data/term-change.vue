@@ -23,9 +23,22 @@
         </el-upload>
       </el-col>
     </el-row>
-    <el-row v-if="prisonTerms.length">
+    <el-row v-if="prisonTermResult.errors && prisonTermResult.errors.length">
       <!--上传模板文件的结果-->
-      <el-table :data="prisonTerms">
+      <el-tag type="danger">失败信息:</el-tag>
+      <el-table :data="prisonTermResult.errors">
+        <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
+        <el-table-column label="减刑时间" prop="changedate"></el-table-column>
+        <el-table-column label="变动类型" prop="changetype"></el-table-column>
+        <el-table-column label="减刑始日" prop="termStart"></el-table-column>
+        <el-table-column label="减刑止日" prop="termFinish"></el-table-column>
+        <el-table-column label="失败原因" show-overflow-tooltip prop="reason" />
+      </el-table>
+    </el-row>
+    <el-row v-if="prisonTermResult.prisonTerms && prisonTermResult.prisonTerms.length">
+      <!--上传模板文件的结果-->
+      <el-tag type="success">成功信息:</el-tag>
+      <el-table :data="prisonTermResult.prisonTerms">
         <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
         <el-table-column label="减刑时间" prop="changedate"></el-table-column>
         <el-table-column label="变动类型" prop="changetype"></el-table-column>
@@ -42,7 +55,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
@@ -51,32 +64,20 @@ export default {
       fileList: []
     }
   },
-  watch: {
-    uploadResult(newValue) {
-      this.importPrisonTerm({ filepath: newValue.path }) // 罪犯刑期模板上传成功后将罪犯刑期数据给服务端解析
-    },
-    prisonTermResult(newValue) {
-      this.alertInformation(newValue)
-    }
-  },
   computed: {
-    ...mapGetters({
-      prisonTermResult: 'prisonTermResult', // 获取刑期变动模板导入结果
-      uploadResult: 'uploadResult', // 获取上传罪犯刑期模板文件的结果
-      prisonTerms: 'prisonTerms' // 获取罪犯刑期变动的模板文件
-    })
+    ...mapState(['prisonTermResult', 'uploadResult'])
   },
   methods: {
-    ...mapActions({
-      importPrisonTerm: 'importPrisonTerm', // 刑期变动模板上传成功后将刑期变动模板导入到服务端
-      uploadFile: 'uploadFile' // 上传罪犯刑期模板文件到服务端
-    }),
-    ...mapMutations({
-      resetPrisonTerms: 'resetPrisonTerms' // 重置刑期变动信息
-    }),
+    ...mapActions(['importPrisonTerm', 'uploadFile', 'resetState']),
     // 上传罪犯刑期模板文件到服务端
     beforeUpload(file) {
-      this.uploadFile(file)
+      this.uploadFile(file).then(res => {
+        if (!res) return
+        this.importPrisonTerm({ filepath: this.uploadResult.path }).then(res => {
+          if (!res) return
+          this.alertInformation(this.prisonTermResult)
+        })
+      })
       return false
     },
     // 点击上传到服务器执行的方法
@@ -90,14 +91,15 @@ export default {
         dangerouslyUseHTMLString: true,
         message: `<p>新增：${ information.add_total }</p>
                   <p>成功：${ information.success_total }</p>
-                  <p>修改：${ information.update_total }</p>`,
-        duration: 5000,
+                  <p>修改：${ information.update_total }</p>
+                  <p>失败：${ information.errors.length }</p>`,
+        duration: 8000,
         offset: 100
       })
     }
   },
   mounted() {
-    this.resetPrisonTerms()
+    this.resetState({ prisonTermResult: {} })
   }
 }
 </script>

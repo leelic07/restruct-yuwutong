@@ -13,7 +13,7 @@
           name="first" />
       </el-tabs>
       <el-table
-        :data="logList"
+        :data="appLogs.contents"
         border
         stripe
         style="width: 100%">
@@ -47,8 +47,8 @@
     </el-col>
     <m-pagination
       ref="pagination"
-      :total="logTotal"
-      @onPageChange="currentChange" />
+      :total="appLogs.total"
+      @onPageChange="getDatas" />
   </el-row>
 </template>
 
@@ -65,19 +65,19 @@ export default {
     }
   },
   computed: {
-    ...mapState(['logList', 'logTotal'])
+    ...mapState(['appLogs'])
   },
   mounted() {
-    this.getLogList(this.pagination)
+    this.getDatas()
   },
   methods: {
-    ...mapActions(['getLogList']),
+    ...mapActions(['getAppLogs']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
-      this.currentChange()
+      this.getDatas()
     },
-    currentChange() {
-      this.getLogList({ ...this.filter, ...this.pagination })
+    getDatas() {
+      this.getAppLogs({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
