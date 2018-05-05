@@ -79,7 +79,7 @@
           <el-time-picker
             is-range
             :clearable="false"
-            :disabled="Boolean(prison.meetingQueue1[index + 1])"
+            :disabled="Boolean(prison.meetingQueue1[index])"
             v-model="prison.meetingQueue1[index]"
             :value="prison.meetingQueue1[index]"
             value-format="HH:mm"
@@ -92,7 +92,7 @@
             @change="onTimeRangeChange">
           </el-time-picker>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button
             v-if="canAddRange"
             size="mini"
@@ -101,7 +101,7 @@
           <el-button
             size="small"
             @click="onRestRange">重置会见列表</el-button>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           label="监狱图片"
           prop="imageUrl">
