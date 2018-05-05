@@ -38,7 +38,8 @@ export default {
     },
     action: {
       type: String,
-      default: 'http://39.108.185.51:1339/avatars'
+      // default: 'http://39.108.185.51:1339/avatars'
+      default: `https://www.yuwugongkai.com/image-server/avatars`
     },
     headers: {
       type: Object,

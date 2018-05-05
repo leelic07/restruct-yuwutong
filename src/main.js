@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import store from './store'
 import filters from './filters'
 import components from '@/components'
+import config from '@/service/config/base'
 import '../static/bootstrap/js/bootstrap.min.js'
 import '../static/dist/js/app.min.js'
 
@@ -25,7 +26,7 @@ Vue.config.productionTip = false
 
 // Vue.prototype._$agency = 'http://10.10.10.2:8081/ywgk'
 
-Vue.prototype._$agency = 'http://39.108.185.51:1339'
+Vue.prototype._$agency = `${ config.baseURL }image-server` // Nodejs 文件上传服务器地址
 
 // Vue.prototype._$agency = 'http://10.10.10.127:8081';
 
