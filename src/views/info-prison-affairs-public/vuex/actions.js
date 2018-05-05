@@ -2,18 +2,11 @@ import http from '@/service'
 
 export default {
   // 获取狱务公开信息
-  getNewsAll: ({ commit }, regs) => {
-    http.getNewsAll(regs).then(res => {
-      if (!res.code) {
-        commit('getNewsAll', { data: { news: [], newsSize: 0 } })
-      }
-      else if (res.code === 200) {
-        commit('getNewsAll', res)
-      }
-    })
+  getNewsList: ({ commit }, params) => {
+    http.getNewsList(params).then(res => res && commit('getNewsList', res))
   },
-  getNews: ({ commit }, regs) =>
-    http.getNews(regs).then(res => res.code === 200 && commit('getNews', res)),
+  getNewsDetail: ({ commit }, regs) =>
+    http.getNewsDetail(regs).then(res => res.code === 200 && commit('getNewsDetail', res)),
   // 编辑狱务公开信息
   editNews({ commit }, regs) {
     return http.editNews(regs).then(res => res.code === 200)

@@ -1,5 +1,4 @@
 import accounts from './modules/accounts'
-import search from './modules/search'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
 import passwordModification from './modules/password-modification'
@@ -15,7 +14,6 @@ import noPage from './modules/no-page'
 
 export default Object.assign(
   accounts,
-  search,
   jailsInformation,
   lawsInformation,
   passwordModification,

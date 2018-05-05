@@ -1,11 +1,12 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  uploadResult: {}// 上传文件的结果
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

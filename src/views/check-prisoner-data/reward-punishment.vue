@@ -23,9 +23,20 @@
         </el-upload>
       </el-col>
     </el-row>
-    <el-row v-if="prisonerRewardPunishments.length">
+    <el-row v-if="prisonerRewardPunishmentResult.errors && prisonerRewardPunishmentResult.errors.length">
       <!--上传模板文件的结果-->
-      <el-table :data="prisonerRewardPunishments">
+      <el-tag type="danger">失败信息:</el-tag>
+      <el-table :data="prisonerRewardPunishmentResult.errors">
+        <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
+        <el-table-column label="罪犯名字" prop="prisonerName"></el-table-column>
+        <el-table-column label="奖惩内容" prop="ndry"></el-table-column>
+        <el-table-column label="失败原因" show-overflow-tooltip prop="reason" />
+      </el-table>
+    </el-row>
+    <el-row v-if="prisonerRewardPunishmentResult.prisonerRewardPunishments && prisonerRewardPunishmentResult.prisonerRewardPunishments.length">
+      <!--上传模板文件的结果-->
+      <el-tag type="success">成功信息:</el-tag>
+      <el-table :data="prisonerRewardPunishmentResult.prisonerRewardPunishments">
         <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
         <el-table-column label="罪犯名字" prop="prisonerName"></el-table-column>
         <el-table-column label="年份" prop="datayear"></el-table-column>
@@ -41,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
@@ -50,32 +61,20 @@ export default {
       fileList: []
     }
   },
-  watch: {
-    uploadResult(newValue) {
-      this.importPrisonerRewardPunishment({ filepath: newValue.path }) // 上传罪犯奖惩模板文件成功后将罪犯奖惩数据给服务端解析
-    },
-    prisonerRewardPunishmentResult(newValue) {
-      this.alertInformation(newValue)
-    }
-  },
   computed: {
-    ...mapGetters({
-      prisonerRewardPunishmentResult: 'prisonerRewardPunishmentResult', // 获取罪犯奖惩模板导入结果
-      uploadResult: 'uploadResult', // 上传罪犯奖惩模板文件的结果
-      prisonerRewardPunishments: 'prisonerRewardPunishments'// 上传模板返回信息
-    })
+    ...mapState(['prisonerRewardPunishmentResult', 'uploadResult'])
   },
   methods: {
-    ...mapActions({
-      importPrisonerRewardPunishment: 'importPrisonerRewardPunishment', // 罪犯奖惩模板上传成功后将罪犯奖惩模板导入到服务端
-      uploadFile: 'uploadFile' // 上传罪犯奖惩信息到服务端
-    }),
-    ...mapMutations({
-      resetPrisonerRewardPunishments: 'resetPrisonerRewardPunishments' // 重置罪犯奖惩信息
-    }),
+    ...mapActions(['importPrisonerRewardPunishment', 'uploadFile', 'resetState']),
     // 上传罪犯奖惩模板文件到服务端
     beforeUpload(file) {
-      this.uploadFile(file)
+      this.uploadFile(file).then(res => {
+        if (!res) return
+        this.importPrisonerRewardPunishment({ filepath: this.uploadResult.path }).then(res => {
+          if (!res) return
+          this.alertInformation(this.prisonerRewardPunishmentResult)
+        })
+      })
       return false
     },
     // 点击上传到服务器执行的方法
@@ -89,14 +88,15 @@ export default {
         dangerouslyUseHTMLString: true,
         message: `<p>新增：${ information.add_total }</p>
                   <p>成功：${ information.success_total }</p>
-                  <p>修改：${ information.update_total }</p>`,
-        duration: 5000,
+                  <p>修改：${ information.update_total }</p>
+                  <p>失败：${ information.errors.length }</p>`,
+        duration: 8000,
         offset: 100
       })
     }
   },
   mounted() {
-    this.resetPrisonerRewardPunishments()
+    this.resetState({ prisonerRewardPunishmentResult: {} })
   }
 }
 </script>

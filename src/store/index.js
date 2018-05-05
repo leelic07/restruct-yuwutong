@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import accounts from './modules/accounts'
 import breadCrumb from './modules/bread-crumb'
-import search from './modules/search'
 import jailsInformation from './modules/jails-information'
-import loading from './modules/loading'
+import common from './modules/common'
 import passwordModification from './modules/password-modification'
 import quillEditor from './modules/quill-editor'
 import downloadFile from './modules/download-file'
@@ -14,6 +12,7 @@ import breadCrumbs from './modules/breadcrumb'
 
 import adminAdvertisement from '@/views/admin-advertisement/vuex'
 import adminFeedback from '@/views/admin-feedback/vuex'
+import adminLog from '@/views/admin-log/vuex'
 import adminPrison from '@/views/admin-prison/vuex'
 import adminPrisonArea from '@/views/admin-prison-area/vuex'
 import adminPrisonUser from '@/views/admin-prison-user/vuex'
@@ -26,11 +25,10 @@ import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
+import infoPrisonAffairsPublic from '@/views/info-prison-affairs-public/vuex'
 import noPage from './modules/no-page'
 import login from '@/views/login/vuex'
 
-import adminLog from './modules/admin-log'
-import infoPrisonAffairsPublic from './modules/info-prison-affairs-public'
 import filter from './modules/filter'
 
 import 'babel-polyfill'
@@ -48,10 +46,8 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
   breadCrumb,
-  search,
-  accounts,
   jailsInformation,
-  loading,
+  common,
   passwordModification,
   quillEditor,
   downloadFile,

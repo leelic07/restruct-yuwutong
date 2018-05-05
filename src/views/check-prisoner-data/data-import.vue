@@ -23,62 +23,50 @@
         </el-upload>
       </el-col>
     </el-row>
-    <el-row v-if="errors.length">
+    <el-row v-if="prisonerDataResult.errors && prisonerDataResult.errors.length">
       <el-tag type="danger">失败信息:</el-tag>
       <!--上传模板失败的结果-->
-      <el-table :data="errors">
-        <el-table-column label="罪犯编号" prop="prisonerNumber" />
+      <el-table :data="prisonerDataResult.errors">
+        <el-table-column label="罪犯编号" prop="prisonerNumber" width="100px" />
         <el-table-column label="罪犯名字" prop="name" />
-        <el-table-column label="性别">
+        <el-table-column label="性别" width="50px">
           <template slot-scope="scope">
             {{scope.row.gender | gender}}
           </template>
         </el-table-column>
         <el-table-column label="犯罪事实" prop="crimes" />
         <el-table-column label="附加刑" prop="additionalPunishment" />
-        <el-table-column label="现刑期起日">
+        <el-table-column label="现刑期起日" width="270px">
           <template slot-scope="scope">
-            {{scope.row.prisonTermStartedAt | Date}}
+            <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="现刑期止日">
-          <template slot-scope="scope">
-            {{scope.row.prisonTermEndedAt | Date}}
-          </template>
-        </el-table-column>
-        <el-table-column label="地区" prop="prisonArea" />
+        <el-table-column label="监区" prop="prisonArea" />
         <el-table-column label="原判刑期" prop="originalSentence" />
-        <el-table-column label="创建时间">
-          <template slot-scope="scope">
-            {{scope.row.createdAt | Date}}
-          </template>
-        </el-table-column>
+        <el-table-column label="失败原因" show-overflow-tooltip prop="reason" />
       </el-table>
     </el-row>
-    <el-row v-if="prisonerData.length">
+    <el-row v-if="prisonerDataResult.prisoners && prisonerDataResult.prisoners.length">
       <el-tag type="success">成功信息:</el-tag>
       <!--上传模板文件的结果-->
-      <el-table :data="prisonerData">
-        <el-table-column label="罪犯编号" prop="prisonerNumber" />
+      <el-table :data="prisonerDataResult.prisoners">
+        <el-table-column label="罪犯编号" prop="prisonerNumber" width="100px" />
         <el-table-column label="罪犯名字" prop="name" />
-        <el-table-column label="性别">
+        <el-table-column label="性别" width="50px">
           <template slot-scope="scope">
             {{scope.row.gender | gender}}
           </template>
         </el-table-column>
         <el-table-column label="犯罪事实" prop="crimes" />
         <el-table-column label="附加刑" prop="additionalPunishment" />
-        <el-table-column label="现刑期起日">
+        <el-table-column label="现刑期起日" width="270px">
           <template slot-scope="scope">
-            {{scope.row.prisonTermStartedAt | Date}}
+            <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="现刑期止日">
-          <template slot-scope="scope">
-            {{scope.row.prisonTermEndedAt | Date}}
-          </template>
-        </el-table-column>
-        <el-table-column label="地区" prop="prisonArea" />
+        <el-table-column label="监区" prop="prisonArea" />
         <el-table-column label="原判刑期" prop="originalSentence" />
         <el-table-column label="创建时间">
           <template slot-scope="scope">
@@ -91,7 +79,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -99,36 +87,22 @@ export default {
       prisonerHref: `${ this._$baseURL }/download/downloadfile?filepath=prison_template.xls`
     }
   },
-  watch: {
-    uploadResult(newValue) {
-      this.importPrisoner({ filepath: newValue.path })
-    },
-    prisonerDataResult(newValue) {
-      this.alertInformation(newValue)
-    }
-  },
   computed: {
-    ...mapGetters({
-      prisonerDataResult: 'prisonerDataResult', // 获取罪犯模板导入结果
-      uploadResult: 'uploadResult', // 获取上传罪犯模板文件的结果
-      prisonerData: 'prisonerData', // 获取上传罪犯模板成功的信息
-      errors: 'errors' // 上传模板成功返回的失败信息
-    })
+    ...mapState(['prisonerDataResult', 'uploadResult'])
   },
   methods: {
-    ...mapActions({
-      importPrisoner: 'importPrisoner', // 罪犯数据模板上传成功后将罪犯数据模板导入到服务端
-      uploadFile: 'uploadFile' // 上传罪犯模板文件到服务端
-    }),
-    ...mapMutations({
-      resetprisonerData: 'resetprisonerData', // 重置罪犯模板信息
-      resetErrors: 'resetErrors' // 重置罪犯模板失败信息
-    }),
+    ...mapActions(['importPrisoner', 'uploadFile', 'resetState']),
     submitUpload() {
       this.$refs.upload.submit()
     },
     beforeUpload(file) {
-      this.uploadFile(file)
+      this.uploadFile(file).then(res => {
+        if (!res) return
+        this.importPrisoner({ filepath: this.uploadResult.path }).then(res => {
+          if (!res) return
+          this.alertInformation(this.prisonerDataResult)
+        })
+      })
       return false
     },
     // 解析文件成功后执行的方法
@@ -146,8 +120,7 @@ export default {
     }
   },
   mounted() {
-    this.resetprisonerData()
-    this.resetErrors()
+    this.resetState({ prisonerDataResult: {} })
   }
 }
 </script>
@@ -156,7 +129,6 @@ export default {
 .row-container {
   min-height: 370px;
   line-height: 40px;
-
   .red {
     color: #F56C6C;
     font-weight: bold;
