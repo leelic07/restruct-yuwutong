@@ -1,4 +1,4 @@
-import * as service from '../base/service'
+import * as service from '../config/service'
 
 export default {
   // 获取囚犯账户信息列表

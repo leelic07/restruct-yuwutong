@@ -1,4 +1,4 @@
-import * as service from '../base/service'
+import * as service from '../config/service'
 
 export default {
   // 带搜索条件时执行的方法

@@ -69,8 +69,9 @@ export default {
       }).then(() => {
         this.logout().then(res => {
           if (!res) return
-          sessionStorage.clear()
-          this.$router.replace('/login')
+          localStorage.removeItem('user')
+          localStorage.removeItem('routes')
+          this.$router.replace('/new-login')
         })
       })
     }

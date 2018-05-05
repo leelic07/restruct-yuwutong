@@ -133,7 +133,11 @@
       onTypeChange(e) {
         switch (e) {
           case 2:
-            this.imageRatio = '200:360'
+            this.imageRatio = '360:200'
+            this.advertisement.imageUrl = ''
+            break
+          case 1:
+            this.imageRatio = '9:16'
             this.advertisement.imageUrl = ''
             break
           default:

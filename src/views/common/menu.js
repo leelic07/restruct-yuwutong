@@ -3,6 +3,10 @@ let adminMenu = [{
     title: '监狱管理',
     icon: 'iconfont icon-jianyuguanli'
   }, {
+    path: '/prison-area/list',
+    title: '监区说明管理',
+    icon: 'iconfont icon-jianquxinxi'
+  }, {
     path: '/prison-user/list',
     title: '监狱用户管理',
     icon: 'iconfont icon-jianyuyonghu'

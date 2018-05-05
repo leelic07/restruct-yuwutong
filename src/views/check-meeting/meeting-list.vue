@@ -50,7 +50,7 @@
           class-name="orange"
           label="申请状态">
           <template slot-scope="scope">
-            <span v-if="scope.row.status !== 'DENIED'">{{scope.row.status | applyStatus}}</span>
+            <span v-if="!scope.row.content">{{scope.row.status | applyStatus}}</span>
             <el-tooltip v-else :content="scope.row.content" placement="top">
               <span>{{scope.row.status | applyStatus}}</span>
             </el-tooltip>

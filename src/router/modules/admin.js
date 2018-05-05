@@ -18,6 +18,23 @@ let admin = [{
     component: resolve => require(['@/views/admin-prison/prison-edit'], resolve)
   }]
 }, {
+  path: '/prison-area',
+  name: '监区说明管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/prison-area/list',
+    name: '监区列表',
+    component: resolve => require(['@/views/admin-prison-area/prison-area-list'], resolve)
+  // }, {
+  //   path: '/prison-area/add',
+  //   name: '新增监狱',
+  //   component: resolve => require(['@/views/admin-prison-area/prison-area-add'], resolve)
+  // }, {
+  //   path: '/prison-area/edit/:id',
+  //   name: '编辑监狱',
+  //   component: resolve => require(['@/views/admin-prison-area/prison-area-edit'], resolve)
+  }]
+}, {
   path: '/prison-user',
   name: '监狱用户管理',
   meta: { hidden: true },
@@ -68,14 +85,6 @@ let admin = [{
     path: '/whitemember/list',
     name: '白名单列表',
     component: resolve => require(['@/views/admin-whitemember/whitemember-list'], resolve)
-  }, {
-    path: '/whitemember/add',
-    name: '新增白名单',
-    component: resolve => require(['@/views/admin-whitemember/whitemember-add'], resolve)
-  }, {
-    path: '/whitemember/edit/:id',
-    name: '编辑白名单',
-    component: resolve => require(['@/views/admin-whitemember/whitemember-edit'], resolve)
   }]
 }, {
   path: '/terminal',
