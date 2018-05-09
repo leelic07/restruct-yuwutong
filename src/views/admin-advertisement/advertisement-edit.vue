@@ -53,6 +53,7 @@
             v-model="advertisement.provinceId"
             :loading="gettingProvince"
             filterable
+            clearable
             placeholder="请选择省份">
             <el-option
               v-for="province in provincesAll"

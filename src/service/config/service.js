@@ -10,6 +10,7 @@ let state = ''
 // 代理服务器
 // export const agency = ''
 export const agency = '/ywgk'
+// export const agency = '/ywgk-demo'
 // 获取异步请求的url
 const getUrl = (url) => `${ agency }${ url }`
 // http request 拦截器
