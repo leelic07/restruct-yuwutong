@@ -65,7 +65,7 @@
           </el-col>
         </el-col>
       </el-row>
-      <el-row :gutter="0">
+      <el-row class="row-flex" :gutter="20" justify="space-between" type="flex">
         <el-col :span="12" class="img-idCard">
           <label for="">身份证正面：</label>
           <img :src="family.familyIdCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
@@ -75,7 +75,7 @@
           <img :src="family.familyIdCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
         </el-col>
       </el-row>
-      <el-row :gutter="0">
+      <el-row :gutter="20">
         <el-col :span="12">
           <label for="">照片：</label>
           <img class="avatar" :src="family.familyAvatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
@@ -125,11 +125,15 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-  .row-container
-    .el-dialog__body
-      img
-        display: block;
-      img.avatar
-        width: 200px
-        height: 200px
+.row-container
+  .el-dialog__body
+    img
+      display: block;
+    img.avatar
+      width: 200px
+      height: 200px
+.img-idCard
+  min-width: 350px;
+.row-flex
+  flex-wrap: wrap;
 </style>
