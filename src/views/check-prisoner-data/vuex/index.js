@@ -1,11 +1,14 @@
 import actions from './actions'
 import mutations from './mutations'
-import getters from './getters'
-import state from './state'
+
+let state = {
+  prisonerDataResult: {}, // 罪犯模板导入结果
+  prisonTermResult: {}, // 刑期变动模板导入结果
+  prisonerRewardPunishmentResult: {} // 罪犯奖惩模板导入结果
+}
 
 export default {
   actions,
   mutations,
-  getters,
   state
 }

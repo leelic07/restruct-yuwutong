@@ -33,7 +33,7 @@ img{
   background: #fff;
 }
 .row-container .el-table__body-wrapper{
-  overflow: visible;
+  /* overflow: visible; */
 }
 .row-container .cell .el-button--default{
     float: left;
@@ -110,4 +110,8 @@ img{
   color: #fff;
   background: #1e282c;
   border-left-color: #3c8dbc !important;
+}
+.img-idCard img{
+  width: 342.4px;
+  height: 216px;
 }

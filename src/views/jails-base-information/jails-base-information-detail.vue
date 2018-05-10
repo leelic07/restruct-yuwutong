@@ -94,7 +94,7 @@
     > .el-row
       > .el-col-12
         &:first-child
-          padding: 3% 2% 0 2%
+          padding: 3% 2% 20px 2%
           img
             max-width: 100%
             float: left

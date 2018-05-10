@@ -52,6 +52,7 @@
           <el-select
             v-model="advertisement.provinceId"
             filterable
+            clearable
             :loading="gettingProvince"
             placeholder="请选择省份">
             <el-option

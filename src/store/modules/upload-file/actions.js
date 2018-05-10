@@ -2,9 +2,13 @@ import http from '@/service'
 
 export default {
   // 上传文件
-  uploadFile({ commit }, regs) {
+  uploadFile({ commit }, params) {
     let formData = new FormData()
-    regs && formData.append('file', regs)
-    http.uploadFile(formData).then(res => commit('uploadFile', res)).catch(err => console.log(err))
+    params && formData.append('file', params)
+    return http.uploadFile(formData).then(res => {
+      if (!res) return
+      commit('uploadFile', res)
+      return true
+    })
   }
 }

@@ -5,15 +5,19 @@ import handleResponse from './handleResponse'
 import qs from 'qs'
 
 const instance = axios.create(base)
+
+let state = ''
 // 代理服务器
-// export let agency = ''
+// export const agency = ''
 export const agency = '/ywgk'
+// export const agency = '/ywgk-demo'
 // 获取异步请求的url
 const getUrl = (url) => `${ agency }${ url }`
 // http request 拦截器
 instance.interceptors.request.use(
   config => {
     store.commit('showLoading')
+    state = history.state
     return config
   },
   error => Promise.reject(error)
@@ -22,11 +26,13 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     store.commit('hideLoading')
+    if (state && history.state.key !== state.key) return
     return handleResponse(response)
   },
   error => {
     if (error.response) {
       store.commit('hideLoading')
+      if (state && history.state.key !== state.key) return
       return handleResponse(error.response)
     }
   }

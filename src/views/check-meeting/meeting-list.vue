@@ -25,12 +25,22 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column
-          prop="phone"
-          label="电话" />
-        <el-table-column
-          prop="uuid"
-          label="身份证" />
+        <el-table-column label="身份证正面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardFront"
+              :src="scope.row.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardFront, 'id')">
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证背面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardBack"
+              :src="scope.row.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardBack, 'id')">
+          </template>
+        </el-table-column>
         <el-table-column
           label="申请时间"
           prop="applicationDate" />
@@ -160,6 +170,12 @@
           @click="onWithdraw">确定</el-button>
       </el-row>
     </el-dialog>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      class="img-idCard"
+      width="382.4px">
+      <img :src="imgSrc">
+    </el-dialog>
   </el-row>
 </template>
 
@@ -171,7 +187,6 @@ export default {
     return {
       tabs: 'first',
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
         prisonerNumber: { type: 'input', label: '囚号' },
         name: { type: 'input', label: '家属姓名' }
       },
@@ -186,7 +201,9 @@ export default {
       withdraw: {},
       rule: {
         remarks: [{ required: true, message: '请填写撤回理由', trigger: 'blur' }]
-      }
+      },
+      dialogVisible: false,
+      imgSrc: ''
     }
   },
   computed: {
@@ -250,10 +267,17 @@ export default {
           })
         }
       })
+    },
+    amplifyImage(imgSrc) {
+      this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
+      this.dialogVisible = true
     }
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
+.cell img
+  width: 126.8px;
+  cursor: pointer;
 </style>

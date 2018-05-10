@@ -22,12 +22,22 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column
-          prop="phone"
-          label="电话" />
-        <el-table-column
-          prop="uuid"
-          label="身份证" />
+        <el-table-column label="身份证正面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardFront"
+              :src="scope.row.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardFront)">
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证背面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardBack"
+              :src="scope.row.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardBack)">
+          </template>
+        </el-table-column>
         <el-table-column
           prop="content"
           show-overflow-tooltip
@@ -44,6 +54,12 @@
       ref="pagination"
       :total="feedbacks.total"
       @onPageChange="getDatas" />
+    <el-dialog
+      :visible.sync="dialogVisible"
+      class="img-idCard"
+      width="382.4px">
+      <img :src="imgSrc">
+    </el-dialog>
   </el-row>
 </template>
 
@@ -53,10 +69,10 @@ export default {
   data() {
     return {
       searchItems: {
-        uuid: { type: 'input', label: '身份证号' },
-        phone: { type: 'input', label: '手机号' },
         name: { type: 'input', label: '家属姓名' }
-      }
+      },
+      dialogVisible: false,
+      imgSrc: ''
     }
   },
   computed: {
@@ -76,10 +92,17 @@ export default {
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
+    },
+    amplifyImage(imgSrc) {
+      this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
+      this.dialogVisible = true
     }
   }
 }
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
+.cell img
+  width: 126.8px;
+  cursor: pointer;
 </style>

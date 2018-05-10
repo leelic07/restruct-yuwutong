@@ -4,7 +4,8 @@ export default {
   // 所有监狱
   getJails: () =>
     service.get('/jails/all').then(res => res).catch(err => err),
-  getLogList: params => {
+  // 日志-列表
+  getAppLogs: params => {
     return service.get('/app_logs/page', params).then(res => res && res.data)
   },
   // 监狱用户管理-列表

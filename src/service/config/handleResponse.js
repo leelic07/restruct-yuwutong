@@ -34,6 +34,7 @@ const codes = {
   },
   404: {
     next: params => {
+      console.log(params)
       tips('找不到对应的资源！')
     }
   },
@@ -55,6 +56,11 @@ const codes = {
   504: {
     next: params => {
       tips('请检查服务是否启动！')
+    }
+  },
+  10006: {
+    next: params => {
+      tips(params.msg || '账号不存在，请确认用户名或密码错误')
     }
   },
   20002: {

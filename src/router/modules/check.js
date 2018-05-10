@@ -50,15 +50,6 @@ let check = [{
     component: resolve => require(['@/views/check-family/family-list'], resolve)
   }]
 }, {
-  path: '/prison-accounts',
-  name: '囚犯账户管理',
-  meta: { hidden: true },
-  children: [{
-    path: '/prison-accounts/list',
-    name: '囚犯账户列表',
-    component: resolve => require(['@/views/prison-accounts/prison-accounts'], resolve)
-  }]
-}, {
   path: '/prisoner-data',
   name: '数据管理',
   meta: { hidden: true },
