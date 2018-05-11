@@ -26,8 +26,23 @@
           prop="prisonerNumber"
           label="囚号" />
         <el-table-column
+          prop="prisonArea"
+          label="监区" />
+        <el-table-column
           prop="crimes"
           label="罪名" />
+        <el-table-column label="会见次数/月">
+          <template slot-scope="scope">
+            <div>
+              {{ scope.row.accessTime }}
+              <el-button
+                size="small"
+                type="text"
+                style="margin-left: 5px;"
+                @click="handleAccessTime(scope.row)">修改</el-button>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column label="刑期起止">
           <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
@@ -50,6 +65,29 @@
       ref="pagination"
       :total="prisoners.total"
       @onPageChange="getDatas" />
+    <el-dialog
+      title="修改会见次数"
+      :visible.sync="isEditAccessTime">
+      <el-form>
+        <el-form-item label="罪犯">{{ prisoner.name }}</el-form-item>
+        <el-form-item label="会见次数">
+          <el-input placeholder="请输入会见次数" v-model="prisoner.accessTime"></el-input>
+        </el-form-item>
+      </el-form>
+      <!-- <label class="el-form-item__label">罪犯：{{ prisoner.name }}</label> -->
+
+      <template slot="footer">
+        <el-button
+          class="button-add"
+          size="mini"
+          type="danger"
+          @click="isEditAccessTime = false">取消</el-button>
+        <el-button
+          class="button-add"
+          size="mini"
+          @click="isEditAccessTime = true">确定</el-button>
+      </template>
+    </el-dialog>
     <el-dialog
       title="家属信息"
       :visible.sync="dialogTableVisible">
@@ -95,7 +133,9 @@ export default {
         name: { type: 'input', label: '姓名' }
       },
       dialogTableVisible: false,
-      family: {}
+      family: {},
+      isEditAccessTime: false,
+      prisoner: {}
     }
   },
   computed: {
@@ -115,6 +155,11 @@ export default {
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
+    },
+    handleAccessTime(e) {
+      console.log(e)
+      this.prisoner = e
+      this.isEditAccessTime = true
     },
     showFamilyDetail(family) {
       this.family = family
