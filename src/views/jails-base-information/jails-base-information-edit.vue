@@ -62,6 +62,15 @@
             placeholder="请填写街道名称" />
         </el-form-item>
         <el-form-item
+          label="探监路线"
+          prop="visitAddress">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 6 }"
+            v-model="prison.visitAddress"
+            placeholder="请填写实地探监路线" />
+        </el-form-item>
+        <el-form-item
           label="监狱编号"
           prop="zipcode">
           <el-input
