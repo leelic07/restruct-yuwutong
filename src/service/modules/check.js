@@ -37,6 +37,10 @@ export default {
   getPrisoners: params => {
     return service.get('/prisoners/page', params).then(res => res && res.data)
   },
+  // 服刑人员信息管理-修改会见次数
+  updateAccessTime: params => {
+    return service.post('/prisoners/updateAccessTime', params).then(res => res && res.code === 200)
+  },
   // 家属信息管理-列表
   getFamilies: params => {
     return service.get('/families/page', params).then(res => res && res.data)

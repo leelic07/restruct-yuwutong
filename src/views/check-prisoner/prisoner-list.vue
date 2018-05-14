@@ -67,15 +67,24 @@
       @onPageChange="getDatas" />
     <el-dialog
       title="修改会见次数"
-      :visible.sync="isEditAccessTime">
-      <el-form>
+      :visible.sync="isEditAccessTime"
+      width="600px">
+      <el-form
+        class="inline-form"
+        ref="form"
+        :model="prisoner">
         <el-form-item label="罪犯">{{ prisoner.name }}</el-form-item>
-        <el-form-item label="会见次数">
-          <el-input placeholder="请输入会见次数" v-model="prisoner.accessTime"></el-input>
+        <el-form-item
+          label="会见次数"
+          :rules="[{ required: true, message: '请输入会见次数' }]"
+          prop="accessTime">
+          <el-input-number
+            :min="0"
+            v-model="prisoner.accessTime"
+            controls-position="right"
+            @change="onAccessTimeChange"></el-input-number>
         </el-form-item>
       </el-form>
-      <!-- <label class="el-form-item__label">罪犯：{{ prisoner.name }}</label> -->
-
       <template slot="footer">
         <el-button
           class="button-add"
@@ -85,7 +94,7 @@
         <el-button
           class="button-add"
           size="mini"
-          @click="isEditAccessTime = true">确定</el-button>
+          @click="onAccessTime">确定</el-button>
       </template>
     </el-dialog>
     <el-dialog
@@ -135,7 +144,8 @@ export default {
       dialogTableVisible: false,
       family: {},
       isEditAccessTime: false,
-      prisoner: {}
+      prisoner: {},
+      thePrisoner: {}
     }
   },
   computed: {
@@ -145,7 +155,7 @@ export default {
     this.getDatas()
   },
   methods: {
-    ...mapActions(['getPrisoners']),
+    ...mapActions(['getPrisoners', 'updateAccessTime']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
@@ -157,9 +167,27 @@ export default {
       this.$refs.pagination.handleCurrentChange(1)
     },
     handleAccessTime(e) {
-      console.log(e)
-      this.prisoner = e
+      this.prisoner = Object.assign({}, e)
+      this.thePrisoner = e
       this.isEditAccessTime = true
+    },
+    onAccessTimeChange(e) {
+      if (!e) this.prisoner.accessTime = 0
+    },
+    onAccessTime() {
+      if (this.prisoner.accessTime === this.thePrisoner.accessTime) {
+        this.isEditAccessTime = false
+        return
+      }
+      this.$refs.form.validate(valid => {
+        if (!valid) return
+        let params = { id: this.prisoner.id, accessTime: this.prisoner.accessTime }
+        this.updateAccessTime(params).then(res => {
+          if (!res) return
+          this.thePrisoner.accessTime = params.accessTime
+          this.isEditAccessTime = false
+        })
+      })
     },
     showFamilyDetail(family) {
       this.family = family

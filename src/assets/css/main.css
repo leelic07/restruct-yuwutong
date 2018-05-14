@@ -110,3 +110,10 @@ img{
   width: 342.4px;
   height: 216px;
 }
+.inline-form .el-form-item__content{
+  width: calc(100% - 80px);
+  float: left;
+}
+.inline-form .el-form-item__label{
+  width: 80px;
+}
