@@ -17,6 +17,10 @@ export default {
   authorizeMeeting: params => {
     return service.post('/meetings/authorize', params).then(res => res && res.code === 200)
   },
+  // 家属会见申请-调整
+  adjustMeeting: params => {
+    return service.get(`/meetings/adjustment?inputDate=${ params }`).then(res => res && res.data)
+  },
   // 家属会见申请-撤回
   withdrawMeeting: params => {
     return service.post('/meetings/withdraw', params).then(res => res && res.code === 200)

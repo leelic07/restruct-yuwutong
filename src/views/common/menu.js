@@ -34,31 +34,27 @@ let adminMenu = [{
     path: '/log/app-error',
     title: 'APP崩溃日志',
     icon: 'iconfont icon-bengkuirizhi'
-  // }, {
-  //   path: '/log',
-  //   title: '日志',
-  //   icon: 'iconfont icon-folder',
-  //   active: false,
-  //   children: [
-  //     {
-  //     //   path: '/log/user-operation',
-  //     //   title: '用户操作日志',
-  //     //   icon: 'iconfont icon-circle-o'
-  //     // }, {
-  //       path: '/log/app-error',
-  //       title: 'APP崩溃日志',
-  //       icon: 'iconfont icon-circle-o'
-  //     }
-  //   ]
   }],
   checkMenu = [{
     path: '/registration/list',
     title: '家属注册管理',
     icon: 'iconfont icon-jiashuzhuce'
   }, {
-    path: '/meeting/list',
+    path: '/meeting',
     title: '会见申请管理',
-    icon: 'iconfont icon-huijianshenqing'
+    icon: 'iconfont icon-huijianshenqing',
+    active: false,
+    children: [
+      {
+        path: '/meeting/list',
+        title: '会见申请列表',
+        icon: 'iconfont icon-circle-o'
+      }, {
+        path: '/meeting/adjust',
+        title: '会见申请调整',
+        icon: 'iconfont icon-circle-o'
+      }
+    ]
   }, {
     path: '/mailbox/list',
     title: '监狱长信箱',

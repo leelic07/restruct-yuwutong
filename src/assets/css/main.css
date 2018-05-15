@@ -117,3 +117,34 @@ img{
 .inline-form .el-form-item__label{
   width: 80px;
 }
+.sidebar-menu .active-menu {
+  color: #fff !important;
+  background: #1e282c !important;
+  border-left-color: #3c8dbc !important;
+  position: relative;
+}
+.treeview-menu .active-menu:before{
+  content: "";
+  background: #1e282c;
+  display: block;
+  position: absolute;
+  left: -5px;
+  top: 0;
+  height: 100%;
+  width: 5px;
+}
+.adjustTable td{
+  cursor: pointer;
+}
+.adjustTable td.no-pointer{
+  cursor: default;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background: transparent;
+}
+.el-table--enable-row-hover .el-table__body tr>td:hover{
+  background: #f5f7fa;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td.occupied {
+  background: #3c8dbc;
+}
