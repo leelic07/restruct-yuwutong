@@ -247,27 +247,15 @@
           faceRecognition: [{ required: true, message: '请选择是否开放人脸识别模块' }],
           remittance: [{ required: true, message: '请填写汇款限制' }, { validator: helper.isFee }],
           consumption: [{ required: true, message: '请填写消费限制' }, { validator: helper.isFee }]
-        // },
-        // prison: {
-        //   citysId: '',
-        //   imageUrl: '',
-        //   cost: 0,
-        //   branchPrison: 1,
-        //   meeting: 1,
-        //   rewards: 1,
-        //   shopping: 1,
-        //   prisonTerm: 1,
-        //   faceRecognition: 1,
-        //   remittance: 800,
-        //   consumption: 800,
-        //   meetingQueue1: [['09:00', '09:30'], ['09:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
           if (rule.index > 0) {
-            let minTimeStart = this.prison.meetingQueue1[rule.index - 1][1]
-            if (minTimeStart > val[0]) {
+            let minTimeStart1 = this.prison.meetingQueue1[rule.index - 1][1], minTimeStart = minTimeStart1, minTimeEnd = val[0]
+            if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
+            if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
+            if (minTimeStart > minTimeEnd) {
               this.canAddRange1 = false
-              callback(new Error(`开始时间最早为${ minTimeStart }`))
+              callback(new Error(`开始时间最早为${ minTimeStart1 }`))
             }
           }
           if (val[0] === val[1]) {
@@ -288,12 +276,13 @@
         if (!this.rangeToAdd.length || this.rangeToAdd[0].indexOf('23:59') > -1) {
           return false
         }
-        else if (lastIndex > 0 && (this.prison.meetingQueue1[lastIndex - 1][1] > this.prison.meetingQueue1[lastIndex][0])) {
-          return false
+        if (lastIndex > 0) {
+          let minTimeStart = this.prison.meetingQueue1[lastIndex - 1][1], minTimeEnd = this.prison.meetingQueue1[lastIndex][0]
+          if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
+          if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
+          if (minTimeStart > minTimeEnd) return false
         }
-        else {
-          return this.canAddRange1
-        }
+        return this.canAddRange1
       }
     },
     mounted() {
