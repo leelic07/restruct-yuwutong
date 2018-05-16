@@ -163,12 +163,54 @@
           </el-input>
         </el-form-item>
         <el-form-item
+          label="实地探监窗口个数"
+          prop="windowSize">
+          <el-input
+            v-model="prison.windowSize"
+            placeholder="请填写实地探监窗口个数(1-20)">
+            <template slot="append">/个</template>
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          v-for="(item, index) in prison.batchQueue1"
+          :key="item[0]"
+          label="实地探监批次"
+          :prop="'batchQueue1.' + index"
+          :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'batchQueue1', flag: 'canAddBatch' }]"
+          :class="index == 0 ? 'queue' : 'queue meetingQueue'">
+          <el-time-picker
+            is-range
+            :clearable="false"
+            :disabled="Boolean(prison.batchQueue1[index + 1])"
+            v-model="prison.batchQueue1[index]"
+            :value="prison.batchQueue1[index]"
+            value-format="H:mm"
+            format="H:mm"
+            range-separator="至"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            placeholder="选择时间范围"
+            :picker-options="index === 0 ? {} : { start: prison.batchQueue1[index - 1][1], minTime: prison.batchQueue1[index - 1][1], selectableRange: prison.batchQueue1[index - 1][1] + ' - 23:59:59' }"
+            @change="onTimeRangeChange">
+          </el-time-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            v-if="canAddBatch"
+            size="mini"
+            type="primary"
+            @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
+          <el-button
+            size="small"
+            @click="onRestRange">重置实地探监批次</el-button>
+        </el-form-item>
+        <el-form-item
           v-for="(item, index) in prison.meetingQueue1"
           :key="index"
           label="会见列表"
           :prop="'meetingQueue1.' + index"
-          :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index }]"
-          class="meetingQueue">
+          :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'meetingQueue1', flag: 'canAddMeeting' }]"
+          :class="index === 0 ? 'queue' : 'queue meetingQueue'">
           <el-time-picker
             is-range
             :clearable="false"
@@ -187,10 +229,10 @@
         </el-form-item>
         <el-form-item>
           <el-button
-            v-if="canAddRange"
+            v-if="canAddMeeting"
             size="mini"
             type="primary"
-            @click="onAddRange">新增会见时间段</el-button>
+            @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
           <el-button
             size="small"
             @click="onRestRange">重置会见列表</el-button>
@@ -228,8 +270,10 @@
             getting: true
           }
         },
-        canAddRange1: true,
-        rangeToAdd: ['17:00', '17:30'],
+        canAddMeeting1: true,
+        canAddBatch1: true,
+        rangeToAdd1: ['17:00', '17:30'],
+        rangeToAdd2: ['17:00', '17:30'],
         rules: {
           title: [{ required: true, message: '请输入监狱名称' }],
           description: [{ required: true, message: '请输入监狱简介' }],
@@ -246,6 +290,7 @@
           prisonTerm: [{ required: true, message: '请选择是否开放监狱条款模块' }],
           faceRecognition: [{ required: true, message: '请选择是否开放人脸识别模块' }],
           remittance: [{ required: true, message: '请填写汇款限制' }, { validator: helper.isFee }],
+          windowSize: [{ required: true, message: '请填写实地探监窗口个数' }, { validator: helper.isNumber }, { validator: helper.numberRange, min: 1, max: 20 }],
           consumption: [{ required: true, message: '请填写消费限制' }, { validator: helper.isFee }]
         },
         prison: {
@@ -260,33 +305,49 @@
           faceRecognition: 1,
           remittance: 800,
           consumption: 800,
+          windowSize: 1,
+          batchQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']],
           meetingQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
+          console.log(rule)
           if (rule.index > 0) {
-            let minTimeStart1 = this.prison.meetingQueue1[rule.index - 1][1], minTimeStart = minTimeStart1, minTimeEnd = val[0]
+            let minTimeStart1 = this.prison[`${ rule.prop }`][rule.index - 1][1], minTimeStart = minTimeStart1, minTimeEnd = val[0]
             if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
             if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
             if (minTimeStart > minTimeEnd) {
-              this.canAddRange1 = false
+              this[rule.flag] = false
               callback(new Error(`开始时间最早为${ minTimeStart1 }`))
             }
           }
           if (val[0] === val[1]) {
-            this.canAddRange1 = false
+            this[rule.flag] = false
             callback(new Error('间隔时间过短'))
           }
           else {
-            this.canAddRange1 = true
+            this[rule.flag] = true
             callback()
           }
         }
       }
     },
     computed: {
-      canAddRange() {
+      canAddBatch() {
+        let lastIndex = this.prison.batchQueue1.length - 1
+        if (!this.rangeToAdd1.length || this.rangeToAdd1[0].indexOf('23:59') > -1) {
+          return false
+        }
+        if (lastIndex > 0) {
+          let minTimeStart = this.prison.batchQueue1[lastIndex - 1][1], minTimeEnd = this.prison.batchQueue1[lastIndex][0]
+          if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
+          if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
+          if (minTimeStart > minTimeEnd) return false
+        }
+        return this.canAddBatch1
+      },
+      canAddMeeting() {
         let lastIndex = this.prison.meetingQueue1.length - 1
-        if (!this.rangeToAdd.length || this.rangeToAdd[0].indexOf('23:59') > -1) {
+        if (!this.rangeToAdd2.length || this.rangeToAdd2[0].indexOf('23:59') > -1) {
           return false
         }
         if (lastIndex > 0) {
@@ -295,7 +356,7 @@
           if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
           if (minTimeStart > minTimeEnd) return false
         }
-        return this.canAddRange1
+        return this.canAddMeeting1
       }
     },
     mounted() {
@@ -307,18 +368,19 @@
       ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),
       onSubmit(e) {
         this.$refs.form.validate(valid => {
-          if (valid) {
-            let prison = Object.assign({}, this.prison), meetingQueue = []
-            prison.meetingQueue1.forEach(arr => {
-              meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
-            })
-            prison.meetingQueue = meetingQueue
-            delete prison.meetingQueue1
-            this.addPrison(prison).then(res => {
-              if (!res) return
-              this.$router.push('/prison/list')
-            })
-          }
+          // if (valid) {
+          let prison = Object.assign({}, this.prison), meetingQueue = []
+          prison.meetingQueue1.forEach(arr => {
+            meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
+          })
+          prison.meetingQueue = meetingQueue
+          delete prison.meetingQueue1
+          console.log(prison)
+          // this.addPrison(prison).then(res => {
+          //   if (!res) return
+          //   this.$router.push('/prison/list')
+          // })
+          // }
         })
       },
       onProvinceChange(e) {
@@ -343,22 +405,22 @@
           this.getNextRange(e)
         }
       },
-      onAddRange() {
-        this.prison.meetingQueue1.push(this.rangeToAdd)
-        this.getNextRange(this.rangeToAdd)
+      onAddRange(queue, toAdd) {
+        this.prison[queue].push(this[toAdd])
+        this.getNextRange(this[toAdd])
       },
       onRestRange() {
         this.prison.meetingQueue1 = [null]
-        this.rangeToAdd = []
+        this.rangeToAdd2 = []
       },
       getNextRange(e) {
         let end = new Date(1970, 0, 1, e[1].split(':')[0], parseInt(e[1].split(':')[1]) + 30)
         if (end.getDate() !== 1) {
-          this.rangeToAdd = [e[1], '23:59:59']
+          this.rangeToAdd2 = [e[1], '23:59:59']
         }
         else {
           var minute = `00${ end.getMinutes() }`.slice(-2)
-          this.rangeToAdd = [e[1], `${ end.getHours() }:${ minute }`]
+          this.rangeToAdd2 = [e[1], `${ end.getHours() }:${ minute }`]
         }
       }
     }
@@ -367,12 +429,13 @@
 
 <style type="text/stylus" lang="stylus">
 .meetingQueue
+  > label
+    visibility: hidden;
   /* .el-range-editor.el-input__inner
     width: 100%; */
   .el-date-editor .el-range-separator
     width: 10%;
-  & + .meetingQueue
-    > label
-      visibility: hidden;
-
+.queue
+  width: 50%;
+  float: left;
 </style>

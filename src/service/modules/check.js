@@ -29,6 +29,18 @@ export default {
   getVisits: params => {
     return service.get('/prisoner_visits/page', params).then(res => res && res.data)
   },
+  // 实地探监管理-已取消
+  getCanceledVisit: params => {
+    return service.get('/prisoner_visits/findCanceled', params).then(res => res && res.data)
+  },
+  // 实地探监管理-授权
+  authorizeVisit: params => {
+    return service.post('/prisoner_visits/auth', params).then(res => res && res.code === 200)
+  },
+  // 实地探监管理-撤回
+  withdrawVisit: params => {
+    return service.post('/prisoner_visits/withdraw', params).then(res => res && res.code === 200)
+  },
   // 监狱长信箱-列表
   getMailboxes: params => {
     return service.get('/mailboxes/page', params).then(res => res && res.data)

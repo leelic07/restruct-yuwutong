@@ -13,9 +13,12 @@
         <el-tab-pane
           label="实地探监"
           name="first" />
-        <el-tab-pane
+        <!-- <el-tab-pane
           label="未授权"
-          name="PENDING" />
+          name="PENDING" /> -->
+        <el-tab-pane
+          label="已取消"
+          name="CANCELED" />
       </el-tabs>
       <el-table
         :data="visits.contents"
@@ -25,15 +28,31 @@
         <el-table-column
           prop="name"
           label="姓名" />
+        <el-table-column label="身份证正面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardFront"
+              :src="scope.row.idCardFront + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardFront, 'id')">
+          </template>
+        </el-table-column>
+        <el-table-column label="身份证背面">
+          <template slot-scope="scope">
+            <img
+              v-if="scope.row.idCardBack"
+              :src="scope.row.idCardBack + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+              @click="amplifyImage(scope.row.idCardBack, 'id')">
+          </template>
+        </el-table-column>
         <el-table-column
-          label="申请时间"
-          prop="applicationDate" />
-        <el-table-column
-          prop="prisonerId"
-          label="囚犯id" />
+          prop="prisonerNumber"
+          label="囚号" />
         <el-table-column
           prop="relationship"
           label="关系" />
+        <el-table-column
+          label="申请时间"
+          prop="applicationDate" />
         <el-table-column label="批次(窗口号)">
           <template slot-scope="scope">
             <span v-if="scope.row.window">{{ scope.row.batch }}({{ scope.row.window }}窗口)</span>
@@ -43,18 +62,25 @@
           class-name="orange"
           label="申请状态">
           <template slot-scope="scope">
-            <span v-if="!scope.row.content">{{scope.row.status | applyStatus}}</span>
-            <el-tooltip v-else :content="scope.row.content" placement="top">
+            <span v-if="!scope.row.remarks">{{scope.row.status | applyStatus}}</span>
+            <el-tooltip v-else :content="scope.row.remarks" placement="top">
               <span>{{scope.row.status | applyStatus}}</span>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column :label="tabs === 'CANCELED' ? '取消原因' : '操作'">
           <template slot-scope="scope">
-            <el-button
-              v-if="scope.row.status == 'PENDING'"
-              size="mini"
-              @click="handleAuthorization(scope.row)">授权</el-button>
+            <span v-if="tabs === 'CANCELED'">{{ scope.row.cause }}</span>
+            <template v-else>
+              <el-button
+                v-if="scope.row.status == 'PENDING'"
+                size="mini"
+                @click="handleAuthorization(scope.row)">授权</el-button>
+              <el-button
+                v-else-if="scope.row.status === 'PASSED' && scope.row.isWithdrawFlag === 1"
+                size="mini"
+                @click="handleWithdraw(scope.row)">撤回</el-button>
+            </template>
           </template>
         </el-table-column>
       </el-table>
@@ -121,6 +147,35 @@
       </div>
     </el-dialog>
     <el-dialog
+      :visible.sync="show.withdraw"
+      class="authorize-dialog"
+      title="撤回"
+      width="530px">
+      <el-form
+        :model="withdraw"
+        :rules="rule"
+        ref="withdrawForm">
+        <el-form-item prop="remarks">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 6 }"
+            placeholder="请输入撤回理由"
+            v-model="withdraw.remarks" />
+        </el-form-item>
+      </el-form>
+      <el-row :gutter="0">
+        <el-button
+          class="button-add"
+          size="mini"
+          type="danger"
+          @click="show.withdraw = false">取消</el-button>
+        <el-button
+          class="button-add"
+          size="mini"
+          @click="onWithdraw">确定</el-button>
+      </el-row>
+    </el-dialog>
+    <el-dialog
       :visible.sync="dialogVisible"
       class="img-idCard"
       width="382.4px">
@@ -137,15 +192,17 @@ export default {
     return {
       tabs: 'first',
       searchItems: {
-        prisonerNumber: { type: 'input', label: '囚号' },
+        // prisonerNumber: { type: 'input', label: '囚号' },
         name: { type: 'input', label: '家属姓名' }
       },
       show: {
         authorize: false,
         agree: false,
-        disagree: false
+        disagree: false,
+        withdraw: false
       },
       toAuthorize: {},
+      withdraw: {},
       remarks: '您的身份信息错误',
       rule: {
         remarks: [{ required: true, message: '请填写撤回理由', trigger: 'blur' }]
@@ -159,27 +216,27 @@ export default {
   },
   watch: {
     tabs(val) {
-      if (val !== 'first') {
-        this.filter.status = val
-        this.getDatas()
-      }
-      else {
-        delete this.filter.status
-        this.getDatas()
-      }
+      // if (val === 'first' || val === 'CANCELED') {
+      //   delete this.filter.status
+      // }
+      // else {
+      //   this.filter.status = val
+      // }
+      this.onSearch()
     }
   },
   mounted() {
     this.getDatas()
   },
   methods: {
-    ...mapActions(['getVisits', 'authorizeVisit']),
+    ...mapActions(['getVisits', 'getCanceledVisit', 'authorizeVisit', 'withdrawVisit']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
     },
     getDatas() {
-      this.getVisits({ ...this.filter, ...this.pagination })
+      if (this.tabs === 'CANCELED') this.getCanceledVisit({ ...this.filter, ...this.pagination })
+      else if (this.tabs !== 'CANCELED') this.getVisits({ ...this.filter, ...this.pagination })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
@@ -190,6 +247,11 @@ export default {
       this.show.disagree = false
       this.show.authorize = true
     },
+    handleWithdraw(e) {
+      this.toAuthorize = e
+      this.withdraw = {}
+      this.show.withdraw = true
+    },
     onAuthorization(e) {
       let params = { id: this.toAuthorize.id, status: e }
       if (e === 'DENIED') params.remarks = this.remarks
@@ -197,6 +259,18 @@ export default {
         if (!res) return
         this.getDatas()
         this.show.authorize = false
+      })
+    },
+    onWithdraw() {
+      this.$refs['withdrawForm'].validate(valid => {
+        if (valid) {
+          let params = { id: this.toAuthorize.id, status: 'DENIED', remarks: this.withdraw.remarks }
+          this.withdrawVisit(params).then(res => {
+            if (!res) return
+            this.getDatas()
+            this.show.withdraw = false
+          })
+        }
       })
     },
     amplifyImage(imgSrc) {

@@ -40,21 +40,25 @@ let adminMenu = [{
     title: '家属注册管理',
     icon: 'iconfont icon-jiashuzhuce'
   }, {
-    path: '/meeting',
+    path: '/meeting/list',
     title: '会见申请管理',
-    icon: 'iconfont icon-huijianshenqing',
-    active: false,
-    children: [
-      {
-        path: '/meeting/list',
-        title: '会见申请列表',
-        icon: 'iconfont icon-circle-o'
-      }, {
-        path: '/meeting/adjust',
-        title: '会见申请调整',
-        icon: 'iconfont icon-circle-o'
-      }
-    ]
+    icon: 'iconfont icon-huijianshenqing'
+  // }, {
+  //   path: '/meeting',
+  //   title: '会见申请管理',
+  //   icon: 'iconfont icon-huijianshenqing',
+  //   active: false,
+  //   children: [
+  //     {
+  //       path: '/meeting/list',
+  //       title: '会见申请列表',
+  //       icon: 'iconfont icon-circle-o'
+  //     }, {
+  //       path: '/meeting/adjust',
+  //       title: '会见申请调整',
+  //       icon: 'iconfont icon-circle-o'
+  //     }
+  //   ]
   }, {
     path: '/visit/list',
     title: '实地探监管理',
