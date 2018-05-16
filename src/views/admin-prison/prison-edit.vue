@@ -396,5 +396,4 @@
   & + .meetingQueue
     > label
       visibility: hidden;
-
 </style>
