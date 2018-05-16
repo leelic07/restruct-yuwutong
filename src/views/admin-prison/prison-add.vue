@@ -62,15 +62,6 @@
             placeholder="请填写街道名称" />
         </el-form-item>
         <el-form-item
-          label="探监路线"
-          prop="visitAddress">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 6 }"
-            v-model="prison.visitAddress"
-            placeholder="请填写实地探监路线" />
-        </el-form-item>
-        <el-form-item
           label="监狱编号"
           prop="zipcode">
           <el-input
@@ -184,8 +175,8 @@
             :disabled="Boolean(prison.meetingQueue1[index + 1])"
             v-model="prison.meetingQueue1[index]"
             :value="prison.meetingQueue1[index]"
-            value-format="HH:mm"
-            format="HH:mm"
+            value-format="H:mm"
+            format="H:mm"
             range-separator="至"
             start-placeholder="开始时间"
             end-placeholder="结束时间"
@@ -269,14 +260,16 @@
           faceRecognition: 1,
           remittance: 800,
           consumption: 800,
-          meetingQueue1: [['09:00', '09:30'], ['09:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
+          meetingQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
           if (rule.index > 0) {
-            let minTimeStart = this.prison.meetingQueue1[rule.index - 1][1]
-            if (minTimeStart > val[0]) {
+            let minTimeStart1 = this.prison.meetingQueue1[rule.index - 1][1], minTimeStart = minTimeStart1, minTimeEnd = val[0]
+            if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
+            if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
+            if (minTimeStart > minTimeEnd) {
               this.canAddRange1 = false
-              callback(new Error(`开始时间最早为${ minTimeStart }`))
+              callback(new Error(`开始时间最早为${ minTimeStart1 }`))
             }
           }
           if (val[0] === val[1]) {
@@ -296,12 +289,13 @@
         if (!this.rangeToAdd.length || this.rangeToAdd[0].indexOf('23:59') > -1) {
           return false
         }
-        else if (lastIndex > 0 && (this.prison.meetingQueue1[lastIndex - 1][1] > this.prison.meetingQueue1[lastIndex][0])) {
-          return false
+        if (lastIndex > 0) {
+          let minTimeStart = this.prison.meetingQueue1[lastIndex - 1][1], minTimeEnd = this.prison.meetingQueue1[lastIndex][0]
+          if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
+          if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
+          if (minTimeStart > minTimeEnd) return false
         }
-        else {
-          return this.canAddRange1
-        }
+        return this.canAddRange1
       }
     },
     mounted() {
@@ -358,13 +352,13 @@
         this.rangeToAdd = []
       },
       getNextRange(e) {
-        let end = new Date(1970, 0, 1, e[1].substr(0, 2), parseInt(e[1].substr(-2)) + 30)
+        let end = new Date(1970, 0, 1, e[1].split(':')[0], parseInt(e[1].split(':')[1]) + 30)
         if (end.getDate() !== 1) {
           this.rangeToAdd = [e[1], '23:59:59']
         }
         else {
-          var hours = `00${ end.getHours() }`.slice(-2), minute = `00${ end.getMinutes() }`.slice(-2)
-          this.rangeToAdd = [e[1], `${ hours }:${ minute }`]
+          var minute = `00${ end.getMinutes() }`.slice(-2)
+          this.rangeToAdd = [e[1], `${ end.getHours() }:${ minute }`]
         }
       }
     }
@@ -380,4 +374,5 @@
   & + .meetingQueue
     > label
       visibility: hidden;
+
 </style>
