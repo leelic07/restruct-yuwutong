@@ -25,6 +25,7 @@ import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
+import checkVisit from '@/views/check-visit/vuex'
 import infoPrisonAffairsPublic from '@/views/info-prison-affairs-public/vuex'
 import noPage from './modules/no-page'
 import login from '@/views/login/vuex'
@@ -71,6 +72,7 @@ merge(
   checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
+  checkVisit,
   login,
   noPage
 )

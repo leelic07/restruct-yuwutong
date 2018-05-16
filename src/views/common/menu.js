@@ -56,6 +56,10 @@ let adminMenu = [{
       }
     ]
   }, {
+    path: '/visit/list',
+    title: '实地探监管理',
+    icon: 'iconfont icon-shidihuijian'
+  }, {
     path: '/mailbox/list',
     title: '监狱长信箱',
     icon: 'iconfont icon-jianyuchangxinxiang'

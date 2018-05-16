@@ -23,6 +23,15 @@ let check = [{
     component: resolve => require(['@/views/check-meeting/meeting-adjust'], resolve)
   }]
 }, {
+  path: '/visit',
+  name: '实地探监管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/visit/list',
+    name: '实地探监列表',
+    component: resolve => require(['@/views/check-visit/visit-list'], resolve)
+  }]
+}, {
   path: '/mailbox',
   name: '监狱长信箱',
   meta: { hidden: true },

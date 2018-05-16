@@ -25,6 +25,10 @@ export default {
   withdrawMeeting: params => {
     return service.post('/meetings/withdraw', params).then(res => res && res.code === 200)
   },
+  // 实地探监管理-列表
+  getVisits: params => {
+    return service.get('/prisoner_visits/page', params).then(res => res && res.data)
+  },
   // 监狱长信箱-列表
   getMailboxes: params => {
     return service.get('/mailboxes/page', params).then(res => res && res.data)

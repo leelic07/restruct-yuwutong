@@ -17,7 +17,6 @@
         border
         stripe
         style="width: 100%">
-
         <el-table-column
           prop="phone"
           label="账号" />
@@ -35,7 +34,7 @@
           label="系统版本" />
         <el-table-column
           prop="contents"
-          show-overflow-tooltip
+          width="380px"
           label="内容" />
         <el-table-column
           label="创建时间">

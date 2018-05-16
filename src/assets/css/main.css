@@ -133,18 +133,3 @@ img{
   height: 100%;
   width: 5px;
 }
-.adjustTable td{
-  cursor: pointer;
-}
-.adjustTable td.no-pointer{
-  cursor: default;
-}
-.el-table--enable-row-hover .el-table__body tr:hover>td{
-  background: transparent;
-}
-.el-table--enable-row-hover .el-table__body tr>td:hover{
-  background: #f5f7fa;
-}
-.el-table--enable-row-hover .el-table__body tr:hover>td.occupied {
-  background: #3c8dbc;
-}
