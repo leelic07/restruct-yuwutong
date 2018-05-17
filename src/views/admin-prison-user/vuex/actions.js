@@ -11,7 +11,11 @@ export default {
     return http.addPrisonUser(params).then(res => res)
   },
   getPrisonUserDetail: ({ commit }, params) => {
-    http.getPrisonUserDetail(params).then(res => res && commit('getPrisonUserDetail', res))
+    return http.getPrisonUserDetail(params).then(res => {
+      if (!res) return
+      commit('getPrisonUserDetail', res)
+      return true
+    })
   },
   updatePrisonUser: ({ commit }, params) => {
     return http.updatePrisonUser(params).then(res => res)

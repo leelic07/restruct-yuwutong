@@ -18,7 +18,7 @@ export default {
   },
   // 监狱用户管理-新增
   addPrisonUser: params => {
-    return service.post('/users/add', params).then(res => res && res.code === 200)
+    return service.postObj('/users/add', params).then(res => res && res.code === 200)
   },
   // 监狱用户管理-详情
   getPrisonUserDetail: params => {
@@ -26,7 +26,7 @@ export default {
   },
   // 监狱用户管理-编辑
   updatePrisonUser: params => {
-    return service.post('/users/edit', params).then(res => res && res.code === 200)
+    return service.postObj('/users/edit', params).then(res => res && res.code === 200)
   },
   // 监狱管理-列表
   getPrisons: params => {

@@ -118,10 +118,12 @@ export default {
       })
     },
     onPrisonChange(e) {
+      delete this.terminal.prisonConfigId
+      this.isPrisonArea = false
+      this.gettingPrisonArea = true
       let prison = this.prisonAllWithBranchPrison.find(item => item.id === e)
       if (prison.branchPrison === 1) {
         this.isPrisonArea = true
-        this.gettingPrisonArea = true
         this.getJailPrisonAreas(e).then(res => {
           if (!res) return
           if (this.jailPrisonAreas.length === 0) {
@@ -133,11 +135,6 @@ export default {
           }
           this.gettingPrisonArea = false
         })
-      }
-      else {
-        this.isPrisonArea = false
-        this.gettingPrisonArea = true
-        delete this.terminal.prisonConfigId
       }
     }
   }
