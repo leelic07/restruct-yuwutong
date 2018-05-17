@@ -1,4 +1,4 @@
-let adminMenu = [{
+let superAdminMenu = [{
     path: '/prison/list',
     title: '监狱管理',
     icon: 'iconfont icon-jianyuguanli'
@@ -145,6 +145,11 @@ let adminMenu = [{
         icon: 'iconfont icon-circle-o'
       }
     ]
+  }],
+  adminMenu = [{
+    path: '/account/list',
+    title: '账户管理',
+    icon: 'iconfont icon-jianyujibenxinxi'
   }]
 
-export default [adminMenu, checkMenu, shopMenu, infoMenu]
+export default [superAdminMenu, checkMenu, shopMenu, infoMenu, adminMenu]

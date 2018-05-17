@@ -25,7 +25,9 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column label="身份证正面">
+        <el-table-column
+          min-width="138px"
+          label="身份证正面">
           <template slot-scope="scope">
             <img
               v-if="scope.row.idCardFront"
@@ -33,7 +35,9 @@
               @click="amplifyImage(scope.row.idCardFront, 'id')">
           </template>
         </el-table-column>
-        <el-table-column label="身份证背面">
+        <el-table-column
+          min-width="138px"
+          label="身份证背面">
           <template slot-scope="scope">
             <img
               v-if="scope.row.idCardBack"

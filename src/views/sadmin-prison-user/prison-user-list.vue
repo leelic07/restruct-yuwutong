@@ -39,11 +39,20 @@
           prop="jail"
           label="监狱名称" />
         <el-table-column
+          prop="prisonConfigName"
+          label="监区" />
+        <el-table-column
+          prop="policeNumber"
+          label="狱警号" />
+        <el-table-column
+          prop="realName"
+          label="真实姓名" />
+        <el-table-column
           label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="onEdit(scope.row.id)">编辑</el-button>
-            <el-button type="danger" size="mini" @click="onDelete(scope.row.id)">删除</el-button>
-          </template>
+            <template v-if="routeRole != scope.row.role" slot-scope="scope">
+              <el-button type="primary" size="mini" @click="onEdit(scope.row.id)">编辑</el-button>
+              <el-button type="danger" size="mini" @click="onDelete(scope.row.id)">删除</el-button>
+            </template>
         </el-table-column>
       </el-table>
     </el-col>
@@ -65,7 +74,8 @@ export default {
         jail: { type: 'input', label: '监狱名称' },
         username: { type: 'input', label: '用户名' },
         role: { type: 'select', label: '角色', options: optionObj.default.role }
-      }
+      },
+      routeRole: this.$route.matched[this.$route.matched.length - 1].props.default.role
     }
   },
   computed: {
