@@ -458,7 +458,9 @@
   overflow: hidden;
 .queue
   width: 50%;
+  min-width: 500px;
   float: left;
+  z-index: 10;
   .el-date-editor .el-range-separator
     width: 10%;
 </style>
