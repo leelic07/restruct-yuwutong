@@ -62,6 +62,15 @@
             placeholder="请填写街道名称" />
         </el-form-item>
         <el-form-item
+          label="探监路线"
+          prop="visitAddress">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 6 }"
+            v-model="prison.visitAddress"
+            placeholder="请填写实地探监路线" />
+        </el-form-item>
+        <el-form-item
           label="监狱编号"
           prop="zipcode">
           <el-input
@@ -171,72 +180,77 @@
             <template slot="append">/个</template>
           </el-input>
         </el-form-item>
-        <el-form-item
-          v-for="(item, index) in prison.batchQueue1"
-          :key="item[0]"
-          label="实地探监批次"
-          :prop="'batchQueue1.' + index"
-          :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'batchQueue1', flag: 'canAddBatch' }]"
-          :class="index == 0 ? 'queue' : 'queue meetingQueue'">
-          <el-time-picker
-            is-range
-            :clearable="false"
-            :disabled="Boolean(prison.batchQueue1[index + 1])"
-            v-model="prison.batchQueue1[index]"
-            :value="prison.batchQueue1[index]"
-            value-format="H:mm"
-            format="H:mm"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            placeholder="选择时间范围"
-            :picker-options="index === 0 ? {} : { start: prison.batchQueue1[index - 1][1], minTime: prison.batchQueue1[index - 1][1], selectableRange: prison.batchQueue1[index - 1][1] + ' - 23:59:59' }"
-            @change="onTimeRangeChange">
-          </el-time-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            v-if="canAddBatch"
-            size="mini"
-            type="primary"
-            @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
-          <el-button
-            size="small"
-            @click="onRestRange">重置实地探监批次</el-button>
-        </el-form-item>
-        <el-form-item
-          v-for="(item, index) in prison.meetingQueue1"
-          :key="index"
-          label="会见列表"
-          :prop="'meetingQueue1.' + index"
-          :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'meetingQueue1', flag: 'canAddMeeting' }]"
-          :class="index === 0 ? 'queue' : 'queue meetingQueue'">
-          <el-time-picker
-            is-range
-            :clearable="false"
-            :disabled="Boolean(prison.meetingQueue1[index + 1])"
-            v-model="prison.meetingQueue1[index]"
-            :value="prison.meetingQueue1[index]"
-            value-format="H:mm"
-            format="H:mm"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            placeholder="选择时间范围"
-            :picker-options="index === 0 ? {} : { start: prison.meetingQueue1[index - 1][1], minTime: prison.meetingQueue1[index - 1][1], selectableRange: prison.meetingQueue1[index - 1][1] + ' - 23:59:59' }"
-            @change="onTimeRangeChange">
-          </el-time-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            v-if="canAddMeeting"
-            size="mini"
-            type="primary"
-            @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
-          <el-button
-            size="small"
-            @click="onRestRange">重置会见列表</el-button>
-        </el-form-item>
+        <div class="queue-box">
+          <div class="queue">
+            <el-form-item
+              v-for="(item, index) in prison.batchQueue1"
+              :key="index"
+              label="实地探监批次"
+              :prop="'batchQueue1.' + index"
+              :rules="[{ required: true, message: '请选择实地探监批次' }, { validator: rangeValidate, index: index, prop: 'batchQueue1', flag: 'canAddBatch1' }]"
+              :class="index == 0 ? '' : 'meetingQueue'">
+              <el-time-picker
+                is-range
+                :clearable="false"
+                :disabled="Boolean(prison.batchQueue1[index + 1])"
+                v-model="prison.batchQueue1[index]"
+                value-format="H:mm"
+                format="H:mm"
+                range-separator="至"
+                start-placeholder="开始时间"
+                end-placeholder="结束时间"
+                placeholder="选择时间范围"
+                :picker-options="index === 0 ? {} : { start: prison.batchQueue1[index - 1][1], minTime: prison.batchQueue1[index - 1][1], selectableRange: prison.batchQueue1[index - 1][1] + ' - 23:59:59' }"
+                @change="onTimeRangeChange($event, 'batchQueue1', 'rangeToAdd1')">
+              </el-time-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                v-if="canAddBatch"
+                size="mini"
+                type="primary"
+                @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
+              <el-button
+                size="small"
+                @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
+            </el-form-item>
+          </div>
+          <div class="queue">
+            <el-form-item
+              v-for="(item, index) in prison.meetingQueue1"
+              :key="index"
+              label="会见列表"
+              :prop="'meetingQueue1.' + index"
+              :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'meetingQueue1', flag: 'canAddMeeting1' }]"
+              :class="index === 0 ? '' : 'meetingQueue'">
+              <el-time-picker
+                is-range
+                :clearable="false"
+                :disabled="Boolean(prison.meetingQueue1[index + 1])"
+                v-model="prison.meetingQueue1[index]"
+                :value="prison.meetingQueue1[index]"
+                value-format="H:mm"
+                format="H:mm"
+                range-separator="至"
+                start-placeholder="开始时间"
+                end-placeholder="结束时间"
+                placeholder="选择时间范围"
+                :picker-options="index === 0 ? {} : { start: prison.meetingQueue1[index - 1][1], minTime: prison.meetingQueue1[index - 1][1], selectableRange: prison.meetingQueue1[index - 1][1] + ' - 23:59:59' }"
+                @change="onTimeRangeChange($event, 'meetingQueue1', 'rangeToAdd2')">
+              </el-time-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-button
+                v-if="canAddMeeting"
+                size="mini"
+                type="primary"
+                @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
+              <el-button
+                size="small"
+                @click="onRestRange('meetingQueue1', 'rangeToAdd2')">重置会见列表</el-button>
+            </el-form-item>
+          </div>
+        </div>
         <el-form-item
           label="监狱图片"
           prop="imageUrl">
@@ -310,7 +324,6 @@
           meetingQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
-          console.log(rule)
           if (rule.index > 0) {
             let minTimeStart1 = this.prison[`${ rule.prop }`][rule.index - 1][1], minTimeStart = minTimeStart1, minTimeEnd = val[0]
             if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
@@ -368,19 +381,23 @@
       ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),
       onSubmit(e) {
         this.$refs.form.validate(valid => {
-          // if (valid) {
-          let prison = Object.assign({}, this.prison), meetingQueue = []
-          prison.meetingQueue1.forEach(arr => {
-            meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
-          })
-          prison.meetingQueue = meetingQueue
-          delete prison.meetingQueue1
-          console.log(prison)
-          // this.addPrison(prison).then(res => {
-          //   if (!res) return
-          //   this.$router.push('/prison/list')
-          // })
-          // }
+          if (valid) {
+            let prison = Object.assign({}, this.prison), meetingQueue = [], batchQueue = []
+            prison.batchQueue1.forEach(arr => {
+              batchQueue.push(`${ arr[0] }-${ arr[1] }`)
+            })
+            prison.batchQueue = batchQueue
+            prison.meetingQueue1.forEach(arr => {
+              meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
+            })
+            prison.meetingQueue = meetingQueue
+            delete prison.batchQueue1
+            delete prison.meetingQueue1
+            this.addPrison(prison).then(res => {
+              if (!res) return
+              this.$router.push('/prison/list')
+            })
+          }
         })
       },
       onProvinceChange(e) {
@@ -400,27 +417,27 @@
       onSuccess(e) {
         this.prison.imageUrl = e
       },
-      onTimeRangeChange(e) {
+      onTimeRangeChange(e, queue, toAdd) {
         if (e[0] !== e[1]) {
-          this.getNextRange(e)
+          this.getNextRange(e, queue, toAdd)
         }
       },
       onAddRange(queue, toAdd) {
         this.prison[queue].push(this[toAdd])
-        this.getNextRange(this[toAdd])
+        this.getNextRange(this[toAdd], queue, toAdd)
       },
-      onRestRange() {
-        this.prison.meetingQueue1 = [null]
-        this.rangeToAdd2 = []
+      onRestRange(queue, toAdd) {
+        this.prison[queue] = [null]
+        this[toAdd] = []
       },
-      getNextRange(e) {
+      getNextRange(e, queue, toAdd) {
         let end = new Date(1970, 0, 1, e[1].split(':')[0], parseInt(e[1].split(':')[1]) + 30)
         if (end.getDate() !== 1) {
-          this.rangeToAdd2 = [e[1], '23:59:59']
+          this[toAdd] = [e[1], '23:59:59']
         }
         else {
           var minute = `00${ end.getMinutes() }`.slice(-2)
-          this.rangeToAdd2 = [e[1], `${ end.getHours() }:${ minute }`]
+          this[toAdd] = [e[1], `${ end.getHours() }:${ minute }`]
         }
       }
     }
@@ -431,10 +448,10 @@
 .meetingQueue
   > label
     visibility: hidden;
-  /* .el-range-editor.el-input__inner
-    width: 100%; */
   .el-date-editor .el-range-separator
     width: 10%;
+.queue-box
+  overflow: hidden;
 .queue
   width: 50%;
   float: left;

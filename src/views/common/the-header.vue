@@ -73,7 +73,7 @@ export default {
           localStorage.removeItem('routes')
           this.$router.replace('/new-login')
         })
-      })
+      }).catch(() => {})
     }
   }
 }
