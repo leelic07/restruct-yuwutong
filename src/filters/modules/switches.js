@@ -29,7 +29,7 @@ let switches = {
     { value: 'DENIED', label: '已拒绝' },
     { value: 'PASSED', label: '已通过' },
     { value: 'FINISHED', label: '已完成' },
-    { value: 'TOBECANCELED', label: '待取消' },
+    // { value: 'TOBECANCELED', label: '待取消' },
     { value: 'CANCELED', label: '已取消' }
   ]
 }

@@ -133,3 +133,8 @@ img{
   height: 100%;
   width: 5px;
 }
+@media screen and (max-width: 415px){
+  .filter-right{
+    width: 100% !important;
+  }
+}

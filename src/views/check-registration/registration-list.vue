@@ -22,7 +22,9 @@
         <el-table-column
           prop="name"
           label="姓名" />
-        <el-table-column label="身份证正面">
+        <el-table-column
+          min-width="148px"
+          label="身份证正面">
           <template slot-scope="scope">
             <img
               v-if="scope.row.idCardFront"
@@ -30,7 +32,9 @@
               @click="amplifyImage(scope.row.idCardFront, 'id')">
           </template>
         </el-table-column>
-        <el-table-column label="身份证背面">
+        <el-table-column
+          min-width="148px"
+          label="身份证背面">
           <template slot-scope="scope">
             <img
               v-if="scope.row.idCardBack"
@@ -38,22 +42,38 @@
               @click="amplifyImage(scope.row.idCardBack, 'id')">
           </template>
         </el-table-column>
-        <el-table-column label="申请时间">
+        <el-table-column
+          width="140px"
+          label="申请时间">
           <template slot-scope="scope"> {{scope.row.createdAt | Date}} </template>
         </el-table-column>
         <el-table-column
           prop="prisonerNumber"
+          width="120px"
           label="囚号" />
         <el-table-column
+          prop="prisonArea"
+          width="120px"
+          label="监区" />
+        <el-table-column
           prop="relationship"
+          width="120px"
           label="关系" />
         <el-table-column
           label="申请状态"
+          width="120px"
           class-name="orange">
           <template slot-scope="scope"> {{scope.row.status | applyStatus}} </template>
         </el-table-column>
         <el-table-column
-          label="操作">
+          prop="auditRealName"
+          width="220px"
+          label="审核人(审核时间)">
+          <template v-if="scope.row.auditRealName" slot-scope="scope">{{ scope.row.auditRealName }}({{ scope.row.auditAt | Date }})</template>
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="120px">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.status == 'PENDING'"
@@ -152,12 +172,17 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import switches from '@/filters/modules/switches'
+console.log(switches)
 export default {
   data() {
     return {
       searchItems: {
+        name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚犯号' },
-        name: { type: 'input', label: '家属姓名' }
+        auditName: { type: 'input', label: '审核人' },
+        status: { type: 'select', label: '审核状态', options: switches.applyStatus },
+        auditAt: { type: 'date', label: '审核时间' }
       },
       toAuthorize: {},
       show: {
