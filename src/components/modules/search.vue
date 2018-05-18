@@ -26,6 +26,7 @@
           clearable>
           <el-option
             v-for="option in item.options"
+            v-if="item.no ? (item.no.indexOf(item.belong ? option[item.belong.value] : option.value) == -1) : true"
             :key="item.belong ? option[item.belong.value] : option.value"
             :label="item.belong ? option[item.belong.label] : option.label"
             :value="item.belong ? option[item.belong.value] : option.value" />

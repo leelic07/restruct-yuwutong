@@ -19,5 +19,8 @@ export default {
   },
   updatePrisonUser: ({ commit }, params) => {
     return http.updatePrisonUser(params).then(res => res)
+  },
+  enableOrDisablePrisonUser: ({ commit }, params) => {
+    return http.enableOrDisablePrisonUser(params).then(res => res)
   }
 }

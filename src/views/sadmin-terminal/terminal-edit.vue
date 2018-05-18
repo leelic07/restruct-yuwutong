@@ -127,7 +127,7 @@ export default {
       let prison = this.prisonAllWithBranchPrison.find(item => item.id === e)
       if (prison.branchPrison === 1) {
         this.isPrisonArea = true
-        this.getJailPrisonAreas(e).then(res => {
+        this.getJailPrisonAreas({ jailId: e }).then(res => {
           if (!res) return
           if (this.jailPrisonAreas.length === 0) {
             this.$message.warning('请先导入罪犯数据')

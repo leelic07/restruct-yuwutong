@@ -24,6 +24,10 @@ export default {
   getPrisonUserDetail: params => {
     return service.get(`/users/to_edit?id=${ params }`).then(res => res && res.data)
   },
+  // 监狱用户管理-启用禁用
+  enableOrDisablePrisonUser: params => {
+    return service.get(`/users/enableOrDisable`, params).then(res => res && res.code === 200)
+  },
   // 监狱用户管理-编辑
   updatePrisonUser: params => {
     return service.postObj('/users/edit', params).then(res => res && res.code === 200)

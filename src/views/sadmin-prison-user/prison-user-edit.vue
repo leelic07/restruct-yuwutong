@@ -10,6 +10,7 @@
         label-position="right"
         label-width="100px">
         <el-form-item
+          v-if="routeRole !== '4'"
           label="监狱名称"
           prop="jailId">
           <el-select
@@ -67,7 +68,7 @@
             clearable>
             <el-option
               v-for="item in $store.state.role"
-              v-if="item.value !== 0"
+              v-if="item.value !== 0 && item.value != routeRole"
               :key="item.value"
               :label="item.label"
               :value="item.value">
@@ -107,20 +108,36 @@ export default {
       gettingJails: true,
       gettingPrisonArea: true,
       isPrisonArea: false,
-      hasPrisonArea: false
+      hasPrisonArea: false,
+      routeRole: this.$route.matched[this.$route.matched.length - 1].props.default.role
     }
   },
   computed: {
     ...mapState(['prisonAllWithBranchPrison', 'jailPrisonAreas', 'prisonUser'])
   },
   mounted() {
-    this.getPrisonAllWithBranchPrison().then(res => {
-      this.gettingJails = false
-      this.getPrisonUserDetail(this.$route.params.id).then(res => {
-        if (!res) return
-        this.onPrisonChange(this.prisonUser.jailId, true)
+    if (this.routeRole === '0') {
+      this.getPrisonAllWithBranchPrison().then(res => {
+        this.gettingJails = false
+        this.getPrisonUserDetail(this.$route.params.id).then(res => {
+          if (!res) return
+          this.onPrisonChange(this.prisonUser.jailId, true)
+        })
       })
-    })
+    }
+    else if (this.routeRole === '4') {
+      this.getJailPrisonAreas().then(res => {
+        if (!res) return
+        this.getPrisonUserDetail(this.$route.params.id).then(res => {
+          if (!res) return
+          if (this.jailPrisonAreas.length !== 0) {
+            this.hasPrisonArea = true
+            this.isPrisonArea = true
+          }
+          this.gettingPrisonArea = false
+        })
+      })
+    }
   },
   methods: {
     ...mapActions(['updatePrisonUser', 'getPrisonAllWithBranchPrison', 'getJailPrisonAreas', 'getPrisonUserDetail']),
@@ -129,7 +146,8 @@ export default {
         if (valid) {
           this.updatePrisonUser(this.prisonUser).then(res => {
             if (!res) return
-            this.$router.push('/prison-user/list')
+            if (this.routeRole === '0') this.$router.push('/prison-user/list')
+            else if (this.routeRole === '4') this.$router.push('/account/list')
           })
         }
       })
@@ -141,10 +159,9 @@ export default {
       let prison = this.prisonAllWithBranchPrison.find(item => item.id === e)
       if (prison.branchPrison === 1) {
         this.isPrisonArea = true
-        this.getJailPrisonAreas(e).then(res => {
+        this.getJailPrisonAreas({ jailId: e }).then(res => {
           if (!res) return
           if (this.jailPrisonAreas.length === 0) {
-            this.$message.warning('请先导入罪犯数据')
             this.hasPrisonArea = false
           }
           else {

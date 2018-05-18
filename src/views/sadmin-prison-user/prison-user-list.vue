@@ -7,7 +7,7 @@
       type="primary"
       plain
       class="button-add"
-      @click="onAdd">添加监狱用户</el-button>
+      @click="onAdd">添加账户</el-button>
     <m-search
       :items="searchItems"
       @sizeChange="sizeChange"
@@ -48,10 +48,31 @@
           prop="realName"
           label="真实姓名" />
         <el-table-column
+          width="210px"
           label="操作">
             <template v-if="routeRole != scope.row.role" slot-scope="scope">
-              <el-button type="primary" size="mini" @click="onEdit(scope.row.id)">编辑</el-button>
-              <el-button type="danger" size="mini" @click="onDelete(scope.row.id)">删除</el-button>
+              <el-button
+                type="primary"
+                size="mini"
+                @click="onEdit(scope.row.id)">编辑</el-button>
+              <el-button
+                v-if="scope.row.sysFlag == 0"
+                size="mini"
+                type="success"
+                style="margin-left: 5px;"
+                @click="onChangeStatus(scope.row, 1)">启用</el-button>
+              <el-button
+                v-if="scope.row.sysFlag == 1"
+                size="mini"
+                type="info"
+                style="margin-left: 5px;"
+                @click="onChangeStatus(scope.row, 0)">禁用</el-button>
+              <el-button
+                v-if="routeRole === '0'"
+                type="danger"
+                size="mini"
+                style="margin-left: 5px;"
+                @click="onDelete(scope.row.id)">删除</el-button>
             </template>
         </el-table-column>
       </el-table>
@@ -68,14 +89,20 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   data() {
-    let optionObj = require('@/filters/modules/switches')
+    let optionObj = require('@/filters/modules/switches'),
+      jail = {}, no = {},
+      routeRole = this.$route.matched[this.$route.matched.length - 1].props.default.role
+    if (routeRole === '0') jail = { jail: { type: 'input', label: '监狱名称' } }
+    if (routeRole === '4') no = { no: [0] }
     return {
-      searchItems: {
-        jail: { type: 'input', label: '监狱名称' },
-        username: { type: 'input', label: '用户名' },
-        role: { type: 'select', label: '角色', options: optionObj.default.role }
-      },
-      routeRole: this.$route.matched[this.$route.matched.length - 1].props.default.role
+      searchItems: Object.assign(
+        {
+          username: { type: 'input', label: '用户名' },
+          role: Object.assign({ type: 'select', label: '角色', options: optionObj.default.role }, no)
+        },
+        jail
+      ),
+      routeRole: routeRole
     }
   },
   computed: {
@@ -85,7 +112,7 @@ export default {
     this.getDatas()
   },
   methods: {
-    ...mapActions(['getPrisonUsers', 'deletePrisonUser']),
+    ...mapActions(['getPrisonUsers', 'deletePrisonUser', 'enableOrDisablePrisonUser']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
@@ -97,7 +124,8 @@ export default {
       this.$refs.pagination.handleCurrentChange(1)
     },
     onEdit(e) {
-      this.$router.push(`/prison-user/edit/${ e }`)
+      if (this.routeRole === '0') this.$router.push(`/prison-user/edit/${ e }`)
+      else if (this.routeRole === '4') this.$router.push(`/account/edit/${ e }`)
     },
     onDelete(e) {
       this.$confirm('是否确认删除？', '提示', {
@@ -110,8 +138,15 @@ export default {
         })
       })
     },
+    onChangeStatus(row, sysFlag) {
+      this.enableOrDisablePrisonUser({ id: row.id, status: sysFlag }).then(res => {
+        if (!res) return
+        row.sysFlag = sysFlag
+      })
+    },
     onAdd() {
-      this.$router.push('/prison-user/add')
+      if (this.routeRole === '0') this.$router.push(`/prison-user/add`)
+      if (this.routeRole === '4') this.$router.push(`/account/add`)
     }
   }
 }
