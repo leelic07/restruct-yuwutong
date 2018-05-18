@@ -3,7 +3,7 @@ import mutations from './mutations'
 
 let state = {
   meetings: { contents: [], total: 0 },
-  meetingAdjustment: { meetingQueue: [], terminals: [], meetings: [] }
+  meetingAdjustment: { meetingQueue: [], terminals: [], meetings: [], config: {} }
 }
 
 export default {

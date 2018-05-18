@@ -146,7 +146,7 @@ export default {
     },
     onAdd() {
       if (this.routeRole === '0') this.$router.push(`/prison-user/add`)
-      if (this.routeRole === '4') this.$router.push(`/account/add`)
+      else if (this.routeRole === '4') this.$router.push(`/account/add`)
     }
   }
 }

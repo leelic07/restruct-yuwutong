@@ -3,7 +3,8 @@ export default {
     state.meetings.contents = params.meetings
     state.meetings.total = params.total
   },
-  adjustMeeting(state, params) {
+  getMeetingConfigs(state, params) {
+    state.meetingAdjustment.config = params.config
     state.meetingAdjustment.meetingQueue = params.meetingQueue
     state.meetingAdjustment.terminals = params.terminals
     state.meetingAdjustment.meetings = params.meetings
