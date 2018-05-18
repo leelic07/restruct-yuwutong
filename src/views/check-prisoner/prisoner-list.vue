@@ -31,7 +31,9 @@
         <el-table-column
           prop="crimes"
           label="罪名" />
-        <el-table-column label="会见次数/月">
+        <el-table-column
+          width="96px"
+          label="会见次数/月">
           <template slot-scope="scope">
             <div>
               {{ scope.row.accessTime }}
@@ -56,6 +58,7 @@
               size="small"
               v-for="family in scope.row.families"
               :key="family.id"
+              style="margin-left: 0px; margin-right: 8px;"
               @click="showFamilyDetail(family)">{{ family.familyName }}</el-button>
           </template>
         </el-table-column>

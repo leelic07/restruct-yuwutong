@@ -43,25 +43,31 @@
           </template>
         </el-table-column>
         <el-table-column
+          min-width="86px"
           label="申请时间">
           <template slot-scope="scope"> {{scope.row.createdAt | Date}} </template>
         </el-table-column>
         <el-table-column
           prop="prisonerNumber"
+          min-width="92px"
           label="囚号" />
         <el-table-column
           prop="prisonArea"
+          min-width="92px"
           label="监区" />
         <el-table-column
           prop="relationship"
+          min-width="64px"
           label="关系" />
         <el-table-column
           label="申请状态"
+          min-width="78px"
           class-name="orange">
           <template slot-scope="scope"> {{scope.row.status | applyStatus}} </template>
         </el-table-column>
         <el-table-column
           prop="auditRealName"
+          min-width="150px"
           label="审核信息">
           <template v-if="scope.row.auditRealName" slot-scope="scope">{{ scope.row.auditRealName }}<br />{{ scope.row.auditUserName }}<br />({{ scope.row.auditAt | Date }})</template>
         </el-table-column>
@@ -165,16 +171,14 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import switches from '@/filters/modules/switches'
-console.log(switches)
 export default {
   data() {
     return {
       searchItems: {
         name: { type: 'input', label: '家属姓名' },
-        prisonerNumber: { type: 'input', label: '囚犯号' },
+        prisonerNumber: { type: 'input', label: '囚号' },
         auditName: { type: 'input', label: '审核人' },
-        status: { type: 'select', label: '审核状态', options: switches.applyStatus },
+        status: { type: 'select', label: '审核状态', options: this.$store.state.applyStatus },
         auditAt: { type: 'date', label: '审核时间' }
       },
       toAuthorize: {},

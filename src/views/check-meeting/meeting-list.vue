@@ -26,7 +26,7 @@
           prop="name"
           label="姓名" />
         <el-table-column
-          min-width="138px"
+          width="148px"
           label="身份证正面">
           <template slot-scope="scope">
             <img
@@ -36,7 +36,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          min-width="138px"
+          width="148px"
           label="身份证背面">
           <template slot-scope="scope">
             <img
@@ -47,24 +47,29 @@
         </el-table-column>
         <el-table-column
           label="申请时间"
+          min-width="86px"
           prop="applicationDate" />
         <el-table-column
           label="预约时间"
           prop="meetingTime" />
         <el-table-column
           prop="prisonerNumber"
+          min-width="92px"
           label="囚号" />
         <el-table-column
           prop="prisonArea"
+          min-width="92px"
           label="监区" />
         <el-table-column
           prop="relationship"
+          min-width="64px"
           label="关系" />
         <el-table-column
           prop="terminalNumber"
           label="终端号" />
         <el-table-column
           class-name="orange"
+          min-width="78px"
           label="申请状态">
           <template slot-scope="scope">
             <span v-if="!scope.row.content">{{scope.row.status | applyStatus}}</span>
@@ -84,6 +89,12 @@
               size="mini"
               @click="handleWithdraw(scope.row)">撤回</el-button>
           </template>
+        </el-table-column>
+        <el-table-column
+          prop="auditRealName"
+          min-width="150px"
+          label="审核信息">
+          <template v-if="scope.row.auditRealName" slot-scope="scope">{{ scope.row.auditRealName }}<br />{{ scope.row.auditUserName }}<br />({{ scope.row.auditAt | Date }})</template>
         </el-table-column>
       </el-table>
     </el-col>
@@ -194,8 +205,11 @@ export default {
     return {
       tabs: 'first',
       searchItems: {
+        name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚号' },
-        name: { type: 'input', label: '家属姓名' }
+        auditName: { type: 'input', label: '审核人' },
+        status: { type: 'select', label: '审核状态', options: this.$store.state.applyStatus },
+        auditAt: { type: 'date', label: '审核时间' }
       },
       show: {
         authorize: false,

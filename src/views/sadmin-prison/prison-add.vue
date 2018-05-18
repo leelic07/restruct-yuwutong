@@ -191,6 +191,7 @@
               :class="index == 0 ? '' : 'meetingQueue'">
               <el-time-picker
                 is-range
+                :editable="false"
                 :clearable="false"
                 :disabled="Boolean(prison.batchQueue1[index + 1])"
                 v-model="prison.batchQueue1[index]"
@@ -209,9 +210,11 @@
                 v-if="canAddBatch"
                 size="mini"
                 type="primary"
+                style="margin-right: 10px;"
                 @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
               <el-button
                 size="small"
+                style="margin-left: 0;"
                 @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
             </el-form-item>
           </div>
@@ -225,6 +228,7 @@
               :class="index === 0 ? '' : 'meetingQueue'">
               <el-time-picker
                 is-range
+                :editable="false"
                 :clearable="false"
                 :disabled="Boolean(prison.meetingQueue1[index + 1])"
                 v-model="prison.meetingQueue1[index]"
@@ -244,9 +248,11 @@
                 v-if="canAddMeeting"
                 size="mini"
                 type="primary"
+                style="margin-right: 10px;"
                 @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
               <el-button
                 size="small"
+                style="margin-left: 0;"
                 @click="onRestRange('meetingQueue1', 'rangeToAdd2')">重置会见列表</el-button>
             </el-form-item>
           </div>
@@ -445,14 +451,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus">
-.meetingQueue
-  > label
-    visibility: hidden;
-  .el-date-editor .el-range-separator
-    width: 10%;
-.queue-box
-  overflow: hidden;
-.queue
-  width: 50%;
-  float: left;
+
 </style>
