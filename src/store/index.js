@@ -28,6 +28,7 @@ import checkRegistration from '@/views/check-registration/vuex'
 import checkVisit from '@/views/check-visit/vuex'
 import infoPrisonAffairsPublic from '@/views/info-prison-affairs-public/vuex'
 import noPage from './modules/no-page'
+import websocket from './modules/websocket'
 import login from '@/views/login/vuex'
 
 import filter from './modules/filter'
@@ -74,7 +75,8 @@ merge(
   checkRegistration,
   checkVisit,
   login,
-  noPage
+  noPage,
+  websocket
 )
 export default new Vuex.Store({
   actions,

@@ -115,7 +115,7 @@ export default {
       this.getMeetingConfigs(this.adjustDate).then(res => {
         if (!res) return
         this.meetingAdjustment.terminals.forEach((terminal, index) => {
-          this.meetings[terminal.terminalNumber] = {}
+          this.meetings[terminal.terminalNumber] = { terminalId: terminal.id }
           this.origin[terminal.terminalNumber] = {}
           this.meetingAdjustment.meetingQueue.map(meetingQueue => {
             this.meetings[terminal.terminalNumber][meetingQueue] = { terminalNumber: terminal.terminalNumber, duration: meetingQueue }
@@ -177,10 +177,12 @@ export default {
         Object.keys(this.meetings[terminal]).forEach(queue => {
           if (this.meetings[terminal][queue].id && this.meetings[terminal][queue].changed) {
             meeting = {
+              name: this.meetings[terminal][queue].name,
               id: this.meetings[terminal][queue].id,
-              meetingTime: `${ this.adjustDate } ${ this.meetings[terminal][queue].duration }`,
-              terminalNumber: this.meetings[terminal][queue].terminalNumber,
-              jailId: this.meetingAdjustment.config.jail_id,
+              meetingTime: `${ this.adjustDate } ${ queue }`,
+              terminalId: this.meetings[terminal].terminalId,
+              terminalNumber: terminal,
+              jailId: `${ this.meetingAdjustment.config.jail_id }`,
               adjustStatus: this.meetings[terminal][queue].adjustStatus
             }
             params.push(meeting)
