@@ -2,7 +2,7 @@ import actions from './actions'
 import mutations from './mutations'
 
 let state = {
-  websocketResult: null
+  // websocketResult: null
 }
 
 export default {

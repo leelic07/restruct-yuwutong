@@ -1,5 +1,5 @@
 export default {
   getWebsocketResult(state, params) {
-    state.websocketResult = params
+    // state.websocketResult = params
   }
 }

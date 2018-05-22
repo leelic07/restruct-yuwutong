@@ -34,7 +34,6 @@ export default {
           duration: 8000
         })
       }
-      // commit('getWebsocketResult', res.data && res.data.meetings)
     }
     // 关闭事件
     socket.onclose = function() {
