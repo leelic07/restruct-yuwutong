@@ -1,4 +1,4 @@
-import { Notification } from 'element-ui'
+import { Notification, Message } from 'element-ui'
 
 const wsUrl = jailId => `ws://123.57.7.159/ws/${ jailId }`
 // const wsUrl = jailId => `ws://10.10.10.10:8081/ywgk/websocket/${ jailId }`
@@ -9,11 +9,15 @@ export default {
   // }
   getWebsocketResult: ({ commit }, params) => {
     const socket = new WebSocket(wsUrl(params))
-
+    // 开启事件
+    socket.onopen = () => {
+      window.router.afterEach(route => {
+        if (route.path === '/new-login') socket.close()
+      })
+    }
     // 获得消息事件
     socket.onmessage = response => {
       let res = JSON.parse(response.data)
-      console.log(res)
       if (res.code === 200 && res.data && res.data.meetings) {
         Notification({
           title: res.data.meetings.name,
@@ -34,11 +38,12 @@ export default {
     }
     // 关闭事件
     socket.onclose = function() {
-      console.log('Socket已关闭')
+      // console.log('Socket已关闭')
     }
     // 发生了错误事件
     socket.onerror = () => {
-      this.$message.error('Socket发生了错误')
+      Message.error('Socket发生了错误')
+      // console.log('Socket发生了错误')
     }
   }
 }

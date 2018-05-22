@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-
+window.router = router
 /* eslint-disable no-new */
 new Vue({
   el: '#layout',
