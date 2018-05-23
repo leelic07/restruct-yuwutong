@@ -60,12 +60,16 @@
         </el-table-column>
         <el-table-column label="犯罪事实" prop="crimes" />
         <el-table-column label="附加刑" prop="additionalPunishment" />
-        <el-table-column label="现刑期起日" width="270px">
+        <el-table-column label="现刑期起日" show-overflow-tooltip>
           <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
-            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
         </el-table-column>
+        <el-table-colum label="现刑期止日" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
+          </template>
+        </el-table-colum>
         <el-table-column label="监区" prop="prisonArea" />
         <el-table-column label="原判刑期" prop="originalSentence" />
         <el-table-column label="创建时间">
