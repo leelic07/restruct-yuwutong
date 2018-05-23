@@ -36,6 +36,10 @@ let superAdminMenu = [{
     icon: 'iconfont icon-bengkuirizhi'
   }],
   checkMenu = [{
+  //   path: '/test/form',
+  //   title: '测试表单',
+  //   icon: 'iconfont icon-jianyuguanli'
+  // }, {
     path: '/registration/list',
     title: '家属注册管理',
     icon: 'iconfont icon-jiashuzhuce'
