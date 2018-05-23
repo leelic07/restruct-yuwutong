@@ -21,7 +21,10 @@ export default {
     }
   },
   isNumber: (rule, value, callback) => {
-    if (!Number.isInteger(Number(value))) {
+    if ([undefined, null, ''].indexOf(value) > -1) {
+      callback()
+    }
+    else if (!Number.isInteger(Number(value))) {
       callback(new Error('请输入整数'))
     }
     else {
