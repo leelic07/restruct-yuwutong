@@ -5,9 +5,6 @@ const wsUrl = jailId => `ws://123.57.7.159/ws-demo/${ jailId }` // 演示
 // const wsUrl = jailId => `ws://10.10.10.10:8081/ywgk/websocket/${ jailId }`
 
 export default {
-  // getPrisonAll: ({ commit }, params) => {
-  //   return http.getPrisonAll(params).then(res => res && commit('getPrisonAll', res))
-  // }
   getWebsocketResult: ({ commit }, params) => {
     const socket = new WebSocket(wsUrl(params))
     // 开启事件
