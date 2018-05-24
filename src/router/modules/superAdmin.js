@@ -5,9 +5,9 @@ let superAdmin = [{
   name: '测试',
   meta: { hidden: true },
   children: [{
-    path: '/test/form',
+    path: '/test/test',
     name: '测试表单',
-    component: resolve => require(['@/views/test/form'], resolve)
+    component: resolve => require(['@/views/test/test'], resolve)
   }]
 }, {
   path: '/prison',

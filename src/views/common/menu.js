@@ -1,8 +1,8 @@
 let superAdminMenu = [{
-    path: '/test/form',
-    title: '测试表单',
-    icon: 'iconfont icon-jianyuguanli'
-  }, {
+  //   path: '/test/test',
+  //   title: '测试表单',
+  //   icon: 'iconfont icon-jianyuguanli'
+  // }, {
     path: '/prison/list',
     title: '监狱管理',
     icon: 'iconfont icon-jianyuguanli'

@@ -15,7 +15,11 @@ export default {
     })
   },
   getCities: ({ commit }, params) => {
-    return http.getCities(params).then(res => res && commit('getCities', res))
+    return http.getCities(params).then(res => {
+      if (!res) return
+      commit('getCities', res)
+      return { options: res.citys, label: 'name', value: 'id' }
+    })
   },
   getJailPrisonAreas: ({ commit }, params) => {
     return http.getJailPrisonAreas(params).then(res => {

@@ -171,7 +171,7 @@
             <template slot="append">/元</template>
           </el-input>
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           label="实地探监窗口个数"
           prop="windowSize">
           <el-input
@@ -179,7 +179,7 @@
             placeholder="请填写实地探监窗口个数(1-20)">
             <template slot="append">/个</template>
           </el-input>
-        </el-form-item>
+        </el-form-item> -->
         <div class="queue-box">
           <div class="queue">
             <el-form-item
@@ -208,10 +208,12 @@
               <el-button
                 v-if="canAddBatch"
                 size="mini"
+                style="margin-right:20px;"
                 type="primary"
                 @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
               <el-button
                 size="small"
+                style="margin-left: 0;"
                 @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
             </el-form-item> -->
           </div>
@@ -243,10 +245,12 @@
               <el-button
                 v-if="canAddMeeting"
                 size="mini"
+                style="margin-right:10px;"
                 type="primary"
                 @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
               <el-button
                 size="small"
+                style="margin-left: 0;"
                 @click="onRestRange('meetingQueue1', 'rangeToAdd2')">重置会见列表</el-button>
             </el-form-item>
           </div>
@@ -366,13 +370,19 @@
             this.formItem.citysId.disabled = false
           })
           let meetingQueue1 = [], batchQueue1 = []
-          this.prison.batchQueue.forEach(str => {
-            batchQueue1.push(str.split('-'))
-          })
+          if (this.prison.batchQueue) {
+            this.prison.batchQueue.forEach(str => {
+              batchQueue1.push(str.replace(/s/g, '').split('-'))
+            })
+            this.getNextRange(batchQueue1[batchQueue1.length - 1], 'batchQueue1', 'rangeToAdd1')
+          }
+          else {
+            batchQueue1 = ['null']
+            this.rangeToAdd1 = []
+          }
           this.prison.batchQueue1 = batchQueue1
-          this.getNextRange(batchQueue1[batchQueue1.length - 1], 'batchQueue1', 'rangeToAdd1')
           this.prison.meetingQueue.forEach(str => {
-            meetingQueue1.push(str.split('-'))
+            meetingQueue1.push(str.replace(/s/g, '').split('-'))
           })
           this.prison.meetingQueue1 = meetingQueue1
           this.getNextRange(meetingQueue1[meetingQueue1.length - 1], 'meetingQueue1', 'rangeToAdd2')
@@ -451,16 +461,4 @@
 </script>
 
 <style type="text/stylus" lang="stylus">
-.meetingQueue
-  > label
-    visibility: hidden;
-.queue-box
-  overflow: hidden;
-.queue
-  width: 50%;
-  min-width: 500px;
-  float: left;
-  z-index: 10;
-  .el-date-editor .el-range-separator
-    width: 10%;
 </style>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import breadCrumb from './modules/bread-crumb'
 import jailsInformation from './modules/jails-information'
 import common from './modules/common'
 import passwordModification from './modules/password-modification'
@@ -47,7 +46,6 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
-  breadCrumb,
   jailsInformation,
   common,
   passwordModification,

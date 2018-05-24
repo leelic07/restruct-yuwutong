@@ -3,9 +3,9 @@
     <el-form
       v-if="flag"
       ref="form"
-      :inline="items.formConfigs && items.formConfigs.inline"
-      :label-width="items.formConfigs && items.formConfigs.labelWidth"
-      :model="values"
+      :inline="items.formConfigs ? items.formConfigs.inline : false"
+      :label-width="items.formConfigs ?  items.formConfigs.labelWidth : ''"
+      :model="fields"
       :rules="rules">
       <template v-for="(item, key) in items">
         <form-item
@@ -13,7 +13,7 @@
           :key="key"
           :prop="key"
           :item="item"
-          :fields="values"
+          :fields="fields"
           @validateField="validateField" />
       </template>
     </el-form>
@@ -46,14 +46,32 @@
 
 <script>
 import formItem from './form-item'
-import helper from '@/utils'
+// import validator from '@/utils'
+import validator, { helper } from '@/utils'
 export default {
   components: { formItem },
-  props: ['items'],
+  props: {
+    items: {
+      type: Object
+    },
+    values: {}
+  },
+  watch: {
+    values: {
+      handler: (val) => {
+        console.log('values', val)
+        this.fields = Object.assign({}, this.fields, val)
+        // Object.keys(this.fields).forEach(k => {
+        //     this.addFormItems({ [k]: this.fields[k] })
+        // })
+      },
+      deep: true
+    }
+  },
   data() {
     return {
       dismiss: ['buttons', 'formConfigs'],
-      values: {},
+      fields: {},
       rules: {},
       flag: false
     }
@@ -68,14 +86,37 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      console.log(this.values)
+      console.log(this.values, this.fields)
       this.$refs.form.validate(valid => {
         console.log(valid)
       })
     },
+    render() {
+      let fields = {}
+      Object.keys(this.items).forEach(key => {
+        if (this.dismiss.indexOf(key) >= 0) return
+        fields[key] = this.items[key].value
+        this.initRules(this.items[key])
+        this.items[key].rule && (this.rules[key] = this.items[key].rule)
+        if (this.items[key].type === 'select') this.initSelect(this.items[key], key)
+      })
+      this.fields = helper.isEmptyObject(this.values) ? this.values : fields
+      this.flag = true
+    },
     // this.$refs.form.validateField(this.prop)
     validateField(e) {
       this.$refs.form.validateField(e)
+    },
+    initSelect(item, key) {
+      if (item.action && !item.defer) {
+        item.loading = true
+        this.$store.dispatch(item.action).then(res => {
+          if (!res) return
+          item.options = res.options
+          item.props = { label: res.label, value: res.value }
+          item.loading = false
+        })
+      }
     },
     initRules(item) {
       if (!item.rules || !item.rules.length) return
@@ -91,7 +132,7 @@ export default {
         case 'required':
           return { message: `${ plea }${ label }`, required: true }
         case 'isNumber':
-          return { validator: helper.isNumber }
+          return { validator: validator.isNumber }
         default:
           return {}
       }
