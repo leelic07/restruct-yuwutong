@@ -358,14 +358,4 @@
 </script>
 
 <style type="text/stylus" lang="stylus">
-.meetingQueue
-  > label
-    visibility: hidden;
-.queue-box
-  overflow: hidden;
-.queue
-  width: 50%;
-  float: left;
-  .el-date-editor .el-range-separator
-    width: 10%;
 </style>
