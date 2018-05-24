@@ -171,7 +171,7 @@
             <template slot="append">/元</template>
           </el-input>
         </el-form-item>
-        <!-- <el-form-item
+        <el-form-item
           label="实地探监窗口个数"
           prop="windowSize">
           <el-input
@@ -179,7 +179,7 @@
             placeholder="请填写实地探监窗口个数(1-20)">
             <template slot="append">/个</template>
           </el-input>
-        </el-form-item> -->
+        </el-form-item>
         <div class="queue-box">
           <div class="queue">
             <el-form-item
@@ -191,8 +191,9 @@
               :class="index == 0 ? '' : 'meetingQueue'">
               <el-time-picker
                 is-range
+                :editable="false"
                 :clearable="false"
-                :disabled="Boolean(prison.batchQueue1[index])"
+                :disabled="Boolean(prison.batchQueue1[index + 1])"
                 v-model="prison.batchQueue1[index]"
                 value-format="H:mm"
                 format="H:mm"
@@ -204,18 +205,18 @@
                 @change="onTimeRangeChange($event, 'batchQueue1', 'rangeToAdd1')">
               </el-time-picker>
             </el-form-item>
-            <!-- <el-form-item>
+            <el-form-item>
               <el-button
                 v-if="canAddBatch"
                 size="mini"
-                style="margin-right:20px;"
                 type="primary"
+                style="margin-right: 10px;"
                 @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
               <el-button
                 size="small"
                 style="margin-left: 0;"
                 @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
-            </el-form-item> -->
+            </el-form-item>
           </div>
           <div class="queue">
             <el-form-item
@@ -227,6 +228,7 @@
               :class="index === 0 ? '' : 'meetingQueue'">
               <el-time-picker
                 is-range
+                :editable="false"
                 :clearable="false"
                 :disabled="Boolean(prison.meetingQueue1[index + 1])"
                 v-model="prison.meetingQueue1[index]"
@@ -245,8 +247,8 @@
               <el-button
                 v-if="canAddMeeting"
                 size="mini"
-                style="margin-right:10px;"
                 type="primary"
+                style="margin-right: 10px;"
                 @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
               <el-button
                 size="small"
@@ -266,7 +268,7 @@
           <el-button
             type="primary"
             @click="onSubmit"
-            size="small">更新</el-button>
+            size="small">新增</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -274,7 +276,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions } from 'vuex'
   import helper from '@/utils'
   export default {
     data() {
@@ -290,8 +292,8 @@
         },
         canAddMeeting1: true,
         canAddBatch1: true,
-        rangeToAdd1: [],
-        rangeToAdd2: [],
+        rangeToAdd1: ['17:00', '17:30'],
+        rangeToAdd2: ['17:00', '17:30'],
         rules: {
           title: [{ required: true, message: '请输入监狱名称' }],
           description: [{ required: true, message: '请输入监狱简介' }],
@@ -310,6 +312,22 @@
           remittance: [{ required: true, message: '请填写汇款限制' }, { validator: helper.isFee }],
           windowSize: [{ required: true, message: '请填写实地探监窗口个数' }, { validator: helper.isNumber }, { validator: helper.numberRange, min: 1, max: 20 }],
           consumption: [{ required: true, message: '请填写消费限制' }, { validator: helper.isFee }]
+        },
+        prison: {
+          citysId: '',
+          imageUrl: '',
+          cost: 0,
+          branchPrison: 1,
+          meeting: 1,
+          rewards: 1,
+          shopping: 1,
+          prisonTerm: 1,
+          faceRecognition: 1,
+          remittance: 800,
+          consumption: 800,
+          windowSize: 1,
+          batchQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']],
+          meetingQueue1: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']]
         },
         rangeValidate: (rule, val, callback) => {
           if (rule.index > 0) {
@@ -333,7 +351,6 @@
       }
     },
     computed: {
-      ...mapState(['prison', 'meetingQueue']),
       canAddBatch() {
         let lastIndex = this.prison.batchQueue1.length - 1
         if (!this.rangeToAdd1.length || this.rangeToAdd1[0].indexOf('23:59') > -1) {
@@ -363,35 +380,11 @@
     },
     mounted() {
       this.getProvincesAll().then(() => {
-        this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
-          if (!res) return
-          this.getCities(this.prison.provincesId).then(res => {
-            this.formItem.citysId.getting = false
-            this.formItem.citysId.disabled = false
-          })
-          let meetingQueue1 = [], batchQueue1 = []
-          if (this.prison.batchQueue) {
-            this.prison.batchQueue.forEach(str => {
-              batchQueue1.push(str.replace(/s/g, '').split('-'))
-            })
-            this.getNextRange(batchQueue1[batchQueue1.length - 1], 'batchQueue1', 'rangeToAdd1')
-          }
-          else {
-            batchQueue1 = ['null']
-            this.rangeToAdd1 = []
-          }
-          this.prison.batchQueue1 = batchQueue1
-          this.prison.meetingQueue.forEach(str => {
-            meetingQueue1.push(str.replace(/s/g, '').split('-'))
-          })
-          this.prison.meetingQueue1 = meetingQueue1
-          this.getNextRange(meetingQueue1[meetingQueue1.length - 1], 'meetingQueue1', 'rangeToAdd2')
-        })
         this.formItem.provincesId.getting = false
       })
     },
     methods: {
-      ...mapActions(['getPrisonDetail', 'updatePrison', 'getProvincesAll', 'getCities']),
+      ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),
       onSubmit(e) {
         this.$refs.form.validate(valid => {
           if (valid) {
@@ -400,16 +393,13 @@
               batchQueue.push(`${ arr[0] }-${ arr[1] }`)
             })
             prison.batchQueue = batchQueue
-            delete prison.batchQueue1
-
             prison.meetingQueue1.forEach(arr => {
               meetingQueue.push(`${ arr[0] }-${ arr[1] }`)
             })
             prison.meetingQueue = meetingQueue
-            if (meetingQueue.toString() !== this.meetingQueue.toString()) prison.changed = 1
-            else prison.changed = 0
+            delete prison.batchQueue1
             delete prison.meetingQueue1
-            this.updatePrison(prison).then(res => {
+            this.addPrison(prison).then(res => {
               if (!res) return
               this.$router.push('/prison/list')
             })
@@ -461,4 +451,5 @@
 </script>
 
 <style type="text/stylus" lang="stylus">
+
 </style>
