@@ -7,17 +7,36 @@
       :rules="rules">
       <template v-for="(item, key) in items">
         <form-item
-          v-if="key !== 'button'"
+          v-if="key !== 'buttons'"
           :key="key"
           :prop="key"
           :item="item"
           :fields="values" />
       </template>
     </el-form>
-    <div v-if="items.button && items.button.length" class="button-box">
-
+    <div v-if="items.buttons && items.buttons.length" class="button-box">
+      <template v-for="(button, index) in items.buttons">
+        <el-button
+          v-if="button === 'add'"
+          :key="index"
+          size="small"
+          type="primary">新增</el-button>
+        <el-button
+          v-if="button === 'update'"
+          :key="index"
+          size="small"
+          type="primary">更新</el-button>
+        <el-button
+          v-if="button === 'back'"
+          :key="index"
+          size="small">返回</el-button>
+        <el-button
+          v-if="button === 'next'"
+          :key="index"
+          size="small"
+          type="primary">下一步</el-button>
+      </template>
     </div>
-    <slot name="submit" @click="onSubmit">sss</slot>
   </div>
 </template>
 
@@ -71,5 +90,11 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.button-box{
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 </style>

@@ -1,278 +1,284 @@
 <template>
-  <el-row :gutter="0">
-    <el-col
-      :span="18"
-      :offset="3">
-      <el-form
-        ref="form"
-        :model="prison"
-        label-width="140px"
-        :rules="rules">
-        <el-form-item
-          label="监狱名称"
-          prop="title">
-          <el-input
-            v-model="prison.title"
-            placeholder="请填写监狱名称" />
-        </el-form-item>
-        <el-form-item
-          label="监狱简介"
-          prop="description">
-          <m-quill-editor :contents="prison.description" @editorChange="editorChange" />
-        </el-form-item>
-        <el-form-item
-          label="所在省"
-          prop="provincesId">
-          <el-select
-            v-model="prison.provincesId"
-            :loading="formItem.provincesId.getting"
-            filterable
-            auto-complete="address-level1"
-            placeholder="请选择所在省名称"
-            @change="onProvinceChange">
-            <el-option
-              v-for="(province, index) in $store.state.provincesAll"
-              :key="index"
-              :label="province.name"
-              :value="province.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          label="所在市"
-          prop="citysId">
-          <el-select
-            :disabled="formItem.citysId.disabled"
-            v-model="prison.citysId"
-            :loading="formItem.citysId.getting"
-            filterable
-            auto-complete="address-level2"
-            placeholder="请选择所在市名称">
-            <el-option
-              v-for="(city, index) in $store.state.cities"
-              :key="index"
-              :label="city.name"
-              :value="city.id" />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          label="街道"
-          prop="street">
-          <el-input
-            v-model="prison.street"
-            placeholder="请填写街道名称" />
-        </el-form-item>
-        <el-form-item
-          label="探监路线"
-          prop="visitAddress">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 6 }"
-            v-model="prison.visitAddress"
-            placeholder="请填写实地探监路线" />
-        </el-form-item>
-        <el-form-item
-          label="监狱编号"
-          prop="zipcode">
-          <el-input
-            v-model="prison.zipcode"
-            auto-complete="postal-code"
-            placeholder="请填写监狱编号" />
-        </el-form-item>
-        <el-form-item
-          label="单次会见费用"
-          prop="cost">
-          <el-input
-            v-model="prison.cost"
-            placeholder="请填写单次会见费用">
-            <template slot="append">/元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item
-          label="是否需要分监区"
-          prop="branchPrison">
-          <el-switch
-            v-model="prison.branchPrison"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="会见模块开放"
-          prop="meeting">
-          <el-switch
-            v-model="prison.meeting"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="奖励模块开放"
-          prop="rewards">
-          <el-switch
-            v-model="prison.rewards"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="电子商务模块开放"
-          prop="shopping">
-          <el-switch
-            v-model="prison.shopping"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="监狱条款模块开放"
-          prop="prisonTerm">
-          <el-switch
-            v-model="prison.prisonTerm"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="人脸识别模块开放"
-          prop="faceRecognition">
-          <el-switch
-            v-model="prison.faceRecognition"
-            active-color="#13ce66"
-            inactive-color="#dddddd"
-            :active-value="1"
-            :inactive-value="0"
-            :width="60" />
-        </el-form-item>
-        <el-form-item
-          label="汇款限制"
-          prop="remittance">
-          <el-input
-            v-model="prison.remittance"
-            placeholder="请填写单次会见费用">
-            <template slot="append">/元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item
-          label="消费限制"
-          prop="consumption">
-          <el-input
-            v-model="prison.consumption"
-            placeholder="请填写单次会见费用">
-            <template slot="append">/元</template>
-          </el-input>
-        </el-form-item>
-        <el-form-item
-          label="实地探监窗口个数"
-          prop="windowSize">
-          <el-input
-            v-model="prison.windowSize"
-            placeholder="请填写实地探监窗口个数(1-20)">
-            <template slot="append">/个</template>
-          </el-input>
-        </el-form-item>
-        <div class="queue-box">
-          <div class="queue">
-            <el-form-item
-              v-for="(item, index) in prison.batchQueue1"
-              :key="index"
-              label="实地探监批次"
-              :prop="'batchQueue1.' + index"
-              :rules="[{ required: true, message: '请选择实地探监批次' }, { validator: rangeValidate, index: index, prop: 'batchQueue1', flag: 'canAddBatch1' }]"
-              :class="index == 0 ? '' : 'meetingQueue'">
-              <el-time-picker
-                is-range
-                :editable="false"
-                :clearable="false"
-                :disabled="Boolean(prison.batchQueue1[index + 1])"
-                v-model="prison.batchQueue1[index]"
-                value-format="H:mm"
-                format="H:mm"
-                range-separator="至"
-                start-placeholder="开始时间"
-                end-placeholder="结束时间"
-                placeholder="选择时间范围"
-                :picker-options="index === 0 ? {} : { start: prison.batchQueue1[index - 1][1], minTime: prison.batchQueue1[index - 1][1], selectableRange: prison.batchQueue1[index - 1][1] + ' - 23:59:59' }"
-                @change="onTimeRangeChange($event, 'batchQueue1', 'rangeToAdd1')">
-              </el-time-picker>
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                v-if="canAddBatch"
-                size="mini"
-                type="primary"
-                style="margin-right: 10px;"
-                @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
-              <el-button
-                size="small"
-                style="margin-left: 0;"
-                @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
-            </el-form-item>
+  <div class="">
+    <div class="form-container">
+      <m-form :items="formItems" @submit="onSubmit"></m-form>
+    </div>
+    <el-row :gutter="0">
+      <el-col
+        :span="18"
+        :offset="3">
+        <el-form
+          ref="form"
+          :model="prison"
+          label-width="140px"
+          :rules="rules">
+          <!-- <el-form-item
+            label="监狱名称"
+            prop="title">
+            <el-input
+              v-model="prison.title"
+              placeholder="请填写监狱名称" />
+          </el-form-item>
+          <el-form-item
+            label="监狱简介"
+            prop="description">
+            <m-quill-editor :contents="prison.description" @editorChange="editorChange" />
+          </el-form-item> -->
+          <el-form-item
+            label="所在省"
+            prop="provincesId">
+            <el-select
+              v-model="prison.provincesId"
+              :loading="formItem.provincesId.getting"
+              filterable
+              auto-complete="address-level1"
+              placeholder="请选择所在省名称"
+              @change="onProvinceChange">
+              <el-option
+                v-for="(province, index) in $store.state.provincesAll"
+                :key="index"
+                :label="province.name"
+                :value="province.id" />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="所在市"
+            prop="citysId">
+            <el-select
+              :disabled="formItem.citysId.disabled"
+              v-model="prison.citysId"
+              :loading="formItem.citysId.getting"
+              filterable
+              auto-complete="address-level2"
+              placeholder="请选择所在市名称">
+              <el-option
+                v-for="(city, index) in $store.state.cities"
+                :key="index"
+                :label="city.name"
+                :value="city.id" />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="街道"
+            prop="street">
+            <el-input
+              v-model="prison.street"
+              placeholder="请填写街道名称" />
+          </el-form-item>
+          <el-form-item
+            label="探监路线"
+            prop="visitAddress">
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 2, maxRows: 6 }"
+              v-model="prison.visitAddress"
+              placeholder="请填写实地探监路线" />
+          </el-form-item>
+          <el-form-item
+            label="监狱编号"
+            prop="zipcode">
+            <el-input
+              v-model="prison.zipcode"
+              auto-complete="postal-code"
+              placeholder="请填写监狱编号" />
+          </el-form-item>
+          <el-form-item
+            label="单次会见费用"
+            prop="cost">
+            <el-input
+              v-model="prison.cost"
+              placeholder="请填写单次会见费用">
+              <template slot="append">/元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item
+            label="是否需要分监区"
+            prop="branchPrison">
+            <el-switch
+              v-model="prison.branchPrison"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="会见模块开放"
+            prop="meeting">
+            <el-switch
+              v-model="prison.meeting"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="奖励模块开放"
+            prop="rewards">
+            <el-switch
+              v-model="prison.rewards"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="电子商务模块开放"
+            prop="shopping">
+            <el-switch
+              v-model="prison.shopping"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="监狱条款模块开放"
+            prop="prisonTerm">
+            <el-switch
+              v-model="prison.prisonTerm"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="人脸识别模块开放"
+            prop="faceRecognition">
+            <el-switch
+              v-model="prison.faceRecognition"
+              active-color="#13ce66"
+              inactive-color="#dddddd"
+              :active-value="1"
+              :inactive-value="0"
+              :width="60" />
+          </el-form-item>
+          <el-form-item
+            label="汇款限制"
+            prop="remittance">
+            <el-input
+              v-model="prison.remittance"
+              placeholder="请填写单次会见费用">
+              <template slot="append">/元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item
+            label="消费限制"
+            prop="consumption">
+            <el-input
+              v-model="prison.consumption"
+              placeholder="请填写单次会见费用">
+              <template slot="append">/元</template>
+            </el-input>
+          </el-form-item>
+          <el-form-item
+            label="实地探监窗口个数"
+            prop="windowSize">
+            <el-input
+              v-model="prison.windowSize"
+              placeholder="请填写实地探监窗口个数(1-20)">
+              <template slot="append">/个</template>
+            </el-input>
+          </el-form-item>
+          <div class="queue-box">
+            <div class="queue">
+              <el-form-item
+                v-for="(item, index) in prison.batchQueue1"
+                :key="index"
+                label="实地探监批次"
+                :prop="'batchQueue1.' + index"
+                :rules="[{ required: true, message: '请选择实地探监批次' }, { validator: rangeValidate, index: index, prop: 'batchQueue1', flag: 'canAddBatch1' }]"
+                :class="index == 0 ? '' : 'meetingQueue'">
+                <el-time-picker
+                  is-range
+                  :editable="false"
+                  :clearable="false"
+                  :disabled="Boolean(prison.batchQueue1[index + 1])"
+                  v-model="prison.batchQueue1[index]"
+                  value-format="H:mm"
+                  format="H:mm"
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  placeholder="选择时间范围"
+                  :picker-options="index === 0 ? {} : { start: prison.batchQueue1[index - 1][1], minTime: prison.batchQueue1[index - 1][1], selectableRange: prison.batchQueue1[index - 1][1] + ' - 23:59:59' }"
+                  @change="onTimeRangeChange($event, 'batchQueue1', 'rangeToAdd1')">
+                </el-time-picker>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  v-if="canAddBatch"
+                  size="mini"
+                  type="primary"
+                  style="margin-right: 10px;"
+                  @click="onAddRange('batchQueue1', 'rangeToAdd1')">新增实地探监批次</el-button>
+                <el-button
+                  size="small"
+                  style="margin-left: 0;"
+                  @click="onRestRange('batchQueue1', 'rangeToAdd1')">重置实地探监批次</el-button>
+              </el-form-item>
+            </div>
+            <div class="queue">
+              <el-form-item
+                v-for="(item, index) in prison.meetingQueue1"
+                :key="index"
+                label="会见列表"
+                :prop="'meetingQueue1.' + index"
+                :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'meetingQueue1', flag: 'canAddMeeting1' }]"
+                :class="index === 0 ? '' : 'meetingQueue'">
+                <el-time-picker
+                  is-range
+                  :editable="false"
+                  :clearable="false"
+                  :disabled="Boolean(prison.meetingQueue1[index + 1])"
+                  v-model="prison.meetingQueue1[index]"
+                  :value="prison.meetingQueue1[index]"
+                  value-format="H:mm"
+                  format="H:mm"
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  placeholder="选择时间范围"
+                  :picker-options="index === 0 ? {} : { start: prison.meetingQueue1[index - 1][1], minTime: prison.meetingQueue1[index - 1][1], selectableRange: prison.meetingQueue1[index - 1][1] + ' - 23:59:59' }"
+                  @change="onTimeRangeChange($event, 'meetingQueue1', 'rangeToAdd2')">
+                </el-time-picker>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  v-if="canAddMeeting"
+                  size="mini"
+                  type="primary"
+                  style="margin-right: 10px;"
+                  @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
+                <el-button
+                  size="small"
+                  style="margin-left: 0;"
+                  @click="onRestRange('meetingQueue1', 'rangeToAdd2')">重置会见列表</el-button>
+              </el-form-item>
+            </div>
           </div>
-          <div class="queue">
-            <el-form-item
-              v-for="(item, index) in prison.meetingQueue1"
-              :key="index"
-              label="会见列表"
-              :prop="'meetingQueue1.' + index"
-              :rules="[{ required: true, message: '请选择会见时间段' }, { validator: rangeValidate, index: index, prop: 'meetingQueue1', flag: 'canAddMeeting1' }]"
-              :class="index === 0 ? '' : 'meetingQueue'">
-              <el-time-picker
-                is-range
-                :editable="false"
-                :clearable="false"
-                :disabled="Boolean(prison.meetingQueue1[index + 1])"
-                v-model="prison.meetingQueue1[index]"
-                :value="prison.meetingQueue1[index]"
-                value-format="H:mm"
-                format="H:mm"
-                range-separator="至"
-                start-placeholder="开始时间"
-                end-placeholder="结束时间"
-                placeholder="选择时间范围"
-                :picker-options="index === 0 ? {} : { start: prison.meetingQueue1[index - 1][1], minTime: prison.meetingQueue1[index - 1][1], selectableRange: prison.meetingQueue1[index - 1][1] + ' - 23:59:59' }"
-                @change="onTimeRangeChange($event, 'meetingQueue1', 'rangeToAdd2')">
-              </el-time-picker>
-            </el-form-item>
-            <el-form-item>
-              <el-button
-                v-if="canAddMeeting"
-                size="mini"
-                type="primary"
-                style="margin-right: 10px;"
-                @click="onAddRange('meetingQueue1', 'rangeToAdd2')">新增会见时间段</el-button>
-              <el-button
-                size="small"
-                style="margin-left: 0;"
-                @click="onRestRange('meetingQueue1', 'rangeToAdd2')">重置会见列表</el-button>
-            </el-form-item>
-          </div>
-        </div>
-        <el-form-item
-          label="监狱图片"
-          prop="imageUrl">
-          <m-upload-img
-            v-model="prison.imageUrl"
-            @success="onSuccess" />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-            size="small">新增</el-button>
-        </el-form-item>
-      </el-form>
-    </el-col>
-  </el-row>
+          <el-form-item
+            label="监狱图片"
+            prop="imageUrl">
+            <m-upload-img
+              v-model="prison.imageUrl"
+              @success="onSuccess" />
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="onSubmit"
+              size="small">新增</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+  </div>
+
 </template>
 
 <script>
@@ -281,6 +287,13 @@
   export default {
     data() {
       return {
+        formItems: {
+          formConfigs: { labelWidth: '140px' },
+          buttons: ['add', 'back'],
+          title: { type: 'input', label: '监狱名称', rules: ['required'] },
+          description: { type: 'editor', label: '监狱简介', rules: ['required'] },
+          provincesId: { type: 'select', label: '所在省', rules: ['required'], action: 'getProvincesAll' }
+        },
         formItem: {
           provincesId: {
             getting: true
@@ -379,9 +392,9 @@
       }
     },
     mounted() {
-      this.getProvincesAll().then(() => {
-        this.formItem.provincesId.getting = false
-      })
+      // this.getProvincesAll().then(() => {
+      //   this.formItem.provincesId.getting = false
+      // })
     },
     methods: {
       ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),

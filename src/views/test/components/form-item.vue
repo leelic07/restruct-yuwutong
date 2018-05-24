@@ -14,7 +14,7 @@
 export default {
   props: ['item', 'prop', 'fields'],
   mounted() {
-    console.log(this.item, this.prop, this.fields)
+    // console.log(this.item, this.prop, this.fields)
   }
 }
 </script>

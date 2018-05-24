@@ -1,6 +1,15 @@
 import frame from '@/views/common/the-frame'
 
 let superAdmin = [{
+  path: '/test',
+  name: '测试',
+  meta: { hidden: true },
+  children: [{
+    path: '/test/form',
+    name: '测试表单',
+    component: resolve => require(['@/views/test/form'], resolve)
+  }]
+}, {
   path: '/prison',
   name: '监狱管理',
   meta: { hidden: true },

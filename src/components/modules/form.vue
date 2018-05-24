@@ -1,136 +1,110 @@
 <template>
-  <el-form
-    v-if="show"
-    ref="form"
-    :model="formData"
-    :rules="rules"
-    :inline="inline"
-    :label-position="labelPosition"
-    :label-width="labelWidth">
-    <template v-for="(item, index) in formItem">
-      <items :formData="formData" :key="index" :attribute="index" :item="item" @clear="onClear"></items>
-    </template>
-    <el-button class="form-button" size="mini" type="primary" @click="onSubmit" :loading="buttonLoading">{{ buttonText }}</el-button>
-    <slot />
-  </el-form>
+  <div class="yt-form">
+    <el-form
+      v-if="flag"
+      ref="form"
+      :inline="items.formConfigs && items.formConfigs.inline"
+      :label-width="items.formConfigs && items.formConfigs.labelWidth"
+      :model="values"
+      :rules="rules">
+      <template v-for="(item, key) in items">
+        <form-item
+          v-if="dismiss.indexOf(key) < 0"
+          :key="key"
+          :prop="key"
+          :item="item"
+          :fields="values"
+          @validateField="validateField" />
+      </template>
+    </el-form>
+    <div v-if="items.buttons && items.buttons.length" class="button-box">
+      <template v-for="(button, index) in items.buttons">
+        <el-button
+          v-if="button === 'add'"
+          :key="index"
+          size="small"
+          type="primary"
+          @click="onSubmit">新增</el-button>
+        <el-button
+          v-if="button === 'update'"
+          :key="index"
+          size="small"
+          type="primary">更新</el-button>
+        <el-button
+          v-if="button === 'back'"
+          :key="index"
+          size="small">返回</el-button>
+        <el-button
+          v-if="button === 'next'"
+          :key="index"
+          size="small"
+          type="primary">下一步</el-button>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>
-import Items from './form-item'
+import formItem from './form-item'
+import helper from '@/utils'
 export default {
-  components: { Items },
-  props: {
-    formItem: {
-      type: Object,
-      required: true
-    },
-    inline: {
-      type: Boolean,
-      default: false
-    },
-    labelPosition: {
-      type: String,
-      default: 'right'
-    },
-    labelWidth: {
-      type: String
-    },
-    buttonLoading: {
-      type: Boolean,
-      default: false
-    },
-    buttonText: {
-      type: String,
-      default: '提交'
-    }
-  },
+  components: { formItem },
+  props: ['items'],
   data() {
     return {
-      show: false,
-      formData: {},
-      rules: {}
-    }
-  },
-  watch: {
-    formItem: {
-      handler: function(val) {
-        console.log(123)
-        this.render()
-        console.log(this.formData)
-      },
-      deep: true
+      dismiss: ['buttons', 'formConfigs'],
+      values: {},
+      rules: {},
+      flag: false
     }
   },
   mounted() {
-    this.render()
+    Object.keys(this.items).forEach(key => {
+      if (this.dismiss.indexOf(key) >= 0) return
+      this.initRules(this.items[key])
+      this.items[key].rule && (this.rules[key] = this.items[key].rule)
+    })
+    this.flag = true
   },
   methods: {
-    render() {
-      this.show = false
-      let rule = {}
-      Object.keys(this.formItem).forEach(key => {
-        this.formData[key] = this.formItem[key].value
-        if (!this.formItem[key].rules) return
-        rule[key] = this.addRules(key, this.formItem[key].rules, this.formItem[key])
-      })
-      this.rules = Object.assign({}, rule)
-      this.show = true
-    },
-    addRules(prop, rules, item) {
-      let arr = [], setting = {}
-      rules.forEach((rule, index) => {
-        switch (rule) {
-          case 'required':
-            setting = {
-              required: true,
-              message: `${ item.type === 'select' ? '请选择' : '请输入' }${ item.label }`
-            }
-            arr.push(Object.assign({}, setting))
-            break
-          case 'required-blur':
-            setting = {
-              required: true,
-              message: `${ item.type === 'select' ? '请选择' : '请输入' }${ item.label }`,
-              trigger: 'blur'
-            }
-            arr.push(Object.assign({}, setting))
-            break
-          default:
-            //
-        }
-      })
-      return arr
-    },
-    onSubmit() {
-      this.$refs.form.validate((valid) => {
-        if (!valid) {
-          this.$emit('submit', false)
-        }
-        else {
-          this.$emit('submit', this.formData)
-        }
+    onSubmit(e) {
+      console.log(this.values)
+      this.$refs.form.validate(valid => {
+        console.log(valid)
       })
     },
-    onClear(e) {
-      this.formData[e] = ''
-      // this.formData = Object.assign({}, this.formData, { [e]: undefined })
-      // console.log(this.formData)
-      // console.log(e)
-      // console.log(this.$refs.form)
-      // let field = this.$refs.form.fields.find(item => {
-      //   return item.labelFor === e
-      // })
-      // field.resetField()
-      // console.dir(this.formData)
-      // console.dir(this.formData)
+    // this.$refs.form.validateField(this.prop)
+    validateField(e) {
+      this.$refs.form.validateField(e)
+    },
+    initRules(item) {
+      if (!item.rules || !item.rules.length) return
+      item.rules.forEach((rule, index) => {
+        if (index === 0) item.rule = []
+        item.rule.push(this.ruleSwitch(rule, item.label, item.type))
+      })
+      delete item.rules
+    },
+    ruleSwitch(rule, label, type) {
+      let plea = ['input', 'editor'].indexOf(type) > -1 ? '请输入' : '请选择'
+      switch (rule) {
+        case 'required':
+          return { message: `${ plea }${ label }`, required: true }
+        case 'isNumber':
+          return { validator: helper.isNumber }
+        default:
+          return {}
+      }
     }
   }
 }
 </script>
 
-<style lang="css">
-.form-button{
-  float: right;
-  margin-bottom: 20px;
+<style lang="css" scoped>
+.button-box{
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 </style>

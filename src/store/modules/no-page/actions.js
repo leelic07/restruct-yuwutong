@@ -8,7 +8,11 @@ export default {
     return http.getPrisonAllWithBranchPrison(params).then(res => res && commit('getPrisonAllWithBranchPrison', res))
   },
   getProvincesAll: ({ commit }) => {
-    return http.getProvincesAll().then(res => res && commit('getProvincesAll', res))
+    return http.getProvincesAll().then(res => {
+      if (!res) return
+      commit('getProvincesAll', res)
+      return { options: res.provinces, label: 'name', value: 'id' }
+    })
   },
   getCities: ({ commit }, params) => {
     return http.getCities(params).then(res => res && commit('getCities', res))
