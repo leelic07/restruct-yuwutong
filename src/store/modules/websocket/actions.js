@@ -2,7 +2,7 @@ import { Notification, Message } from 'element-ui'
 
 const wsUrl = jailId => `ws://123.57.7.159/ws/${ jailId }` // 测试
 // const wsUrl = jailId => `ws://123.57.7.159/ws-demo/${ jailId }` // 演示
-// const wsUrl = jailId => `ws://10.10.10.10:8081/ywgk/websocket/${ jailId }`
+// const wsUrl = jailId => `wss://www.yuwugongkai.com/ws/${ jailId }`
 
 export default {
   // getPrisonAll: ({ commit }, params) => {
