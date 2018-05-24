@@ -78,7 +78,7 @@
             auto-complete="postal-code"
             placeholder="请填写监狱编号" />
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           label="实地探监窗口个数"
           prop="windowSize">
           <el-input
@@ -86,7 +86,7 @@
             placeholder="请填写实地探监窗口个数(1-20)">
             <template slot="append">/个</template>
           </el-input>
-        </el-form-item>
+        </el-form-item> -->
         <div class="queue-box">
           <div class="queue">
             <el-form-item
