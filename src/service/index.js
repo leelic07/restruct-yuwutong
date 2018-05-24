@@ -1,4 +1,3 @@
-import accounts from './modules/accounts'
 import jailsInformation from './modules/jails-information'
 import lawsInformation from './modules/laws-information'
 import passwordModification from './modules/password-modification'
@@ -10,10 +9,10 @@ import admin from './modules/admin'
 import check from './modules/check'
 import information from './modules/information'
 import common from './modules/common'
+import superAdmin from './modules/superAdmin'
 import noPage from './modules/no-page'
 
 export default Object.assign(
-  accounts,
   jailsInformation,
   lawsInformation,
   passwordModification,
@@ -21,6 +20,7 @@ export default Object.assign(
   uploadFile,
   uploadImg,
   admin,
+  superAdmin,
   common,
   check,
   information,

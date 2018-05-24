@@ -71,6 +71,7 @@ export default {
     ...mapActions(['importPrisonTerm', 'uploadFile', 'resetState']),
     // 上传罪犯刑期模板文件到服务端
     beforeUpload(file) {
+      this.resetState({ prisonTermResult: {} })
       this.uploadFile(file).then(res => {
         if (!res) return
         this.importPrisonTerm({ filepath: this.uploadResult.path }).then(res => {

@@ -1,4 +1,8 @@
-let adminMenu = [{
+let superAdminMenu = [{
+  //   path: '/test/test',
+  //   title: '测试表单',
+  //   icon: 'iconfont icon-jianyuguanli'
+  // }, {
     path: '/prison/list',
     title: '监狱管理',
     icon: 'iconfont icon-jianyuguanli'
@@ -34,31 +38,32 @@ let adminMenu = [{
     path: '/log/app-error',
     title: 'APP崩溃日志',
     icon: 'iconfont icon-bengkuirizhi'
-  // }, {
-  //   path: '/log',
-  //   title: '日志',
-  //   icon: 'iconfont icon-folder',
-  //   active: false,
-  //   children: [
-  //     {
-  //     //   path: '/log/user-operation',
-  //     //   title: '用户操作日志',
-  //     //   icon: 'iconfont icon-circle-o'
-  //     // }, {
-  //       path: '/log/app-error',
-  //       title: 'APP崩溃日志',
-  //       icon: 'iconfont icon-circle-o'
-  //     }
-  //   ]
   }],
   checkMenu = [{
+
     path: '/registration/list',
     title: '家属注册管理',
     icon: 'iconfont icon-jiashuzhuce'
   }, {
-    path: '/meeting/list',
+    path: '/meeting',
     title: '会见申请管理',
-    icon: 'iconfont icon-huijianshenqing'
+    icon: 'iconfont icon-huijianshenqing',
+    active: false,
+    children: [
+      {
+        path: '/meeting/list',
+        title: '会见申请列表',
+        icon: 'iconfont icon-circle-o'
+      }, {
+        path: '/meeting/adjust',
+        title: '会见申请调整',
+        icon: 'iconfont icon-circle-o'
+      }
+    ]
+  }, {
+    path: '/visit/list',
+    title: '实地探监管理',
+    icon: 'iconfont icon-shidihuijian'
   }, {
     path: '/mailbox/list',
     title: '监狱长信箱',
@@ -141,6 +146,11 @@ let adminMenu = [{
         icon: 'iconfont icon-circle-o'
       }
     ]
+  }],
+  adminMenu = [{
+    path: '/account/list',
+    title: '账户管理',
+    icon: 'iconfont icon-jianyujibenxinxi'
   }]
 
-export default [adminMenu, checkMenu, shopMenu, infoMenu]
+export default [superAdminMenu, checkMenu, shopMenu, infoMenu, adminMenu]

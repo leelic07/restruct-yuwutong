@@ -1,7 +1,6 @@
 <template>
   <el-col :span="24" class="filter-box">
-    <el-col :span="8">
-      <!--页数选择框-->
+    <div class="pagination-box">
       <el-select v-model="pageSize" placeholder="请选择" @change="sizeChange">
         <el-option
           v-for="item in selectItem"
@@ -11,9 +10,60 @@
         </el-option>
       </el-select>
       条记录
-    </el-col>
+    </div>
+    <div class="filter-right">
+      <template v-for="(item, index) in items">
+        <el-input
+          v-if="item.type === 'input'"
+          v-model="item.value"
+          :placeholder="'请输入' + item.label" />
+        <el-select
+          v-if="item.type === 'select'"
+          v-model="item.value"
+          :placeholder="'请选择' + item.label"
+          :loading="item.getting || false"
+          :filterable="item.filterable"
+          clearable>
+          <el-option
+            v-for="option in item.options"
+            v-if="item.no ? (item.no.indexOf(item.belong ? option[item.belong.value] : option.value) == -1) : true"
+            :key="item.belong ? option[item.belong.value] : option.value"
+            :label="item.belong ? option[item.belong.label] : option.label"
+            :value="item.belong ? option[item.belong.value] : option.value" />
+        </el-select>
+        <el-date-picker
+          v-if="item.type === 'datetime'"
+          v-model="item.value"
+          type="datetime"
+          :placeholder="item.label"
+          align="right"
+          :picker-options="pickerOptions">
+        </el-date-picker>
+        <el-date-picker
+          v-if="item.type === 'date'"
+          v-model="item.value"
+          type="date"
+          value-format="yyyy-MM-dd"
+          :placeholder="item.label">
+        </el-date-picker>
+        <el-date-picker
+          v-if="item.type === 'datetimerange'"
+          v-model="item.value"
+          type="datetimerange"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          format="yyyy-MM-dd HH:mm:ss"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          :default-time="['00:00:00', '23:59:59']">
+        </el-date-picker>
+      </template>
+      <template>
+        <el-button v-if="buttonText" @click="onSearch">{{ buttonText }}</el-button>
+        <el-button v-else icon="el-icon-search" @click="onSearch"></el-button>
+      </template>
+    </div>
     <!--搜索框-->
-    <el-col :span="16" class="search-box">
+    <!-- <el-col :span="16" class="search-box">
       <el-col>
         <el-button v-if="buttonText" @click="onSearch">{{ buttonText }}</el-button>
         <el-button v-else icon="el-icon-search" @click="onSearch"></el-button>
@@ -60,7 +110,7 @@
           </el-date-picker>
         </el-col>
       </template>
-    </el-col>
+    </el-col> -->
   </el-col>
 </template>
 
@@ -133,20 +183,35 @@ export default {
 
 <style type="text/stylus" lang="stylus">
 .filter-box
-  margin-bottom: 25px;
-  .search-box
-    .el-col:not(.el-col-8)
-      &:first-child
-        width: 8%
-      float: right
-      width: 22%
-      margin-left: 3%
-      .el-date-editor.el-input
-        width: 100%;
-    .el-col-8
-      float: right;
-      min-width: 274px;
-    .el-date-editor--datetimerange.el-input, .el-date-editor--datetimerange.el-input__inner{
-      width: 100%;
-    }
+  overflow: hidden;
+  margin-bottom: 10px;
+.pagination-box
+  width: 200px;
+  float: left;
+  margin-bottom: 10px;
+  z-index: 10;
+  .el-select .el-input
+    width: 154px;
+.filter-right
+  float: right;
+  z-index: 10;
+  width: calc(100% - 200px);
+  min-width: 128px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  & > *:not(.el-button)
+    margin-left: 20px;
+    margin-bottom: 10px;
+    min-width: 128px;
+    max-width: 198px;
+    width: 20%;
+  .el-button
+    margin-left: 20px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  .el-date-editor--datetimerange.el-input, .el-date-editor--datetimerange.el-input__inner
+    width: 320px;
+    max-width: 320px;
 </style>

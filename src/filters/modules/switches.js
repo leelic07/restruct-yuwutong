@@ -12,10 +12,11 @@ let switches = {
     { value: 'f', label: '女' }
   ],
   role: [
-    { value: 0, label: '管理员' },
+    { value: 0, label: '超级管理员' },
     { value: 1, label: '审核人员' },
     { value: 2, label: '商品用户' },
-    { value: 3, label: '信息管理人员' }
+    { value: 3, label: '信息管理人员' },
+    { value: 4, label: '监狱管理员' }
   ],
   goodsCategory: [
     { value: 1, label: '洗化日用' },
@@ -29,6 +30,7 @@ let switches = {
     { value: 'DENIED', label: '已拒绝' },
     { value: 'PASSED', label: '已通过' },
     { value: 'FINISHED', label: '已完成' },
+    // { value: 'TOBECANCELED', label: '待取消' },
     { value: 'CANCELED', label: '已取消' }
   ]
 }

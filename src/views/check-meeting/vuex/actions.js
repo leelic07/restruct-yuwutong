@@ -9,5 +9,15 @@ export default {
   },
   withdrawMeeting({ commit }, params) {
     return http.withdrawMeeting(params).then(res => res)
+  },
+  getMeetingConfigs({ commit }, params) {
+    return http.getMeetingConfigs(params).then(res => {
+      if (!res) return
+      commit('getMeetingConfigs', res)
+      return true
+    })
+  },
+  adjustMeeting({ commit }, params) {
+    return http.adjustMeeting(params).then(res => res)
   }
 }

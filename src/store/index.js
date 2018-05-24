@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import breadCrumb from './modules/bread-crumb'
 import jailsInformation from './modules/jails-information'
 import common from './modules/common'
 import passwordModification from './modules/password-modification'
@@ -10,23 +9,25 @@ import uploadFile from './modules/upload-file'
 import uploadImg from './modules/upload-img'
 import breadCrumbs from './modules/breadcrumb'
 
-import adminAdvertisement from '@/views/admin-advertisement/vuex'
-import adminFeedback from '@/views/admin-feedback/vuex'
-import adminLog from '@/views/admin-log/vuex'
-import adminPrison from '@/views/admin-prison/vuex'
-import adminPrisonArea from '@/views/admin-prison-area/vuex'
-import adminPrisonUser from '@/views/admin-prison-user/vuex'
-import adminTerminal from '@/views/admin-terminal/vuex'
-import adminVersion from '@/views/admin-version/vuex'
-import adminWhitemember from '@/views/admin-whitemember/vuex'
+import adminAdvertisement from '@/views/sadmin-advertisement/vuex'
+import adminFeedback from '@/views/sadmin-feedback/vuex'
+import adminLog from '@/views/sadmin-log/vuex'
+import adminPrison from '@/views/sadmin-prison/vuex'
+import adminPrisonArea from '@/views/sadmin-prison-area/vuex'
+import adminPrisonUser from '@/views/sadmin-prison-user/vuex'
+import adminTerminal from '@/views/sadmin-terminal/vuex'
+import adminVersion from '@/views/sadmin-version/vuex'
+import adminWhitemember from '@/views/sadmin-whitemember/vuex'
 import checkFamily from '@/views/check-family/vuex'
 import checkMailbox from '@/views/check-mailbox/vuex'
 import checkMeeting from '@/views/check-meeting/vuex'
 import checkPrisoner from '@/views/check-prisoner/vuex'
 import checkPrisonDataManagement from '@/views/check-prisoner-data/vuex'
 import checkRegistration from '@/views/check-registration/vuex'
+import checkVisit from '@/views/check-visit/vuex'
 import infoPrisonAffairsPublic from '@/views/info-prison-affairs-public/vuex'
 import noPage from './modules/no-page'
+import websocket from './modules/websocket'
 import login from '@/views/login/vuex'
 
 import filter from './modules/filter'
@@ -45,7 +46,6 @@ let actions = {}, mutations = {}, getters = {}, state = {}, merge = (...args) =>
 
 // 将对应的actions,mutations,getters,state 添加到声明的对象中
 merge(
-  breadCrumb,
   jailsInformation,
   common,
   passwordModification,
@@ -71,8 +71,10 @@ merge(
   checkPrisonDataManagement,
   checkPrisoner,
   checkRegistration,
+  checkVisit,
   login,
-  noPage
+  noPage,
+  websocket
 )
 export default new Vuex.Store({
   actions,

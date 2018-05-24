@@ -17,11 +17,7 @@ export default {
     return http.deleteAdvertisement(params).then(res => res)
   },
   getAdvertisementDetail: ({ commit }, params) => {
-    return http.getAdvertisementDetail(params).then(res => {
-      if (!res) return
-      commit('getAdvertisementDetail', res)
-      return true
-    })
+    return http.getAdvertisementDetail(params).then(res => res && commit('getAdvertisementDetail', res))
   },
   updateAdvertisement: ({ commit }, params) => {
     return http.updateAdvertisement(params).then(res => res)

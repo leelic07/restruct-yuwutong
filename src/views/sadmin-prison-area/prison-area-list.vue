@@ -11,7 +11,7 @@
         value="first"
         type="card">
         <el-tab-pane
-          label="监区说明"
+          label="监区说明管理"
           name="first" />
       </el-tabs>
       <el-table
@@ -61,7 +61,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-
 export default {
   data() {
     return {

@@ -34,7 +34,6 @@ const codes = {
   },
   404: {
     next: params => {
-      console.log(params)
       tips('找不到对应的资源！')
     }
   },
@@ -73,10 +72,10 @@ const codes = {
   },
   99998: {
     next: params => {
-      localStorage.removeItem('user')
-      localStorage.removeItem('routes')
+      // localStorage.removeItem('user')
+      // localStorage.removeItem('routes')
       tips(params.msg || '无相应权限，请重新登录')
-      router.push({ path: '/new-login' })
+      // router.push({ path: '/new-login' })
     }
   }
 }

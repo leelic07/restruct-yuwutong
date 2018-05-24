@@ -5,7 +5,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>狱务</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>狱务公开</b>管理平台</span>
+      <span class="logo-lg"><b>狱务通</b>管理平台</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -73,7 +73,7 @@ export default {
           localStorage.removeItem('routes')
           this.$router.replace('/new-login')
         })
-      })
+      }).catch(() => {})
     }
   }
 }

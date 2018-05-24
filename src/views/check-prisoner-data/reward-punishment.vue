@@ -68,6 +68,7 @@ export default {
     ...mapActions(['importPrisonerRewardPunishment', 'uploadFile', 'resetState']),
     // 上传罪犯奖惩模板文件到服务端
     beforeUpload(file) {
+      this.resetState({ prisonerRewardPunishmentResult: {} })
       this.uploadFile(file).then(res => {
         if (!res) return
         this.importPrisonerRewardPunishment({ filepath: this.uploadResult.path }).then(res => {

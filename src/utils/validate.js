@@ -21,8 +21,26 @@ export default {
     }
   },
   isNumber: (rule, value, callback) => {
-    if (!Number.isInteger(value)) {
+    if ([undefined, null, ''].indexOf(value) > -1) {
+      callback()
+    }
+    else if (!Number.isInteger(Number(value))) {
       callback(new Error('请输入整数'))
+    }
+    else {
+      callback()
+    }
+  },
+  numberRange: (rule, value, callback) => {
+    let val = Number(value)
+    if (String(rule.min).length && String(rule.max).length && (val < rule.min || val > rule.max)) {
+      callback(new Error(`请输入${ rule.min }-${ rule.max }之间的数字`))
+    }
+    else if (String(rule.min).length && !String(rule.max).length && val < rule.min) {
+      callback(new Error(`请输入大于${ rule.min }的数字`))
+    }
+    else if (!String(rule.min).length && String(rule.max).length && val > rule.max) {
+      callback(new Error(`请输入小于${ rule.min }的数字`))
     }
     else {
       callback()

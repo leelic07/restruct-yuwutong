@@ -17,6 +17,20 @@ let check = [{
     path: '/meeting/list',
     name: '会见申请列表',
     component: resolve => require(['@/views/check-meeting/meeting-list'], resolve)
+  }, {
+    path: '/meeting/adjust',
+    name: '会见申请调整',
+    component: resolve => require(['@/views/check-meeting/meeting-adjust'], resolve)
+    // component: resolve => require(['@/views/check-meeting/ws'], resolve)
+  }]
+}, {
+  path: '/visit',
+  name: '实地探监管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/visit/list',
+    name: '实地探监列表',
+    component: resolve => require(['@/views/check-visit/visit-list'], resolve)
   }]
 }, {
   path: '/mailbox',

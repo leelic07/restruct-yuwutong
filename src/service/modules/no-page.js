@@ -19,6 +19,6 @@ export default {
   },
   // 监区-根据监狱id查询
   getJailPrisonAreas: params => {
-    return service.get(`/terminals/getPrisonConfigs?jailId=${ params }`).then(res => res && res.data)
+    return service.get(`/prison_config/getPrisonConfigs`, params).then(res => res && res.data)
   }
 }

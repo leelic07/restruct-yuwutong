@@ -1,74 +1,69 @@
 <template>
   <el-form-item
+    v-if="flag"
     :label="item.label"
-    :prop="attribute">
+    :prop="prop">
     <el-input
       v-if="item.type === 'input'"
-      v-model="item.value"
-      :placeholder="'请输入' + item.label"
-      @change="onChange" />
-<!-- <template v-if="item.type === 'select'">
-  {{ item.rely ? !formData[item.rely] : item.disabled }}
-</template> -->
+      v-model="fields[prop]"
+      :placeholder="'请输入' + item.label" />
+      <!-- <template v-if="item.type === 'select'">{{ item }}</template> -->
     <el-select
       v-if="item.type === 'select'"
-      v-model="item.value"
       :placeholder="'请选择' + item.label"
-      clearable
+      v-model="fields[prop]"
+      :loading="item.loading"
+      filterable
       :disabled="item.disabled"
-      :loading="item.getting"
-      @change="onChange">
+      @change="item.func ? item.func($event, prop) : onSelectChange($event, prop)">
       <el-option
-        v-for="option in item.options"
-        :key="item.belong ? option[item.belong.value]: option.valve"
-        :label="item.belong ? option[item.belong.label]: option.label"
-        :value="item.belong ? option[item.belong.value]: option.valve" />
+        v-for="(option) in item.options"
+        :key="item.props ? option[item.props.value] : option.value"
+        :label="item.props.label ? option[item.props.label] : option.label"
+        :value="item.props.value ? option[item.props.value] : option.value"/>
     </el-select>
-
     <m-quill-editor
       v-if="item.type === 'editor'"
+      :contents="fields[prop]"
       @editorChange="editorChange" />
   </el-form-item>
 </template>
 
 <script>
+// import { mapActions } from 'vuex'
 export default {
   props: {
-    item: {
-      type: Object
-    },
-    attribute: {
-      type: String
-    },
-    formData: {
-      type: Object
-    }
+    item: Object,
+    prop: String,
+    fields: Object
   },
   data() {
     return {
-      disabled: true
+      flag: true
+      // getting: true
+      // options: {}
     }
   },
+  // watch
+  mounted() {
+    console.log(this.item, this.prop, this.fields)
+    if (this.item.type === 'select') this.initSelect()
+  },
   methods: {
-    onChange(e) {
-      if (this.item.func) {
-        console.log(this.attribute)
-        if (this.attribute === 'provincesId') this.$emit('clear', 'citysId')
-        this.item.func(e)
-      }
-      this.formData[this.attribute] = e
-      if (this.attribute === 'provincesId') this.formData.citysId = 3
+    // ...mapActions({ this.item.action }),
+    initSelect() {
+    },
+    onSelectChange(e, prop) {
+      // this.fields[prop] = e
+      // if (this.item.rely)
     },
     editorChange(contents, text) {
-      this.formData[this.attribute] = contents
+      this.fields[this.prop] = contents
+      this.$emit('validateField', this.prop)
     }
   }
 }
 </script>
 
 <style lang="css">
-.filter{
-  display: inline-block;
-  width: 100%;
-}
 </style>

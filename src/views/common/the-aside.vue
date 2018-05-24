@@ -23,8 +23,8 @@
               <span>{{ first.title }}</span>
             </router-link>
           </template>
-          <template v-else>
-            <a href="javascript:;" @click="first.active = !first.active">
+          <template v-else><!-- first.active = !first.active -->
+            <a href="javascript:;" @click="onTreeMenuClick(first)">
               <i :class="first.icon"></i>
               <span>{{ first.title }}</span>
               <i class="el-submenu__icon-arrow"
@@ -57,7 +57,14 @@ export default {
   computed: {
     ...mapState(['user'])
   },
-  methods: {}
+  methods: {
+    onTreeMenuClick(e) {
+      this.menus[this.user.role].forEach(item => {
+        if (e.path !== item.path) item.active = false
+      })
+      e.active = true
+    }
+  }
 }
 </script>
 

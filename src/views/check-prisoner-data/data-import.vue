@@ -96,6 +96,7 @@ export default {
       this.$refs.upload.submit()
     },
     beforeUpload(file) {
+      this.resetState({ prisonerDataResult: {} })
       this.uploadFile(file).then(res => {
         if (!res) return
         this.importPrisoner({ filepath: this.uploadResult.path }).then(res => {

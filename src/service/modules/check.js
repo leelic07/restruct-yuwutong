@@ -17,9 +17,33 @@ export default {
   authorizeMeeting: params => {
     return service.post('/meetings/authorize', params).then(res => res && res.code === 200)
   },
+  // 家属会见申请-获取会见信息
+  getMeetingConfigs: params => {
+    return service.get(`/meetings/adjustment?inputDate=${ params }`).then(res => res && res.data)
+  },
+  // 家属会见申请-调整
+  adjustMeeting: params => {
+    return service.postObj(`/meetings/adjustMeeting`, params).then(res => res && res.code === 200)
+  },
   // 家属会见申请-撤回
   withdrawMeeting: params => {
     return service.post('/meetings/withdraw', params).then(res => res && res.code === 200)
+  },
+  // 实地探监管理-列表
+  getVisits: params => {
+    return service.get('/prisoner_visits/page', params).then(res => res && res.data)
+  },
+  // 实地探监管理-已取消
+  getCanceledVisit: params => {
+    return service.get('/prisoner_visits/findCanceled', params).then(res => res && res.data)
+  },
+  // 实地探监管理-授权
+  authorizeVisit: params => {
+    return service.post('/prisoner_visits/auth', params).then(res => res && res.code === 200)
+  },
+  // 实地探监管理-撤回
+  withdrawVisit: params => {
+    return service.post('/prisoner_visits/withdraw', params).then(res => res && res.code === 200)
   },
   // 监狱长信箱-列表
   getMailboxes: params => {
@@ -36,6 +60,10 @@ export default {
   // 服刑人员信息管理-列表
   getPrisoners: params => {
     return service.get('/prisoners/page', params).then(res => res && res.data)
+  },
+  // 服刑人员信息管理-修改会见次数
+  updateAccessTime: params => {
+    return service.post('/prisoners/updateAccessTime', params).then(res => res && res.code === 200)
   },
   // 家属信息管理-列表
   getFamilies: params => {
