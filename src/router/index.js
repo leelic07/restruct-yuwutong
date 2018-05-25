@@ -5,6 +5,7 @@ import admin from './modules/admin'
 import check from './modules/check'
 import common from './modules/common'
 import information from './modules/information'
+import superAdmin from './modules/superAdmin'
 Vue.use(Router)
 
 export default new Router({
@@ -13,9 +14,10 @@ export default new Router({
     ...admin,
     ...check,
     ...information,
-    ...common
+    ...common,
+    ...superAdmin
   ],
-  linkActiveClass: 'activeMenu',
+  linkActiveClass: 'active-menu',
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition

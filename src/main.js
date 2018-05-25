@@ -1,4 +1,5 @@
 import Vue from 'vue'
+// import VueWebsocket from 'vue-websocket'
 import App from '@/app'
 import router from './router'
 import ElementUI from 'element-ui'
@@ -19,6 +20,8 @@ import 'quill/dist/quill.snow.css'
 import '@/assets/css/main.css'
 
 Vue.use(ElementUI)
+// Vue.use(VueWebsocket, 'wss://pandax.mofasion.com/ws/7')
+// Vue.use(VueWebsocket, `ws://123.57.7.159/ws/2`)
 
 Vue.config.productionTip = false
 
@@ -62,7 +65,7 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-
+window.router = router
 /* eslint-disable no-new */
 new Vue({
   el: '#layout',

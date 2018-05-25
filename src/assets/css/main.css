@@ -115,3 +115,55 @@ img{
   width: 342.4px;
   height: 216px;
 }
+.inline-form .el-form-item__content{
+  width: calc(100% - 80px);
+  float: left;
+}
+.inline-form .el-form-item__label{
+  width: 80px;
+}
+.sidebar-menu .active-menu {
+  color: #fff !important;
+  background: #1e282c !important;
+  border-left-color: #3c8dbc !important;
+  position: relative;
+}
+.treeview-menu .active-menu:before{
+  content: "";
+  background: #1e282c;
+  display: block;
+  position: absolute;
+  left: -5px;
+  top: 0;
+  height: 100%;
+  width: 5px;
+}
+@media screen and (max-width: 415px){
+  .filter-right{
+    width: 100% !important;
+  }
+}
+.meetingQueue > label{
+  visibility: hidden;
+}
+.queue-box{
+  overflow: hidden;
+}
+.queue{
+  width: 50%;
+  float: left;
+  min-width: 340px;
+}
+.queue-box .queue .el-date-editor--timerange.el-input__inner{
+  width: 100%;
+  min-width: 200px;
+  max-width: 350px;
+}
+.queue-box .queue .el-date-editor .el-range-separator{
+  width: 30px;
+}
+.form-container{
+  width: 75%;
+  margin: auto;
+  padding-top: 20px;
+}
