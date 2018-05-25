@@ -2,7 +2,6 @@
   <div class="">
     <div class="form-container">
       <m-form :items="formItems" @submit="onSubmit" :values="values"></m-form>
-      <el-button @click="onAaaaaaaa">aaaaaaaaa</el-button>
     </div>
     <el-row :gutter="0">
       <el-col
@@ -13,68 +12,6 @@
           :model="prison"
           label-width="140px"
           :rules="rules">
-          <!-- <el-form-item
-            label="监狱名称"
-            prop="title">
-            <el-input
-              v-model="prison.title"
-              placeholder="请填写监狱名称" />
-          </el-form-item>
-          <el-form-item
-            label="监狱简介"
-            prop="description">
-            <m-quill-editor :contents="prison.description" @editorChange="editorChange" />
-          </el-form-item>
-          <el-form-item
-            label="所在省"
-            prop="provincesId">
-            <el-select
-              v-model="prison.provincesId"
-              :loading="formItem.provincesId.getting"
-              filterable
-              auto-complete="address-level1"
-              placeholder="请选择所在省名称"
-              @change="onProvinceChange">
-              <el-option
-                v-for="(province, index) in $store.state.provincesAll"
-                :key="index"
-                :label="province.name"
-                :value="province.id" />
-            </el-select>
-          </el-form-item> -->
-          <el-form-item
-            label="所在市"
-            prop="citysId">
-            <el-select
-              :disabled="formItem.citysId.disabled"
-              v-model="prison.citysId"
-              :loading="formItem.citysId.getting"
-              filterable
-              auto-complete="address-level2"
-              placeholder="请选择所在市名称">
-              <el-option
-                v-for="(city, index) in $store.state.cities"
-                :key="index"
-                :label="city.name"
-                :value="city.id" />
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="街道"
-            prop="street">
-            <el-input
-              v-model="prison.street"
-              placeholder="请填写街道名称" />
-          </el-form-item>
-          <el-form-item
-            label="探监路线"
-            prop="visitAddress">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 6 }"
-              v-model="prison.visitAddress"
-              placeholder="请填写实地探监路线" />
-          </el-form-item>
           <el-form-item
             label="监狱编号"
             prop="zipcode">
@@ -293,8 +230,11 @@
           buttons: ['add', 'back'],
           title: { type: 'input', label: '监狱名称', rules: ['required'] },
           description: { type: 'editor', label: '监狱简介', rules: ['required'] },
-          provincesId: { type: 'select', label: '所在省', func: this.onProvinceChange, loading: true, rules: ['required'], action: 'getProvincesAll' },
-          citysId: { type: 'select', label: '所在市', rules: ['required'], defer: true, disabled: true, loading: true }
+          provincesId: { type: 'select', label: '所在省', rely: 'citysId', func: this.onProvinceChange, loading: true, rules: ['required'], action: 'getProvincesAll' },
+          citysId: { type: 'select', label: '所在市', rules: ['required'], defer: true, disabled: true, loading: true },
+          street: { type: 'input', label: '街道' },
+          visitAddress: { type: 'textarea', label: '探监路线', autosize: { minRows: 2, maxRows: 6 } },
+          zipcode: { type: 'input', label: '监狱编号', rules: ['required'] }
         },
         values: {},
         formItem: {
@@ -311,10 +251,6 @@
         rangeToAdd1: ['17:00', '17:30'],
         rangeToAdd2: ['17:00', '17:30'],
         rules: {
-          title: [{ required: true, message: '请输入监狱名称' }],
-          description: [{ required: true, message: '请输入监狱简介' }],
-          provincesId: [{ required: true, message: '请输入监狱所在省' }],
-          citysId: [{ required: true, message: '请输入监狱所在市' }],
           // imageUrl: [{ required: true, message: '请上传监狱图片' }],
           settings: [{ required: true, message: '请输入监狱配置' }],
           zipcode: [{ required: true, message: '请输入监狱编号' }],
@@ -330,7 +266,6 @@
           consumption: [{ required: true, message: '请填写消费限制' }, { validator: helper.isFee }]
         },
         prison: {
-          citysId: '',
           imageUrl: '',
           cost: 0,
           branchPrison: 1,
@@ -366,36 +301,6 @@
         }
       }
     },
-    computed: {
-      canAddBatch() {
-        let lastIndex = this.prison.batchQueue1.length - 1
-        if (!this.rangeToAdd1.length || this.rangeToAdd1[0].indexOf('23:59') > -1) {
-          return false
-        }
-        if (lastIndex > 0) {
-          let minTimeStart = this.prison.batchQueue1[lastIndex - 1][1], minTimeEnd = this.prison.batchQueue1[lastIndex][0]
-          if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
-          if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
-          if (minTimeStart > minTimeEnd) return false
-        }
-        return this.canAddBatch1
-      },
-      canAddMeeting() {
-        let lastIndex = this.prison.meetingQueue1.length - 1
-        if (!this.rangeToAdd2.length || this.rangeToAdd2[0].indexOf('23:59') > -1) {
-          return false
-        }
-        if (lastIndex > 0) {
-          let minTimeStart = this.prison.meetingQueue1[lastIndex - 1][1], minTimeEnd = this.prison.meetingQueue1[lastIndex][0]
-          if (minTimeStart.split(':')[0].length === 1) minTimeStart = `0${ minTimeStart }`
-          if (minTimeEnd.split(':')[0].length === 1) minTimeEnd = `0${ minTimeEnd }`
-          if (minTimeStart > minTimeEnd) return false
-        }
-        return this.canAddMeeting1
-      }
-    },
-    mounted() {
-    },
     methods: {
       ...mapActions(['addPrison', 'getProvincesAll', 'getCities']),
       onSubmit(e) {
@@ -419,18 +324,12 @@
           }
         })
       },
-      onAaaaaaaa() {
-        console.log(this.values)
-      },
       onProvinceChange(e) {
-        this.values.citysId = ''
+        this.values = { citysId: '' }
         this.formItems.citysId.loading = true
         this.formItems.citysId.disabled = false
         this.getCities(e).then(res => {
           if (!res) return
-          // this.formItems.citysId.options = res.options
-          // this.formItems.citysId.props = { label: res.label, value: res.value }
-          // this.formItems.citysId.loading = false
           this.formItems.citysId = Object.assign({}, this.formItems.citysId, { options: res.options, props: { label: res.label, value: res.value }, loading: false, value: '' })
         })
       },

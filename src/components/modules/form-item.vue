@@ -1,12 +1,15 @@
 <template>
   <el-form-item
-    v-if="flag"
     :label="item.label"
     :prop="prop">
     <el-input
-      v-if="item.type === 'input'"
+      v-if="item.type === 'input' || item.type === 'textarea'"
+      :type="item.type"
+      :autosize="item.autosize"
       v-model="fields[prop]"
-      :placeholder="'请输入' + item.label" />
+      :placeholder="'请输入' + item.label">
+      <template v-if="item.append" slot="append">{{ item.append }}</template>
+    </el-input>
       <!-- <template v-if="item.type === 'select'">{{ item }}</template> -->
     <el-select
       v-if="item.type === 'select'"
@@ -39,20 +42,16 @@ export default {
   },
   data() {
     return {
-      flag: true
       // getting: true
       // options: {}
     }
   },
   // watch
   mounted() {
-    console.log(this.item, this.prop, this.fields)
-    if (this.item.type === 'select') this.initSelect()
+    // console.log(this.item, this.prop, this.fields)
   },
   methods: {
     // ...mapActions({ this.item.action }),
-    initSelect() {
-    },
     onSelectChange(e, prop) {
       // this.fields[prop] = e
       // if (this.item.rely)

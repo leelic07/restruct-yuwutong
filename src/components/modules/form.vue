@@ -17,8 +17,25 @@
           @validateField="validateField" />
       </template>
     </el-form>
-    <div v-if="items.buttons && items.buttons.length" class="button-box">
+    <div v-if="items.buttons && Object.keys(items.buttons).length" class="button-box">
       <template v-for="(button, index) in items.buttons">
+        <el-button
+          v-if="button === 'prev' || button.prev"
+          :key="index"
+          size="small"
+          type="primary"
+          @click="onPrevClick">上一步</el-button>
+        <el-button
+          v-if="button === 'next' || button.next"
+          :key="index"
+          size="small"
+          type="primary"
+          @click="onSubmit(button, $event)">下一步</el-button>
+        <el-button
+          v-if="button === 'update'"
+          :key="index"
+          size="small"
+          type="primary">更新</el-button>
         <el-button
           v-if="button === 'add'"
           :key="index"
@@ -26,19 +43,9 @@
           type="primary"
           @click="onSubmit">新增</el-button>
         <el-button
-          v-if="button === 'update'"
-          :key="index"
-          size="small"
-          type="primary">更新</el-button>
-        <el-button
           v-if="button === 'back'"
           :key="index"
           size="small">返回</el-button>
-        <el-button
-          v-if="button === 'next'"
-          :key="index"
-          size="small"
-          type="primary">下一步</el-button>
       </template>
     </div>
   </div>
@@ -46,7 +53,6 @@
 
 <script>
 import formItem from './form-item'
-// import validator from '@/utils'
 import validator, { helper } from '@/utils'
 export default {
   components: { formItem },
@@ -54,16 +60,18 @@ export default {
     items: {
       type: Object
     },
-    values: {}
+    values: Object
   },
   watch: {
     values: {
-      handler: (val) => {
-        console.log('values', val)
+      handler: function(val) {
         this.fields = Object.assign({}, this.fields, val)
-        // Object.keys(this.fields).forEach(k => {
-        //     this.addFormItems({ [k]: this.fields[k] })
-        // })
+      },
+      deep: true
+    },
+    items: {
+      handler: val => {
+        // console.log('222222222', val)
       },
       deep: true
     }
@@ -77,18 +85,19 @@ export default {
     }
   },
   mounted() {
-    Object.keys(this.items).forEach(key => {
-      if (this.dismiss.indexOf(key) >= 0) return
-      this.initRules(this.items[key])
-      this.items[key].rule && (this.rules[key] = this.items[key].rule)
-    })
-    this.flag = true
+    this.render()
   },
   methods: {
+    onPrevClick(e) {
+      this.$router.back()
+    },
     onSubmit(e) {
-      console.log(this.values, this.fields)
+      // console.dir(Object.assign(this.fields))
       this.$refs.form.validate(valid => {
-        console.log(valid)
+        console.log(111, valid, this.fields)
+        if (valid) {
+          this.$emit('submit', this.fields)
+        }
       })
     },
     render() {
@@ -101,9 +110,9 @@ export default {
         if (this.items[key].type === 'select') this.initSelect(this.items[key], key)
       })
       this.fields = helper.isEmptyObject(this.values) ? this.values : fields
+      console.log(333, this.fields)
       this.flag = true
     },
-    // this.$refs.form.validateField(this.prop)
     validateField(e) {
       this.$refs.form.validateField(e)
     },
@@ -133,6 +142,8 @@ export default {
           return { message: `${ plea }${ label }`, required: true }
         case 'isNumber':
           return { validator: validator.isNumber }
+        case 'isFee':
+          return { validator: validator.isFee }
         default:
           return {}
       }
