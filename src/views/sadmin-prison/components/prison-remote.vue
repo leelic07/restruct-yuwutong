@@ -42,38 +42,6 @@
       </div>
 
     </el-form>
-    <!-- <div v-if="items.buttons && Object.keys(items.buttons).length" class="button-box">
-      <template v-for="(button, index) in items.buttons">
-        <el-button
-          v-if="button === 'prev' || button.prev"
-          :key="index"
-          size="small"
-          type="primary"
-          @click="onPrevClick">上一步</el-button>
-        <el-button
-          v-if="button === 'next' || button.next"
-          :key="index"
-          size="small"
-          type="primary"
-          @click="onSubmit(button, $event)">下一步</el-button>
-        <el-button
-          v-if="button === 'update'"
-          :key="index"
-          size="small"
-          type="primary">更新</el-button>
-        <el-button
-          v-if="button === 'add'"
-          :key="index"
-          size="small"
-          type="primary"
-          @click="onSubmit">新增</el-button>
-        <el-button
-          v-if="button === 'back'"
-          :key="index"
-          size="small">返回</el-button>
-      </template>
-    </div> -->
-    <!-- <m-form :items="formItems" @submit="onSubmit" :values="values"></m-form> -->
   </div>
 </template>
 
