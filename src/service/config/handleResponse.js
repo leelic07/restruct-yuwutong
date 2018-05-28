@@ -24,12 +24,15 @@ const codes = {
   },
   401: {
     next: params => {
+      localStorage.removeItem('user')
+      localStorage.removeItem('routes')
       tips('身份验证失败，请重新登录')
+      router.push({ path: '/new-login' })
     }
   },
   403: {
     next: params => {
-      tips('权限不足，请重新登录')
+      tips(params || '权限不足，请重新登录')
     }
   },
   404: {
@@ -52,6 +55,11 @@ const codes = {
       tips('服务器内部错误！')
     }
   },
+  502: {
+    next: params => {
+      tips('Bad Gateway,网关错误！')
+    }
+  },
   504: {
     next: params => {
       tips('请检查服务是否启动！')
@@ -72,10 +80,7 @@ const codes = {
   },
   99998: {
     next: params => {
-      // localStorage.removeItem('user')
-      // localStorage.removeItem('routes')
       tips(params.msg || '无相应权限，请重新登录')
-      // router.push({ path: '/new-login' })
     }
   }
 }
@@ -83,7 +88,7 @@ const codes = {
 export default params => {
   let result = codes[params.status === 200 ? params.data.code : params.status]
   if (!result) {
-    tips(params.data ? params.data.msg : '')
+    tips(params.data ? params.data.msg : (params.message ? params.message : ''))
     return false
   }
   result.next && result.next(params.data)

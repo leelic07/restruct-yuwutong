@@ -29,7 +29,7 @@ export default {
   // 设置请求超时时间
   timeout: 10000,
   // 请求数据返回类型
-  responseType: 'json',
+  // responseType: 'json',
   // 设置跨域请求的令牌
   withCredentials: true
   // 'proxy' 定义代理服务器的主机名称和端口

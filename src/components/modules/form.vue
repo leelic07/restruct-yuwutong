@@ -85,6 +85,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(8888, this.values)
     this.render()
   },
   methods: {
@@ -110,7 +111,7 @@ export default {
         if (this.items[key].type === 'select') this.initSelect(this.items[key], key)
       })
       this.fields = helper.isEmptyObject(this.values) ? this.values : fields
-      console.log(333, this.fields)
+      // console.log(333, this.fields)
       this.flag = true
     },
     validateField(e) {
@@ -136,6 +137,12 @@ export default {
       delete item.rules
     },
     ruleSwitch(rule, label, type) {
+      if (rule.indexOf('numberRange') > -1) {
+        var range = rule.replace('numberRange', '').split('-'), validate = {}
+        if (range[0] !== '') validate.min = parseInt(range[0])
+        if (range[1] !== '') validate.max = parseInt(range[1])
+        return Object.assign({}, { validator: validator.numberRange }, validate)
+      }
       let plea = ['input', 'editor'].indexOf(type) > -1 ? '请输入' : '请选择'
       switch (rule) {
         case 'required':

@@ -1,3 +1,5 @@
+import dateFormate from '@/filters/modules/date'
+
 export default {
   phone: (rule, val, callback) => {
     var reg = /^1\d{10}$/
@@ -43,6 +45,22 @@ export default {
       callback(new Error(`请输入小于${ rule.min }的数字`))
     }
     else {
+      callback()
+    }
+  },
+  timeRange: (rule, val, callback) => { // 只比较时间先后, 设置时间列表时专用
+    let minTime = '', time = dateFormate.dateFormate(new Date(`1971-01-01 ${ val[0] }`), 'hh:mm')
+    if (rule.prev) minTime = dateFormate.dateFormate(new Date(`1971-01-01 ${ rule.prev[1] }`), 'hh:mm')
+    if (time < minTime) {
+      rule.flag[rule.prop] = false
+      callback(new Error(`开始时间最早为${ rule.prev[1] }`))
+    }
+    else if (val[0] === val[1]) {
+      rule.flag[rule.prop] = false
+      callback(new Error('间隔时间过短'))
+    }
+    else {
+      rule.flag[rule.prop] = true
       callback()
     }
   }

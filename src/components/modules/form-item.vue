@@ -25,6 +25,18 @@
         :label="item.props.label ? option[item.props.label] : option.label"
         :value="item.props.value ? option[item.props.value] : option.value"/>
     </el-select>
+    <el-switch
+      v-if="item.type === 'switch'"
+      v-model="fields[prop]"
+      active-color="#13ce66"
+      inactive-color="#dddddd"
+      :active-value="1"
+      :inactive-value="0"
+      :width="60" />
+    <m-upload-img
+      v-if="item.type === 'uploadImg'"
+      v-model="fields[prop]"
+      @success="onSuccess" />
     <m-quill-editor
       v-if="item.type === 'editor'"
       :contents="fields[prop]"
@@ -58,6 +70,10 @@ export default {
     },
     editorChange(contents, text) {
       this.fields[this.prop] = contents
+      this.$emit('validateField', this.prop)
+    },
+    onSuccess(e) {
+      this.fields[this.prop] = e
       this.$emit('validateField', this.prop)
     }
   }

@@ -18,15 +18,23 @@ export default {
         citysId: { type: 'select', label: '所在市', rules: ['required'], defer: true, disabled: true, loading: true },
         street: { type: 'input', label: '街道' },
         visitAddress: { type: 'textarea', label: '探监路线', autosize: { minRows: 2, maxRows: 6 } },
-        zipcode: { type: 'input', label: '监狱编号', rules: ['required'] }
+        zipcode: { type: 'input', label: '监狱编号', rules: ['required'] },
+        imageUrl: { type: 'uploadImg', label: '监狱图片' }
       },
       values: {}
     }
+  },
+  activated() {
+    console.log('activated')
+  },
+  mounted() {
+    console.log('mounted')
   },
   methods: {
     ...mapActions(['getCities']),
     onSubmit(e) {
       sessionStorage.setItem('base', JSON.stringify(e))
+      sessionStorage.setItem('step', 1)
       this.$router.push({ query: Object.assign({}, { tag: 'prisonConfig' }) })
     },
     onNext(e) {

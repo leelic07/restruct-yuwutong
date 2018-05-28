@@ -35,6 +35,7 @@ instance.interceptors.response.use(
       if (state && history.state.key !== state.key) return
       return handleResponse(error.response)
     }
+    return handleResponse(error)
   }
 )
 /**

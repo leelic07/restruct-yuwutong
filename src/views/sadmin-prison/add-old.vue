@@ -158,7 +158,7 @@
           prop="remittance">
           <el-input
             v-model="prison.remittance"
-            placeholder="请填写单次会见费用">
+            placeholder="请填写汇款限制">
             <template slot="append">/元</template>
           </el-input>
         </el-form-item>
@@ -167,7 +167,7 @@
           prop="consumption">
           <el-input
             v-model="prison.consumption"
-            placeholder="请填写单次会见费用">
+            placeholder="请填写消费限制">
             <template slot="append">/元</template>
           </el-input>
         </el-form-item>
