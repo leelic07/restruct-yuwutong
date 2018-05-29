@@ -154,6 +154,9 @@ img{
   float: left;
   min-width: 340px;
 }
+.el-loading-mask{
+  z-index: 3000;
+}
 .queue-box .queue .el-date-editor--timerange.el-input__inner{
   width: 100%;
   min-width: 200px;
