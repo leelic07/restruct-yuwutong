@@ -59,6 +59,10 @@ export default {
       rule.flag[rule.prop] = false
       callback(new Error('间隔时间过短'))
     }
+    else if (val[1].indexOf('23:59') > -1) {
+      rule.flag[rule.prop] = false
+      callback()
+    }
     else {
       rule.flag[rule.prop] = true
       callback()

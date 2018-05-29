@@ -41,22 +41,12 @@ export default {
       this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
     }
   },
-  activated() {
-    console.log('activated')
-  },
-  deactivated() {
-    console.log('deactivated')
-  },
   methods: {
     ...mapActions(['getCities']),
     onSubmit(e) {
-      console.log(e)
       sessionStorage.setItem('config', JSON.stringify(e))
       sessionStorage.setItem('step', 2)
       this.$router.push({ query: Object.assign({}, { tag: 'prisonRemote' }) })
-    },
-    onNext(e) {
-      console.log(e)
     }
   }
 }

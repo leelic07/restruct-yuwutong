@@ -24,21 +24,12 @@ export default {
       values: {}
     }
   },
-  activated() {
-    console.log('activated')
-  },
-  mounted() {
-    console.log('mounted')
-  },
   methods: {
     ...mapActions(['getCities']),
     onSubmit(e) {
       sessionStorage.setItem('base', JSON.stringify(e))
       sessionStorage.setItem('step', 1)
       this.$router.push({ query: Object.assign({}, { tag: 'prisonConfig' }) })
-    },
-    onNext(e) {
-      console.log(e)
     },
     onProvinceChange(e) {
       this.values = { citysId: '' }
