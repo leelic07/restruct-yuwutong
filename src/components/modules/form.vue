@@ -95,7 +95,6 @@ export default {
     onSubmit(e) {
       // console.dir(Object.assign(this.fields))
       this.$refs.form.validate(valid => {
-        console.log(111, valid, this.fields)
         if (valid) {
           this.$emit('submit', this.fields)
         }
@@ -110,7 +109,7 @@ export default {
         this.items[key].rule && (this.rules[key] = this.items[key].rule)
         if (this.items[key].type === 'select') this.initSelect(this.items[key], key)
       })
-      this.fields = helper.isEmptyObject(this.values) ? this.values : fields
+      this.fields = helper.isEmptyObject(this.values) ? Object.assign({}, this.values) : fields
       // console.log(333, this.fields)
       this.flag = true
     },

@@ -1,14 +1,18 @@
 <template>
   <div>
     <div class="form-container">
-      <el-tabs v-model="activeName" type="card"  @tab-click="handleClick">
-        <el-tab-pane v-for="item in tabMapOptions" :label="item.label" :key='item.key' :name="item.key">
-          <keep-alive>
-            <component v-if='activeName == item.key' :is="activeName"></component>
-            <!-- <component :is="activeName"></component> -->
-          </keep-alive>
-        </el-tab-pane>
-      </el-tabs>
+      <el-steps :active="status" finish-status="success" simple style="margin-bottom: 20px">
+        <el-step title="基本信息" ></el-step>
+        <el-step title="配置信息" ></el-step>
+        <el-step title="远程会见" ></el-step>
+      </el-steps>
+
+      <template v-for="(item, index) in tabMapOptions">
+        <keep-alive>
+          <component v-if='status == index' :is="item.key"></component>
+        </keep-alive>
+      </template>
+
     </div>
   </div>
 
@@ -20,6 +24,7 @@ import prisonConfig from './components/prison-config'
 import prisonRemote from './components/prison-remote'
 
 export default {
+  components: { prisonBase, prisonConfig, prisonRemote },
   data() {
     return {
       activeName: 'prisonBase',
@@ -31,26 +36,30 @@ export default {
       ]
     }
   },
-  components: { prisonBase, prisonConfig, prisonRemote },
-  methods: {
-    handleClick(tag, e) {
-      this.tabMapOptions[this.placeHolder].query = this.$route.query
-      this.placeHolder = tag.index
-      let query = this.tabMapOptions[tag.index].query || ''
-      this.$router.push({ query: Object.assign({}, query, { tag: tag.name }) })
-    },
-    render() {
-      if (this.$route.query.tag !== this.activeName) {
-        this.activeName = this.$route.query.tag || 'prisonBase'
-        this.placeHolder = this.tabMapOptions.findIndex((value) => { return value.key === this.activeName })
+  computed: {
+    status() {
+      switch (this.$route.query.tag) {
+        case 'prisonBase':
+          return 0
+        case 'prisonConfig':
+          return 1
+        case 'prisonRemote':
+          return 2
+        default:
+          return 0
       }
     }
   },
-  watch: {
-    '$route': 'render'
-  },
   mounted() {
     this.render()
+  },
+  methods: {
+    render() {
+      sessionStorage.removeItem('base')
+      sessionStorage.removeItem('config')
+      sessionStorage.removeItem('step')
+      this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
+    }
   }
 }
 </script>
