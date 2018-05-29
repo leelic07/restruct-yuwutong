@@ -77,7 +77,14 @@
             <el-button
               v-if="scope.row.status == 'PENDING'"
               size="mini"
+              :disabled="btnDisable"
               @click="handleAuthorization(scope.row)">授权
+            </el-button>
+            <el-button
+              v-if="scope.row.status == 'PASSED'"
+              size="mini"
+              :disabled="btnDisable"
+              @click="handleCallback(scope.row)">撤回
             </el-button>
           </template>
         </el-table-column>
@@ -90,7 +97,7 @@
     <el-dialog
       :visible.sync="show.authorize"
       class="authorize-dialog"
-      title="授权"
+      :title="show.callback ? '撤回' : '授权'"
       width="530px">
       <div style="margin-bottom: 10px;">请核对申请人照片:</div>
       <div class="img-box">
@@ -108,7 +115,7 @@
           alt="头像">
       </div>
       <div
-        v-if="!show.agree && !show.disagree"
+        v-if="!show.agree && !show.disagree && !show.callback"
         class="button-box">
         <el-button
           plain
@@ -152,7 +159,27 @@
           @click="onAuthorization('DENIED')">提交</el-button>
         <el-button
           plain
-          @click="show.disagree=false">返回</el-button>
+          @click="show.disagree = false">返回</el-button>
+        <el-button
+          type="danger"
+          plain
+          @click="show.authorize = false">关闭</el-button>
+      </div>
+      <div
+        v-if="show.callback"
+        class="button-box">
+        <div style="margin-bottom: 10px;">请选择驳回原因</div>
+        <el-select v-model="remarks">
+          <el-option
+            v-for="(remark,index) in frontRemarks"
+            :value="remark"
+            :label="remark"
+            :key="index">
+          </el-option>
+        </el-select>
+        <el-button
+          plain
+          >提交</el-button>
         <el-button
           type="danger"
           plain
@@ -186,11 +213,13 @@ export default {
         authorize: false,
         agree: false,
         disagree: false,
+        callback: false,
         imgplus: false
       },
       remarks: '您的身份信息错误',
       imgSrc: '',
-      isIdcard: false
+      isIdcard: false,
+      btnDisable: false// 按钮禁用与启用
     }
   },
   computed: {
@@ -219,15 +248,22 @@ export default {
       this.show.authorize = true
     },
     onAuthorization(e) {
+      this.btnDisable = true
       let params = { id: this.toAuthorize.id, status: e }
       if (e === 'DENIED') params.remarks = this.remarks
       this.authorizeRegistrations(params).then(res => {
         if (res) {
           this.show.authorize = false
+          this.btnDisable = false
           this.toAuthorize = {}
           this.getDatas()
         }
       })
+    },
+    handleCallback(e) {
+      this.toAuthorize = e
+      this.show.authorize = true
+      this.show.callback = true
     },
     amplifyImage(imgSrc, isIdcard) {
       if (isIdcard) this.isIdcard = true
