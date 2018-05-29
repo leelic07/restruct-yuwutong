@@ -69,8 +69,9 @@ img{
   margin-bottom: 10px;
 }
 .authorize-dialog .img-box img{
-  width: 150px;
+  width: 48%;
   height: 150px;
+  margin-bottom: 5px;
   box-shadow: 0 0 5px #ddd;
   cursor: pointer;
 }

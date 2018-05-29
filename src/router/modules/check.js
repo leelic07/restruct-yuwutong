@@ -22,6 +22,10 @@ let check = [{
     name: '会见申请调整',
     component: resolve => require(['@/views/check-meeting/meeting-adjust'], resolve)
     // component: resolve => require(['@/views/check-meeting/ws'], resolve)
+  }, {
+    path: '/meeting/records',
+    name: '会见申请记录',
+    component: resolve => require(['@/views/check-meeting/meeting-records'], resolve)
   }]
 }, {
   path: '/visit',

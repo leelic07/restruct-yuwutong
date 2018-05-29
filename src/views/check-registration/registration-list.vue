@@ -77,13 +77,11 @@
             <el-button
               v-if="scope.row.status == 'PENDING'"
               size="mini"
-              :disabled="btnDisable"
               @click="handleAuthorization(scope.row)">授权
             </el-button>
             <el-button
               v-if="scope.row.status == 'PASSED'"
               size="mini"
-              :disabled="btnDisable"
               @click="handleCallback(scope.row)">撤回
             </el-button>
           </template>
@@ -113,6 +111,10 @@
           :src="toAuthorize.avatarUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
           @click="amplifyImage(toAuthorize.avatarUrl)"
           alt="头像">
+        <img
+          :src="toAuthorize.relationalProofUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'"
+          @click="amplifyImage(toAuthorize.relationalProofUrl)"
+          alt="关系证明图">
       </div>
       <div
         v-if="!show.agree && !show.disagree && !show.callback"
@@ -133,6 +135,7 @@
         class="button-box">
         <el-button
           plain
+          :disabled="btnDisable"
           @click="onAuthorization('PASSED')">确定申请通过？</el-button>
         <el-button
           plain
@@ -156,6 +159,7 @@
         </el-select>
         <el-button
           plain
+          :disabled="btnDisable"
           @click="onAuthorization('DENIED')">提交</el-button>
         <el-button
           plain
@@ -168,7 +172,7 @@
       <div
         v-if="show.callback"
         class="button-box">
-        <div style="margin-bottom: 10px;">请选择驳回原因</div>
+        <div style="margin-bottom: 10px;">请选择撤回原因</div>
         <el-select v-model="remarks">
           <el-option
             v-for="(remark,index) in frontRemarks"
@@ -177,13 +181,19 @@
             :key="index">
           </el-option>
         </el-select>
+        <el-form :model="withdrawForm" :rules="withdrawRule" ref="withdrawForm" class="withdraw-box">
+          <el-form-item prop="withdrawReason">
+            <el-input type="textarea" placeholder="请输入撤回理由..." v-model="withdrawForm.withdrawReason"></el-input>
+          </el-form-item>
+        </el-form>
         <el-button
           plain
+          @click="onAuthorization('WITHDRAW')"
           >提交</el-button>
         <el-button
           type="danger"
           plain
-          @click="show.authorize = false">关闭</el-button>
+          @click="closeWithdraw">关闭</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -205,7 +215,7 @@ export default {
         name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚号' },
         auditName: { type: 'input', label: '审核人' },
-        status: { type: 'select', label: '审核状态', options: this.$store.state.applyStatus },
+        status: { type: 'select', label: '审核状态', options: this.$store.state.registStatus },
         auditAt: { type: 'date', label: '审核时间' }
       },
       toAuthorize: {},
@@ -215,6 +225,12 @@ export default {
         disagree: false,
         callback: false,
         imgplus: false
+      },
+      withdrawForm: {
+        withdrawReason: ''
+      },
+      withdrawRule: {
+        withdrawReason: [{ required: true, message: '请填写撤回理由', trigger: 'blur' }]
       },
       remarks: '您的身份信息错误',
       imgSrc: '',
@@ -250,15 +266,33 @@ export default {
     onAuthorization(e) {
       this.btnDisable = true
       let params = { id: this.toAuthorize.id, status: e }
-      if (e === 'DENIED') params.remarks = this.remarks
-      this.authorizeRegistrations(params).then(res => {
-        if (res) {
-          this.show.authorize = false
-          this.btnDisable = false
-          this.toAuthorize = {}
-          this.getDatas()
-        }
-      })
+      if (e === 'DENIED') {
+        params.remarks = this.remarks
+        this.authorizeRegistrations(params).then(res => {
+          if (res) {
+            this.show.authorize = false
+            this.btnDisable = false
+            this.toAuthorize = {}
+            this.getDatas()
+          }
+        })
+      }
+      else if (e === 'WITHDRAW') {
+        this.$refs.withdrawForm.validate(valid => {
+          if (valid) {
+            params.remarks = this.remarks
+            params.withdrawReason = this.withdrawForm.withdrawReason
+            this.authorizeRegistrations(params).then(res => {
+              if (res) {
+                this.show.authorize = false
+                this.btnDisable = false
+                this.toAuthorize = {}
+                this.getDatas()
+              }
+            })
+          }
+        })
+      }
     },
     handleCallback(e) {
       this.toAuthorize = e
@@ -270,6 +304,11 @@ export default {
       else this.isIdcard = false
       this.imgSrc = `${ imgSrc }?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a`
       this.show.imgplus = true
+    },
+    closeWithdraw() {
+      this.show.authorize = false
+      this.withdrawForm.withdrawReason = ''
+      this.$refs.withdrawForm.clearValidate()
     }
   }
 }
@@ -277,6 +316,8 @@ export default {
 
 <style type="text/stylus" lang="stylus" scoped>
 .cell img
-  width: 126.8px;
-  cursor: pointer;
+  width 126.8px
+  cursor pointer
+.withdraw-box
+  margin-bottom 8px
 </style>

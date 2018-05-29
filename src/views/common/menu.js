@@ -58,6 +58,10 @@ let superAdminMenu = [{
         path: '/meeting/adjust',
         title: '会见申请调整',
         icon: 'iconfont icon-circle-o'
+      }, {
+        path: '/meeting/records',
+        title: '会见申请记录',
+        icon: 'iconfont icon-circle-o'
       }
     ]
   }, {
