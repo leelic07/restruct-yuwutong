@@ -32,7 +32,7 @@ const codes = {
   },
   403: {
     next: params => {
-      tips(params || '权限不足，请重新登录')
+      tips(typeof params === 'string' ? params : '权限不足，请重新登录')
     }
   },
   404: {
