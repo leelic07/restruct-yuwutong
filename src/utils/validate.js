@@ -49,6 +49,10 @@ export default {
     }
   },
   timeRange: (rule, val, callback) => { // 只比较时间先后, 设置时间列表时专用
+    if (!val) {
+      callback()
+      return
+    }
     let minTime = '', time = dateFormate.dateFormate(new Date(`1971-01-01 ${ val[0] }`), 'hh:mm')
     if (rule.prev) minTime = dateFormate.dateFormate(new Date(`1971-01-01 ${ rule.prev[1] }`), 'hh:mm')
     if (time < minTime) {
