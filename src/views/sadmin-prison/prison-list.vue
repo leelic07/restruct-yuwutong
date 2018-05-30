@@ -28,7 +28,10 @@
           label="监狱名称" />
         <el-table-column label="监狱图片">
           <template slot-scope="scope">
-            <img :src="scope.row.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" alt="">
+            <img
+              v-if="scope.row.imageUrl"
+              :src="scope.row.imageUrl + '?token=523b87c4419da5f9186dbe8aa90f37a3876b95e448fe2a'" 
+              alt="">
           </template>
         </el-table-column>
         <el-table-column

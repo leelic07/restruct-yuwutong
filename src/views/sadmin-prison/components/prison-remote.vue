@@ -8,7 +8,7 @@
       :rules="rules">
 
       <div v-for="(type, idx) in types" :key="idx" style="overflow: hidden;">
-        <div class="el-form-item is-required" style="float: left;">
+        <div class="el-form-item" :class="{ 'is-required': type.name==='usual' }" style="float: left;">
            <label class="el-form-item__label" style="width: 140px;padding-right: 2px;">{{ type.label }}</label>
         </div>
         <div class="time-queue" style="float: left; width: calc(100% - 150px);">
@@ -16,7 +16,7 @@
             <el-form-item
               :key="index"
               :prop="type.name + '.' + index"
-              :rules="[{ required: true, message: '请选择会见时间段' }, { validator: validator.timeRange, prev: meeting[type.name][index - 1], prop: 'canAdd' + type.upperName, flag: flag }]">
+              :rules="[{ required: type.name === 'usual', message: '请选择会见时间段' }, { validator: validator.timeRange, prev: meeting[type.name][index - 1], prop: 'canAdd' + type.upperName, flag: flag }]">
               <el-time-picker
                 is-range
                 arrow-control
@@ -228,9 +228,42 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getCities']),
+    ...mapActions(['getCities', 'addPrison']),
     onSubmit(e) {
-      console.log(Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting))
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          let prison = Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting), cfg = []
+          // console.log(prison)
+          prison.meetingQueue = []
+          prison.usual.forEach(queue => {
+            prison.meetingQueue.push(`${ queue[0] }-${ queue[1] }`)
+          })
+          if (prison.weekend[0] !== null) {
+            prison.weekendQueue = []
+            prison.weekend.forEach(queue => {
+              prison.weekendQueue.push(`${ queue[0] }-${ queue[1] }`)
+            })
+          }
+          if (prison.special[0].date && prison.special[0].queue[0] !== null) {
+            prison.specialQueue = []
+            prison.special.forEach(queue => {
+              if (queue.queue[0] === null) return
+              cfg = []
+              queue.queue.forEach(c => {
+                cfg.push(`${ c[0] }-${ c[1] }`)
+              })
+              prison.specialQueue.push({ day: queue.date, config: cfg })
+            })
+          }
+          delete prison.usual
+          delete prison.weekend
+          delete prison.special
+          this.addPrison(prison).then(res => {
+            if (!res) return
+            this.$router.push('/prison/list')
+          })
+        }
+      })
       // this.$router.push({ query: Object.assign({}, { tag: 'prisonRemote' }) })
     },
     onAddRange(e) {

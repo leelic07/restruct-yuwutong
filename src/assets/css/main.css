@@ -32,9 +32,6 @@ img{
 .row-container .el-tabs__item{
   background: #fff;
 }
-.row-container .el-table__body-wrapper{
-  /* overflow: visible; */
-}
 .row-container .cell .el-button--default{
     float: left;
     color: #3C8DBC;
@@ -173,12 +170,12 @@ img{
 }
 .time-queue .el-form-item{
   width: calc(25% - 10px);
-  min-width: 160px;
+  min-width: 140px;
   max-width: 350px;
 }
 .time-queue .el-date-editor--timerange.el-input__inner, .time-queue .el-date-editor.el-input, .el-date-editor.el-input__inner{
   width: 100%;
-  min-width: 160px;
+  min-width: 140px;
   max-width: 350px;
 }
 .yt-form .button-box{

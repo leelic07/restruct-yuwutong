@@ -8,7 +8,7 @@
       </el-steps>
 
       <template v-for="(item, index) in tabMapOptions">
-        <keep-alive>
+        <keep-alive :key="index">
           <component v-if='status == index' :is="item.key"></component>
         </keep-alive>
       </template>
