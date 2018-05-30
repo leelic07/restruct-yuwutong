@@ -79,13 +79,20 @@
     </el-form>
     <div class="button-box">
       <el-button
+        v-if="permission !== 'edit'"
         size="small"
         type="primary"
         @click="onPrevClick">上一步</el-button>
       <el-button
+        v-if="permission !== 'edit'"
         size="small"
         type="primary"
         @click="onSubmit">新增</el-button>
+      <el-button
+        v-if="permission === 'edit'"
+        size="small"
+        type="primary"
+        @click="onSubmit">更新</el-button>
     </div>
     <el-dialog
       :visible.sync="flag.dialog"
@@ -144,25 +151,32 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import validator from '@/utils'
+
 const fillPre = (val) => {
   return `00${ val }`.slice(-2)
 }
+
 export default {
   data() {
+    let permission = 'add'
+    if (this.$route.meta.permission === 'edit') {
+      permission = 'edit'
+    }
     return {
       types: [
         { name: 'usual', label: '常规配置', upperName: 'Usual' },
         { name: 'weekend', label: '周末配置', upperName: 'Weekend' }
       ],
-      meeting: {
+      meetingAdd: {
         usual: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']],
         weekend: [['9:00', '9:30'], ['9:30', '10:00'], ['10:00', '10:30'], ['10:30', '11:00'], ['11:00', '11:30'], ['11:30', '12:00'], ['14:00', '14:30'], ['14:30', '15:00'], ['15:00', '15:30'], ['15:30', '16:00'], ['16:00', '16:30'], ['16:30', '17:00']],
         special: [
           { date: '', queue: [null] }
         ]
       },
+      meeting: { usual: [null], weekend: [null], special: [{ date: '', queue: [null] }] },
       rules: {},
       flag: {
         canAddUsual: true,
@@ -180,7 +194,8 @@ export default {
           return (time.getTime() < Date.now()) || (this.meeting.special.find(item => item.date === `${ yyyy }-${ MM }-${ dd }`))
         }
       },
-      validator
+      validator,
+      permission
     }
   },
   watch: {
@@ -216,7 +231,20 @@ export default {
       deep: true
     }
   },
-  mounted() {
+  computed: {
+    ...mapState(['prison'])
+  },
+  activated() {
+    if (this.permission === 'edit') {
+      this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
+        if (!res) return
+        this.meeting = this.prison
+      })
+    }
+  },
+  created() {
+    if (this.permission === 'edit') return
+    this.meeting = this.meetingAdd
     if (!sessionStorage.getItem('base')) {
       this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
     }
@@ -228,43 +256,76 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getCities', 'addPrison']),
+    ...mapActions(['getPrisonDetail', 'addPrison']),
     onSubmit(e) {
       this.$refs.form.validate(valid => {
         if (valid) {
-          let prison = Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting), cfg = []
-          // console.log(prison)
-          prison.meetingQueue = []
-          prison.usual.forEach(queue => {
-            prison.meetingQueue.push(`${ queue[0] }-${ queue[1] }`)
-          })
-          if (prison.weekend[0] !== null) {
-            prison.weekendQueue = []
-            prison.weekend.forEach(queue => {
-              prison.weekendQueue.push(`${ queue[0] }-${ queue[1] }`)
+          if (this.permission !== 'edit') {
+            let prison = Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting)
+            this.handleQueue(prison)
+            delete prison.usual
+            delete prison.weekend
+            delete prison.special
+            this.addPrison(prison).then(res => {
+              if (!res) return
+              this.$router.push('/prison/list')
             })
           }
-          if (prison.special[0].date && prison.special[0].queue[0] !== null) {
-            prison.specialQueue = []
-            prison.special.forEach(queue => {
-              if (queue.queue[0] === null) return
-              cfg = []
-              queue.queue.forEach(c => {
-                cfg.push(`${ c[0] }-${ c[1] }`)
-              })
-              prison.specialQueue.push({ day: queue.date, config: cfg })
-            })
+          else if (this.permission === 'edit') {
+            let params = Object.assign({}, this.meeting)
+            delete params.meetingQueue
+            delete params.weekendQueue
+            delete params.specialQueue
+            this.handleQueue(params)
+            if (params.meetingQueue.toString() !== this.prison.meetingQueue.toString()) {
+              params.changed = 1
+            }
+            else {
+              params.changed = 0
+            }
+            if ((!params.weekendQueue && !this.prison.weekendQueue) || (params.weekendQueue && this.prison.weekendQueue && (params.weekendQueue.toString() === this.prison.weekendQueue.toString()))) {
+              params.weekendChanged = 0
+              // params.weekendQueue ? '' : params.weekendQueue = 'null'
+              if (!params.weekendQueue) params.weekendQueue = 'qqqq'
+            }
+            else {
+              params.weekendChanged = 1
+            }
+            console.log(111, params)
           }
-          delete prison.usual
-          delete prison.weekend
-          delete prison.special
-          this.addPrison(prison).then(res => {
-            if (!res) return
-            this.$router.push('/prison/list')
-          })
         }
       })
-      // this.$router.push({ query: Object.assign({}, { tag: 'prisonRemote' }) })
+    },
+    handleEdit() {
+      // let params = Object.assign({}, e, { changed: 0, weekendChanged: 0 })
+      // this.updatePrison(params).then(res => {
+      //   if (!res) return
+      //   this.$router.push('/prison/list')
+      // })
+    },
+    handleQueue(prison) {
+      prison.meetingQueue = []
+      prison.usual.forEach(queue => {
+        prison.meetingQueue.push(`${ queue[0] }-${ queue[1] }`)
+      })
+      if (prison.weekend[0] !== null) {
+        prison.weekendQueue = []
+        prison.weekend.forEach(queue => {
+          prison.weekendQueue.push(`${ queue[0] }-${ queue[1] }`)
+        })
+      }
+      if (prison.special[0].date && prison.special[0].queue[0] !== null) {
+        let cfg = []
+        prison.specialQueue = []
+        prison.special.forEach(queue => {
+          if (queue.queue[0] === null) return
+          cfg = []
+          queue.queue.forEach(c => {
+            cfg.push(`${ c[0] }-${ c[1] }`)
+          })
+          prison.specialQueue.push({ day: queue.date, config: cfg })
+        })
+      }
     },
     onAddRange(e) {
       let last = e === 'special' ? this.meeting[e][this.specialIndex].queue[this.meeting[e][this.specialIndex].queue.length - 1] : this.meeting[e][this.meeting[e].length - 1]

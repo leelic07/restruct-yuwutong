@@ -2,9 +2,7 @@
   <div>
     <div class="form-container">
       <el-steps :active="status" finish-status="success" simple style="margin-bottom: 20px">
-        <el-step title="基本信息" ></el-step>
-        <el-step title="配置信息" ></el-step>
-        <el-step title="远程会见" ></el-step>
+        <el-step v-for="(tag, index) in tabMapOptions" :key="index" :title="tag.label" ></el-step>
       </el-steps>
 
       <template v-for="(item, index) in tabMapOptions">
@@ -53,12 +51,18 @@ export default {
   mounted() {
     this.render()
   },
+  destroyed() {
+    this.removeSession()
+  },
   methods: {
     render() {
+      this.removeSession()
+      this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
+    },
+    removeSession() {
       sessionStorage.removeItem('base')
       sessionStorage.removeItem('config')
       sessionStorage.removeItem('step')
-      this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
     }
   }
 }

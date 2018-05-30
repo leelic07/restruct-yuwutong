@@ -1,17 +1,22 @@
 <template>
   <div>
-    <m-form :items="formItems" @submit="onSubmit" :values="values"></m-form>
+    <m-form v-if="show" :items="formItems" @submit="onSubmit" :values="values"></m-form>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
+    let formButton = { buttons: ['next'] }, permission = 'add'
+    if (this.$route.meta.permission === 'edit') {
+      formButton.buttons = ['update']
+      permission = 'edit'
+    }
     return {
-      formItems: {
+      show: false,
+      formItems: Object.assign({}, {
         formConfigs: { labelWidth: '140px' },
-        buttons: ['next'],
         title: { type: 'input', label: '监狱名称', rules: ['required'] },
         description: { type: 'editor', label: '监狱简介', rules: ['required'] },
         provincesId: { type: 'select', label: '所在省', rely: 'citysId', func: this.onProvinceChange, loading: true, rules: ['required'], action: 'getProvincesAll' },
@@ -20,19 +25,49 @@ export default {
         visitAddress: { type: 'textarea', label: '探监路线', autosize: { minRows: 2, maxRows: 6 } },
         zipcode: { type: 'input', label: '监狱编号', rules: ['required'] },
         imageUrl: { type: 'uploadImg', label: '监狱图片' }
-      },
-      values: {}
+      }, formButton),
+      values: {},
+      permission
     }
   },
+  computed: {
+    ...mapState(['prison'])
+  },
+  activated() {
+    console.log(444444)
+    this.show = true
+    if (this.permission === 'edit') {
+      if (this.$route.query.tag === 'prisonBase') {
+        this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
+          if (!res) return
+          console.log(this.prison)
+          this.values = this.prison
+          this.onProvinceChange(this.prison.provincesId, 'init')
+        })
+      }
+    }
+  },
+  deactivated() {
+    this.show = false
+  },
   methods: {
-    ...mapActions(['getCities']),
+    ...mapActions(['getCities', 'getPrisonDetail', 'updatePrison']),
     onSubmit(e) {
-      sessionStorage.setItem('base', JSON.stringify(e))
-      sessionStorage.setItem('step', 1)
-      this.$router.push({ query: Object.assign({}, { tag: 'prisonConfig' }) })
+      if (this.permission !== 'edit') {
+        sessionStorage.setItem('base', JSON.stringify(e))
+        sessionStorage.setItem('step', 1)
+        this.$router.push({ query: Object.assign({}, { tag: 'prisonConfig' }) })
+      }
+      else if (this.permission === 'edit') {
+        let params = Object.assign({}, e, { changed: 0, weekendChanged: 0 })
+        this.updatePrison(params).then(res => {
+          if (!res) return
+          this.$router.push('/prison/list')
+        })
+      }
     },
-    onProvinceChange(e) {
-      this.values = { citysId: '' }
+    onProvinceChange(e, init) {
+      if (init !== 'init') this.values = { citysId: '' }
       this.formItems.citysId.loading = true
       this.formItems.citysId.disabled = false
       this.getCities(e).then(res => {

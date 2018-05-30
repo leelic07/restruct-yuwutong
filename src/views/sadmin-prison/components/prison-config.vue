@@ -5,48 +5,65 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data() {
+    let formButton = { buttons: ['next'] }, permission = 'add'
+    if (this.$route.meta.permission === 'edit') {
+      formButton.buttons = ['update']
+      permission = 'edit'
+    }
     return {
-      formItems: {
+      formItems: Object.assign({}, {
         formConfigs: { labelWidth: '140px' },
         buttons: ['prev', 'next'],
-        cost: { type: 'input', label: '单次会见费用', rules: ['required', 'isFee'], append: '/元' },
-        branchPrison: { type: 'switch', label: '是否需要分监区', rules: ['required'] },
-        meeting: { type: 'switch', label: '会见模块开放', rules: ['required'] },
-        rewards: { type: 'switch', label: '奖励模块开放', rules: ['required'] },
-        shopping: { type: 'switch', label: '电子商务模块开放', rules: ['required'] },
-        prisonTerm: { type: 'switch', label: '监狱条款模块开放', rules: ['required'] },
-        faceRecognition: { type: 'switch', label: '人脸识别模块开放', rules: ['required'] },
-        remittance: { type: 'input', label: '汇款限制', rules: ['required', 'isFee'], append: '/元' },
-        consumption: { type: 'input', label: '消费限制', rules: ['required', 'isFee'], append: '/元' }
+        cost: { type: 'input', label: '单次会见费用', rules: ['required', 'isFee'], append: '/元', value: 0 },
+        branchPrison: { type: 'switch', label: '是否需要分监区', rules: ['required'], value: 1 },
+        meeting: { type: 'switch', label: '会见模块开放', rules: ['required'], value: 1 },
+        rewards: { type: 'switch', label: '奖励模块开放', rules: ['required'], value: 1 },
+        shopping: { type: 'switch', label: '电子商务模块开放', rules: ['required'], value: 1 },
+        prisonTerm: { type: 'switch', label: '监狱条款模块开放', rules: ['required'], value: 1 },
+        faceRecognition: { type: 'switch', label: '人脸识别模块开放', rules: ['required'], value: 1 },
+        remittance: { type: 'input', label: '汇款限制', rules: ['required', 'isFee'], append: '/元', value: 800 },
+        consumption: { type: 'input', label: '消费限制', rules: ['required', 'isFee'], append: '/元', value: 800 }
         // windowSize: { type: 'input', label: '实地探监窗口个数', rules: ['required', 'isNumber', 'numberRange1-20'], append: '/个' }
-      },
-      values: {
-        cost: 0,
-        branchPrison: 1,
-        meeting: 1,
-        rewards: 1,
-        shopping: 1,
-        prisonTerm: 1,
-        faceRecognition: 1,
-        remittance: 800,
-        consumption: 800
-      }
+      }, formButton),
+      values: {},
+      permission
+    }
+  },
+  computed: {
+    ...mapState(['prison'])
+  },
+  activated() {
+    if (this.permission === 'edit') {
+      this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
+        if (!res) return
+        this.values = this.prison
+      })
     }
   },
   mounted() {
+    if (this.permission === 'edit') return
     if (parseInt(sessionStorage.getItem('step')) !== 1 || !sessionStorage.getItem('base')) {
       this.$router.push({ query: Object.assign({}, { tag: 'prisonBase' }) })
     }
   },
   methods: {
-    ...mapActions(['getCities']),
+    ...mapActions(['getPrisonDetail', 'updatePrison']),
     onSubmit(e) {
-      sessionStorage.setItem('config', JSON.stringify(e))
-      sessionStorage.setItem('step', 2)
-      this.$router.push({ query: Object.assign({}, { tag: 'prisonRemote' }) })
+      if (this.permission !== 'edit') {
+        sessionStorage.setItem('config', JSON.stringify(e))
+        sessionStorage.setItem('step', 2)
+        this.$router.push({ query: Object.assign({}, { tag: 'prisonRemote' }) })
+      }
+      else if (this.permission === 'edit') {
+        let params = Object.assign({}, e, { changed: 0, weekendChanged: 0 })
+        this.updatePrison(params).then(res => {
+          if (!res) return
+          this.$router.push('/prison/list')
+        })
+      }
     }
   }
 }
