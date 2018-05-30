@@ -260,14 +260,15 @@ export default {
       this.toAuthorize = e
       this.show.agree = false
       this.show.disagree = false
+      this.show.callback = false
       this.remarks = '您的身份信息错误'
       this.show.authorize = true
     },
     onAuthorization(e) {
       this.btnDisable = true
       let params = { id: this.toAuthorize.id, status: e }
-      if (e === 'DENIED') {
-        params.remarks = this.remarks
+      if (e === 'DENIED' || e === 'PASSED') {
+        e === 'DENIED' && (params.remarks = this.remarks)
         this.authorizeRegistrations(params).then(res => {
           if (res) {
             this.show.authorize = false
@@ -297,6 +298,8 @@ export default {
     handleCallback(e) {
       this.toAuthorize = e
       this.show.authorize = true
+      this.show.agree = false
+      this.show.disagree = false
       this.show.callback = true
     },
     amplifyImage(imgSrc, isIdcard) {
