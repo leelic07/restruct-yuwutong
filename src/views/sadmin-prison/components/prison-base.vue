@@ -37,7 +37,6 @@ export default {
     if ((this.permission === 'edit' && this.$route.query.tag === 'prisonBase') || (this.permission === 'edit' && !this.$route.query.tag)) {
       this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
         if (!res) return
-        console.log(this.prison)
         this.values = this.prison
         this.onProvinceChange(this.prison.provincesId, 'init')
       })
