@@ -34,21 +34,20 @@ export default {
     ...mapState(['prison'])
   },
   activated() {
-    console.log(444444)
-    this.show = true
-    if (this.permission === 'edit') {
-      if (this.$route.query.tag === 'prisonBase') {
-        this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
-          if (!res) return
-          console.log(this.prison)
-          this.values = this.prison
-          this.onProvinceChange(this.prison.provincesId, 'init')
-        })
-      }
+    if ((this.permission === 'edit' && this.$route.query.tag === 'prisonBase') || (this.permission === 'edit' && !this.$route.query.tag)) {
+      this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
+        if (!res) return
+        console.log(this.prison)
+        this.values = this.prison
+        this.onProvinceChange(this.prison.provincesId, 'init')
+      })
     }
+    this.show = true
   },
   deactivated() {
-    this.show = false
+    if (this.permission === 'edit') {
+      this.show = false
+    }
   },
   methods: {
     ...mapActions(['getCities', 'getPrisonDetail', 'updatePrison']),

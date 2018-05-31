@@ -5,7 +5,6 @@ export default {
     state.prisons.total = params.jailsSize
   },
   getPrisonDetail(state, params) {
-    console.log(params)
     state.prison = Object.assign({}, params)
     state.meetingQueue = params.meetingQueue
   }

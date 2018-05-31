@@ -8,7 +8,7 @@
 import { mapActions, mapState } from 'vuex'
 export default {
   data() {
-    let formButton = { buttons: ['next'] }, permission = 'add'
+    let formButton = { buttons: ['prev', 'next'] }, permission = 'add'
     if (this.$route.meta.permission === 'edit') {
       formButton.buttons = ['update']
       permission = 'edit'

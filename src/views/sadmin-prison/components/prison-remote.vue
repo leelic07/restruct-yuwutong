@@ -7,7 +7,7 @@
       inline
       :rules="rules">
 
-      <div v-for="(type, idx) in types" :key="idx" style="overflow: hidden;">
+      <div v-for="(type, idx) in types" :key="idx" style="clear: both;">
         <div class="el-form-item" :class="{ 'is-required': type.name==='usual' }" style="float: left;">
            <label class="el-form-item__label" style="width: 140px;padding-right: 2px;">{{ type.label }}</label>
         </div>
@@ -44,7 +44,7 @@
             @click="onRestRange(type.name)">重置{{ type.label }}</el-button>
         </div>
       </div>
-      <div style="overflow: hidden;">
+      <div style="clear: both;">
         <div class="el-form-item" style="float: left;">
            <label class="el-form-item__label" style="width: 140px;padding-right: 2px;">特殊日期配置</label>
         </div>
@@ -111,6 +111,7 @@
             v-for="(q, order) in meeting.special[specialIndex].queue"
             :key="order"
             :prop="'queue.' + order"
+            style="width: calc(30% - 10px); margin-right: 10px;"
             :rules="[{ required: true, message: '请选择会见时间段' }, { validator: validator.timeRange, prev: meeting.special[specialIndex][order - 1], prop: 'canAddSpecial', flag: flag }]">
             <el-time-picker
               is-range
@@ -124,7 +125,6 @@
               range-separator="至"
               start-placeholder="开始时间"
               end-placeholder="结束时间"
-              style="width: calc(30% - 10px); margin-right: 10px;"
               :picker-options="order === 0 ? {} : { start: meeting.special[specialIndex].queue[order - 1][1], end: '23:59:59', minTime: meeting.special[specialIndex].queue[order - 1][1], selectableRange: meeting.special[specialIndex].queue[order - 1][1] + ' - 23:59:59' }"
               @change="getNextTime('special')">
             </el-time-picker>
@@ -138,7 +138,7 @@
             style="margin-left: 0; margin-bottom: 22px;"
             @click="onRestRange('special')">重置</el-button>
         </div>
-    </el-form>
+      </el-form>
       <template slot="footer">
         <el-button
           class="button-add"
@@ -238,7 +238,7 @@ export default {
     if (this.permission === 'edit') {
       this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
         if (!res) return
-        this.meeting = this.prison
+        this.meeting = Object.assign(this.prison)
       })
     }
   },
@@ -256,7 +256,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getPrisonDetail', 'addPrison']),
+    ...mapActions(['getPrisonDetail', 'addPrison', 'updatePrison']),
     onSubmit(e) {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -285,13 +285,14 @@ export default {
             }
             if ((!params.weekendQueue && !this.prison.weekendQueue) || (params.weekendQueue && this.prison.weekendQueue && (params.weekendQueue.toString() === this.prison.weekendQueue.toString()))) {
               params.weekendChanged = 0
-              // params.weekendQueue ? '' : params.weekendQueue = 'null'
-              if (!params.weekendQueue) params.weekendQueue = 'qqqq'
             }
             else {
               params.weekendChanged = 1
             }
-            console.log(111, params)
+            this.updatePrison(params).then(res => {
+              if (!res) return
+              this.$router.push('/prison/list')
+            })
           }
         }
       })

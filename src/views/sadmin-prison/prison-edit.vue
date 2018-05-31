@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-container">
-      <el-tabs v-model="activeName" type="card"  @tab-click="handleClick">
+      <el-tabs v-model="activeName" type="border-card" class="no-bottom-padding" @tab-click="handleClick">
         <el-tab-pane v-for="item in tabMapOptions" :label="item.label" :key='item.key' :name="item.key">
           <keep-alive>
             <component v-if='activeName == item.key' :is="activeName"></component>

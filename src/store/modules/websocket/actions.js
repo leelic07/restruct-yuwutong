@@ -38,8 +38,9 @@ export default {
       // console.log('Socket已关闭')
     }
     // 发生了错误事件
-    socket.onerror = () => {
+    socket.onerror = (event, e) => {
       Message.error('Socket发生了错误')
+      console.log(event.data)
       // console.log('Socket发生了错误')
     }
   }

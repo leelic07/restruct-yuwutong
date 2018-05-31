@@ -43,6 +43,7 @@ export default {
     delete params.usual
     delete params.weekend
     delete params.special
+    console.log(params)
     return http.updatePrison(params).then(res => res)
   }
 }
