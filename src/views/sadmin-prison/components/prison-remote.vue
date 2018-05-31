@@ -219,16 +219,12 @@ export default {
     },
     'meeting.special': {
       handler: function(val) {
-        if (!this.flag.dialog) return
-        if (val[this.specialIndex].queue[val[this.specialIndex].queue.length - 1] === null) return
-        if (val[this.specialIndex].queue[val[this.specialIndex].queue.length - 1][1] === '23:59') {
-          this.flag.canAddSpecial = false
-        }
-        else {
-          this.flag.canAddSpecial = true
-        }
+        this.canChangeSpecial()
       },
       deep: true
+    },
+    specialIndex(val) {
+      this.canChangeSpecial()
     }
   },
   computed: {
@@ -296,13 +292,6 @@ export default {
           }
         }
       })
-    },
-    handleEdit() {
-      // let params = Object.assign({}, e, { changed: 0, weekendChanged: 0 })
-      // this.updatePrison(params).then(res => {
-      //   if (!res) return
-      //   this.$router.push('/prison/list')
-      // })
     },
     handleQueue(prison) {
       prison.meetingQueue = []
@@ -376,6 +365,18 @@ export default {
           this.specialIndex = 0
         }
       })
+    },
+    canChangeSpecial() {
+      if (this.meeting.special[this.specialIndex].queue[this.meeting.special[this.specialIndex].queue.length - 1] === null) {
+        this.flag.canAddSpecial = false
+        return
+      }
+      if (this.meeting.special[this.specialIndex].queue[this.meeting.special[this.specialIndex].queue.length - 1][1] === '23:59') {
+        this.flag.canAddSpecial = false
+      }
+      else {
+        this.flag.canAddSpecial = true
+      }
     }
   }
 }
