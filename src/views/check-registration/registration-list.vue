@@ -8,11 +8,14 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        value="first"
+        v-model="tabs"
         type="card">
         <el-tab-pane
           label="家属注册"
           name="first" />
+        <el-tab-pane
+          label="未授权"
+          name="PENDING" />
       </el-tabs>
       <el-table
         :data="registrations.contents"
@@ -235,14 +238,24 @@ export default {
       remarks: '您的身份信息错误',
       imgSrc: '',
       isIdcard: false,
-      btnDisable: false// 按钮禁用与启用
+      btnDisable: false, // 按钮禁用与启用
+      tabs: 'PENDING'
+    }
+  },
+  watch: {
+    tabs: {
+      handler: function(newVal) {
+        this.filter = {}
+        newVal === 'first'
+          ? delete this.filter.status
+          : this.filter.status = newVal
+        this.getDatas()
+      },
+      immediate: true
     }
   },
   computed: {
     ...mapState(['registrations', 'registRemarks'])
-  },
-  mounted() {
-    this.getDatas()
   },
   methods: {
     ...mapActions(['getRegistrations', 'authorizeRegistrations']),
