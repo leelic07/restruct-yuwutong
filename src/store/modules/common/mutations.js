@@ -4,8 +4,15 @@ export default {
   // 隐藏loading遮罩层
   hideLoading: state => { state.loading = false },
   resetState: (state, params) => {
-    Object.keys(params).forEach(key => {
-      state[key] = params[key]
-    })
+    if (params === 'logout') {
+      Object.keys(state).forEach(key => {
+        if (state[key] && state[key].contents && state[key].contents.length) state[key] = { contents: [], total: 0 }
+      })
+    }
+    else {
+      Object.keys(params).forEach(key => {
+        state[key] = params[key]
+      })
+    }
   }
 }

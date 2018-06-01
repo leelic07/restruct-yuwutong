@@ -59,7 +59,7 @@ export default {
     ...mapState(['user'])
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'resetState']),
     confirmExit(e) {
       e.preventDefault()
       this.$confirm('是否退出登录？', '提示', {
@@ -72,6 +72,7 @@ export default {
           localStorage.removeItem('user')
           localStorage.removeItem('routes')
           this.$router.replace('/new-login')
+          this.resetState('logout')
         })
       }).catch(() => {})
     }

@@ -49,9 +49,9 @@
           label="申请时间"
           min-width="86px"
           prop="applicationDate" />
-        <el-table-column
+        <!-- <el-table-column
           label="预约时间"
-          prop="meetingTime" />
+          prop="meetingTime" /> -->
         <el-table-column
           prop="prisonerNumber"
           min-width="92px"
@@ -60,13 +60,13 @@
           prop="prisonArea"
           min-width="92px"
           label="监区" />
-        <el-table-column
+        <!-- <el-table-column
           prop="relationship"
-          min-width="64px"
-          label="关系" />
-        <el-table-column
+          width="64px"
+          label="关系" /> -->
+        <!-- <el-table-column
           prop="terminalNumber"
-          label="终端号" />
+          label="终端号" /> -->
         <el-table-column
           class-name="orange"
           min-width="78px"
@@ -78,7 +78,10 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="76px">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.status == 'PENDING'"
@@ -88,14 +91,20 @@
               v-else-if="scope.row.status === 'PASSED' && scope.row.isWithdrawFlag === 1"
               size="mini"
               @click="handleWithdraw(scope.row)">撤回</el-button>
+            <el-button
+              v-if="scope.row.status != 'PENDING'"
+              type="text"
+              size="mini"
+              class="button-detail"
+              @click="onDetail(scope.row)">详情</el-button>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="auditRealName"
           min-width="150px"
           label="审核信息">
           <template v-if="scope.row.auditRealName" slot-scope="scope">{{ scope.row.auditRealName }}<br />{{ scope.row.auditUserName }}<br />({{ scope.row.auditAt | Date }})</template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </el-col>
     <m-pagination
@@ -194,6 +203,23 @@
       width="382.4px">
       <img :src="imgSrc">
     </el-dialog>
+    <el-dialog
+      :visible.sync="toShow.id ? true : false"
+      :title="'家属：' + toShow.name"
+      width="530px"
+      class="authorize-dialog"
+      @close="onCloseShow">
+      <div class="flex-dialog">
+        <div style="width: 100%;"><label>与囚犯关系：</label><span>{{ toShow.relationship }}</span></div>
+        <div style="width: 50%;"><label>预约时间：</label><span>{{ toShow.meetingTime }}</span></div>
+        <div style="width: 50%;"><label>终端号：</label><span>{{ toShow.terminalNumber }}</span></div>
+        <div style="width: 50%;"><label>审核人账号：</label><span>{{ toShow.auditUserName }}</span></div>
+        <div style="width: 50%;"><label>审核人姓名：</label><span>{{ toShow.auditRealName }}</span></div>
+        <div style="width: 50%;"><label>审核时间：</label><span>{{ toShow.auditAt | Date }}</span></div>
+        <div style="width: 50%;"><label>审核状态：</label><span>{{ toShow.status | applyStatus }}</span></div>
+        <div v-if="toShow.status === 'DENIED'" style="width: 100%;"><label>拒绝原因：</label><span>{{ toShow.content }}</span></div>
+      </div>
+    </el-dialog>
   </el-row>
 </template>
 
@@ -215,9 +241,11 @@ export default {
         authorize: false,
         agree: false,
         disagree: false,
-        withdraw: false
+        withdraw: false,
+        detail: false
       },
       toAuthorize: {},
+      toShow: {},
       remarks: '您的身份信息错误',
       withdraw: {},
       rule: {
@@ -240,6 +268,13 @@ export default {
         delete this.filter.status
         this.getDatas()
       }
+    },
+    toShow: {
+      handler: function(val) {
+        if (val.id) this.show.detail = true
+        else this.show.detail = false
+      },
+      deep: true
     }
   },
   mounted() {
@@ -267,6 +302,13 @@ export default {
       this.toAuthorize = e
       this.withdraw = {}
       this.show.withdraw = true
+    },
+    onDetail(e) {
+      console.log(e)
+      this.toShow = Object.assign({}, e)
+    },
+    onCloseShow() {
+      this.toShow.id = ''
     },
     onAuthorization(e) {
       let params = { id: this.toAuthorize.id, status: e }
@@ -301,4 +343,15 @@ export default {
 .cell img
   width: 126.8px;
   cursor: pointer;
+.button-detail
+  display: block;
+  margin-left: 0;
+  width: 56px;
+.flex-dialog
+  display: flex;
+  flex-wrap: wrap;
+  label
+    display: inline-block;
+    width: 84px;
+    text-align: right;
 </style>
