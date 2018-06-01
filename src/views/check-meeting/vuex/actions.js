@@ -21,6 +21,6 @@ export default {
     return http.adjustMeeting(params).then(res => res)
   },
   getFreeMeetings({ commit }, params) {
-    http.getFreeMeetings(params).then(res => res && commit('getFreeMeetings', res)).catch(err => console.log(err))
+    http.getFreeMeetings(params).then(res => res && commit('getFreeMeetings', res))
   }
 }

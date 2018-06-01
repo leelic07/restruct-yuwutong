@@ -8,7 +8,7 @@
       @search="onSearch" />
     <el-col :span="24">
       <el-tabs
-        v-model="tabs"
+        value="first"
         type="card">
         <el-tab-pane
           label="免费会见记录"
@@ -60,7 +60,6 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tabs: 'first',
       searchItems: {
         name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚号' }
@@ -74,7 +73,7 @@ export default {
     this.getDatas()
   },
   methods: {
-    ...mapActions(['getFreeMeetings', 'authorizeMeeting', 'withdrawMeeting']),
+    ...mapActions(['getFreeMeetings']),
     sizeChange(rows) {
       this.$refs.pagination.handleSizeChange(rows)
       this.getDatas()
@@ -90,7 +89,4 @@ export default {
 </script>
 
 <style type="text/stylus" lang="stylus" scoped>
-.cell img
-  width: 126.8px;
-  cursor: pointer;
 </style>
