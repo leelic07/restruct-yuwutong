@@ -172,7 +172,7 @@
       <div
         v-if="show.callback"
         class="button-box">
-        <div style="margin-bottom: 10px;">请选择撤回原因</div>
+        <div style="margin-bottom: 10px;">请选择驳回原因</div>
         <el-select v-model="remarks">
           <el-option
             v-for="(remark,index) in frontRemarks"
