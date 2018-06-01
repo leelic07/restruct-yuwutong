@@ -80,5 +80,8 @@ export default {
   // 数据管理-罪犯奖惩数据导入-上传到服务器
   importPrisonerRewardPunishment: params => {
     return service.get('/prisoner_reward_punishments/processing', params).then(res => res && res.data)
+  },
+  getFreeMeetings: params => {
+    return service.get('/freeMeetings/page', params).then(res => res.code === 200 && res.data).catch(err => err)
   }
 }
