@@ -7,9 +7,5 @@ export default {
     Object.keys(params).forEach(key => {
       state[key] = params[key]
     })
-  },
-  addFormItems: (state, params) => {
-    state.formItems = Object.assign({}, state.formItems, params)
-    console.log(state.formItems)
   }
 }
