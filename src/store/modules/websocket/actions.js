@@ -1,4 +1,5 @@
-import { Notification, Message } from 'element-ui'
+// import { Notification, Message } from 'element-ui'
+import { Notification } from 'element-ui'
 
 const wsUrl = jailId => `ws://123.57.7.159/ws/${ jailId }` // 测试
 // const wsUrl = jailId => `ws://123.57.7.159/ws-demo/${ jailId }` // 演示
@@ -9,7 +10,7 @@ export default {
     let socket,
       lockReconnect = false,
       heartCheck = {
-        timeout: 60000,
+        timeout: 6000,
         frontTimeout: null,
         serverTimeout: null,
         reset: function() {
@@ -65,8 +66,8 @@ export default {
           if (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).role === '1') reconnect()
         }
         socket.onerror = (event) => {
-          Message.error('Socket发生了错误')
-          console.log('Socket发生了错误', event.data)
+          // Message.error('Socket发生了错误')
+          console.log('Socket发生了错误', event)
           if (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).role === '1') reconnect()
         }
       },

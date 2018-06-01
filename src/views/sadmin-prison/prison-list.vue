@@ -50,9 +50,10 @@
               v-if="scope.row.street">{{scope.row.street}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="170px">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="onEdit(scope.row.id)">编辑</el-button>
+            <el-button type="text" size="mini" @click="onVisit(scope.row.id)">实地会见配置</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -98,6 +99,9 @@ export default {
     },
     onEdit(e) {
       this.$router.push(`/prison/edit/${ e }`)
+    },
+    onVisit(e) {
+      this.$router.push(`/prison/visit/${ e }`)
     }
   }
 }
