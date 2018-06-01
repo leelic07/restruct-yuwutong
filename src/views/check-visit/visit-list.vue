@@ -51,6 +51,9 @@
         <el-table-column
           prop="prisonerNumber"
           label="囚号" />
+          <el-table-column
+          prop="prisonArea"
+          label="监区" />
         <el-table-column
           prop="relationship"
           label="关系" />
