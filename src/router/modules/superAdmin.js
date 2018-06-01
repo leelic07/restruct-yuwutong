@@ -24,6 +24,9 @@ let superAdmin = [{
   }, {
     path: '/prison/edit/:id',
     name: '编辑监狱',
+    meta: {
+      permission: 'edit'
+    },
     component: resolve => require(['@/views/sadmin-prison/prison-edit'], resolve)
   }]
 }, {

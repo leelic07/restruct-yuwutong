@@ -3,7 +3,7 @@ import mutations from './mutations'
 
 let state = {
   prisons: { contents: [], total: 0 },
-  prison: { imageUrl: '', meetingQueue1: [null], batchQueue1: [null] },
+  prison: { imageUrl: '', usual: [null], weekend: [null], special: [{ date: '', queue: [null] }] },
   meetingQueue: []
 }
 

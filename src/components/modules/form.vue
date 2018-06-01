@@ -30,12 +30,13 @@
           :key="index"
           size="small"
           type="primary"
-          @click="onSubmit(button, $event)">下一步</el-button>
+          @click="onSubmit">下一步</el-button>
         <el-button
           v-if="button === 'update'"
           :key="index"
           size="small"
-          type="primary">更新</el-button>
+          type="primary"
+          @click="onSubmit">更新</el-button>
         <el-button
           v-if="button === 'add'"
           :key="index"

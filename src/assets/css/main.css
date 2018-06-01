@@ -167,6 +167,7 @@ img{
   width: 75%;
   margin: auto;
   padding-top: 20px;
+  overflow: hidden;
 }
 .time-queue .el-form-item{
   width: calc(25% - 10px);
@@ -183,4 +184,12 @@ img{
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  clear: both;
+}
+.no-bottom-padding.el-tabs--border-card>.el-tabs__content{
+  padding-bottom: 0;
+  overflow-x: auto
+}
+.el-tabs--border-card.no-bottom-padding{
+  margin-bottom: 20px;
 }
