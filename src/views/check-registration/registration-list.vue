@@ -151,7 +151,7 @@
         <div style="margin-bottom: 10px;">请选择驳回原因</div>
         <el-select v-model="remarks">
           <el-option
-            v-for="(remark,index) in frontRemarks"
+            v-for="(remark,index) in registRemarks"
             :value="remark"
             :label="remark"
             :key="index">
@@ -175,7 +175,7 @@
         <div style="margin-bottom: 10px;">请选择驳回原因</div>
         <el-select v-model="remarks">
           <el-option
-            v-for="(remark,index) in frontRemarks"
+            v-for="(remark,index) in registRemarks"
             :value="remark"
             :label="remark"
             :key="index">
@@ -239,7 +239,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['registrations', 'frontRemarks'])
+    ...mapState(['registrations', 'registRemarks'])
   },
   mounted() {
     this.getDatas()
