@@ -5,7 +5,6 @@
         <el-tab-pane v-for="item in tabMapOptions" :label="item.label" :key='item.key' :name="item.key">
           <keep-alive>
             <component v-if='activeName == item.key' :is="activeName"></component>
-            <!-- <component :is="activeName"></component> -->
           </keep-alive>
         </el-tab-pane>
       </el-tabs>
@@ -19,6 +18,7 @@ import prisonBase from './components/prison-base'
 import prisonConfig from './components/prison-config'
 import prisonRemote from './components/prison-remote'
 export default {
+  components: { prisonBase, prisonConfig, prisonRemote },
   data() {
     return {
       activeName: 'prisonBase',
@@ -30,7 +30,12 @@ export default {
       ]
     }
   },
-  components: { prisonBase, prisonConfig, prisonRemote },
+  watch: {
+    '$route': 'render'
+  },
+  mounted() {
+    this.render()
+  },
   methods: {
     handleClick(tag, e) {
       this.tabMapOptions[this.placeHolder].query = this.$route.query
@@ -47,12 +52,6 @@ export default {
         this.placeHolder = this.tabMapOptions.findIndex((value) => { return value.key === this.activeName })
       }
     }
-  },
-  watch: {
-    '$route': 'render'
-  },
-  mounted() {
-    this.render()
   }
 }
 </script>
