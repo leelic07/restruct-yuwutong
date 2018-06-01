@@ -82,6 +82,6 @@ export default {
     return service.get('/prisoner_reward_punishments/processing', params).then(res => res && res.data)
   },
   getFreeMeetings: params => {
-    return service.get('/freeMeetings/page', params).then(res => res.code === 200 && res.data).catch(err => err)
+    return service.get('/freeMeetings/page', params).then(res => res && res.data)
   }
 }

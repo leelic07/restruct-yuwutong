@@ -40,9 +40,11 @@ export default {
   addPrison: params => {
     return service.postObj('/jails/addJails', params).then(res => res && res.code === 200)
   },
+  // 监狱管理-编辑
   updatePrison: params => {
     return service.postObj('/jails/updateJails', params).then(res => res && res.code === 200)
   },
+  // 监狱管理-详情
   getPrisonDetail: params => {
     return service.get('/jails/getJailsDetail', params).then(res => res && res.data)
   },

@@ -150,6 +150,10 @@ let superAdminMenu = [{
         icon: 'iconfont icon-circle-o'
       }
     ]
+  }, {
+    path: '/visit/config',
+    title: '实地探监配置',
+    icon: 'iconfont icon-shidihuijian'
   }],
   adminMenu = [{
     path: '/account/list',

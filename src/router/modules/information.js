@@ -54,6 +54,16 @@ let infomation = [{
     name: '编辑投诉/建议',
     component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-edit'], resolve)
   }]
+}, {
+  path: '/visit',
+  name: '实地探监管理',
+  meta: { hidden: true },
+  children: [{
+    path: '/visit/config',
+    name: '实地探监配置',
+    meta: { role: '3' },
+    component: resolve => require(['@/views/info-visit/visit-config'], resolve)
+  }]
 }]
 
 infomation.forEach(item => {

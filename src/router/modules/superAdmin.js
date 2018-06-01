@@ -25,7 +25,7 @@ let superAdmin = [{
     path: '/prison/visit/:id',
     name: '监狱实地会见配置',
     meta: { role: '0' },
-    component: resolve => require(['@/views/sadmin-prison/components/prison-visit'], resolve)
+    component: resolve => require(['@/views/info-visit/visit-config'], resolve)
   }, {
     path: '/prison/edit/:id',
     name: '编辑监狱',

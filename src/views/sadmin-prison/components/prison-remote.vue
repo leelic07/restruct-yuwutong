@@ -234,7 +234,7 @@ export default {
     if (this.permission === 'edit') {
       this.getPrisonDetail({ id: this.$route.params.id }).then(res => {
         if (!res) return
-        this.meeting = Object.assign(this.prison)
+        this.meeting = Object.assign({}, this.prison)
       })
     }
   },

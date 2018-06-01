@@ -82,6 +82,24 @@ const codes = {
     next: params => {
       tips(params.msg || '无相应权限，请重新登录')
     }
+  },
+  '-1': {
+    next: (params, url) => {
+      if (url.indexOf('/jails/updateJails') > -1 && params.data && Object.keys(params.data).length) {
+        if (params.data.canNotAddDay ||
+          params.data.canNotDeleteDay ||
+          params.data.delList ||
+          params.data.addList ||
+          params.data.updList) {
+          Object.keys(params.data).forEach(key => {
+            tips(`${ params.msg }, 日期为：${ params.data[key].join('，') }`)
+          })
+          return
+        }
+        tips(params.msg)
+      }
+      else tips(params.msg)
+    }
   }
 }
 
@@ -91,6 +109,6 @@ export default params => {
     tips(params.data ? params.data.msg : (params.message ? params.message : ''))
     return false
   }
-  result.next && result.next(params.data)
+  result.next && result.next(params.data, params.request.responseURL)
   if (result.resData) return params.data
 }
