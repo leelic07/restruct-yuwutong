@@ -65,7 +65,6 @@
         style="margin-right: 10px;"
         @click="onSubmit">确定</el-button>
     </el-form>
-    
   </div>
 </template>
 
@@ -115,12 +114,11 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           if (this.routeRole === '0') {
-            let params = Object.assign({}, this.prisonVisitConfigDetail, { jailId: this.$route.params.id })
+            let params = Object.assign({}, this.prisonVisitConfigDetail, { jailId: this.jailId })
             this.handleQueue(params)
             delete params.usual
             delete params.canNotChange
             this.updatePrisonVisitConfig(params).then(res => {
-              console.log(res)
               if (!res) return
               this.render()
             })
