@@ -11,7 +11,11 @@ let infomation = [{
   }, {
     path: '/jails/edit/:id',
     name: '编辑监狱基本信息',
-    component: resolve => require(['@/views/jails-base-information/jails-base-information-edit'], resolve)
+    meta: {
+      permission: 'edit',
+      role: '3'
+    },
+    component: resolve => require(['@/views/sadmin-prison/prison-edit'], resolve)
   }]
 }, {
   path: '/prison-affairs-public',
@@ -56,7 +60,7 @@ let infomation = [{
   }]
 }, {
   path: '/visit',
-  name: '实地探监管理',
+  name: '实地探监信息',
   meta: { hidden: true },
   children: [{
     path: '/visit/config',

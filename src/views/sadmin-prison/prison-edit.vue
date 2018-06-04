@@ -2,11 +2,18 @@
   <div>
     <div class="form-container">
       <el-tabs v-model="activeName" type="border-card" class="no-bottom-padding" @tab-click="handleClick">
-        <el-tab-pane v-for="item in tabMapOptions" :label="item.label" :key='item.key' :name="item.key">
-          <keep-alive>
-            <component v-if='activeName == item.key' :is="activeName"></component>
-          </keep-alive>
-        </el-tab-pane>
+        <template v-for="item in tabMapOptions">
+          <el-tab-pane v-if="item.key !== 'prisonConfig'" :label="item.label" :key='item.key' :name="item.key">
+            <keep-alive>
+              <component v-if='activeName == item.key' :is="activeName"></component>
+            </keep-alive>
+          </el-tab-pane>
+          <el-tab-pane v-if="item.key === 'prisonConfig' && $route.meta.role !== '3'" :label="item.label" :key='item.key' :name="item.key">
+            <keep-alive>
+              <component v-if='activeName == item.key' :is="activeName"></component>
+            </keep-alive>
+          </el-tab-pane>
+        </template>
       </el-tabs>
     </div>
   </div>

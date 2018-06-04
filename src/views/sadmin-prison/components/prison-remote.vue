@@ -287,7 +287,8 @@ export default {
             }
             this.updatePrison(params).then(res => {
               if (!res) return
-              this.$router.push('/prison/list')
+              // if (this.$route.meta.role !== '3') this.$router.push('/prison/list')
+              // else this.$router.push('/jails/detail')
             })
           }
         }
