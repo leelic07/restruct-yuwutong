@@ -6,7 +6,6 @@
       :model="meeting"
       inline
       :rules="rules">
-
       <div v-for="(type, idx) in types" :key="idx" style="clear: both;">
         <div class="el-form-item" :class="{ 'is-required': type.name==='usual' }" style="float: left;">
            <label class="el-form-item__label" style="width: 140px;padding-right: 2px;">{{ type.label }}</label>

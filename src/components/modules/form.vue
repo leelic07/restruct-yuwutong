@@ -94,10 +94,9 @@ export default {
       this.$router.back()
     },
     onSubmit(e) {
-      // console.dir(Object.assign(this.fields))
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.$emit('submit', this.fields)
+          this.$emit('submit', helper.trimObject(this.fields))
         }
       })
     },
@@ -137,20 +136,22 @@ export default {
       delete item.rules
     },
     ruleSwitch(rule, label, type) {
-      if (rule.indexOf('numberRange') > -1) {
-        var range = rule.replace('numberRange', '').split('-'), validate = {}
+      if (rule.indexOf('numberRange') > -1 || rule.indexOf('lengthRange') > -1) {
+        var range = rule.replace(/^numberRange|lengthRange/, '').split('-'), validate = {}
         if (range[0] !== '') validate.min = parseInt(range[0])
         if (range[1] !== '') validate.max = parseInt(range[1])
-        return Object.assign({}, { validator: validator.numberRange }, validate)
+        return Object.assign({}, { validator: validator[rule.match(/^numberRange|lengthRange/)[0]] }, validate)
       }
       let plea = ['input', 'editor'].indexOf(type) > -1 ? '请输入' : '请选择'
       switch (rule) {
         case 'required':
-          return { message: `${ plea }${ label }`, required: true }
+          return { message: `${ plea }${ label }`, required: true, validator: validator.required }
         case 'isNumber':
           return { validator: validator.isNumber }
         case 'isFee':
           return { validator: validator.isFee }
+        case 'noChinese':
+          return { validator: validator.noChinese }
         default:
           return {}
       }

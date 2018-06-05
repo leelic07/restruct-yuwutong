@@ -23,7 +23,7 @@ export default {
         citysId: { type: 'select', label: '所在市', rules: ['required'], defer: true, disabled: true, loading: true },
         street: { type: 'input', label: '街道' },
         visitAddress: { type: 'textarea', label: '探监路线', autosize: { minRows: 2, maxRows: 6 } },
-        zipcode: { type: 'input', label: '监狱编号', rules: ['required'] },
+        zipcode: { type: 'input', label: '监狱编号', rules: ['required', 'isNumber', 'lengthRange-6'] },
         imageUrl: { type: 'uploadImg', label: '监狱图片' }
       }, formButton),
       values: {},
