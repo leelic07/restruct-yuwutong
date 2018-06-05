@@ -218,7 +218,7 @@ export default {
         name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚号' },
         auditName: { type: 'input', label: '审核人' },
-        status: { type: 'select', label: '审核状态', options: this.$store.state.registStatus },
+        status: { type: 'select', label: '审核状态', options: this.$store.state.registStatus, miss: true },
         auditAt: { type: 'date', label: '审核时间' }
       },
       toAuthorize: {},
@@ -243,15 +243,15 @@ export default {
     }
   },
   watch: {
-    tabs: {
-      handler: function(newVal) {
-        this.filter = {}
-        newVal === 'first'
-          ? delete this.filter.status
-          : this.filter.status = newVal
-        this.getDatas()
-      },
-      immediate: true
+    tabs(val) {
+      if (val !== 'first') {
+        this.searchItems.status.miss = true
+      }
+      else {
+        delete this.filter.status
+        this.searchItems.status.miss = false
+      }
+      this.getDatas()
     }
   },
   computed: {
@@ -264,6 +264,7 @@ export default {
       this.getDatas()
     },
     getDatas() {
+      if (this.tabs !== 'first') this.filter.status = this.tabs
       this.getRegistrations({ ...this.filter, ...this.pagination })
     },
     onSearch() {

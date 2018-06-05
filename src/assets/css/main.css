@@ -193,3 +193,6 @@ img{
 .el-tabs--border-card.no-bottom-padding{
   margin-bottom: 20px;
 }
+ .el-form--inline .special-config .el-form-item__content{
+  display: block;
+}

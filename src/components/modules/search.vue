@@ -18,7 +18,7 @@
           v-model="item.value"
           :placeholder="'请输入' + item.label" />
         <el-select
-          v-if="item.type === 'select'"
+          v-if="item.type === 'select' && !item.miss"
           v-model="item.value"
           :placeholder="'请选择' + item.label"
           :loading="item.getting || false"
@@ -62,55 +62,6 @@
         <el-button v-else icon="el-icon-search" @click="onSearch"></el-button>
       </template>
     </div>
-    <!--搜索框-->
-    <!-- <el-col :span="16" class="search-box">
-      <el-col>
-        <el-button v-if="buttonText" @click="onSearch">{{ buttonText }}</el-button>
-        <el-button v-else icon="el-icon-search" @click="onSearch"></el-button>
-      </el-col>
-      <template v-for="(item, index) in items">
-        <el-col :key="index" v-if="item.type !== 'datetimerange'">
-          <el-input
-            v-if="item.type === 'input'"
-            v-model="item.value"
-            :placeholder="'请输入' + item.label" />
-
-          <el-select
-            v-if="item.type === 'select'"
-            v-model="item.value"
-            :placeholder="'请选择' + item.label"
-            :loading="item.getting || false"
-            :filterable="item.filterable"
-            clearable>
-            <el-option
-              v-for="option in item.options"
-              :key="item.belong ? option[item.belong.value] : option.value"
-              :label="item.belong ? option[item.belong.label] : option.label"
-              :value="item.belong ? option[item.belong.value] : option.value" />
-          </el-select>
-          <el-date-picker
-            v-if="item.type === 'datetime'"
-            v-model="item.value"
-            type="datetime"
-            :placeholder="item.label"
-            align="right"
-            :picker-options="pickerOptions">
-          </el-date-picker>
-        </el-col>
-        <el-col :span="8" :key="index" v-if="item.type === 'datetimerange'">
-          <el-date-picker
-            v-if="item.type === 'datetimerange'"
-            v-model="item.value"
-            type="datetimerange"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间"
-            format="yyyy-MM-dd HH:mm:ss"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            :default-time="['00:00:00', '23:59:59']">
-          </el-date-picker>
-        </el-col>
-      </template>
-    </el-col> -->
   </el-col>
 </template>
 

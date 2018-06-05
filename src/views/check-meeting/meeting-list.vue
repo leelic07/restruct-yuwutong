@@ -229,12 +229,12 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tabs: 'first',
+      tabs: 'PENDING',
       searchItems: {
         name: { type: 'input', label: '家属姓名' },
         prisonerNumber: { type: 'input', label: '囚号' },
         auditName: { type: 'input', label: '审核人' },
-        status: { type: 'select', label: '审核状态', options: this.$store.state.applyStatus },
+        status: { type: 'select', label: '审核状态', options: this.$store.state.applyStatus, miss: true },
         auditAt: { type: 'date', label: '审核时间' }
       },
       show: {
@@ -261,13 +261,13 @@ export default {
   watch: {
     tabs(val) {
       if (val !== 'first') {
-        this.filter.status = val
-        this.getDatas()
+        this.searchItems.status.miss = true
       }
       else {
         delete this.filter.status
-        this.getDatas()
+        this.searchItems.status.miss = false
       }
+      this.getDatas()
     },
     toShow: {
       handler: function(val) {
@@ -287,6 +287,7 @@ export default {
       this.getDatas()
     },
     getDatas() {
+      if (this.tabs !== 'first') this.filter.status = this.tabs
       this.getMeetings({ ...this.filter, ...this.pagination })
     },
     onSearch() {

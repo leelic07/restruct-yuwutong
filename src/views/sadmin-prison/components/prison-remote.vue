@@ -50,7 +50,7 @@
         </div>
         <div class="time-queue" style="float: left; width: calc(100% - 150px);">
           <div v-for="(special, list) in meeting.special" :key="list">
-            <el-form-item>
+            <el-form-item class="special-config">
               <el-date-picker
                 v-model="special.date"
                 :clearable="false"
@@ -72,7 +72,7 @@
             <el-button
               v-if="list === (meeting.special.length - 1) && special.queue[0] !== null"
               type="text"
-              @click="addSpecialQueue()">新增特殊日期</el-button>
+              @click="addSpecialQueue">新增特殊日期</el-button>
           </div>
         </div>
       </div>
@@ -256,43 +256,52 @@ export default {
     onSubmit(e) {
       this.$refs.form.validate(valid => {
         if (valid) {
-          if (this.permission !== 'edit') {
-            let prison = Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting)
-            this.handleQueue(prison)
-            delete prison.usual
-            delete prison.weekend
-            delete prison.special
-            this.addPrison(prison).then(res => {
-              if (!res) return
-              this.$router.push('/prison/list')
-            })
+          if (this.meeting.special[this.meeting.special.length - 1].date &&
+            this.meeting.special[this.meeting.special.length - 1].queue[0] === null) {
+            this.$confirm(`特殊日期配置中日期为${ this.meeting.special[this.meeting.special.length - 1].date }尚未设置会见时间段，是否继续？`, '提示', { type: 'warning' }).then(() => { this.handleSubmit() }).catch(() => {})
           }
-          else if (this.permission === 'edit') {
-            let params = Object.assign({}, this.meeting)
-            delete params.meetingQueue
-            delete params.weekendQueue
-            delete params.specialQueue
-            this.handleQueue(params)
-            if (params.meetingQueue.toString() !== this.prison.meetingQueue.toString()) {
-              params.changed = 1
-            }
-            else {
-              params.changed = 0
-            }
-            if ((!params.weekendQueue && !this.prison.weekendQueue) || (params.weekendQueue && this.prison.weekendQueue && (params.weekendQueue.toString() === this.prison.weekendQueue.toString()))) {
-              params.weekendChanged = 0
-            }
-            else {
-              params.weekendChanged = 1
-            }
-            this.updatePrison(params).then(res => {
-              if (!res) return
-              // if (this.$route.meta.role !== '3') this.$router.push('/prison/list')
-              // else this.$router.push('/jails/detail')
-            })
+          else {
+            this.handleSubmit()
           }
         }
       })
+    },
+    handleSubmit() {
+      if (this.permission !== 'edit') {
+        let prison = Object.assign({}, JSON.parse(sessionStorage.getItem('base')), JSON.parse(sessionStorage.getItem('config')), this.meeting)
+        this.handleQueue(prison)
+        delete prison.usual
+        delete prison.weekend
+        delete prison.special
+        this.addPrison(prison).then(res => {
+          if (!res) return
+          this.$router.push('/prison/list')
+        })
+      }
+      else if (this.permission === 'edit') {
+        let params = Object.assign({}, this.meeting)
+        delete params.meetingQueue
+        delete params.weekendQueue
+        delete params.specialQueue
+        this.handleQueue(params)
+        if (params.meetingQueue.toString() !== this.prison.meetingQueue.toString()) {
+          params.changed = 1
+        }
+        else {
+          params.changed = 0
+        }
+        if ((!params.weekendQueue && !this.prison.weekendQueue) || (params.weekendQueue && this.prison.weekendQueue && (params.weekendQueue.toString() === this.prison.weekendQueue.toString()))) {
+          params.weekendChanged = 0
+        }
+        else {
+          params.weekendChanged = 1
+        }
+        this.updatePrison(params).then(res => {
+          if (!res) return
+          // if (this.$route.meta.role !== '3') this.$router.push('/prison/list')
+          // else this.$router.push('/jails/detail')
+        })
+      }
     },
     handleQueue(prison) {
       prison.meetingQueue = []
