@@ -56,7 +56,7 @@
           label="囚号" />
         <el-table-column
           prop="prisonArea"
-          min-width="92px"
+          min-width="88px"
           label="监区" />
         <el-table-column
           prop="relationship"
@@ -64,7 +64,7 @@
           label="关系" />
         <el-table-column
           label="申请状态"
-          min-width="78px"
+          min-width="74px"
           class-name="orange">
           <template slot-scope="scope"> {{scope.row.status | applyStatus}} </template>
         </el-table-column>
@@ -253,6 +253,9 @@ export default {
       }
       this.getDatas()
     }
+  },
+  mounted() {
+    this.getDatas()
   },
   computed: {
     ...mapState(['registrations', 'registRemarks'])
