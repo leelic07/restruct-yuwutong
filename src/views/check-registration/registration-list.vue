@@ -243,16 +243,21 @@ export default {
     }
   },
   watch: {
-    tabs(val) {
-      if (val !== 'first') {
-        this.searchItems.status.miss = true
+    tabs: {
+      handler: function(val) {
+        if (val !== 'first') {
+          this.searchItems.status.miss = true
+        }
+        else {
+          delete this.filter.status
+          this.searchItems.status.miss = false
+        }
+        this.getDatas()
       }
-      else {
-        delete this.filter.status
-        this.searchItems.status.miss = false
-      }
-      this.getDatas()
     }
+  },
+  mounted() {
+    this.getDatas()
   },
   computed: {
     ...mapState(['registrations', 'registRemarks'])

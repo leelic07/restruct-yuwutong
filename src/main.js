@@ -41,7 +41,7 @@ Vue.prototype._$agency = `${ config.baseURL }image-server`
 
 // Vue.prototype._$baseURL = 'http://39.108.185.51:8081/ywgk'
 
-Vue.prototype._$baseURL = `${ config.baseURL }/ywgk`
+Vue.prototype._$baseURL = `${ config.baseURL }ywgk`
 
 // 声明过滤器
 Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]))
