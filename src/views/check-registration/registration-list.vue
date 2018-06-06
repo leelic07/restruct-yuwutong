@@ -56,7 +56,7 @@
           label="囚号" />
         <el-table-column
           prop="prisonArea"
-          min-width="92px"
+          min-width="88px"
           label="监区" />
         <el-table-column
           prop="relationship"
@@ -64,7 +64,7 @@
           label="关系" />
         <el-table-column
           label="申请状态"
-          min-width="78px"
+          min-width="74px"
           class-name="orange">
           <template slot-scope="scope"> {{scope.row.status | applyStatus}} </template>
         </el-table-column>
@@ -243,17 +243,15 @@ export default {
     }
   },
   watch: {
-    tabs: {
-      handler: function(val) {
-        if (val !== 'first') {
-          this.searchItems.status.miss = true
-        }
-        else {
-          delete this.filter.status
-          this.searchItems.status.miss = false
-        }
-        this.getDatas()
+    tabs(val) {
+      if (val !== 'first') {
+        this.searchItems.status.miss = true
       }
+      else {
+        delete this.filter.status
+        this.searchItems.status.miss = false
+      }
+      this.getDatas()
     }
   },
   mounted() {
