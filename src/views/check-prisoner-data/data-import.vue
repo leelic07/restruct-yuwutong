@@ -60,9 +60,14 @@
         <el-table-column label="附加刑"
           prop="additionalPunishment" />
         <el-table-column label="现刑期起日"
-          width="270px">
+          show-overflow-tooltip>
           <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="现刑期止日"
+          show-overflow-tooltip>
+          <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
         </el-table-column>
@@ -100,12 +105,12 @@
             <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
           </template>
         </el-table-column>
-        <el-table-colum label="现刑期止日"
+        <el-table-column label="现刑期止日"
           show-overflow-tooltip>
           <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
-        </el-table-colum>
+        </el-table-column>
         <el-table-column label="监区"
           prop="prisonArea" />
         <el-table-column label="原判刑期"
