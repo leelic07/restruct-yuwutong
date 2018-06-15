@@ -26,7 +26,6 @@ export default {
         faceRecognition: { type: 'switch', label: '人脸识别模块开放', rules: ['required'], value: 1 },
         remittance: { type: 'input', label: '汇款限制', rules: ['required', 'isFee'], append: '/元', value: 800 },
         consumption: { type: 'input', label: '消费限制', rules: ['required', 'isFee'], append: '/元', value: 800 }
-        // windowSize: { type: 'input', label: '实地探监窗口个数', rules: ['required', 'isNumber', 'numberRange1-20'], append: '/个' }
       }, formButton),
       values: {},
       permission

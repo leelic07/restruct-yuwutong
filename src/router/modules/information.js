@@ -59,6 +59,16 @@ let infomation = [{
     component: resolve => require(['@/views/info-prison-affairs-public/complaints-suggestions-edit'], resolve)
   }]
 }, {
+  path: '/remote',
+  name: '远程会见信息',
+  meta: { hidden: true },
+  children: [{
+    path: '/remote/config',
+    name: '远程会见配置',
+    meta: { permission: 'edit', role: '3' },
+    component: resolve => require(['@/views/sadmin-prison/prison-edit'], resolve)
+  }]
+}, {
   path: '/visit',
   name: '实地探监信息',
   meta: { hidden: true },

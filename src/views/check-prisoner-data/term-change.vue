@@ -27,6 +27,7 @@
       <!--上传模板文件的结果-->
       <el-tag type="danger">失败信息:</el-tag>
       <el-table :data="prisonTermResult.errors">
+        <el-table-column label="所在行" prop="rowNum" width="70px" />
         <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
         <el-table-column label="减刑时间" prop="changedate"></el-table-column>
         <el-table-column label="变动类型" prop="changetype"></el-table-column>

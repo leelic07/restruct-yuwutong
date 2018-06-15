@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       loginForm: {
-        password: '',
+        password: '3m4c3n9J',
         username: '',
         prison: ''
       },

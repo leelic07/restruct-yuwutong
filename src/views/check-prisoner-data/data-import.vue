@@ -27,6 +27,7 @@
       <el-tag type="danger">失败信息:</el-tag>
       <!--上传模板失败的结果-->
       <el-table :data="prisonerDataResult.errors">
+        <el-table-column label="所在行" prop="rowNum" width="70px" />
         <el-table-column label="罪犯编号" prop="prisonerNumber" width="100px" />
         <el-table-column label="罪犯名字" prop="name" />
         <el-table-column label="性别" width="50px">
@@ -65,11 +66,11 @@
             <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
           </template>
         </el-table-column>
-        <el-table-colum label="现刑期止日" show-overflow-tooltip>
+        <el-table-column label="现刑期止日" show-overflow-tooltip>
           <template slot-scope="scope">
             <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
           </template>
-        </el-table-colum>
+        </el-table-column>
         <el-table-column label="监区" prop="prisonArea" />
         <el-table-column label="原判刑期" prop="originalSentence" />
         <el-table-column label="创建时间">

@@ -1,14 +1,9 @@
 <template>
   <div>
-    <div class="form-container">
+    <div v-if="show" class="form-container">
       <el-tabs v-model="activeName" type="border-card" class="no-bottom-padding" @tab-click="handleClick">
         <template v-for="item in tabMapOptions">
-          <el-tab-pane v-if="item.key !== 'prisonConfig'" :label="item.label" :key='item.key' :name="item.key">
-            <keep-alive>
-              <component v-if='activeName == item.key' :is="activeName"></component>
-            </keep-alive>
-          </el-tab-pane>
-          <el-tab-pane v-if="item.key === 'prisonConfig' && $route.meta.role !== '3'" :label="item.label" :key='item.key' :name="item.key">
+          <el-tab-pane :label="item.label" :key='item.key' :name="item.key">
             <keep-alive>
               <component v-if='activeName == item.key' :is="activeName"></component>
             </keep-alive>
@@ -28,13 +23,9 @@ export default {
   components: { prisonBase, prisonConfig, prisonRemote },
   data() {
     return {
-      activeName: 'prisonBase',
-      placeHolder: 0,
-      tabMapOptions: [
-        { label: '基本信息', key: 'prisonBase' },
-        { label: '配置信息', key: 'prisonConfig' },
-        { label: '远程会见', key: 'prisonRemote' }
-      ]
+      activeName: '',
+      tabMapOptions: [],
+      show: false
     }
   },
   watch: {
@@ -44,20 +35,30 @@ export default {
     this.render()
   },
   methods: {
-    handleClick(tag, e) {
-      this.tabMapOptions[this.placeHolder].query = this.$route.query
-      this.placeHolder = tag.index
-      let query = this.tabMapOptions[tag.index].query || ''
-      this.$router.push({ query: Object.assign({}, query, { tag: tag.name }) })
+    handleClick() {
+      this.$router.push({ query: { tag: this.activeName } })
     },
     render() {
+      this.handleShow()
       if (!this.$route.query.tag) {
-        this.$router.push({ query: { tag: 'prisonBase' } })
+        this.$router.push({ query: { tag: this.tabMapOptions[0].key } })
       }
       if (this.$route.query.tag !== this.activeName) {
-        this.activeName = this.$route.query.tag || 'prisonBase'
-        this.placeHolder = this.tabMapOptions.findIndex((value) => { return value.key === this.activeName })
+        if (this.tabMapOptions.find(item => item.key === this.$route.query.tag)) this.activeName = this.$route.query.tag
+        else this.activeName = this.tabMapOptions[0].key
+        this.handleClick()
       }
+    },
+    handleShow() {
+      this.show = false
+      let tabs = [
+        { label: '基本信息', key: 'prisonBase' },
+        { label: '配置信息', key: 'prisonConfig' }
+      ]
+      if (this.$route.path === '/remote/config') tabs = [{ label: '远程会见', key: 'prisonRemote' }]
+      if (this.$route.meta.role === '0') tabs.push({ label: '远程会见', key: 'prisonRemote' })
+      this.tabMapOptions = tabs
+      this.show = true
     }
   }
 }

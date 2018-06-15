@@ -23,8 +23,8 @@
           prop="name"
           label="姓名" />
         <el-table-column
-          label="预约时间"
-          prop="meetingTime" 
+          label="会见时间"
+          prop="meetingTime"
           show-overflow-tooltip/>
         <el-table-column
           prop="prisonerNumber"

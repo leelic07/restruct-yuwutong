@@ -96,9 +96,6 @@
     <el-dialog
       :visible.sync="flag.dialog"
       class="authorize-dialog"
-      :show-close="false"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
       :title="meeting.special[specialIndex].date + '会见配置'">
       <el-form
         ref="special"

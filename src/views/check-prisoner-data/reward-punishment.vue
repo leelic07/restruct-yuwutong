@@ -37,6 +37,7 @@
       <!--上传模板文件的结果-->
       <el-tag type="success">成功信息:</el-tag>
       <el-table :data="prisonerRewardPunishmentResult.prisonerRewardPunishments">
+        <el-table-column label="所在行" prop="rowNum" width="70px" />
         <el-table-column label="罪犯编号" prop="prisonerNumber"></el-table-column>
         <el-table-column label="罪犯名字" prop="prisonerName"></el-table-column>
         <el-table-column label="年份" prop="datayear"></el-table-column>
