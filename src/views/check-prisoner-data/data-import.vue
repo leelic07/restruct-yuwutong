@@ -65,13 +65,13 @@
         <el-table-column label="现刑期起日"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermStartedAt | dateFormate}}</span>
           </template>
         </el-table-column>
         <el-table-column label="现刑期止日"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermEndedAt | dateFormate}}</span>
           </template>
         </el-table-column>
         <el-table-column label="监区"
@@ -105,13 +105,13 @@
         <el-table-column label="现刑期起日"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermStartedAt | dateFormate}}</span>
           </template>
         </el-table-column>
         <el-table-column label="现刑期止日"
           show-overflow-tooltip>
           <template slot-scope="scope">
-            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermEndedAt | dateFormate}}</span>
           </template>
         </el-table-column>
         <el-table-column label="监区"
