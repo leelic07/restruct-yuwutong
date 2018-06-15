@@ -120,13 +120,7 @@ export default {
         this.gettingJails = false
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
-          let prisonConfigIds = []
-          if (this.prisonUser.prisonConfigList.length) {
-            this.prisonUser.prisonConfigList.forEach(c => {
-              prisonConfigIds.push(c.prisonConfigId)
-            })
-          }
-          this.prisonUser.prisonConfigIds = prisonConfigIds
+          this.handleConfigs()
           this.onPrisonChange(this.prisonUser.jailId, true)
         })
       })
@@ -136,6 +130,7 @@ export default {
         if (!res) return
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
+          this.handleConfigs()
           if (this.jailPrisonAreas.length !== 0) {
             this.hasPrisonArea = true
           }
@@ -159,6 +154,15 @@ export default {
           })
         }
       })
+    },
+    handleConfigs() {
+      let prisonConfigIds = []
+      if (this.prisonUser.prisonConfigList.length) {
+        this.prisonUser.prisonConfigList.forEach(c => {
+          prisonConfigIds.push(c.prisonConfigId)
+        })
+      }
+      this.prisonUser.prisonConfigIds = prisonConfigIds
     },
     onPrisonChange(e, init) {
       if (!init) this.prisonUser.prisonConfigIds = []
