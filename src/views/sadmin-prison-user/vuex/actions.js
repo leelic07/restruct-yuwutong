@@ -6,6 +6,7 @@ export default {
       if (!res) return
       res.items.forEach(user => {
         let configList = []
+        if (!user.prisonConfigList) return
         user.prisonConfigList.forEach(c => { configList.push(c.prisonConfigName) })
         user.prisonAreas = configList.join('、')
       })
