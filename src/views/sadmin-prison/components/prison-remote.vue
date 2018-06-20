@@ -34,11 +34,13 @@
             </el-form-item>
           </template>
           <el-button
+            v-if="meeting[type.name][meeting[type.name].length - 1] !== null"
             :disabled="!flag['canAdd' + type.upperName]"
             type="primary"
             style="margin-right: 10px; margin-bottom: 22px;"
             @click="onAddRange(type.name)">新增会见时间段</el-button>
           <el-button
+            v-if="meeting[type.name].length > 1"
             style="margin-left: 0; margin-bottom: 22px;"
             @click="onRestRange(type.name)">重置{{ type.label }}</el-button>
         </div>

@@ -120,7 +120,7 @@ export default {
         this.gettingJails = false
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
-          this.handleConfigs()
+          // this.handleConfigs()
           this.onPrisonChange(this.prisonUser.jailId, true)
         })
       })
@@ -130,7 +130,7 @@ export default {
         if (!res) return
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
-          this.handleConfigs()
+          // this.handleConfigs()
           if (this.jailPrisonAreas.length !== 0) {
             this.hasPrisonArea = true
           }
@@ -145,8 +145,7 @@ export default {
       this.$refs.prisonUser.validate(valid => {
         if (valid) {
           let params = Object.assign({}, this.prisonUser)
-          if (!this.hasPrisonArea) delete params.prisonConfigIds
-          delete params.prisonConfigList
+          if (!this.hasPrisonArea || !params.prisonConfigIds.length) params.prisonConfigIds = null
           this.updatePrisonUser(params).then(res => {
             if (!res) return
             if (this.routeRole === '0') this.$router.push('/prison-user/list')
@@ -156,13 +155,13 @@ export default {
       })
     },
     handleConfigs() {
-      let prisonConfigIds = []
-      if (this.prisonUser.prisonConfigList.length) {
-        this.prisonUser.prisonConfigList.forEach(c => {
-          prisonConfigIds.push(c.prisonConfigId)
-        })
-      }
-      this.prisonUser.prisonConfigIds = prisonConfigIds
+      // let prisonConfigIds = []
+      // if (this.prisonUser.prisonConfigList.length) {
+      //   this.prisonUser.prisonConfigList.forEach(c => {
+      //     prisonConfigIds.push(c.prisonConfigId)
+      //   })
+      // }
+      // this.prisonUser.prisonConfigIds = prisonConfigIds
     },
     onPrisonChange(e, init) {
       if (!init) this.prisonUser.prisonConfigIds = []
