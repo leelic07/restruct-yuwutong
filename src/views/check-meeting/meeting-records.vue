@@ -23,8 +23,8 @@
           prop="name"
           label="姓名" />
         <el-table-column
-          label="预约时间"
-          prop="meetingTime" 
+          label="会见时间"
+          prop="meetingTime"
           show-overflow-tooltip/>
         <el-table-column
           prop="prisonerNumber"
@@ -62,7 +62,8 @@ export default {
     return {
       searchItems: {
         name: { type: 'input', label: '家属姓名' },
-        prisonerNumber: { type: 'input', label: '囚号' }
+        prisonerNumber: { type: 'input', label: '囚号' },
+        prisonArea: { type: 'select', label: '监区', options: JSON.parse(localStorage.getItem('user')).prisonConfigList, belong: { value: 'prisonConfigName', label: 'prisonConfigName' } }
       }
     }
   },

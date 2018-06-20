@@ -200,7 +200,8 @@ export default {
       tabs: 'first',
       searchItems: {
         // prisonerNumber: { type: 'input', label: '囚号' },
-        name: { type: 'input', label: '家属姓名' }
+        name: { type: 'input', label: '家属姓名' },
+        prisonArea: { type: 'select', label: '监区', options: JSON.parse(localStorage.getItem('user')).prisonConfigList, belong: { value: 'prisonConfigName', label: 'prisonConfigName' } }
       },
       show: {
         authorize: false,

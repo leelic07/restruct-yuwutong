@@ -151,6 +151,10 @@ let superAdminMenu = [{
       }
     ]
   }, {
+    path: '/remote/config',
+    title: '远程会见配置',
+    icon: 'iconfont icon-yuanchenghuijian'
+  }, {
     path: '/visit/config',
     title: '实地探监配置',
     icon: 'iconfont icon-shidihuijian'
@@ -158,7 +162,7 @@ let superAdminMenu = [{
   adminMenu = [{
     path: '/account/list',
     title: '账户管理',
-    icon: 'iconfont icon-jianyujibenxinxi'
+    icon: 'iconfont icon-zhanghuguanli'
   }]
 
 export default [superAdminMenu, checkMenu, shopMenu, infoMenu, adminMenu]

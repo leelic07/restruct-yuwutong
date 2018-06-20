@@ -24,6 +24,7 @@
         :data="prisonUsers.contents"
         border
         stripe
+        v-loading="loading"
         style="width: 100%">
         <el-table-column
           prop="username"
@@ -39,7 +40,7 @@
           prop="jail"
           label="监狱名称" />
         <el-table-column
-          prop="prisonConfigName"
+          prop="prisonAreas"
           label="监区" />
         <el-table-column
           prop="policeNumber"
@@ -102,7 +103,8 @@ export default {
         },
         jail
       ),
-      routeRole: routeRole
+      routeRole: routeRole,
+      loading: true
     }
   },
   computed: {
@@ -118,7 +120,11 @@ export default {
       this.getDatas()
     },
     getDatas() {
-      this.getPrisonUsers({ ...this.filter, ...this.pagination })
+      this.loading = true
+      this.getPrisonUsers({ ...this.filter, ...this.pagination }).then(res => {
+        if (!res) return
+        this.loading = false
+      })
     },
     onSearch() {
       this.$refs.pagination.handleCurrentChange(1)
