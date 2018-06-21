@@ -2,7 +2,17 @@ import http from '@/service'
 
 export default {
   getPrisonUsers: ({ commit }, params) => {
-    http.getPrisonUsers(params).then(res => res && commit('getPrisonUsers', res))
+    return http.getPrisonUsers(params).then(res => {
+      if (!res) return
+      res.items.forEach(user => {
+        let configList = []
+        if (!user.prisonConfigList) return
+        user.prisonConfigList.forEach(c => { configList.push(c.prisonConfigName) })
+        user.prisonAreas = configList.join('、')
+      })
+      commit('getPrisonUsers', res)
+      return true
+    })
   },
   deletePrisonUser: ({ commit }, params) => {
     return http.deletePrisonUser(params).then(res => res)

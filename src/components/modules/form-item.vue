@@ -7,6 +7,7 @@
       :type="item.type"
       :autosize="item.autosize"
       v-model="fields[prop]"
+      :disabled="item.disabled"
       :placeholder="'请输入' + item.label">
       <template v-if="item.append" slot="append">{{ item.append }}</template>
     </el-input>
@@ -32,6 +33,7 @@
       inactive-color="#dddddd"
       :active-value="1"
       :inactive-value="0"
+      :disabled="item.disabled"
       :width="60" />
     <m-upload-img
       v-if="item.type === 'uploadImg'"

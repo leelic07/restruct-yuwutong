@@ -4,6 +4,6 @@ export default {
     state.prisonUsers.total = params.itemSize
   },
   getPrisonUserDetail: (state, params) => {
-    state.prisonUser = params
+    state.prisonUser = Object.assign({}, { prisonConfigIds: [] }, params)
   }
 }

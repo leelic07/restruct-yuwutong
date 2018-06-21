@@ -13,20 +13,21 @@ export default {
       formButton.buttons = ['update']
       permission = 'edit'
     }
+    if (this.$route.meta.role === '3') {
+      delete formButton.buttons
+    }
     return {
       formItems: Object.assign({}, {
         formConfigs: { labelWidth: '140px' },
-        buttons: ['prev', 'next'],
-        cost: { type: 'input', label: '单次会见费用', rules: ['required', 'isFee'], append: '/元', value: 0 },
-        branchPrison: { type: 'switch', label: '是否需要分监区', rules: ['required'], value: 1 },
-        meeting: { type: 'switch', label: '会见模块开放', rules: ['required'], value: 1 },
-        rewards: { type: 'switch', label: '奖励模块开放', rules: ['required'], value: 1 },
-        shopping: { type: 'switch', label: '电子商务模块开放', rules: ['required'], value: 1 },
-        prisonTerm: { type: 'switch', label: '监狱条款模块开放', rules: ['required'], value: 1 },
-        faceRecognition: { type: 'switch', label: '人脸识别模块开放', rules: ['required'], value: 1 },
-        remittance: { type: 'input', label: '汇款限制', rules: ['required', 'isFee'], append: '/元', value: 800 },
-        consumption: { type: 'input', label: '消费限制', rules: ['required', 'isFee'], append: '/元', value: 800 }
-        // windowSize: { type: 'input', label: '实地探监窗口个数', rules: ['required', 'isNumber', 'numberRange1-20'], append: '/个' }
+        cost: { type: 'input', label: '单次会见费用', disabled: this.$route.meta.role === '3', rules: ['required', 'isFee'], append: '/元', value: 0 },
+        branchPrison: { type: 'switch', label: '是否需要分监区', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        meeting: { type: 'switch', label: '会见模块开放', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        rewards: { type: 'switch', label: '奖励模块开放', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        shopping: { type: 'switch', label: '电子商务模块开放', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        prisonTerm: { type: 'switch', label: '监狱条款模块开放', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        faceRecognition: { type: 'switch', label: '人脸识别模块开放', disabled: this.$route.meta.role === '3', rules: ['required'], value: 1 },
+        remittance: { type: 'input', label: '汇款限制', disabled: this.$route.meta.role === '3', rules: ['required', 'isFee'], append: '/元', value: 800 },
+        consumption: { type: 'input', label: '消费限制', disabled: this.$route.meta.role === '3', rules: ['required', 'isFee'], append: '/元', value: 800 }
       }, formButton),
       values: {},
       permission

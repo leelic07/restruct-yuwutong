@@ -47,8 +47,8 @@
         </el-table-column>
         <el-table-column label="刑期起止">
           <template slot-scope="scope">
-            <span class="separate">{{scope.row.prisonTermStartedAt | Date}}</span>
-            <span class="separate">{{scope.row.prisonTermEndedAt | Date}}</span>
+            <span class="separate">{{scope.row.prisonTermStartedAt | dateFormate}}</span>
+            <span class="separate">{{scope.row.prisonTermEndedAt | dateFormate}}</span>
           </template>
         </el-table-column>
         <el-table-column label="对应家属">
@@ -142,6 +142,7 @@ export default {
     return {
       searchItems: {
         prisonerNumber: { type: 'input', label: '囚号' },
+        prisonArea: { type: 'select', label: '监区', options: JSON.parse(localStorage.getItem('user')).prisonConfigList, belong: { value: 'prisonConfigName', label: 'prisonConfigName' } },
         name: { type: 'input', label: '姓名' }
       },
       dialogTableVisible: false,

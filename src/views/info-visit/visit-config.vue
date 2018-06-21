@@ -46,13 +46,13 @@
             </el-form-item>
           </template>
           <el-button
-            v-if="!prisonVisitConfigDetail.canNotChange"
+            v-if="!prisonVisitConfigDetail.canNotChange && prisonVisitConfigDetail.usual[prisonVisitConfigDetail.usual.length - 1] !== null"
             :disabled="!flag['canAddUsual']"
             type="primary"
             style="margin-right: 10px; margin-bottom: 22px;"
             @click="onAddRange('usual')">新增实地会见批次</el-button>
           <el-button
-            v-if="!prisonVisitConfigDetail.canNotChange"
+            v-if="!prisonVisitConfigDetail.canNotChange && prisonVisitConfigDetail.usual.length > 1"
             style="margin-left: 0; margin-bottom: 22px;"
             @click="onRestRange('usual')">重置实地会见配置</el-button>
         </div>

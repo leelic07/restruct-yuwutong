@@ -28,16 +28,16 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="isPrisonArea"
-          label="分监区"
-          prop="prisonConfigId">
+          v-if="hasPrisonArea"
+          label="监区"
+          prop="prisonConfigIds">
           <el-select
-            v-model="prisonUser.prisonConfigId"
+            v-model="prisonUser.prisonConfigIds"
             filterable
             clearable
-            :disabled="!hasPrisonArea"
+            multiple
             :loading="gettingPrisonArea"
-            placeholder="请选择分监区">
+            placeholder="请选择监区">
             <el-option
               v-for="prisonArea in jailPrisonAreas"
               :key="prisonArea.id"
@@ -107,7 +107,6 @@ export default {
       },
       gettingJails: true,
       gettingPrisonArea: true,
-      isPrisonArea: false,
       hasPrisonArea: false,
       routeRole: this.$route.matched[this.$route.matched.length - 1].props.default.role
     }
@@ -121,6 +120,7 @@ export default {
         this.gettingJails = false
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
+          // this.handleConfigs()
           this.onPrisonChange(this.prisonUser.jailId, true)
         })
       })
@@ -130,9 +130,9 @@ export default {
         if (!res) return
         this.getPrisonUserDetail(this.$route.params.id).then(res => {
           if (!res) return
+          // this.handleConfigs()
           if (this.jailPrisonAreas.length !== 0) {
             this.hasPrisonArea = true
-            this.isPrisonArea = true
           }
           this.gettingPrisonArea = false
         })
@@ -144,7 +144,9 @@ export default {
     onSubmit() {
       this.$refs.prisonUser.validate(valid => {
         if (valid) {
-          this.updatePrisonUser(this.prisonUser).then(res => {
+          let params = Object.assign({}, this.prisonUser)
+          if (!this.hasPrisonArea || !params.prisonConfigIds.length) params.prisonConfigIds = null
+          this.updatePrisonUser(params).then(res => {
             if (!res) return
             if (this.routeRole === '0') this.$router.push('/prison-user/list')
             else if (this.routeRole === '4') this.$router.push('/account/list')
@@ -152,24 +154,29 @@ export default {
         }
       })
     },
+    handleConfigs() {
+      // let prisonConfigIds = []
+      // if (this.prisonUser.prisonConfigList.length) {
+      //   this.prisonUser.prisonConfigList.forEach(c => {
+      //     prisonConfigIds.push(c.prisonConfigId)
+      //   })
+      // }
+      // this.prisonUser.prisonConfigIds = prisonConfigIds
+    },
     onPrisonChange(e, init) {
-      if (!init) delete this.prisonUser.prisonConfigId
-      this.isPrisonArea = false
+      if (!init) this.prisonUser.prisonConfigIds = []
+      this.hasPrisonArea = false
       this.gettingPrisonArea = true
-      let prison = this.prisonAllWithBranchPrison.find(item => item.id === e)
-      if (prison.branchPrison === 1) {
-        this.isPrisonArea = true
-        this.getJailPrisonAreas({ jailId: e }).then(res => {
-          if (!res) return
-          if (this.jailPrisonAreas.length === 0) {
-            this.hasPrisonArea = false
-          }
-          else {
-            this.hasPrisonArea = true
-          }
-          this.gettingPrisonArea = false
-        })
-      }
+      this.getJailPrisonAreas({ jailId: e }).then(res => {
+        if (!res) return
+        if (this.jailPrisonAreas.length === 0) {
+          this.hasPrisonArea = false
+        }
+        else {
+          this.hasPrisonArea = true
+        }
+        this.gettingPrisonArea = false
+      })
     }
   }
 }
